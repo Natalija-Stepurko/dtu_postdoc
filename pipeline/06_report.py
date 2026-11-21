@@ -551,6 +551,16 @@ def _norm(values):
     span = (hi - lo) or 1.0
     return {k: (None if v is None else (v - lo) / span) for k, v in values.items()}
 
+_cdr_member = {r: k for k, v in ref["cdrs"].items() for r in v["residues"]}
+_para_labels = sorted(iface["paratope_labels"],
+                      key=lambda l: int("".join(c for c in l[1:] if c.isdigit())))
+N["n_paratope"] = len(_para_labels)
+N["n_cdr_para"] = sum(1 for l in _para_labels if l in _cdr_member)
+N["n_fw_para"] = N["n_paratope"] - N["n_cdr_para"]
+N["fw2_para"] = ", ".join(l for l in _para_labels
+                          if l not in _cdr_member
+                          and 39 <= int("".join(c for c in l[1:] if c.isdigit())) <= 52)
+
 top_paratope = [
     {"resi": int("".join(c for c in lbl[1:] if c.isdigit())), "label": lbl}
     for lbl, _ in sorted(iface["paratope_delta_sasa"].items(),
@@ -694,7 +704,15 @@ measured.</p></div>
 <span><i style="background:#C06014"></i>antigen-binding residues, sticks</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
-{chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
+{chart_wide("paratope_footprint",
+  "Surface buried per nanobody residue on complex formation. The six residues burying the most "
+  "surface are labelled in the viewer above.")}
+<p>Of the {N['n_paratope']} residues that bury surface on binding, {N['n_cdr_para']} lie in the
+CDR loops and {N['n_fw_para']} in framework. Six of those framework residues
+({N['fw2_para']}) sit in framework 2, the face that in a conventional antibody is buried against
+the light chain. A VHH has no light chain, so that face is exposed and available to the antigen.
+The consequence for the design is that a mask has to cover framework 2 as well as the loops, which
+is more surface than a graft taken from the CDR contacts alone would address.</p>
 
 <h3 class="mod"><span>Module 01</span>Estimation of the usable mask affinity</h3>
 {mri("The Gly/Ser linker was treated as a worm-like chain with persistence length "
