@@ -7,6 +7,10 @@ carried over unchanged.
 
 **Results page: https://natalija-stepurko.github.io/dtu_postdoc/**
 
+> **Concept demonstration.** A worked example showing the pipeline running end to end on a
+> real structure. Not a therapeutic design campaign — the mask candidates are deliberately
+> simple and no candidate here is proposed for synthesis.
+
 The construct is a single chain — mask `M`, protease-cleavable linker `L`, fixed
 nanobody `N`:
 
