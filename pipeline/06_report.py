@@ -16,11 +16,13 @@ try:
     fold = load_json("04_folding.json")
 except FileNotFoundError:
     fold = None
-try:
-    redesign = load_json("07_redesign.json")
-    redesign_fold = load_json("08_redesign_folding.json")
-except FileNotFoundError:
-    redesign = redesign_fold = None
+for _name, _key in (("07_redesign.json", "redesign"),
+                    ("08_redesign_folding.json", "redesign_fold"),
+                    ("09_complexes.json", "complexes")):
+    try:
+        globals()[_key] = load_json(_name)
+    except FileNotFoundError:
+        globals()[_key] = None
 
 meta, geom = ref["metadata"], ref["terminal_geometry"]
 iface = ref["chain_pairs"][REFERENCE_VHH_CHAIN]
@@ -30,6 +32,18 @@ bN, bC = tether["best_per_terminus"]["N"], tether["best_per_terminus"]["C"]
 closed_C = max(r["linker_residues"] for r in tether["scan"]
                if r["terminus"] == "C" and not r["window_open"])
 model = tether["model"]
+
+schematic_facts = dict(
+    n_paratope=iface["n_paratope"], cdr3_frac=str(region["CDR3"]),
+    span_n=geom["n_term_to_paratope_centroid_A"],
+    span_c=geom["c_term_to_paratope_centroid_A"],
+    win_n=f"{bN['window_decades']:.1f}", closed_c=closed_C,
+    best_linker=bN["linker_residues"],
+    km_ceiling_uM=bN["km_max_for_masking_M"] * 1e6,
+    n_masks=len(lib["masks"]), n_linkers=len(lib["linker_lengths"]),
+    n_folded=(fold["n_folded"] if fold else lib["n_constructs"]),
+    n_redesigns=(redesign["n_unique"] if redesign else 0),
+    boltz_tag=("RUN" if complexes else "RUNNING"))
 
 R.copy_assets(lib["constructs"])
 R.write_reference_pdb()
@@ -105,6 +119,7 @@ if fold:
 fusion compared against the same residues in the folded free nanobody. The grafts are read against
 their scrambled, truncated and inert controls at matched linker length; the controls are the
 reason the comparison means anything.</p></div>
+<div class="chart wide">{{R.occlusion_schematic()}}</div>
 <div class="cards">{fold_cards}</div>
 <div class="charts2">
 {chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
@@ -204,17 +219,23 @@ synthesis. The point is the method and the numbers it produces, not the molecule
 </header>
 
 <section class="sec">
+<div class="stack"><div class="eyebrow">Method</div>
+<h2>The pipeline, as built</h2>
+<p>The order matters more than the parts. The structure is measured first and the tether priced
+second, so the attachment point, the linker length and the useful range of mask affinities are all
+settled <em>before</em> any candidate is generated. Everything after that searches inside a space
+the geometry has already narrowed.</p></div>
+<div class="chart wide">{R.pipeline_schematic(schematic_facts)}</div>
+</section>
+
+<section class="sec">
 <div class="stack"><div class="eyebrow">The construct</div>
 <h2>Three states, one chain</h2>
 <p>A single polypeptide: designed mask <span class="mono">M</span>, protease-cleavable linker
 <span class="mono">L</span>, fixed nanobody <span class="mono">N</span>. Cleavage severs the tether,
 the mask diffuses away, and the original paratope is free to take toxin
 <span class="mono">T</span>.</p></div>
-<div class="eq">N–L–M &nbsp;&nbsp;<span class="dim">──protease──▶</span>&nbsp;&nbsp; N + M
-&nbsp;&nbsp;&nbsp;<span class="dim">then</span>&nbsp;&nbsp;&nbsp; N + T &nbsp;⇌&nbsp; NT</div>
-<div class="banner"><b>The tension that defines the problem.</b> The strongest mask is not the best
-mask. One tight enough to block the paratope while tethered may stay bound after cleavage and keep
-blocking it. The stages below turn that sentence into a bounded range.</div>
+<div class="chart wide">{R.states_schematic()}</div>
 </section>
 
 <section class="sec">
@@ -251,7 +272,10 @@ interchangeable places to hang a mask.</div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
 <span><i style="background:#C06014"></i>α-cobratoxin</span>
-<span><i style="background:#0E7C7B"></i>paratope ({iface['n_paratope']} residues)</span></div>
+<span><i style="background:#C06014"></i>paratope sticks ({iface['n_paratope']} residues)</span>
+<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini ·
+primes mark the toxin chain</span>
+<span class="dim">sticks coloured by element</span></div>
 <p class="dim" style="font-size:.85rem">{PDB_ID} chains {REFERENCE_VHH_CHAIN} and
 {iface['toxin_chain']}, as deposited.</p>
 </div>
@@ -324,7 +348,9 @@ directly.</p></div>
 <div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
 <span><i style="background:#0E7C7B"></i>mask</span>
 <span><i style="background:#8A9BA8"></i>linker</span>
-<span><i style="background:#C06014"></i>paratope</span></div>
+<span><i style="background:#C06014"></i>paratope</span>
+<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span>
+<span class="dim">sticks coloured by element</span></div>
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
 </section>
@@ -350,31 +376,25 @@ from host protease is the real obstacle, and it is wet-lab work.</div>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Reproducing this</div>
-<h2>Six stages, no hand-entered numbers</h2></div>
-<div class="steps">
-<div class="step"><div class="n">01</div><div><b>Reference structure</b>
-<span>Fetch the complex, key residues on number and insertion code, measure the interface and the
-terminal geometry.</span></div><span class="tag run">CPU</span></div>
-<div class="step"><div class="n">02</div><div><b>Tether model</b>
-<span>Worm-like-chain effective concentration, masking ceiling, release floor, design window.</span>
-</div><span class="tag run">CPU</span></div>
-<div class="step"><div class="n">03</div><div><b>Construct library</b>
-<span>Epitope segments to mask candidates, with controls; enumerate mask × linker.</span></div>
-<span class="tag run">CPU</span></div>
-<div class="step"><div class="n">04</div><div><b>Folding</b>
-<span>ESMFold on every construct, then paratope occlusion against the folded free nanobody.
-Resumable.</span></div><span class="tag run">CPU or GPU</span></div>
-<div class="step"><div class="n">05</div><div><b>Figures</b>
-<span>Every chart on this page.</span></div><span class="tag run">CPU</span></div>
-<div class="step"><div class="n">06</div><div><b>Report</b>
-<span>This page, rendered from the stage outputs.</span></div><span class="tag run">CPU</span></div>
-</div>
-<div class="eq">git clone {REPO_URL}<br>uv venv &amp;&amp; uv pip install -e .<br>
-for s in pipeline/0*.py; do python "$s"; done</div>
-<p>Each stage writes a JSON file; figures and this page are generated from those files. The folding
-stage runs on CPU — a GPU only makes it faster — and a
-<a href="{NOTEBOOK_URL}">Colab notebook</a> runs the same step on a free T4.</p>
+<div class="stack"><div class="eyebrow">Provenance</div>
+<h2>Where the numbers come from</h2>
+<p>Every value and every chart here is produced by the analysis code, run in eight stages against
+one deposited structure. Each stage writes its results to a file and this page is generated from
+those files, so nothing is typed in by hand. The folding and design stages run on CPU; a GPU only
+makes them faster.</p></div>
+<div class="scroll"><table><thead><tr><th>stage</th><th>method</th><th>what it produces</th>
+</tr></thead><tbody>
+<tr><td>Measure the complex</td><td>Shrake-Rupley surface burial</td><td>paratope, CDRs, terminal geometry</td></tr>
+<tr><td>Price the tether</td><td>worm-like chain</td><td>effective concentration, masking ceiling, release floor</td></tr>
+<tr><td>Build the library</td><td>antigen epitope graft, with controls</td><td>mask x linker constructs</td></tr>
+<tr><td>Fold and measure</td><td>ESMFold</td><td>paratope occlusion per construct</td></tr>
+<tr><td>Redesign the mask</td><td>ProteinMPNN</td><td>new masks on the folded backbone</td></tr>
+<tr><td>Refold</td><td>ESMFold</td><td>occlusion for the redesigns</td></tr>
+<tr><td>Test the competition</td><td>Boltz-2</td><td>two-chain complex with the toxin</td></tr>
+<tr><td>Report</td><td>—</td><td>this page</td></tr>
+</tbody></table></div>
+<p class="dim" style="font-size:.88rem">Code and stage outputs:
+<a href="{REPO_URL}">{REPO_URL.split("//")[1]}</a></p>
 </section>
 
 <section class="sec">

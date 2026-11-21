@@ -81,7 +81,7 @@ tr.ctrl td{color:var(--ink-3)}
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
 .viewer{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:18px;
         display:flex;flex-direction:column;gap:12px}
-.vstage{position:relative;width:100%;height:460px;border:1px solid var(--rule-2);
+.vstage{position:relative;width:100%;height:420px;border:1px solid var(--rule-2);
         border-radius:2px;background:#FFFFFF;overflow:hidden}
 .vbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
 .vbar select,.vbar button{font-family:var(--mono);font-size:.72rem;padding:5px 10px;
@@ -113,17 +113,23 @@ synthesis. The point is the method and the numbers it produces, not the molecule
 </header>
 
 <section class="sec">
+<div class="stack"><div class="eyebrow">Method</div>
+<h2>The pipeline, as built</h2>
+<p>The order matters more than the parts. The structure is measured first and the tether priced
+second, so the attachment point, the linker length and the useful range of mask affinities are all
+settled <em>before</em> any candidate is generated. Everything after that searches inside a space
+the geometry has already narrowed.</p></div>
+<div class="chart wide"><svg viewBox="0 0 1120 650" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline as built"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.d-title{font:600 13.5px Inter,system-ui,sans-serif}.d-num{font:600 9.5px ui-monospace,monospace}.d-item{font:12px Inter,system-ui,sans-serif}.d-sub{font:10.5px ui-monospace,monospace;letter-spacing:.03em}.d-tool{font:600 10px ui-monospace,monospace;letter-spacing:.05em}.d-tag{font:600 9px ui-monospace,monospace;letter-spacing:.09em}.d-edge{font:10px ui-monospace,monospace;letter-spacing:.04em}.d-head{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.d-band{font:600 11px Inter,system-ui,sans-serif}</style><text x="0" y="13" class="d-head" fill="#0E7C7B">STEP 1 — LET THE STRUCTURE SET THE LIMITS</text><rect x="0" y="26" width="345" height="136" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="26" width="345" height="3" fill="#2D5BD1"/><text x="14" y="50" class="d-num" fill="#2D5BD1">01</text><text x="36" y="51" class="d-title" fill="#12191F">Measure the complex</text><text x="14" y="69" class="d-tool" fill="#2D5BD1">biotite · Shrake-Rupley</text><text x="14" y="88" class="d-item" fill="#3A464F">paratope: 16 residues, 11 in CDR3</text><text x="14" y="104" class="d-item" fill="#3A464F">N-terminus 11.78 Å from it, C-term 41.95 Å</text><text x="14" y="120" class="d-item" fill="#3A464F">4 copies in the crystal agree</text><text x="333" y="151" class="d-tag" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="388" y="26" width="345" height="136" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="388" y="26" width="345" height="3" fill="#2D5BD1"/><text x="402" y="50" class="d-num" fill="#2D5BD1">02</text><text x="424" y="51" class="d-title" fill="#12191F">Price the tether</text><text x="402" y="69" class="d-tool" fill="#2D5BD1">worm-like chain</text><text x="402" y="88" class="d-item" fill="#3A464F">C_eff, masking ceiling, release floor</text><text x="402" y="104" class="d-item" fill="#3A464F">N-terminal window 3.9 decades wide</text><text x="402" y="120" class="d-item" fill="#3A464F">C-terminal closed below 10 residues</text><text x="721" y="151" class="d-tag" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="776" y="26" width="344" height="136" rx="3" fill="#FFFFFF" stroke="#0E7C7B" stroke-width="1.4"/><rect x="776" y="26" width="344" height="3" fill="#0E7C7B"/><text x="790" y="47" class="d-head" fill="#0E7C7B">WHAT THIS DECIDES</text><text x="790" y="70" class="d-item" fill="#12191F">• attach the mask at the N-terminus</text><text x="790" y="89" class="d-item" fill="#12191F">• use a 5-residue linker</text><text x="790" y="108" class="d-item" fill="#12191F">• aim for a mask K_D near 753 µM — not tighter</text><text x="790" y="143" class="d-sub" fill="#6E7880">decided before any candidate exists</text><path d="M 345 94 L 382 94" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 733 94 L 770 94" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="0" y="203" class="d-head" fill="#0E7C7B">STEP 2 — BUILD CANDIDATES AND SCORE THEM</text><rect x="0" y="216" width="262" height="150" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="216" width="262" height="3" fill="#2D5BD1"/><text x="14" y="240" class="d-num" fill="#2D5BD1">03</text><text x="36" y="241" class="d-title" fill="#12191F">Build the library</text><text x="14" y="259" class="d-tool" fill="#2D5BD1">antigen epitope graft</text><text x="14" y="278" class="d-item" fill="#3A464F">5 masks x 5 linker lengths</text><text x="14" y="294" class="d-item" fill="#3A464F">scrambled, truncated and</text><text x="14" y="310" class="d-item" fill="#3A464F">inert masks as controls</text><text x="250" y="355" class="d-tag" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="286" y="216" width="262" height="150" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="286" y="216" width="262" height="3" fill="#2D5BD1"/><text x="300" y="240" class="d-num" fill="#2D5BD1">04</text><text x="322" y="241" class="d-title" fill="#12191F">Fold and measure</text><text x="300" y="259" class="d-tool" fill="#2D5BD1">ESMFold · CPU</text><text x="300" y="278" class="d-item" fill="#3A464F">26 constructs folded</text><text x="300" y="294" class="d-item" fill="#3A464F">paratope occlusion against</text><text x="300" y="310" class="d-item" fill="#3A464F">the folded free nanobody</text><text x="536" y="355" class="d-tag" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="572" y="216" width="262" height="150" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="572" y="216" width="262" height="3" fill="#2D5BD1"/><text x="586" y="240" class="d-num" fill="#2D5BD1">05</text><text x="608" y="241" class="d-title" fill="#12191F">Redesign the mask</text><text x="586" y="259" class="d-tool" fill="#2D5BD1">ProteinMPNN · CPU</text><text x="586" y="278" class="d-item" fill="#3A464F">nanobody and linker held fixed,</text><text x="586" y="294" class="d-item" fill="#3A464F">mask positions rewritten</text><text x="586" y="310" class="d-item" fill="#3A464F">61 distinct masks, then refolded</text><text x="822" y="355" class="d-tag" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="858" y="216" width="262" height="150" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="858" y="216" width="262" height="3" fill="#2D5BD1"/><text x="872" y="240" class="d-num" fill="#2D5BD1">06</text><text x="894" y="241" class="d-title" fill="#12191F">Test the competition</text><text x="872" y="259" class="d-tool" fill="#2D5BD1">Boltz-2 · CPU</text><text x="872" y="278" class="d-item" fill="#3A464F">two-chain prediction: with the</text><text x="872" y="294" class="d-item" fill="#3A464F">mask in place, can the toxin</text><text x="872" y="310" class="d-item" fill="#3A464F">still reach the paratope?</text><text x="1108" y="355" class="d-tag" fill="#C06014" text-anchor="end">RUNNING</text><path d="M 262 291 L 282 291" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 548 291 L 568 291" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 834 291 L 854 291" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><rect x="180" y="404" width="470" height="118" rx="3" fill="#FFFFFF" stroke="#C06014" stroke-dasharray="5 4"/><rect x="180" y="404" width="470" height="3" fill="#C06014"/><text x="194" y="426" class="d-num" fill="#C06014">2a</text><text x="216" y="427" class="d-title" fill="#12191F">Score the trigger</text><text x="194" y="445" class="d-tool" fill="#C06014">NOT BUILT</text><text x="194" y="465" class="d-item" fill="#3A464F">Is the linker cut by the protease at the target site, and left alone elsewhere?</text><text x="194" y="482" class="d-item" fill="#3A464F">The module is swappable — pH, metal ion or protease would each slot in here.</text><text x="194" y="499" class="d-item" fill="#3A464F">It is missing because the cleavage data for these proteases does not exist yet.</text><rect x="690" y="404" width="430" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="690" y="404" width="430" height="3" fill="#2D5BD1"/><text x="704" y="428" class="d-num" fill="#2D5BD1">07</text><text x="726" y="429" class="d-title" fill="#12191F">Rank, then hand over</text><text x="704" y="447" class="d-tool" fill="#2D5BD1">Pareto over the scores</text><text x="704" y="466" class="d-item" fill="#3A464F">keep the trade-offs separate, do not average them</text><text x="704" y="482" class="d-item" fill="#3A464F">keep structurally different designs</text><text x="704" y="498" class="d-item" fill="#3A464F">top candidates go to the lab</text><text x="1108" y="511" class="d-tag" fill="#C06014" text-anchor="end">PARTIAL</text><path d="M 989 366 L 989 400" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 650 463 L 684 463" stroke="#C06014" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/><path d="M 905 522 L 905 548 L 70 548 L 70 372" stroke="#0E7C7B" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah)"/><text x="500" y="542" class="d-edge" fill="#0E7C7B" text-anchor="middle">measurements come back and retrain the scorers</text><rect x="0" y="566" width="1120" height="76" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="18" y="588" class="d-head" fill="#0E7C7B">WHAT THE FEEDBACK LOOP COSTS AT 3 MEASUREMENTS A MONTH</text><text x="18" y="614" class="d-band" fill="#12191F">20–30 measurements</text><text x="18" y="632" class="d-sub" fill="#C06014">a validation set — 7 to 10 months</text><text x="384" y="614" class="d-band" fill="#12191F">~100 measurements</text><text x="384" y="632" class="d-sub" fill="#C06014">optimising against it — nearly 3 years</text><text x="750" y="614" class="d-band" fill="#12191F">100–1000 measurements</text><text x="750" y="632" class="d-sub" fill="#C06014">training on it directly — longer still</text></svg></div>
+</section>
+
+<section class="sec">
 <div class="stack"><div class="eyebrow">The construct</div>
 <h2>Three states, one chain</h2>
 <p>A single polypeptide: designed mask <span class="mono">M</span>, protease-cleavable linker
 <span class="mono">L</span>, fixed nanobody <span class="mono">N</span>. Cleavage severs the tether,
 the mask diffuses away, and the original paratope is free to take toxin
 <span class="mono">T</span>.</p></div>
-<div class="eq">N–L–M &nbsp;&nbsp;<span class="dim">──protease──▶</span>&nbsp;&nbsp; N + M
-&nbsp;&nbsp;&nbsp;<span class="dim">then</span>&nbsp;&nbsp;&nbsp; N + T &nbsp;⇌&nbsp; NT</div>
-<div class="banner"><b>The tension that defines the problem.</b> The strongest mask is not the best
-mask. One tight enough to block the paratope while tethered may stay bound after cleavage and keep
-blocking it. The stages below turn that sentence into a bounded range.</div>
+<div class="chart wide"><svg viewBox="0 0 1120 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three states"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.s-t{font:600 13px Inter,system-ui,sans-serif}.s-i{font:12px Inter,system-ui,sans-serif}.s-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.s-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.s-lbl{font:600 11px ui-monospace,monospace}</style><text x="0" y="13" class="s-h" fill="#0E7C7B">THE THREE STATES</text><rect x="0" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="58" class="s-t" fill="#12191F">A · masked</text><text x="16" y="230" class="s-i" fill="#3A464F">tethered mask sits over the paratope</text><path d="M 124 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="170 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 144 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="170" cy="104" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="170" y="109" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 140 128 q -12 -18 12 -26" stroke="#6E7880" stroke-width="1.6" fill="none"/><text x="112" y="116" class="s-m" fill="#6E7880">L</text><rect x="390" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="406" y="58" class="s-t" fill="#12191F">B · cleaved</text><text x="406" y="230" class="s-i" fill="#3A464F">protease cuts; the mask drifts off</text><path d="M 514 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="560 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 534 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="648" cy="92" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="648" y="97" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 576 118 L 622 96" stroke="#6E7880" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah2)" fill="none"/><text x="531" y="100" class="s-m" fill="#C06014">protease</text><path d="M 524 112 l 14 10 M 538 112 l -14 10" stroke="#C06014" stroke-width="1.8"/><rect x="780" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="796" y="58" class="s-t" fill="#12191F">C · active</text><text x="796" y="230" class="s-i" fill="#3A464F">the original paratope takes the toxin</text><path d="M 904 130 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="950 " y="165" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 924 127 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="926" y="86" width="48" height="34" rx="6" fill="#C06014" stroke="#FFFFFF" stroke-width="2"/><text x="950" y="108" class="s-lbl" fill="#FFFFFF" text-anchor="middle">T</text><rect x="0" y="258" width="1120" height="36" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="281" class="s-i" fill="#12191F">A mask tight enough to hold state A may refuse to leave in state B. That single sentence is the whole design problem, and stage 02 turns it into a range of allowed mask affinities.</text></svg></div>
 </section>
 
 <section class="sec">
@@ -160,7 +166,10 @@ interchangeable places to hang a mask.</div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
 <span><i style="background:#C06014"></i>α-cobratoxin</span>
-<span><i style="background:#0E7C7B"></i>paratope (16 residues)</span></div>
+<span><i style="background:#C06014"></i>paratope sticks (16 residues)</span>
+<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini ·
+primes mark the toxin chain</span>
+<span class="dim">sticks coloured by element</span></div>
 <p class="dim" style="font-size:.85rem">9GCN chains A and
 X, as deposited.</p>
 </div>
@@ -227,17 +236,42 @@ interaction and should fail.</div>
 N-terminus and the paratope is drawn as sticks, so whether the mask covers it is visible
 directly.</p></div>
 <div class="viewer">
-<div class="vbar"><select id="pick"><option value="epi1_L10">epi1_L10</option><option value="epi1_L15">epi1_L15</option><option value="epi1_L20">epi1_L20</option><option value="epi1_L30">epi1_L30</option><option value="epi1_L5" selected>epi1_L5</option><option value="epi1_half_L10">epi1_half_L10</option><option value="epi1_half_L5">epi1_half_L5</option><option value="epi1_scram_L10">epi1_scram_L10</option><option value="epi1_scram_L15">epi1_scram_L15</option><option value="epi1_scram_L20">epi1_scram_L20</option><option value="epi1_scram_L30">epi1_scram_L30</option><option value="epi1_scram_L5">epi1_scram_L5</option></select>
+<div class="vbar"><select id="pick"><option value="VHH_only">VHH_only</option><option value="epi1_L10">epi1_L10</option><option value="epi1_L15">epi1_L15</option><option value="epi1_L20">epi1_L20</option><option value="epi1_L30">epi1_L30</option><option value="epi1_L5" selected>epi1_L5</option><option value="epi1_half_L10">epi1_half_L10</option><option value="epi1_half_L15">epi1_half_L15</option><option value="epi1_half_L20">epi1_half_L20</option><option value="epi1_half_L30">epi1_half_L30</option><option value="epi1_half_L5">epi1_half_L5</option><option value="epi1_scram_L10">epi1_scram_L10</option><option value="epi1_scram_L15">epi1_scram_L15</option><option value="epi1_scram_L20">epi1_scram_L20</option><option value="epi1_scram_L30">epi1_scram_L30</option><option value="epi1_scram_L5">epi1_scram_L5</option><option value="epi2_L10">epi2_L10</option><option value="epi2_L15">epi2_L15</option><option value="epi2_L20">epi2_L20</option><option value="epi2_L30">epi2_L30</option><option value="epi2_L5">epi2_L5</option><option value="polyG_L10">polyG_L10</option><option value="polyG_L15">polyG_L15</option><option value="polyG_L20">polyG_L20</option><option value="polyG_L30">polyG_L30</option><option value="polyG_L5">polyG_L5</option></select>
 <button data-spin="designed">spin</button></div>
 <div class="vstage" id="stage-designed"></div>
 <div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
 <span><i style="background:#0E7C7B"></i>mask</span>
 <span><i style="background:#8A9BA8"></i>linker</span>
-<span><i style="background:#C06014"></i>paratope</span></div>
+<span><i style="background:#C06014"></i>paratope</span>
+<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span>
+<span class="dim">sticks coloured by element</span></div>
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
 </section>
 
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">Stage 4 · folded on CPU</div>
+<h2>Does the mask actually reach the paratope?</h2>
+<p>Every construct folded with ESMFold, then the paratope's solvent-accessible surface in the
+fusion compared against the same residues in the folded free nanobody. The grafts are read against
+their scrambled, truncated and inert controls at matched linker length; the controls are the
+reason the comparison means anything.</p></div>
+<div class="chart wide">{R.occlusion_schematic()}</div>
+<div class="cards"><div class="card hl"><div class="cl">best occlusion</div><div class="big">29%</div><div class="sub">polyG_L20 · inert control</div></div><div class="card"><div class="cl">epitope grafts</div><div class="big">14%</div><div class="sub">mean across linkers</div></div><div class="card"><div class="cl">scrambled control</div><div class="big">16%</div><div class="sub">mean</div></div><div class="card"><div class="cl">inert control</div><div class="big">18%</div><div class="sub">mean</div></div><div class="card"><div class="cl">VHH core RMSD</div><div class="big">0.18 Å</div><div class="sub">fusion against free nanobody</div></div></div>
+<div class="charts2">
+<figure class="chart"><img src="figures/occlusion_by_linker.svg" alt="Paratope occlusion against linker length, by mask."><figcaption>Paratope occlusion against linker length, by mask.</figcaption></figure>
+<figure class="chart"><img src="figures/occlusion_vs_confidence.svg" alt="Occlusion against fold confidence in the nanobody region."><figcaption>Occlusion against fold confidence in the nanobody region.</figcaption></figure>
+</div>
+<div class="scroll"><table><thead><tr>
+<th>construct</th><th>kind</th><th>linker</th><th>occluded %</th><th>min CA–CA Å</th>
+<th>contacts &lt;8 Å</th><th>VHH pLDDT</th><th>core RMSD Å</th>
+</tr></thead><tbody><tr class="ctrl"><td>polyG_L20</td><td>inert control</td><td>20</td><td>+28.6</td><td>2.4</td><td>24</td><td>85</td><td>0.18</td></tr><tr class="hl"><td>epi1_L5</td><td>epitope graft</td><td>5</td><td>+26.4</td><td>4.19</td><td>16</td><td>90</td><td>0.18</td></tr><tr class="ctrl"><td>epi1_half_L30</td><td>truncated control</td><td>30</td><td>+26.3</td><td>9.52</td><td>0</td><td>85</td><td>0.20</td></tr><tr class="ctrl"><td>polyG_L30</td><td>inert control</td><td>30</td><td>+23.2</td><td>2.89</td><td>14</td><td>84</td><td>0.21</td></tr><tr class="ctrl"><td>epi1_scram_L20</td><td>scrambled control</td><td>20</td><td>+20.0</td><td>6.26</td><td>7</td><td>86</td><td>0.18</td></tr><tr class="ctrl"><td>epi1_scram_L5</td><td>scrambled control</td><td>5</td><td>+17.9</td><td>4.93</td><td>9</td><td>89</td><td>0.26</td></tr><tr class="ctrl"><td>epi1_half_L5</td><td>truncated control</td><td>5</td><td>+17.7</td><td>3.77</td><td>13</td><td>90</td><td>0.44</td></tr><tr class="hl"><td>epi1_L30</td><td>epitope graft</td><td>30</td><td>+17.2</td><td>10.32</td><td>0</td><td>84</td><td>0.20</td></tr><tr class="hl"><td>epi1_L10</td><td>epitope graft</td><td>10</td><td>+16.5</td><td>6.02</td><td>5</td><td>88</td><td>0.14</td></tr><tr class="ctrl"><td>epi1_scram_L15</td><td>scrambled control</td><td>15</td><td>+14.9</td><td>11.54</td><td>0</td><td>87</td><td>0.14</td></tr><tr class="hl"><td>epi2_L30</td><td>epitope graft</td><td>30</td><td>+14.5</td><td>12.08</td><td>0</td><td>84</td><td>0.20</td></tr><tr class="ctrl"><td>epi1_scram_L30</td><td>scrambled control</td><td>30</td><td>+14.2</td><td>15.85</td><td>0</td><td>84</td><td>0.19</td></tr><tr class="hl"><td>epi1_L15</td><td>epitope graft</td><td>15</td><td>+14.1</td><td>11.78</td><td>0</td><td>87</td><td>0.14</td></tr><tr class="ctrl"><td>polyG_L10</td><td>inert control</td><td>10</td><td>+13.9</td><td>5.63</td><td>2</td><td>88</td><td>0.15</td></tr><tr class="ctrl"><td>epi1_scram_L10</td><td>scrambled control</td><td>10</td><td>+13.7</td><td>7.36</td><td>2</td><td>88</td><td>0.13</td></tr><tr class="hl"><td>epi2_L20</td><td>epitope graft</td><td>20</td><td>+13.3</td><td>12.96</td><td>0</td><td>86</td><td>0.16</td></tr><tr class="ctrl"><td>polyG_L5</td><td>inert control</td><td>5</td><td>+12.6</td><td>6.67</td><td>6</td><td>89</td><td>0.14</td></tr><tr class="ctrl"><td>epi1_half_L15</td><td>truncated control</td><td>15</td><td>+12.6</td><td>16.29</td><td>0</td><td>87</td><td>0.14</td></tr><tr class="hl"><td>epi2_L15</td><td>epitope graft</td><td>15</td><td>+12.4</td><td>10.56</td><td>0</td><td>87</td><td>0.16</td></tr><tr class="hl"><td>epi1_L20</td><td>epitope graft</td><td>20</td><td>+12.4</td><td>9.07</td><td>0</td><td>86</td><td>0.16</td></tr><tr class="ctrl"><td>epi1_half_L20</td><td>truncated control</td><td>20</td><td>+12.3</td><td>14.29</td><td>0</td><td>86</td><td>0.16</td></tr><tr class="ctrl"><td>polyG_L15</td><td>inert control</td><td>15</td><td>+12.3</td><td>6.92</td><td>1</td><td>86</td><td>0.14</td></tr><tr class="ctrl"><td>epi1_half_L10</td><td>truncated control</td><td>10</td><td>+10.8</td><td>8.85</td><td>0</td><td>89</td><td>0.12</td></tr><tr class="hl"><td>epi2_L5</td><td>epitope graft</td><td>5</td><td>+8.6</td><td>9.34</td><td>0</td><td>89</td><td>0.15</td></tr><tr class="hl"><td>epi2_L10</td><td>epitope graft</td><td>10</td><td>+7.7</td><td>9.12</td><td>0</td><td>88</td><td>0.16</td></tr></tbody></table></div>
+<div class="banner"><b>What a predicted structure is not.</b> ESMFold returns one structure per
+sequence. A mask resting against the paratope is a hypothesis about the masked state, not a masking
+efficiency and not a dissociation constant. pLDDT is a confidence score, not a folding free energy.
+The informative quantity here is the contrast between graft and control, not any single number.</div>
+</section>
 
 
 <section class="sec">
@@ -258,31 +292,25 @@ from host protease is the real obstacle, and it is wet-lab work.</div>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Reproducing this</div>
-<h2>Six stages, no hand-entered numbers</h2></div>
-<div class="steps">
-<div class="step"><div class="n">01</div><div><b>Reference structure</b>
-<span>Fetch the complex, key residues on number and insertion code, measure the interface and the
-terminal geometry.</span></div><span class="tag run">CPU</span></div>
-<div class="step"><div class="n">02</div><div><b>Tether model</b>
-<span>Worm-like-chain effective concentration, masking ceiling, release floor, design window.</span>
-</div><span class="tag run">CPU</span></div>
-<div class="step"><div class="n">03</div><div><b>Construct library</b>
-<span>Epitope segments to mask candidates, with controls; enumerate mask × linker.</span></div>
-<span class="tag run">CPU</span></div>
-<div class="step"><div class="n">04</div><div><b>Folding</b>
-<span>ESMFold on every construct, then paratope occlusion against the folded free nanobody.
-Resumable.</span></div><span class="tag run">CPU or GPU</span></div>
-<div class="step"><div class="n">05</div><div><b>Figures</b>
-<span>Every chart on this page.</span></div><span class="tag run">CPU</span></div>
-<div class="step"><div class="n">06</div><div><b>Report</b>
-<span>This page, rendered from the stage outputs.</span></div><span class="tag run">CPU</span></div>
-</div>
-<div class="eq">git clone https://github.com/Natalija-Stepurko/dtu_postdoc<br>uv venv &amp;&amp; uv pip install -e .<br>
-for s in pipeline/0*.py; do python "$s"; done</div>
-<p>Each stage writes a JSON file; figures and this page are generated from those files. The folding
-stage runs on CPU — a GPU only makes it faster — and a
-<a href="https://colab.research.google.com/github/Natalija-Stepurko/dtu_postdoc/blob/main/notebooks/esmfold_masked_vhh.ipynb">Colab notebook</a> runs the same step on a free T4.</p>
+<div class="stack"><div class="eyebrow">Provenance</div>
+<h2>Where the numbers come from</h2>
+<p>Every value and every chart here is produced by the analysis code, run in eight stages against
+one deposited structure. Each stage writes its results to a file and this page is generated from
+those files, so nothing is typed in by hand. The folding and design stages run on CPU; a GPU only
+makes them faster.</p></div>
+<div class="scroll"><table><thead><tr><th>stage</th><th>method</th><th>what it produces</th>
+</tr></thead><tbody>
+<tr><td>Measure the complex</td><td>Shrake-Rupley surface burial</td><td>paratope, CDRs, terminal geometry</td></tr>
+<tr><td>Price the tether</td><td>worm-like chain</td><td>effective concentration, masking ceiling, release floor</td></tr>
+<tr><td>Build the library</td><td>antigen epitope graft, with controls</td><td>mask x linker constructs</td></tr>
+<tr><td>Fold and measure</td><td>ESMFold</td><td>paratope occlusion per construct</td></tr>
+<tr><td>Redesign the mask</td><td>ProteinMPNN</td><td>new masks on the folded backbone</td></tr>
+<tr><td>Refold</td><td>ESMFold</td><td>occlusion for the redesigns</td></tr>
+<tr><td>Test the competition</td><td>Boltz-2</td><td>two-chain complex with the toxin</td></tr>
+<tr><td>Report</td><td>—</td><td>this page</td></tr>
+</tbody></table></div>
+<p class="dim" style="font-size:.88rem">Code and stage outputs:
+<a href="https://github.com/Natalija-Stepurko/dtu_postdoc">github.com/Natalija-Stepurko/dtu_postdoc</a></p>
 </section>
 
 <section class="sec">
@@ -324,50 +352,70 @@ language model. <i>Science</i> 379:1123–1130 (2023).
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
 <script>
-const MODELS = {"epi1_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi1_L10 \u2014 epitope graft, mask RGKRV, 10-residue linker", "mask": "1-5", "linker": "6-15"}, "epi1_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi1_L15 \u2014 epitope graft, mask RGKRV, 15-residue linker", "mask": "1-5", "linker": "6-20"}, "epi1_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi1_L20 \u2014 epitope graft, mask RGKRV, 20-residue linker", "mask": "1-5", "linker": "6-25"}, "epi1_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi1_L30 \u2014 epitope graft, mask RGKRV, 30-residue linker", "mask": "1-5", "linker": "6-35"}, "epi1_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi1_L5 \u2014 epitope graft, mask RGKRV, 5-residue linker", "mask": "1-5", "linker": "6-10"}, "epi1_half_L10": {"vhh": "14-135", "paratope": [14, 40, 42, 43, 45, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123, 125], "caption": "epi1_half_L10 \u2014 truncated control, mask RGK, 10-residue linker", "mask": "1-3", "linker": "4-13"}, "epi1_half_L5": {"vhh": "9-130", "paratope": [9, 35, 37, 38, 40, 108, 109, 110, 111, 112, 113, 114, 115, 116, 118, 120], "caption": "epi1_half_L5 \u2014 truncated control, mask RGK, 5-residue linker", "mask": "1-3", "linker": "4-8"}, "epi1_scram_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi1_scram_L10 \u2014 scrambled control, mask RGKVR, 10-residue linker", "mask": "1-5", "linker": "6-15"}, "epi1_scram_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi1_scram_L15 \u2014 scrambled control, mask RGKVR, 15-residue linker", "mask": "1-5", "linker": "6-20"}, "epi1_scram_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi1_scram_L20 \u2014 scrambled control, mask RGKVR, 20-residue linker", "mask": "1-5", "linker": "6-25"}, "epi1_scram_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi1_scram_L30 \u2014 scrambled control, mask RGKVR, 30-residue linker", "mask": "1-5", "linker": "6-35"}, "epi1_scram_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi1_scram_L5 \u2014 scrambled control, mask RGKVR, 5-residue linker", "mask": "1-5", "linker": "6-10"}};
+const MODELS = {"VHH_only": {"vhh": "1-122", "paratope": [1, 27, 29, 30, 32, 100, 101, 102, 103, 104, 105, 106, 107, 108, 110, 112], "caption": "free nanobody, folded as the reference state"}, "epi1_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi1_L10 \u2014 epitope graft, mask RGKRV, 10-residue linker \u00b7 paratope +16.5% occluded \u00b7 VHH pLDDT 88", "mask": "1-5", "linker": "6-15"}, "epi1_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi1_L15 \u2014 epitope graft, mask RGKRV, 15-residue linker \u00b7 paratope +14.1% occluded \u00b7 VHH pLDDT 87", "mask": "1-5", "linker": "6-20"}, "epi1_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi1_L20 \u2014 epitope graft, mask RGKRV, 20-residue linker \u00b7 paratope +12.4% occluded \u00b7 VHH pLDDT 86", "mask": "1-5", "linker": "6-25"}, "epi1_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi1_L30 \u2014 epitope graft, mask RGKRV, 30-residue linker \u00b7 paratope +17.2% occluded \u00b7 VHH pLDDT 84", "mask": "1-5", "linker": "6-35"}, "epi1_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi1_L5 \u2014 epitope graft, mask RGKRV, 5-residue linker \u00b7 paratope +26.4% occluded \u00b7 VHH pLDDT 90", "mask": "1-5", "linker": "6-10"}, "epi1_half_L10": {"vhh": "14-135", "paratope": [14, 40, 42, 43, 45, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123, 125], "caption": "epi1_half_L10 \u2014 truncated control, mask RGK, 10-residue linker \u00b7 paratope +10.8% occluded \u00b7 VHH pLDDT 89", "mask": "1-3", "linker": "4-13"}, "epi1_half_L15": {"vhh": "19-140", "paratope": [19, 45, 47, 48, 50, 118, 119, 120, 121, 122, 123, 124, 125, 126, 128, 130], "caption": "epi1_half_L15 \u2014 truncated control, mask RGK, 15-residue linker \u00b7 paratope +12.6% occluded \u00b7 VHH pLDDT 87", "mask": "1-3", "linker": "4-18"}, "epi1_half_L20": {"vhh": "24-145", "paratope": [24, 50, 52, 53, 55, 123, 124, 125, 126, 127, 128, 129, 130, 131, 133, 135], "caption": "epi1_half_L20 \u2014 truncated control, mask RGK, 20-residue linker \u00b7 paratope +12.3% occluded \u00b7 VHH pLDDT 86", "mask": "1-3", "linker": "4-23"}, "epi1_half_L30": {"vhh": "34-155", "paratope": [34, 60, 62, 63, 65, 133, 134, 135, 136, 137, 138, 139, 140, 141, 143, 145], "caption": "epi1_half_L30 \u2014 truncated control, mask RGK, 30-residue linker \u00b7 paratope +26.3% occluded \u00b7 VHH pLDDT 85", "mask": "1-3", "linker": "4-33"}, "epi1_half_L5": {"vhh": "9-130", "paratope": [9, 35, 37, 38, 40, 108, 109, 110, 111, 112, 113, 114, 115, 116, 118, 120], "caption": "epi1_half_L5 \u2014 truncated control, mask RGK, 5-residue linker \u00b7 paratope +17.7% occluded \u00b7 VHH pLDDT 90", "mask": "1-3", "linker": "4-8"}, "epi1_scram_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi1_scram_L10 \u2014 scrambled control, mask RGKVR, 10-residue linker \u00b7 paratope +13.7% occluded \u00b7 VHH pLDDT 88", "mask": "1-5", "linker": "6-15"}, "epi1_scram_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi1_scram_L15 \u2014 scrambled control, mask RGKVR, 15-residue linker \u00b7 paratope +14.9% occluded \u00b7 VHH pLDDT 87", "mask": "1-5", "linker": "6-20"}, "epi1_scram_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi1_scram_L20 \u2014 scrambled control, mask RGKVR, 20-residue linker \u00b7 paratope +20.0% occluded \u00b7 VHH pLDDT 86", "mask": "1-5", "linker": "6-25"}, "epi1_scram_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi1_scram_L30 \u2014 scrambled control, mask RGKVR, 30-residue linker \u00b7 paratope +14.2% occluded \u00b7 VHH pLDDT 84", "mask": "1-5", "linker": "6-35"}, "epi1_scram_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi1_scram_L5 \u2014 scrambled control, mask RGKVR, 5-residue linker \u00b7 paratope +17.9% occluded \u00b7 VHH pLDDT 89", "mask": "1-5", "linker": "6-10"}, "epi2_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi2_L10 \u2014 epitope graft, mask WCDAF, 10-residue linker \u00b7 paratope +7.7% occluded \u00b7 VHH pLDDT 88", "mask": "1-5", "linker": "6-15"}, "epi2_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi2_L15 \u2014 epitope graft, mask WCDAF, 15-residue linker \u00b7 paratope +12.4% occluded \u00b7 VHH pLDDT 87", "mask": "1-5", "linker": "6-20"}, "epi2_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi2_L20 \u2014 epitope graft, mask WCDAF, 20-residue linker \u00b7 paratope +13.3% occluded \u00b7 VHH pLDDT 86", "mask": "1-5", "linker": "6-25"}, "epi2_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi2_L30 \u2014 epitope graft, mask WCDAF, 30-residue linker \u00b7 paratope +14.5% occluded \u00b7 VHH pLDDT 84", "mask": "1-5", "linker": "6-35"}, "epi2_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi2_L5 \u2014 epitope graft, mask WCDAF, 5-residue linker \u00b7 paratope +8.6% occluded \u00b7 VHH pLDDT 89", "mask": "1-5", "linker": "6-10"}, "polyG_L10": {"vhh": "19-140", "paratope": [19, 45, 47, 48, 50, 118, 119, 120, 121, 122, 123, 124, 125, 126, 128, 130], "caption": "polyG_L10 \u2014 inert control, mask GGGGGGGG, 10-residue linker \u00b7 paratope +13.9% occluded \u00b7 VHH pLDDT 88", "mask": "1-8", "linker": "9-18"}, "polyG_L15": {"vhh": "24-145", "paratope": [24, 50, 52, 53, 55, 123, 124, 125, 126, 127, 128, 129, 130, 131, 133, 135], "caption": "polyG_L15 \u2014 inert control, mask GGGGGGGG, 15-residue linker \u00b7 paratope +12.3% occluded \u00b7 VHH pLDDT 86", "mask": "1-8", "linker": "9-23"}, "polyG_L20": {"vhh": "29-150", "paratope": [29, 55, 57, 58, 60, 128, 129, 130, 131, 132, 133, 134, 135, 136, 138, 140], "caption": "polyG_L20 \u2014 inert control, mask GGGGGGGG, 20-residue linker \u00b7 paratope +28.6% occluded \u00b7 VHH pLDDT 85", "mask": "1-8", "linker": "9-28"}, "polyG_L30": {"vhh": "39-160", "paratope": [39, 65, 67, 68, 70, 138, 139, 140, 141, 142, 143, 144, 145, 146, 148, 150], "caption": "polyG_L30 \u2014 inert control, mask GGGGGGGG, 30-residue linker \u00b7 paratope +23.2% occluded \u00b7 VHH pLDDT 84", "mask": "1-8", "linker": "9-38"}, "polyG_L5": {"vhh": "14-135", "paratope": [14, 40, 42, 43, 45, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123, 125], "caption": "polyG_L5 \u2014 inert control, mask GGGGGGGG, 5-residue linker \u00b7 paratope +12.6% occluded \u00b7 VHH pLDDT 89", "mask": "1-8", "linker": "9-13"}};
 const PARATOPE = [1, 27, 29, 30, 32, 97, 98, 99, 100, 102];
 let v1 = null, v2 = null;
 
-function style(view, spec) {
-  view.setStyle({}, {cartoon: {color: '#C9D1D6', opacity: 0.95}});
-  if (spec.vhh) view.setStyle({resi: spec.vhh}, {cartoon: {color: '#2D5BD1'}});
-  if (spec.toxin) view.setStyle({chain: spec.toxin}, {cartoon: {color: '#C06014'}});
-  if (spec.mask) {
-    view.setStyle({resi: spec.mask}, {cartoon: {color: '#0E7C7B'}});
-    view.addStyle({resi: spec.mask}, {stick: {color: '#0E7C7B', radius: 0.17}});
-  }
-  if (spec.linker) view.setStyle({resi: spec.linker}, {cartoon: {color: '#8A9BA8'}});
-  if (spec.paratope) view.addStyle({resi: spec.paratope},
-      {stick: {color: '#C06014', radius: 0.19}});
+// Sticks are drawn with element colouring on a region-tinted carbon, so
+// nitrogen, oxygen and sulfur read as themselves while the residue still
+// says which part of the construct it belongs to.
+const STICK_PARATOPE = {stick: {colorscheme: 'orangeCarbon', radius: 0.19}};
+const STICK_MASK = {stick: {colorscheme: 'greenCarbon', radius: 0.17}};
+
+function termini(view, model, sel, labelSuffix) {
+  const cas = model.selectedAtoms(Object.assign({atom: 'CA'}, sel));
+  if (!cas.length) return;
+  const first = cas[0], last = cas[cas.length - 1];
+  const mk = (atom, text, colour) => {
+    view.addSphere({center: {x: atom.x, y: atom.y, z: atom.z}, radius: 1.1,
+                    color: colour});
+    view.addLabel(text, {position: {x: atom.x, y: atom.y, z: atom.z},
+      backgroundColor: colour, backgroundOpacity: 0.92, fontColor: 'white',
+      fontSize: 11, borderThickness: 0, inFront: true, alignment: 'center'});
+  };
+  mk(first, 'N' + labelSuffix, '#12191F');
+  mk(last, 'C' + labelSuffix, '#6E7880');
 }
 
 function boot() {
   v1 = $3Dmol.createViewer('stage-solved', {backgroundColor: '#FFFFFF'});
   jQuery.get('structures/9GCN_AX.pdb', function (data) {
-    v1.addModel(data, 'pdb');
+    const m = v1.addModel(data, 'pdb');
     v1.setStyle({chain: 'A'}, {cartoon: {color: '#2D5BD1'}});
     v1.setStyle({chain: 'X'}, {cartoon: {color: '#C06014'}});
-    v1.addStyle({chain: 'A', resi: PARATOPE}, {stick: {color: '#0E7C7B', radius: 0.19}});
-    v1.zoomTo(); v1.zoom(1.3); v1.render();
+    v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
+    termini(v1, m, {chain: 'A'}, '');
+    termini(v1, m, {chain: 'X'}, '′');
+    v1.zoomTo(); v1.zoom(1.75); v1.render();
   });
 
   v2 = $3Dmol.createViewer('stage-designed', {backgroundColor: '#FFFFFF'});
   loadDesigned(document.getElementById('pick').value);
-  document.getElementById('pick').addEventListener('change', e => loadDesigned(e.target.value));
-  document.querySelectorAll('[data-spin]').forEach(b => b.addEventListener('click', () => {
-    const v = b.dataset.spin === 'solved' ? v1 : v2;
-    v.spin(v.isSpinning && v.isSpinning() ? false : 'y');
-  }));
+  document.getElementById('pick').addEventListener('change',
+    e => loadDesigned(e.target.value));
+  document.querySelectorAll('[data-spin]').forEach(b =>
+    b.addEventListener('click', () => {
+      const v = b.dataset.spin === 'solved' ? v1 : v2;
+      v.spin(v.isSpinning && v.isSpinning() ? false : 'y');
+    }));
 }
 
 function loadDesigned(id) {
-  const m = MODELS[id];
+  const spec = MODELS[id];
   v2.clear();
   jQuery.get('structures/' + id + '.pdb', function (data) {
-    v2.addModel(data, 'pdb');
-    style(v2, {vhh: m.vhh, mask: m.mask, linker: m.linker, paratope: m.paratope});
-    v2.zoomTo(); v2.zoom(1.3); v2.render();
-    document.getElementById('dcap').textContent = m.caption;
+    const m = v2.addModel(data, 'pdb');
+    v2.setStyle({}, {cartoon: {color: '#C9D1D6'}});
+    if (spec.vhh) v2.setStyle({resi: spec.vhh}, {cartoon: {color: '#2D5BD1'}});
+    if (spec.linker) v2.setStyle({resi: spec.linker}, {cartoon: {color: '#8A9BA8'}});
+    if (spec.mask) {
+      v2.setStyle({resi: spec.mask}, {cartoon: {color: '#0E7C7B'}});
+      v2.addStyle({resi: spec.mask}, STICK_MASK);
+    }
+    if (spec.paratope) v2.addStyle({resi: spec.paratope}, STICK_PARATOPE);
+    termini(v2, m, {}, '');
+    v2.zoomTo(); v2.zoom(1.75); v2.render();
+    document.getElementById('dcap').textContent = spec.caption;
   });
 }
 window.addEventListener('load', boot);
