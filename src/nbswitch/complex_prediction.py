@@ -81,3 +81,51 @@ def toxin_paratope_overlap(pdb_path: Path, fusion_chain: str, toxin_chain: str,
             "total_contacting_residues": len(contacting),
             "fraction_of_contacts_on_paratope":
                 round(len(on_para) / max(len(contacting), 1), 3)}
+
+
+def write_tethered_job(path: Path, vhh: str, mask_linker: str, toxin: str,
+                       vhh_msa: str = "server", peptide_msa: str = "empty") -> Path:
+    """The construct as three chains joined by an explicit covalent bond.
+
+    Modelling the fusion as one chain forces a single alignment over the whole
+    sequence, which would mean sending the designed mask to an alignment server.
+    Splitting it lets the nanobody and antigen - both public, both already in the
+    PDB - take real alignments, while the designed peptide takes none and never
+    leaves the machine. The bond constraint keeps the tether.
+
+    Chain A nanobody, chain B mask+linker, chain C antigen. The bond joins the
+    peptide's C-terminus to the nanobody's N-terminus.
+    """
+    lines = ["version: 1", "sequences:",
+             "  - protein:", "      id: A", f"      sequence: {vhh}"]
+    if vhh_msa != "server":
+        lines.append(f"      msa: {vhh_msa}")
+    lines += ["  - protein:", "      id: B", f"      sequence: {mask_linker}",
+              f"      msa: {peptide_msa}",
+              "  - protein:", "      id: C", f"      sequence: {toxin}"]
+    if vhh_msa != "server":
+        lines.append(f"      msa: {vhh_msa}")
+    lines += ["constraints:",
+              "  - bond:",
+              f"      atom1: [B, {len(mask_linker)}, C]",
+              "      atom2: [A, 1, N]"]
+    path.write_text("\n".join(lines) + "\n")
+    return path
+
+
+def predict_with_msa(job_yaml: Path, out_dir: Path, binary: str = "boltz",
+                     recycling: int = 3, samples: int = 1, seed: int = 42) -> Path:
+    """Run with the alignment server enabled for the chains that request it."""
+    import subprocess
+    out_dir.mkdir(parents=True, exist_ok=True)
+    cmd = [binary, "predict", str(job_yaml), "--out_dir", str(out_dir),
+           "--cache", str(CACHE), "--accelerator", "cpu", "--devices", "1",
+           "--recycling_steps", str(recycling), "--diffusion_samples", str(samples),
+           "--seed", str(seed), "--output_format", "pdb", "--override",
+           "--use_msa_server"]
+    subprocess.run(cmd, check=True, capture_output=True, text=True)
+    hits = sorted((out_dir / f"boltz_results_{job_yaml.stem}" / "predictions"
+                   / job_yaml.stem).glob("*.pdb"))
+    if not hits:
+        raise FileNotFoundError(f"no prediction written for {job_yaml.stem}")
+    return hits[0]

@@ -77,6 +77,9 @@ if TARGET_ID != CAUTIONARY:
     except FileNotFoundError:
         cautionary_html = ""
 
+background_html = R.background_section(
+    bN["km_min_for_release_M"] * 1e9, bN["km_max_for_masking_M"] * 1e6)
+
 R.copy_assets(lib["constructs"])
 R.write_reference_pdb()
 
@@ -530,6 +533,14 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 </tbody></table></div>
 <p class="dim" style="font-size:.88rem">Code and stage outputs:
 <a href="{REPO_URL}">{REPO_URL.split("//")[1]}</a></p>
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">Prior work</div>
+<h2>Where this problem is familiar from</h2>
+<p>The two-state, tethered-affinity problem on this page is one I characterised experimentally
+during the PhD, in a protein that solves it naturally.</p></div>
+{background_html}
 </section>
 
 <section class="sec">

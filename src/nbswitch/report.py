@@ -800,3 +800,72 @@ criterion the replacement system was chosen on. A pipeline that measures the geo
 tell you that a target is unsuitable before you spend anything on it.</p>
 </div>
 </details>"""
+
+
+def background_section(window_lo_nM: float, window_hi_nM: float) -> str:
+    """Prior work, folded away. The link is architectural, not decorative:
+    follistatin's C-terminal tail is an endogenous tethered competitor for the
+    same domain that binds heparan sulphate, which is the arrangement this
+    pipeline designs on purpose."""
+    def fig(name, cap):
+        return (f'<figure class="fig"><img src="thesis/{name}.png" alt="{cap}">'
+                f'<figcaption>{cap}</figcaption></figure>')
+    return f"""
+<details class="fold">
+<summary><b>Background: a tethered competitive regulator, measured</b>
+<span>PhD work on follistatin — the same two-state, tethered-affinity problem,
+approached experimentally.</span></summary>
+<div class="foldbody">
+
+<p>Follistatin's isoforms differ at the C-terminus. FST315 carries an acidic tail that folds back
+onto the FS1 domain — the same surface that binds heparan sulphate. The tail is therefore an
+<b>endogenous mask</b>: covalently tethered, competing for a binding site, and tuned so that it
+can be displaced. That is the architecture this pipeline sets out to design.</p>
+
+{fig("fig2_4_1_a", "Follistatin domain organisation, charge distribution and conservation. "
+     "The C-terminal extension distinguishing FST288, FST303 and FST315 is at the right.")}
+<div class="two">
+{fig("fig2_4_1_b", "FS0 and FS1 domains: TB fold, EGF and Kazal subdomains.")}
+{fig("fig2_4_1_g", "Topology of the full-length molecule.")}
+</div>
+
+<p><b>The tail competes, and its affinity is measurable.</b> Biolayer interferometry and
+fluorescence polarisation were used to measure how tightly the tail binds back, and how that
+changes with ionic strength — the tail–domain interaction is largely electrostatic.</p>
+<div class="two">
+{fig("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding FST288, FST303 and "
+     "FST315.")}
+{fig("fig4_1_8_d", "Fluorescence polarisation: the tail's affinity for FS12 at three salt "
+     "concentrations. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM.")}
+</div>
+{fig("fig4_1_4_e", "Isoform binding to heparan sulphate — the ligand the tail competes with.")}
+
+<div class="note good"><b>The numbers land inside the window this pipeline computes.</b> For the
+nanobody here, masking and release together allow a mask dissociation constant between roughly
+<b>{window_lo_nM:.0f} nM and {window_hi_nM:.0f} µM</b>. The follistatin tail operates at 145 nM to
+34.6 µM depending on ionic strength — inside that range at every salt concentration measured. A
+natural tethered competitor sits where the model says a designed one should. The systems are
+unrelated and the geometry differs, so this is a sanity check on the regime rather than a
+validation of the model.</div>
+
+<p><b>Two states, resolved experimentally.</b> SEC-SAXS and BilboMD modelling showed FST315 is not
+one structure in solution but an equilibrium between an open and a closed conformation — the
+closed one being the state with the tail engaged.</p>
+<div class="two">
+{fig("fig4_1_14_a", "FST288 crystal structure fitted into the DENSS ab initio envelope.")}
+{fig("fig4_1_14_b", "MODELLER structure for FST315 and its fit to the envelope.")}
+</div>
+{fig("fig4_1_14_c", "The two-state solution model: 65% open, 35% closed, interconverting.")}
+<div class="two">
+{fig("fig4_1_14_f", "SEC-SAXS scattering with fits from each model. The two-state model gives the "
+     "lowest chi-squared, 1.058.")}
+{fig("fig4_1_23_a_isoforms", "Conformational space explored during modelling for each isoform, "
+     "as radius of gyration against maximum dimension.")}
+</div>
+
+<div class="note"><b>Why this is the relevant experience.</b> The design problem on this page is a
+two-state one: a construct that must hold one conformation while tethered and lose it when cut, at
+an affinity inside a narrow window. That is the system characterised here experimentally — by
+SEC-SAXS, ensemble modelling and direct affinity measurement — rather than predicted.</div>
+</div>
+</details>"""

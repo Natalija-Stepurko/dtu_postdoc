@@ -1,0 +1,71 @@
+{
+  "accelerator": "cpu",
+  "method": "Boltz-2, single-sequence (no MSA server; designed sequences stay local)",
+  "n_cases": 4,
+  "results": [
+    {
+      "atom_contacts": 240,
+      "buried_surface_area_A2": 847.0,
+      "case": "control_free_vhh",
+      "construct": "VHH_only",
+      "construct_length": 127,
+      "fraction_of_contacts_on_paratope": 0.071,
+      "min_distance_A": 1.9,
+      "note": "free nanobody with toxin \u2014 the crystal structure already answers this, so it calibrates the rest",
+      "paratope_contacts": 1,
+      "seconds": 89.9,
+      "status": "ok",
+      "structure": "complexes/boltz_results_control_free_vhh/predictions/control_free_vhh/control_free_vhh_model_0.pdb",
+      "total_contacting_residues": 14,
+      "toxin_length": 61
+    },
+    {
+      "atom_contacts": 601,
+      "buried_surface_area_A2": 2091.5,
+      "case": "masked_epi1_L5",
+      "construct": "epi1_L5",
+      "construct_length": 148,
+      "fraction_of_contacts_on_paratope": 0.107,
+      "min_distance_A": 1.81,
+      "note": "grafted mask on the shortest linker",
+      "paratope_contacts": 3,
+      "seconds": 107.8,
+      "status": "ok",
+      "structure": "complexes/boltz_results_masked_epi1_L5/predictions/masked_epi1_L5/masked_epi1_L5_model_0.pdb",
+      "total_contacting_residues": 28,
+      "toxin_length": 61
+    },
+    {
+      "atom_contacts": 1190,
+      "buried_surface_area_A2": 2862.9,
+      "case": "masked_epi1_L20",
+      "construct": "epi1_L20",
+      "construct_length": 163,
+      "fraction_of_contacts_on_paratope": 0.125,
+      "min_distance_A": 1.56,
+      "note": "same mask, linker four times longer",
+      "paratope_contacts": 6,
+      "seconds": 115.2,
+      "status": "ok",
+      "structure": "complexes/boltz_results_masked_epi1_L20/predictions/masked_epi1_L20/masked_epi1_L20_model_0.pdb",
+      "total_contacting_residues": 48,
+      "toxin_length": 61
+    },
+    {
+      "atom_contacts": 422,
+      "buried_surface_area_A2": 1459.8,
+      "case": "masked_polyG_L5",
+      "construct": "polyG_L5",
+      "construct_length": 140,
+      "fraction_of_contacts_on_paratope": 0.259,
+      "min_distance_A": 1.53,
+      "note": "inert mask \u2014 should not block",
+      "paratope_contacts": 7,
+      "seconds": 98.3,
+      "status": "ok",
+      "structure": "complexes/boltz_results_masked_polyG_L5/predictions/masked_polyG_L5/masked_polyG_L5_model_0.pdb",
+      "total_contacting_residues": 27,
+      "toxin_length": 61
+    }
+  ]
+}
