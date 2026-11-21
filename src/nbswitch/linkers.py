@@ -122,10 +122,16 @@ def predict(sequences, work_dir: Path | None = None,
         cwd=CLEAVENET, check=True, capture_output=True)
 
     scores = next(out.rglob("all_scores.csv"))
-    frame = pd.read_csv(scores, header=None)
-    frame.columns = PROTEASES[:frame.shape[1]]
-    frame.insert(0, "sequence", sequences[:len(frame)])
-    return frame
+    # the file carries a header and its own sequence column, and the model
+    # writes its start token back out in front of each peptide
+    frame = pd.read_csv(scores)
+    first = frame.columns[0]
+    frame = frame.rename(columns={first: "sequence"})
+    frame["sequence"] = frame["sequence"].astype(str).str.lstrip("!").str.strip()
+    missing = [p for p in PROTEASES if p not in frame.columns]
+    if missing:
+        raise ValueError(f"predictor output is missing {missing}")
+    return frame[["sequence"] + PROTEASES]
 
 
 def selectivity(frame: pd.DataFrame) -> pd.DataFrame:
