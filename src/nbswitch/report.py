@@ -199,13 +199,17 @@ footer{padding:36px 0 72px;color:var(--ink-3);font-size:.85rem}
 VIEWER_JS = """
 const MODELS = __MODELS__;
 const PARATOPE = __PARATOPE__;
+const SOLVED_FILE = __SOLVED__;
+const ENSEMBLE = __ENSEMBLE__;
+const TOP_PARATOPE = __TOPPARA__;
+const SCORES = __SCORES__;
 let v1 = null, v2 = null;
 
 // Sticks are drawn with element colouring on a region-tinted carbon, so
 // nitrogen, oxygen and sulfur read as themselves while the residue still
 // says which part of the construct it belongs to.
-const STICK_PARATOPE = {stick: {colorscheme: 'orangeCarbon', radius: 0.19}};
-const STICK_MASK = {stick: {colorscheme: 'greenCarbon', radius: 0.17}};
+const STICK_PARATOPE = {stick: {colorscheme: 'orangeCarbon', radius: 0.22}};
+const STICK_MASK = {stick: {colorscheme: 'purpleCarbon', radius: 0.19}};
 
 function termini(view, model, sel, labelSuffix) {
   const cas = model.selectedAtoms(Object.assign({atom: 'CA'}, sel));
@@ -224,11 +228,19 @@ function termini(view, model, sel, labelSuffix) {
 
 function boot() {
   v1 = $3Dmol.createViewer('stage-solved', {backgroundColor: '#FFFFFF'});
-  jQuery.get('structures/9GCN_AX.pdb', function (data) {
+  jQuery.get(SOLVED_FILE, function (data) {
     const m = v1.addModel(data, 'pdb');
-    v1.setStyle({chain: 'A'}, {cartoon: {color: '#2D5BD1'}});
-    v1.setStyle({chain: 'X'}, {cartoon: {color: '#C06014'}});
+    v1.setStyle({chain: 'A'}, {cartoon: {color: '#337D79'}});
+    v1.setStyle({chain: 'B'}, {cartoon: {color: '#C99555'}});
     v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
+    (typeof TOP_PARATOPE !== 'undefined' ? TOP_PARATOPE : []).forEach(function (r) {
+      const sel = m.selectedAtoms({chain: 'A', resi: r.resi, atom: 'CA'});
+      if (!sel.length) return;
+      const a = sel[0];
+      v1.addLabel(r.label, {position: {x: a.x, y: a.y, z: a.z},
+        backgroundColor: '#C06014', backgroundOpacity: 0.9, fontColor: 'white',
+        fontSize: 10, borderThickness: 0, inFront: true});
+    });
     termini(v1, m, {chain: 'A'}, '');
     termini(v1, m, {chain: 'X'}, '\u2032');
     v1.zoomTo(); v1.zoom(1.75); v1.render();
@@ -251,10 +263,10 @@ function loadDesigned(id) {
   jQuery.get('structures/' + id + '.pdb', function (data) {
     const m = v2.addModel(data, 'pdb');
     v2.setStyle({}, {cartoon: {color: '#C9D1D6'}});
-    if (spec.vhh) v2.setStyle({resi: spec.vhh}, {cartoon: {color: '#2D5BD1'}});
-    if (spec.linker) v2.setStyle({resi: spec.linker}, {cartoon: {color: '#8A9BA8'}});
+    if (spec.vhh) v2.setStyle({resi: spec.vhh}, {cartoon: {color: '#337D79'}});
+    if (spec.linker) v2.setStyle({resi: spec.linker}, {cartoon: {color: '#9AA7B1'}});
     if (spec.mask) {
-      v2.setStyle({resi: spec.mask}, {cartoon: {color: '#0E7C7B'}});
+      v2.setStyle({resi: spec.mask}, {cartoon: {color: '#8C72AD'}});
       v2.addStyle({resi: spec.mask}, STICK_MASK);
     }
     if (spec.paratope) v2.addStyle({resi: spec.paratope}, STICK_PARATOPE);
@@ -263,7 +275,40 @@ function loadDesigned(id) {
     document.getElementById('dcap').textContent = spec.caption;
   });
 }
-window.addEventListener('load', boot);
+// One aligned ensemble, mounted several times and coloured by a different
+// score each time. Model 0 is the nanobody; every later model is one mask.
+const RAMP = ['#2C5F8A', '#4E8FB0', '#8FBDC9', '#D8C9A3', '#D79A5B', '#C06014'];
+
+function colourFor(value) {
+  if (value === null || value === undefined || isNaN(value)) return '#B9C2C8';
+  const i = Math.max(0, Math.min(RAMP.length - 1, Math.round(value * (RAMP.length - 1))));
+  return RAMP[i];
+}
+
+function mountEnsemble(hostId, scoreKey) {
+  const host = document.getElementById(hostId);
+  if (!host || typeof ENSEMBLE === 'undefined') return;
+  const v = $3Dmol.createViewer(hostId, {backgroundColor: '#FFFFFF'});
+  jQuery.get('structures/ensemble.pdb', function (data) {
+    v.addModels(data, 'pdb');
+    v.setStyle({model: 0}, {cartoon: {color: '#337D79'}});
+    v.addStyle({model: 0, resi: PARATOPE},
+               {stick: {colorscheme: 'orangeCarbon', radius: 0.22}});
+    ENSEMBLE.forEach(function (id, n) {
+      const score = scoreKey ? (SCORES[id] || {})[scoreKey] : null;
+      v.setStyle({model: n + 1},
+                 {cartoon: {color: colourFor(score), opacity: 0.75, thickness: 0.3}});
+    });
+    v.zoomTo(); v.zoom(1.55); v.render();
+  });
+}
+
+window.addEventListener('load', function () {
+  boot();
+  document.querySelectorAll('[data-ensemble]').forEach(function (el) {
+    mountEnsemble(el.id, el.dataset.ensemble || null);
+  });
+});
 """
 
 
@@ -808,6 +853,11 @@ paratope</b>, burying {iface['paratope_delta_sasa'][geom['n_term_residue']]:.0f}
 <p>That makes masking trivially easy and measuring it impossible. Any peptide tethered at that
 terminus starts on top of the binding site, whatever its sequence, so occlusion cannot tell a
 designed mask from a random one.</p>
+<figure class="tfig full"><img src="figures/paratope_footprint_9GCN.svg"
+alt="Surface buried per residue for the set-aside complex">
+<figcaption>Surface buried per nanobody residue for this complex. Almost all of it lies in CDR3,
+and the N-terminal residue itself contributes, which is the geometry that defeats the
+measurement.</figcaption></figure>
 <div class="scroll"><table><thead><tr><th>mask kind</th><th>mean occlusion %</th><th>n</th>
 </tr></thead><tbody>{rows}</tbody></table></div>
 <p>The inert poly-glycine control occluded <b>{inert:+.1f}%</b> of the paratope against
@@ -1225,3 +1275,25 @@ def implementation_table(rows) -> str:
             '<col style="width:38%"></colgroup>'
             '<thead><tr><th>module</th><th>implemented</th><th>remaining work</th></tr></thead>'
             f'<tbody>{body}</tbody></table></div>')
+
+
+def ensemble_viewer(element_id: str, score_key: str | None, caption: str,
+                    legend: str) -> str:
+    """A viewer over the aligned ensemble, coloured by one score."""
+    attr = f' data-ensemble="{score_key}"' if score_key else ' data-ensemble=""'
+    return (f'<div class="viewer">'
+            f'<div class="vbar"><span class="eyebrow">All constructs, aligned on the nanobody'
+            f'</span></div>'
+            f'<div class="vstage" id="{element_id}"{attr}></div>'
+            f'<div class="vkey">{legend}</div>'
+            f'<p class="dim" style="font-size:.85rem">{caption}</p></div>')
+
+
+def ramp_legend(low: str, high: str) -> str:
+    stops = ["#2C5F8A", "#4E8FB0", "#8FBDC9", "#D8C9A3", "#D79A5B", "#C06014"]
+    swatches = "".join(f'<i style="background:{c};width:18px;border-radius:0"></i>'
+                       for c in stops)
+    return (f'<span><i style="background:#337D79"></i>nanobody</span>'
+            f'<span><i style="background:#C06014"></i>antigen-binding residues</span>'
+            f'<span style="display:flex;align-items:center;gap:0">{low}&nbsp;{swatches}'
+            f'&nbsp;{high}</span>')

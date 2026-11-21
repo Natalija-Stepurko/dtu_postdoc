@@ -234,6 +234,10 @@ def build_all():
     except FileNotFoundError:
         pass
     try:
+        made.append(feasibility_components(load_json("12_feasibility.json")))
+    except FileNotFoundError:
+        pass
+    try:
         made.append(pareto_panels(load_json("13_ranking.json")))
     except FileNotFoundError:
         pass
@@ -361,3 +365,28 @@ def pareto_panels(ranking):
     axes[0].legend(fontsize=7, loc="best")
     fig.tight_layout()
     return _save(fig, "pareto_panels")
+
+
+def feasibility_components(feas):
+    """Where each construct family loses feasibility."""
+    plt = _style()
+    rows = feas["results"]
+    fams = {}
+    for r in rows:
+        key = "ProteinMPNN" if str(r["mask"]).startswith("mpnn") else str(r["mask"])
+        fams.setdefault(key, []).append(r)
+    keys = ("f_fold", "f_preserved", "f_surface", "f_cysteine")
+    labels = ("fold\nconfidence", "nanobody\npreserved", "surface\nliability", "cysteine\npairing")
+    order = sorted(fams, key=lambda k: -np.mean([x["feasibility_score"] for x in fams[k]]))
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    x = np.arange(len(keys))
+    width = 0.8 / max(len(order), 1)
+    colours = [SEQ, CHROME, STR, "#8A9BA8", "#7B5EA7", "#2E7D32", NULL]
+    for i, fam in enumerate(order):
+        vals = [np.mean([r[k] for r in fams[fam]]) for k in keys]
+        ax.bar(x + i * width - 0.4 + width / 2, vals, width * 0.92,
+               color=colours[i % len(colours)], linewidth=0, label=fam)
+    ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
+    ax.set_ylabel("component score"); ax.set_ylim(0, 1.05)
+    ax.legend(fontsize=7, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.22))
+    return _save(fig, "feasibility_components")

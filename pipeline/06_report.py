@@ -533,6 +533,41 @@ N["boltz_rows"] = "".join(
      f"<td>{r.get('mask_fraction_on_paratope', 0):.2f}</td></tr>")
     for r in _mm.values())
 
+try:
+    N["n_ensemble"] = load_json("14_ensemble.json")["n_models"] - 1
+except FileNotFoundError:
+    N["n_ensemble"] = 0
+try:
+    _ens = load_json("14_ensemble.json")
+    N["n_ensemble"] = _ens["n_models"] - 1
+    ENSEMBLE_IDS = _ens["constructs"]
+except FileNotFoundError:
+    N["n_ensemble"] = 0
+    ENSEMBLE_IDS = []
+
+def _norm(values):
+    vals = [v for v in values.values() if v is not None]
+    lo, hi = (min(vals), max(vals)) if vals else (0.0, 1.0)
+    span = (hi - lo) or 1.0
+    return {k: (None if v is None else (v - lo) / span) for k, v in values.items()}
+
+top_paratope = [
+    {"resi": int("".join(c for c in lbl[1:] if c.isdigit())), "label": lbl}
+    for lbl, _ in sorted(iface["paratope_delta_sasa"].items(),
+                         key=lambda kv: -kv[1])[:6]]
+
+SCORES = {}
+_feas_by = {r["id"]: r["feasibility_score"] for r in (feas_data["results"] if feas_data else [])}
+_occ_by = {}
+for _src in (fold, redesign_fold):
+    for _r in (_src["results"] if _src else []):
+        _occ_by[_r["id"]] = _r["occlusion"]
+_acc_by_id = {r["id"]: r["accessibility_score"] for r in (trigger["results"] if trigger else [])}
+for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability", _acc_by_id)):
+    _n = _norm({i: _d.get(i) for i in ENSEMBLE_IDS})
+    for _i, _v in _n.items():
+        SCORES.setdefault(_i, {})[_key] = _v
+
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
 
@@ -654,9 +689,9 @@ measured.</p></div>
 <div class="vbar"><span class="eyebrow">Deposited structure</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
-<div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
-<span><i style="background:#C06014"></i>short neurotoxin 1</span>
-<span><i style="background:#C06014"></i>paratope, sticks</span>
+<div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>
+<span><i style="background:#C99555"></i>short neurotoxin 1</span>
+<span><i style="background:#C06014"></i>antigen-binding residues, sticks</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 {chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
@@ -708,12 +743,19 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
 {mri("Each construct was folded with ESMFold. Preservation of the nanobody was assessed by "
      "superimposing its core on the folded free nanobody, and sequence-based descriptors were "
      "calculated for exposed hydrophobic surface and unpaired cysteines.",
-     f"{N['n_folded']} constructs were folded. The mean core RMSD against the free nanobody is "
-     f"{N['rmsd_mean']:.2f} Å. The grafted mask taken from the antigen carries {N['feas_cys']} "
-     f"unpaired cysteines and scores {N['feas_graft']:.2f} on this module.",
-     "The nanobody fold is retained in the predictions, which is a necessary condition rather than "
-     "evidence of expression or thermodynamic stability. The cysteine content of the grafted mask "
-     "would be expected to interfere with disulfide formation, which no other module detects.")}
+     f"{N['n_folded']} constructs were folded and {N['n_ensemble']} superimposed on the nanobody. "
+     f"The mean core RMSD against the free nanobody is {N['rmsd_mean']:.2f} Å. The mask grafted "
+     f"from the antigen carries {N['feas_cys']} unpaired cysteines and scores "
+     f"{N['feas_graft']:.2f} on this module.",
+     "The nanobody fold is retained, which is a necessary condition rather than evidence of "
+     "expression or thermodynamic stability. Cysteine content is the dominant liability and is "
+     "detected by no other module.")}
+{chart("feasibility_components", "Feasibility components by construct family. A low score on any "
+       "one component is enough to make a construct unusable.")}
+{R.ensemble_viewer("ens-feas", "feasibility",
+   "Every construct was predicted separately, so each was superimposed on the nanobody backbone "
+   "to bring them into a common frame. Masks are coloured by feasibility score.",
+   R.ramp_legend("low", "high"))}
 <details class="tech"><summary>Conformational heterogeneity</summary><div class="techbody">
 <p>A single predicted structure does not describe the conformational distribution of a tethered
 peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the appropriate
@@ -738,14 +780,18 @@ extension of this module and are not implemented here.</p></div></details>
 <th>antigen contacts on paratope</th><th>mask contacts on paratope</th></tr></thead>
 <tbody>{N['boltz_rows']}</tbody></table></div>
 </div>
+{R.ensemble_viewer("ens-mask", "masking",
+   "The same constructs, coloured by paratope occlusion. The masks do not concentrate over the "
+   "antigen-binding residues, which is the result reported above.",
+   R.ramp_legend("least occluding", "most"))}
 <div class="viewer">
 <div class="vbar"><select id="pick">{options}</select>
 <button data-spin="designed">spin</button></div>
 <div class="vstage" id="stage-designed"></div>
-<div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
-<span><i style="background:#0E7C7B"></i>mask</span>
-<span><i style="background:#8A9BA8"></i>linker</span>
-<span><i style="background:#C06014"></i>paratope</span></div>
+<div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>
+<span><i style="background:#8C72AD"></i>mask</span>
+<span><i style="background:#9AA7B1"></i>linker</span>
+<span><i style="background:#C06014"></i>antigen-binding residues</span></div>
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
 <details class="tech"><summary>Complex prediction without alignments</summary><div class="techbody">
@@ -769,6 +815,10 @@ over time.</p></div></details>
      "describes presentation of the linker only. Prediction of recognition by a particular "
      "protease, and of selectivity against host enzymes, remains to be incorporated.")}
 {chart("trigger_tradeoff", "Linker accessibility and the usable affinity window against linker length.")}
+{R.ensemble_viewer("ens-cleave", "cleavability",
+   "The same constructs, coloured by linker accessibility. Short linkers stay extended and are "
+   "better presented; long ones adopt compact conformations.",
+   R.ramp_legend("least accessible", "most"))}
 <p>The two quantities favour different linker lengths: the affinity window is widest at
 {N['linker_best']} residues, while accessibility is highest at {N['acc_short_n']}.</p>
 
@@ -844,7 +894,7 @@ Data Bank.</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
-<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi))}</script>
+<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__SCORES__", json.dumps(SCORES))}</script>
 </body></html>"""
 
 import re
