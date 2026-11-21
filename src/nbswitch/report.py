@@ -147,6 +147,8 @@ details.fold>summary:hover b{color:var(--str)}
     padding:14px;display:flex;flex-direction:column;gap:9px}
 .tfig img{width:100%;height:auto;max-height:260px;object-fit:contain;display:block}
 .tfig.tall img{max-height:340px}
+.tfig.full img{max-height:none;max-width:980px;margin:0 auto}
+.tfig.portrait img{max-height:720px;max-width:620px;margin:0 auto}
 .tfig.wide img{max-height:190px}
 .tfig figcaption{font-size:.82rem;color:var(--ink-3);line-height:1.45}
 .tgrid{display:grid;gap:14px;margin:4px 0}
@@ -852,9 +854,9 @@ tell you that a target is unsuitable before you spend anything on it.</p>
 def background_section(window_lo_nM: float, window_hi_nM: float) -> str:
     """Prior work, told as a sequence rather than a gallery.
 
-    The link is architectural: follistatin's C-terminal tail is an endogenous
-    tethered competitor for the same domain that binds heparan sulphate, which
-    is the arrangement this pipeline designs on purpose.
+    Follistatin's C-terminal tail is an endogenous tethered competitor for the
+    same domain that binds heparan sulphate - the arrangement this pipeline
+    designs on purpose - so the link is architectural rather than decorative.
     """
     def f(name, cap, cls=""):
         return (f'<figure class="tfig {cls}"><img src="thesis/{name}.png" alt="{cap}">'
@@ -871,28 +873,26 @@ def background_section(window_lo_nM: float, window_hi_nM: float) -> str:
 <div class="foldbody">
 
 <p>The construct on this page needs a tethered module that binds its own protein tightly enough to
-block, and weakly enough to let go. Follistatin already does this. Its isoforms differ at the
+block and weakly enough to let go. Follistatin already does this. Its isoforms differ only at the
 C-terminus, and the longest, FST315, carries an acidic tail that folds back onto the FS1 domain —
 the same surface that binds heparan sulphate. The tail is an <b>endogenous mask</b>.</p>
 
 {step("01", "The molecule, and where the isoforms differ")}
-{f("fig2_4_1_a", "Domain organisation, charge and conservation across follistatin. The isoforms "
-   "FST288, FST303 and FST315 differ only in how much C-terminal tail they carry (right).", "wide")}
-<div class="tgrid c2">
-{f("fig2_4_1_b", "The FS0 and FS1 domains: TB fold, EGF and Kazal subdomains.")}
-{f("fig2_4_1_g", "Topology of the full-length molecule.")}
-</div>
+{f("fst_domains", "Domain organisation, charge and conservation. FST288, FST303 and FST315 differ "
+   "only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against "
+   "a basic heparan-sulphate binding site (HSB) on FS1.", "tall")}
+{f("fst_topology", "Topology of the full-length molecule, from the N-terminus to the tail.", "wide")}
 
 {step("02", "The tail binds back, and the strength can be measured")}
 <div class="tgrid c2">
-{f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding the three isoforms.")}
+{f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding each isoform.")}
 {f("fig4_1_8_d", "Fluorescence polarisation, tail against FS12 at three ionic strengths. "
    "K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM — the interaction "
    "is largely electrostatic.")}
 </div>
 
-{step("03", "What the tail is competing with")}
-{f("fig4_1_4_e", "Isoform binding to heparan sulphate, the ligand the tail displaces from the "
+{step("03", "What the tail competes with")}
+{f("fig4_1_4_e", "Isoform binding to heparan sulphate, the ligand the tail displaces from that "
    "same surface.", "wide")}
 
 <div class="note good"><b>Those affinities land inside the window this pipeline computes.</b>
@@ -900,19 +900,17 @@ Masking and release together allow a mask dissociation constant between roughly
 <b>{window_lo_nM:.0f} nM and {window_hi_nM:.0f} µM</b> for the nanobody here. The follistatin tail
 works at 145 nM to 34.6 µM depending on ionic strength — inside that range at every salt
 concentration measured. A natural tethered competitor sits where the model says a designed one
-should. Different protein and different geometry, so this says the regime is physically sensible,
-not that the model is right.</div>
+should. Different protein and different geometry, so this says the regime is physically sensible
+rather than that the model is right.</div>
 
 {step("04", "Two states, resolved experimentally rather than predicted")}
-<div class="tgrid c2">
-{f("fig4_1_14_a", "FST288 crystal structure fitted into the DENSS ab initio envelope.")}
-{f("fig4_1_14_b", "A MODELLER structure for FST315 and its fit to the same envelope.")}
-</div>
-{f("fig4_1_14_c", "The solution structure is not one conformation but two: 65% open and 35% "
-   "closed, interconverting. The closed state is the one with the tail engaged.", "wide")}
+{f("fst_saxs_abc", "From crystal structure to solution ensemble. (a) FST288 in the "
+   "activin A complex, fitted to the SAXS envelope. (b) A model of FST315 adding the tails. "
+   "(c) The solution structure is not one conformation but two — 65% open and 35% closed, "
+   "interconverting, with the tail engaged in the closed state.", "portrait")}
 <div class="tgrid c2">
 {f("fig4_1_14_f", "SEC-SAXS scattering with fits from each model. The two-state model gives the "
-   "lowest chi-squared, 1.058, beating both single structures.", "tall")}
+   "lowest chi-squared, 1.058, beating either single structure.", "tall")}
 {f("fig4_1_23_a_isoforms", "Conformational space explored for each isoform, radius of gyration "
    "against maximum dimension. The longer the tail, the more closed states appear.", "tall")}
 </div>
@@ -923,6 +921,7 @@ window. That is the system characterised above — by SEC-SAXS, ensemble modelli
 affinity measurement — rather than predicted.</div>
 </div>
 </details>"""
+
 
 
 

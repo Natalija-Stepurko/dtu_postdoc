@@ -143,6 +143,8 @@ details.fold>summary:hover b{color:var(--str)}
     padding:14px;display:flex;flex-direction:column;gap:9px}
 .tfig img{width:100%;height:auto;max-height:260px;object-fit:contain;display:block}
 .tfig.tall img{max-height:340px}
+.tfig.full img{max-height:none;max-width:980px;margin:0 auto}
+.tfig.portrait img{max-height:720px;max-width:620px;margin:0 auto}
 .tfig.wide img{max-height:190px}
 .tfig figcaption{font-size:.82rem;color:var(--ink-3);line-height:1.45}
 .tgrid{display:grid;gap:14px;margin:4px 0}
@@ -577,42 +579,35 @@ during the PhD, in a protein that solves it naturally.</p></div>
 <div class="foldbody">
 
 <p>The construct on this page needs a tethered module that binds its own protein tightly enough to
-block, and weakly enough to let go. Follistatin already does this. Its isoforms differ at the
+block and weakly enough to let go. Follistatin already does this. Its isoforms differ only at the
 C-terminus, and the longest, FST315, carries an acidic tail that folds back onto the FS1 domain —
 the same surface that binds heparan sulphate. The tail is an <b>endogenous mask</b>.</p>
 
 <div class="tstep"><b>01</b><span>The molecule, and where the isoforms differ</span></div>
-<figure class="tfig wide"><img src="thesis/fig2_4_1_a.png" alt="Domain organisation, charge and conservation across follistatin. The isoforms FST288, FST303 and FST315 differ only in how much C-terminal tail they carry (right)."><figcaption>Domain organisation, charge and conservation across follistatin. The isoforms FST288, FST303 and FST315 differ only in how much C-terminal tail they carry (right).</figcaption></figure>
-<div class="tgrid c2">
-<figure class="tfig "><img src="thesis/fig2_4_1_b.png" alt="The FS0 and FS1 domains: TB fold, EGF and Kazal subdomains."><figcaption>The FS0 and FS1 domains: TB fold, EGF and Kazal subdomains.</figcaption></figure>
-<figure class="tfig "><img src="thesis/fig2_4_1_g.png" alt="Topology of the full-length molecule."><figcaption>Topology of the full-length molecule.</figcaption></figure>
-</div>
+<figure class="tfig tall"><img src="thesis/fst_domains.png" alt="Domain organisation, charge and conservation. FST288, FST303 and FST315 differ only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against a basic heparan-sulphate binding site (HSB) on FS1."><figcaption>Domain organisation, charge and conservation. FST288, FST303 and FST315 differ only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against a basic heparan-sulphate binding site (HSB) on FS1.</figcaption></figure>
+<figure class="tfig wide"><img src="thesis/fst_topology.png" alt="Topology of the full-length molecule, from the N-terminus to the tail."><figcaption>Topology of the full-length molecule, from the N-terminus to the tail.</figcaption></figure>
 
 <div class="tstep"><b>02</b><span>The tail binds back, and the strength can be measured</span></div>
 <div class="tgrid c2">
-<figure class="tfig "><img src="thesis/fig4_1_3_a_isoforms.png" alt="Biolayer interferometry: tail peptides binding the three isoforms."><figcaption>Biolayer interferometry: tail peptides binding the three isoforms.</figcaption></figure>
+<figure class="tfig "><img src="thesis/fig4_1_3_a_isoforms.png" alt="Biolayer interferometry: tail peptides binding each isoform."><figcaption>Biolayer interferometry: tail peptides binding each isoform.</figcaption></figure>
 <figure class="tfig "><img src="thesis/fig4_1_8_d.png" alt="Fluorescence polarisation, tail against FS12 at three ionic strengths. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM — the interaction is largely electrostatic."><figcaption>Fluorescence polarisation, tail against FS12 at three ionic strengths. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM — the interaction is largely electrostatic.</figcaption></figure>
 </div>
 
-<div class="tstep"><b>03</b><span>What the tail is competing with</span></div>
-<figure class="tfig wide"><img src="thesis/fig4_1_4_e.png" alt="Isoform binding to heparan sulphate, the ligand the tail displaces from the same surface."><figcaption>Isoform binding to heparan sulphate, the ligand the tail displaces from the same surface.</figcaption></figure>
+<div class="tstep"><b>03</b><span>What the tail competes with</span></div>
+<figure class="tfig wide"><img src="thesis/fig4_1_4_e.png" alt="Isoform binding to heparan sulphate, the ligand the tail displaces from that same surface."><figcaption>Isoform binding to heparan sulphate, the ligand the tail displaces from that same surface.</figcaption></figure>
 
 <div class="note good"><b>Those affinities land inside the window this pipeline computes.</b>
 Masking and release together allow a mask dissociation constant between roughly
 <b>99 nM and 129 µM</b> for the nanobody here. The follistatin tail
 works at 145 nM to 34.6 µM depending on ionic strength — inside that range at every salt
 concentration measured. A natural tethered competitor sits where the model says a designed one
-should. Different protein and different geometry, so this says the regime is physically sensible,
-not that the model is right.</div>
+should. Different protein and different geometry, so this says the regime is physically sensible
+rather than that the model is right.</div>
 
 <div class="tstep"><b>04</b><span>Two states, resolved experimentally rather than predicted</span></div>
+<figure class="tfig portrait"><img src="thesis/fst_saxs_abc.png" alt="From crystal structure to solution ensemble. (a) FST288 in the activin A complex, fitted to the SAXS envelope. (b) A model of FST315 adding the tails. (c) The solution structure is not one conformation but two — 65% open and 35% closed, interconverting, with the tail engaged in the closed state."><figcaption>From crystal structure to solution ensemble. (a) FST288 in the activin A complex, fitted to the SAXS envelope. (b) A model of FST315 adding the tails. (c) The solution structure is not one conformation but two — 65% open and 35% closed, interconverting, with the tail engaged in the closed state.</figcaption></figure>
 <div class="tgrid c2">
-<figure class="tfig "><img src="thesis/fig4_1_14_a.png" alt="FST288 crystal structure fitted into the DENSS ab initio envelope."><figcaption>FST288 crystal structure fitted into the DENSS ab initio envelope.</figcaption></figure>
-<figure class="tfig "><img src="thesis/fig4_1_14_b.png" alt="A MODELLER structure for FST315 and its fit to the same envelope."><figcaption>A MODELLER structure for FST315 and its fit to the same envelope.</figcaption></figure>
-</div>
-<figure class="tfig wide"><img src="thesis/fig4_1_14_c.png" alt="The solution structure is not one conformation but two: 65% open and 35% closed, interconverting. The closed state is the one with the tail engaged."><figcaption>The solution structure is not one conformation but two: 65% open and 35% closed, interconverting. The closed state is the one with the tail engaged.</figcaption></figure>
-<div class="tgrid c2">
-<figure class="tfig tall"><img src="thesis/fig4_1_14_f.png" alt="SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating both single structures."><figcaption>SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating both single structures.</figcaption></figure>
+<figure class="tfig tall"><img src="thesis/fig4_1_14_f.png" alt="SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating either single structure."><figcaption>SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating either single structure.</figcaption></figure>
 <figure class="tfig tall"><img src="thesis/fig4_1_23_a_isoforms.png" alt="Conformational space explored for each isoform, radius of gyration against maximum dimension. The longer the tail, the more closed states appear."><figcaption>Conformational space explored for each isoform, radius of gyration against maximum dimension. The longer the tail, the more closed states appear.</figcaption></figure>
 </div>
 
