@@ -115,3 +115,26 @@ def test_contact_cutoff_excludes_hydrogens_and_is_tighter_than_burial():
     d_with, _ = S.contact_residues(a, b, 3.0)
     d_without, _ = S.contact_residues(a[a.element != "H"], b[b.element != "H"], 3.0)
     assert np.allclose(d_with, d_without, equal_nan=True)
+
+
+def test_trims_the_tev_remnant_from_the_deposited_construct():
+    """9RIU is deposited with ENLY after framework 4: a TEV site remnant.
+
+    Scoring a construct that carries it measures four residues of vector as
+    though they were antibody, so it is cut before anything is built.
+    """
+    from nbswitch.structure import trim_expression_tags
+    seq = ("QVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNH"
+           "VSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSSENLY")
+    kept, cut = trim_expression_tags(seq)
+    assert cut == "ENLY"
+    assert kept.endswith("WGQGTQVTVSS")
+    assert len(kept) == 123
+
+
+def test_trim_leaves_an_untagged_vhh_alone():
+    """A chain that already ends at framework 4 must not be shortened."""
+    from nbswitch.structure import trim_expression_tags
+    kept, cut = trim_expression_tags("QVQLQESGGGLVQAGGSLRLSCAASWGQGTQVTVSS")
+    assert cut == ""
+    assert kept.endswith("VTVSS")

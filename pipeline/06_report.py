@@ -13,6 +13,33 @@ from nbswitch.config import (DOCS, PDB_ID, REPO_URL, NOTEBOOK_URL, load_json,
                              results_dir)
 
 ref = load_json("01_reference.json")
+
+def _check_library_matches_structures():
+    """Refuse to build a page whose numbers and structures disagree.
+
+    The construct library and the folded coordinates are separate artefacts.
+    Changing the library without refolding leaves residue ranges pointing at
+    the wrong atoms, which renders as a page that looks fine and is wrong.
+    """
+    from nbswitch.config import STRUCTURES
+    lib = load_json("03_constructs.json")
+    for item in lib["constructs"]:
+        path = STRUCTURES / f"{item['id']}.pdb"
+        if not path.exists():
+            continue
+        last = 0
+        for line in path.read_text().splitlines():
+            if line.startswith("ATOM"):
+                last = max(last, int(line[22:26]))
+        if last and last != item["vhh_range"][1]:
+            raise SystemExit(
+                f"library and structures disagree: {item['id']} ends at residue "
+                f"{item['vhh_range'][1]} in 03_constructs.json but the folded "
+                f"model has {last}. Refold (stages 04 and 08) before building "
+                f"the page.")
+
+
+_check_library_matches_structures()
 tether = load_json("02_tether.json")
 lib = load_json("03_constructs.json")
 try:

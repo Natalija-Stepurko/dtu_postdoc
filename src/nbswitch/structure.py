@@ -186,6 +186,29 @@ def interface(atoms, vhh_chain: str, toxin_chain: str) -> dict:
     }
 
 
+#: Framework 4 closes every VHH. Anything after it in a deposited construct is
+#: cloning, not antibody: here a TEV remnant left when a C-terminal tag was cut.
+FRAMEWORK4_END = re.compile(r"WG[QRKPE]G[TA][QLM]?[VLM]TVSS")
+
+
+def trim_expression_tags(sequence: str) -> tuple[str, str]:
+    """Cut a deposited VHH back to its own C-terminus.
+
+    Crystallised constructs carry purification tags, and what is left after
+    cleavage is deposited as though it were part of the chain. 9RIU ends
+    ...VTVSSENLY, where ENLY is the start of the TEV site ENLYFQ. Scoring a
+    construct that carries it measures four residues of vector.
+
+    Returns the trimmed sequence and whatever was removed.
+    """
+    match = None
+    for match in FRAMEWORK4_END.finditer(sequence):
+        pass
+    if match is None:
+        return sequence, ""
+    return sequence[:match.end()], sequence[match.end():]
+
+
 def find_cdrs(sequence: str, anchors: dict = CDR_ANCHORS,
               scheme: str = CDR_SCHEME) -> dict:
     """CDR spans under a published numbering scheme.
