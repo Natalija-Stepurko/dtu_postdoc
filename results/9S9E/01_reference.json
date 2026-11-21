@@ -62,6 +62,10 @@
     "A": {
       "atom_contacts_5A": 1732,
       "buried_surface_area_A2": 1210.4,
+      "contact_cutoff_A": 3.0,
+      "epitope_contact_labels": [
+        "P8"
+      ],
       "epitope_labels": [
         "Q5",
         "L6",
@@ -82,7 +86,12 @@
       ],
       "interface_area_A2": 605.2,
       "n_epitope": 16,
+      "n_epitope_contacts": 1,
       "n_paratope": 18,
+      "n_paratope_contacts": 1,
+      "paratope_contact_labels": [
+        "S50"
+      ],
       "paratope_delta_sasa": {
         "A33": 14.33,
         "A35": 10.0,
@@ -123,6 +132,47 @@
         "T105",
         "Y106"
       ],
+      "paratope_min_distance": {
+        "A33": 3.38,
+        "A35": 3.77,
+        "A49": 5.76,
+        "A61": 7.71,
+        "C96": 7.98,
+        "D100": 5.73,
+        "D56": 7.86,
+        "E101": 4.89,
+        "E44": 3.1,
+        "E46": 6.52,
+        "E99": 3.2,
+        "F37": 4.08,
+        "F47": 3.62,
+        "G102": 6.83,
+        "G104": 3.54,
+        "I51": 4.29,
+        "K43": 7.59,
+        "M34": 5.0,
+        "N54": 7.92,
+        "N97": 4.39,
+        "Q39": 7.43,
+        "R45": 3.06,
+        "S103": 3.23,
+        "S31": 6.02,
+        "S50": 2.72,
+        "S52": 3.74,
+        "S57": 5.15,
+        "T105": 3.47,
+        "T58": 6.09,
+        "T98": 3.67,
+        "V48": 6.98,
+        "W109": 6.2,
+        "W36": 6.82,
+        "W53": 5.5,
+        "Y106": 3.44,
+        "Y107": 6.78,
+        "Y32": 3.06,
+        "Y59": 3.73,
+        "Y60": 6.8
+      },
       "toxin_chain": "C",
       "toxin_delta_sasa_all": [
         0.0,
@@ -492,6 +542,11 @@
     "B": {
       "atom_contacts_5A": 1034,
       "buried_surface_area_A2": 713.2,
+      "contact_cutoff_A": 3.0,
+      "epitope_contact_labels": [
+        "R27",
+        "L48"
+      ],
       "epitope_labels": [
         "R27",
         "K44",
@@ -503,7 +558,13 @@
       ],
       "interface_area_A2": 356.6,
       "n_epitope": 7,
+      "n_epitope_contacts": 2,
       "n_paratope": 11,
+      "n_paratope_contacts": 2,
+      "paratope_contact_labels": [
+        "D56",
+        "N74"
+      ],
       "paratope_delta_sasa": {
         "A75": 12.9,
         "D56": 34.93,
@@ -530,6 +591,28 @@
         "A75",
         "W79"
       ],
+      "paratope_min_distance": {
+        "A75": 3.87,
+        "D56": 2.94,
+        "D73": 3.23,
+        "G55": 3.45,
+        "G72": 3.5,
+        "I51": 3.76,
+        "I70": 7.06,
+        "K76": 5.51,
+        "M34": 6.77,
+        "N54": 3.0,
+        "N74": 2.92,
+        "N77": 6.61,
+        "S52": 4.24,
+        "S57": 6.02,
+        "S71": 4.75,
+        "T58": 7.65,
+        "T78": 4.82,
+        "W53": 3.6,
+        "W79": 3.56,
+        "Y80": 6.83
+      },
       "toxin_chain": "D",
       "toxin_delta_sasa_all": [
         0.0,

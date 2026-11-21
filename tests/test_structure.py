@@ -59,3 +59,26 @@ def test_cdr_anchors_generalise(pdb_id, chain, lengths):
     spans = S.find_cdrs(seq)
     got = tuple(spans[name][1] - spans[name][0] for name in ("CDR1", "CDR2", "CDR3"))
     assert got == lengths
+
+
+def test_contact_cutoff_excludes_hydrogens_and_is_tighter_than_burial():
+    """The 3 A contact set is a subset of the burial footprint, and riding
+    hydrogens in the deposited model must not affect it."""
+    import numpy as np
+    from nbswitch import structure as S
+    from nbswitch.config import load_json
+    ref = load_json("01_reference.json")
+    pair = ref["chain_pairs"]["A"]
+    contacts = set(pair["paratope_contact_labels"])
+    buried = set(pair["paratope_labels"])
+    assert contacts, "a 3 A criterion should still select something"
+    assert contacts <= buried, "a contacting residue must also bury surface"
+    assert len(contacts) < len(buried), "3 A is tighter than burial"
+    from nbswitch.config import PDB_ID
+    atoms = S.read_atoms(S.fetch_structure(PDB_ID))
+    assert (atoms.element == "H").any(), "this model carries riding hydrogens"
+    a = atoms[atoms.chain_id == "A"]
+    b = atoms[atoms.chain_id == pair["toxin_chain"]]
+    d_with, _ = S.contact_residues(a, b, 3.0)
+    d_without, _ = S.contact_residues(a[a.element != "H"], b[b.element != "H"], 3.0)
+    assert np.allclose(d_with, d_without, equal_nan=True)

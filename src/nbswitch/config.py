@@ -120,3 +120,8 @@ def plt_style():
         "figure.facecolor": "white", "savefig.bbox": "tight",
     })
     return plt
+
+#: Heavy-atom distance defining a chemical contact: hydrogen bonds and salt
+#: bridges fall at or below this. Van der Waals packing extends further, which
+#: is why the masking footprint uses buried surface rather than this cutoff.
+CONTACT_CUTOFF_A = 3.0

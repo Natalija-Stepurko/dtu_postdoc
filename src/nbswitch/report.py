@@ -201,6 +201,7 @@ const MODELS = __MODELS__;
 const PARATOPE = __PARATOPE__;
 const SOLVED_FILE = __SOLVED__;
 const ENSEMBLE = __ENSEMBLE__;
+const CDRS = __CDRS__;
 const TOP_PARATOPE = __TOPPARA__;
 const SCORES = __SCORES__;
 let v1 = null, v2 = null;
@@ -285,6 +286,32 @@ function colourFor(value) {
   return RAMP[i];
 }
 
+const CDR_COLOUR = {CDR1: '#2E7DBE', CDR2: '#B8860B', CDR3: '#A8324A'};
+
+function mountCdr(hostId) {
+  const host = document.getElementById(hostId);
+  if (!host || typeof CDRS === 'undefined') return;
+  const v = $3Dmol.createViewer(hostId, {backgroundColor: '#FFFFFF'});
+  jQuery.get('structures/VHH_only.pdb', function (data) {
+    const m = v.addModel(data, 'pdb');
+    v.setStyle({}, {cartoon: {color: '#C3CBD1'}});
+    Object.keys(CDRS).forEach(function (name) {
+      v.setStyle({resi: CDRS[name]},
+                 {cartoon: {color: CDR_COLOUR[name] || '#8C72AD'}});
+      const sel = m.selectedAtoms({resi: CDRS[name][Math.floor(CDRS[name].length / 2)],
+                                   atom: 'CA'});
+      if (sel.length) {
+        const a = sel[0];
+        v.addLabel(name, {position: {x: a.x, y: a.y, z: a.z},
+          backgroundColor: CDR_COLOUR[name], backgroundOpacity: 0.92,
+          fontColor: 'white', fontSize: 11, borderThickness: 0, inFront: true});
+      }
+    });
+    v.zoomTo(); v.zoom(1.25); v.render();
+    host.__viewer = v;
+  });
+}
+
 function mountEnsemble(hostId, scoreKey) {
   const host = document.getElementById(hostId);
   if (!host || typeof ENSEMBLE === 'undefined') return;
@@ -309,6 +336,7 @@ function mountEnsemble(hostId, scoreKey) {
 
 window.addEventListener('load', function () {
   boot();
+  document.querySelectorAll('[data-cdr]').forEach(function (el) { mountCdr(el.id); });
   document.querySelectorAll('[data-ensemble]').forEach(function (el) {
     mountEnsemble(el.id, el.dataset.ensemble || null);
   });
@@ -1301,3 +1329,16 @@ def ramp_legend(low: str, high: str) -> str:
             f'<span><i style="background:#C06014"></i>antigen-binding residues</span>'
             f'<span style="display:flex;align-items:center;gap:0">{low}&nbsp;{swatches}'
             f'&nbsp;{high}</span>')
+
+
+def cdr_viewer(element_id: str = "stage-cdr") -> str:
+    """The free nanobody with its three CDR loops picked out."""
+    swatches = {"CDR1": "#2E7DBE", "CDR2": "#B8860B", "CDR3": "#A8324A"}
+    key = "".join(f'<span><i style="background:{c}"></i>{n}</span>'
+                  for n, c in swatches.items())
+    return (f'<div class="viewer">'
+            f'<div class="vbar"><span class="eyebrow">The nanobody and its loops</span>'
+            f'<button data-spin="cdr">spin</button></div>'
+            f'<div class="vstage" id="{element_id}" data-cdr=""></div>'
+            f'<div class="vkey"><span><i style="background:#C3CBD1"></i>framework</span>{key}</div>'
+            f'</div>')

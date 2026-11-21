@@ -14,7 +14,8 @@ import numpy as np
 import biotite.structure as struc
 import biotite.structure.io.pdbx as pdbx
 
-from .config import (DATA, PDB_ID, BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINTS)
+from .config import (
+    CONTACT_CUTOFF_A, DATA, PDB_ID, BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINTS)
 
 RCSB = "https://files.rcsb.org/download/{pdb_id}.cif.gz"
 
@@ -99,6 +100,28 @@ def residue_sasa(atoms) -> np.ndarray:
     return out
 
 
+def contact_residues(partner_a, partner_b, cutoff: float) -> tuple[np.ndarray, np.ndarray]:
+    """Minimum heavy-atom distance from each residue of each partner to the other.
+
+    Hydrogens are excluded: deposited models may carry riding hydrogens, and a
+    donor-acceptor criterion is defined between heavy atoms. A residue is in
+    contact when this distance is at or below the cutoff.
+    """
+    def _min_dist(this, other):
+        this_heavy = this[this.element != "H"]
+        other_heavy = other[other.element != "H"]
+        res = residues(this)
+        heavy_mask = this.element != "H"
+        index = res.atom_index[heavy_mask]
+        d = np.linalg.norm(
+            this_heavy.coord[:, None, :] - other_heavy.coord[None, :, :], axis=-1).min(axis=1)
+        out = np.full(len(res), np.inf)
+        np.minimum.at(out, index, d)
+        return out
+
+    return _min_dist(partner_a, partner_b), _min_dist(partner_b, partner_a)
+
+
 def buried_on_binding(partner_a, partner_b) -> tuple[np.ndarray, np.ndarray]:
     """Surface each residue of both partners loses when the complex forms."""
     free_a, free_b = residue_sasa(partner_a), residue_sasa(partner_b)
@@ -122,14 +145,34 @@ def pair_chains(atoms, vhh_chains, toxin_chains, cutoff_A: float = 5.0) -> dict:
 
 
 def interface(atoms, vhh_chain: str, toxin_chain: str) -> dict:
+    """Two descriptions of the same interface, kept separate because they answer
+    different questions.
+
+    The polar contacts are residues with a heavy atom within CONTACT_CUTOFF_A of
+    the partner: hydrogen-bond and salt-bridge range, so this is the set that is
+    "interacting" in the chemical sense. The footprint is every residue that
+    loses solvent-accessible surface on binding, which also counts van der Waals
+    packing. A mask has to cover the footprint, not just the polar core.
+    """
     a, b = atoms[atoms.chain_id == vhh_chain], atoms[atoms.chain_id == toxin_chain]
     res_a, res_b = residues(a), residues(b)
     delta_a, delta_b = buried_on_binding(a, b)
+    dist_a, dist_b = contact_residues(a, b, CONTACT_CUTOFF_A)
     para = [i for i in range(len(res_a)) if delta_a[i] > BURIAL_THRESHOLD_A2]
     epi = [i for i in range(len(res_b)) if delta_b[i] > BURIAL_THRESHOLD_A2]
+    contact_a = [i for i in range(len(res_a)) if dist_a[i] <= CONTACT_CUTOFF_A]
+    contact_b = [i for i in range(len(res_b)) if dist_b[i] <= CONTACT_CUTOFF_A]
     total = float(delta_a.sum() + delta_b.sum())
     return {
         "toxin_chain": toxin_chain,
+        "contact_cutoff_A": CONTACT_CUTOFF_A,
+        "n_paratope_contacts": len(contact_a),
+        "n_epitope_contacts": len(contact_b),
+        "paratope_contact_labels": [res_a.labels[i] for i in contact_a],
+        "epitope_contact_labels": [res_b.labels[i] for i in contact_b],
+        "paratope_min_distance": {res_a.labels[i]: round(float(dist_a[i]), 2)
+                                  for i in range(len(res_a)) if np.isfinite(dist_a[i])
+                                  and dist_a[i] <= 8.0},
         "buried_surface_area_A2": round(total, 1),
         "interface_area_A2": round(total / 2, 1),
         "n_paratope": len(para), "n_epitope": len(epi),

@@ -317,16 +317,26 @@ measured.</p></div>
 
 <h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
 <div class="mri"><div><div class="k">Method</div><div class="v">Solvent-accessible surface was calculated for the nanobody alone and in complex, and residues losing more than 1 Å<sup>2</sup> on binding were defined as the paratope. Distances from each terminus to that surface were measured.</div></div><div><div class="k">Result</div><div class="v">The paratope comprises 19 residues burying 631 Å<sup>2</sup>. The N-terminus lies 12.42 Å from the nearest paratope residue and the C-terminus 27.45 Å. Across the 2 VHH–antigen pairs in the entry the buried area is 1232 ± 42 Å<sup>2</sup>.</div></div><div><div class="k">Interpretation</div><div class="v">The N-terminus is closer to the antigen-binding surface and is therefore the attachment point used throughout. The agreement between the two pairs indicates the interface is consistently resolved within this crystal.</div></div></div>
+<div class="viewer"><div class="vbar"><span class="eyebrow">The nanobody and its loops</span><button data-spin="cdr">spin</button></div><div class="vstage" id="stage-cdr" data-cdr=""></div><div class="vkey"><span><i style="background:#C3CBD1"></i>framework</span><span><i style="background:#2E7DBE"></i>CDR1</span><span><i style="background:#B8860B"></i>CDR2</span><span><i style="background:#A8324A"></i>CDR3</span></div></div>
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>
 <span><i style="background:#C99555"></i>short neurotoxin 1</span>
-<span><i style="background:#C06014"></i>antigen-binding residues, sticks</span>
+<span><i style="background:#C06014"></i>buried on binding, sticks</span>
+<span><i style="background:#C06014"></i>within 3 &#8491;, labelled</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 <figure class="chart wide"><img src="figures/paratope_footprint.svg" alt="Surface buried per nanobody residue on complex formation. The six residues burying the most surface are labelled in the viewer above."><figcaption>Surface buried per nanobody residue on complex formation. The six residues burying the most surface are labelled in the viewer above.</figcaption></figure>
+<p>Two cutoffs describe this interface and they answer different questions. Taking a heavy-atom
+distance of 3 &#8491;, the range of hydrogen bonds and salt bridges, gives
+6 residues: R49, D50, Q54, G107, D108, Y110. These are labelled in the viewer and marked on the
+plot. Taking every residue that loses solvent-accessible surface gives 19, because
+van der Waals packing reaches further than a hydrogen bond. The smaller set is what is interacting
+chemically; the larger one is the surface a mask has to cover, so the pipeline targets the larger
+one. On one of the other complexes examined the 3 &#8491; criterion returns a
+single residue, which is too little to define a footprint from.</p>
 <p>Of the 19 residues that bury surface on binding, 12 lie in the
 CDR loops and 7 in framework. Six of those framework residues
 (F40, T47, G48, R49, D50, L51) sit in framework 2, the face that in a conventional antibody is buried against
@@ -495,7 +505,8 @@ const MODELS = {"VHH_only": {"vhh": "1-127", "paratope": [36, 40, 47, 48, 49, 50
 const PARATOPE = [36, 40, 47, 48, 49, 50, 51, 54, 60, 61, 63, 65, 67, 103, 107, 108, 109, 110, 113];
 const SOLVED_FILE = "structures/9RIU_AB.pdb";
 const ENSEMBLE = [{"id": "epi1_L5", "linker_end": 21}, {"id": "epi1_L10", "linker_end": 26}, {"id": "epi1_L15", "linker_end": 31}, {"id": "epi1_L20", "linker_end": 36}, {"id": "epi1_L30", "linker_end": 46}, {"id": "epi1_scram_L5", "linker_end": 21}, {"id": "epi1_scram_L10", "linker_end": 26}, {"id": "epi1_scram_L15", "linker_end": 31}, {"id": "epi1_scram_L20", "linker_end": 36}, {"id": "epi1_scram_L30", "linker_end": 46}, {"id": "epi1_half_L5", "linker_end": 13}, {"id": "epi1_half_L10", "linker_end": 18}, {"id": "epi1_half_L15", "linker_end": 23}, {"id": "epi1_half_L20", "linker_end": 28}, {"id": "epi1_half_L30", "linker_end": 38}, {"id": "epi2_L5", "linker_end": 8}, {"id": "epi2_L10", "linker_end": 13}, {"id": "epi2_L15", "linker_end": 18}, {"id": "epi2_L20", "linker_end": 23}, {"id": "epi2_L30", "linker_end": 33}, {"id": "epi1_noCys_L5", "linker_end": 21}, {"id": "epi1_noCys_L10", "linker_end": 26}, {"id": "epi1_noCys_L15", "linker_end": 31}, {"id": "epi1_noCys_L20", "linker_end": 36}, {"id": "epi1_noCys_L30", "linker_end": 46}, {"id": "polyG_L5", "linker_end": 13}, {"id": "polyG_L10", "linker_end": 18}, {"id": "polyG_L15", "linker_end": 23}, {"id": "polyG_L20", "linker_end": 28}, {"id": "polyG_L30", "linker_end": 38}, {"id": "mpnn000_epi1_L5", "linker_end": 21}, {"id": "mpnn001_epi1_L5", "linker_end": 21}, {"id": "mpnn002_epi1_L5", "linker_end": 21}, {"id": "mpnn003_epi1_L5", "linker_end": 21}, {"id": "mpnn004_epi1_L5", "linker_end": 21}, {"id": "mpnn005_epi1_L5", "linker_end": 21}, {"id": "mpnn006_epi1_L5", "linker_end": 21}, {"id": "mpnn007_epi1_L5", "linker_end": 21}, {"id": "mpnn008_epi1_L5", "linker_end": 21}, {"id": "mpnn009_epi1_L5", "linker_end": 21}, {"id": "mpnn010_epi1_L5", "linker_end": 21}, {"id": "mpnn011_epi1_L5", "linker_end": 21}, {"id": "mpnn012_epi1_L5", "linker_end": 21}, {"id": "mpnn013_epi1_L20", "linker_end": 36}, {"id": "mpnn014_epi1_L20", "linker_end": 36}, {"id": "mpnn015_epi1_L20", "linker_end": 36}, {"id": "mpnn016_epi1_L20", "linker_end": 36}, {"id": "mpnn017_epi1_L20", "linker_end": 36}, {"id": "mpnn018_epi1_L20", "linker_end": 36}, {"id": "mpnn019_epi1_L5", "linker_end": 21}, {"id": "mpnn020_epi1_L10", "linker_end": 26}, {"id": "mpnn021_epi1_L10", "linker_end": 26}, {"id": "mpnn022_epi1_L20", "linker_end": 36}, {"id": "mpnn023_epi1_L5", "linker_end": 21}, {"id": "mpnn024_epi1_L10", "linker_end": 26}, {"id": "mpnn025_epi1_L5", "linker_end": 21}, {"id": "mpnn026_epi1_L10", "linker_end": 26}, {"id": "mpnn027_epi1_L10", "linker_end": 26}, {"id": "mpnn028_epi1_L10", "linker_end": 26}, {"id": "mpnn029_epi1_L20", "linker_end": 36}];
-const TOP_PARATOPE = [{"resi": 49, "label": "R49"}, {"resi": 109, "label": "N109"}, {"resi": 63, "label": "H63"}, {"resi": 51, "label": "L51"}, {"resi": 110, "label": "Y110"}, {"resi": 60, "label": "E60"}];
+const CDRS = {"CDR1": [26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38], "CDR2": [54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70], "CDR3": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112]};
+const TOP_PARATOPE = [{"resi": 49, "label": "R49"}, {"resi": 50, "label": "D50"}, {"resi": 54, "label": "Q54"}, {"resi": 107, "label": "G107"}, {"resi": 108, "label": "D108"}, {"resi": 110, "label": "Y110"}];
 const SCORES = {"epi1_L5": {"feasibility": 0.0, "masking": 0.12391304347826088, "cleavability": 1.0}, "epi1_L10": {"feasibility": 0.0, "masking": 0.6706521739130434, "cleavability": 0.39086859688195996}, "epi1_L15": {"feasibility": 0.0, "masking": 0.8804347826086957, "cleavability": 0.1737193763919822}, "epi1_L20": {"feasibility": 0.0, "masking": 0.6923913043478261, "cleavability": 0.05679287305122495}, "epi1_L30": {"feasibility": 0.0, "masking": 0.7217391304347827, "cleavability": 0.0}, "epi1_scram_L5": {"feasibility": 0.0, "masking": 0.31521739130434784, "cleavability": 1.0}, "epi1_scram_L10": {"feasibility": 0.0, "masking": 0.2173913043478261, "cleavability": 0.6224944320712695}, "epi1_scram_L15": {"feasibility": 0.0, "masking": 0.4880434782608696, "cleavability": 0.38641425389755013}, "epi1_scram_L20": {"feasibility": 0.0, "masking": 0.8010869565217391, "cleavability": 0.03563474387527841}, "epi1_scram_L30": {"feasibility": 0.0, "masking": 0.9500000000000001, "cleavability": 0.0734966592427617}, "epi1_half_L5": {"feasibility": 0.7745901639344263, "masking": 0.020652173913043477, "cleavability": 0.9922048997772829}, "epi1_half_L10": {"feasibility": 0.8237704918032788, "masking": 0.42391304347826086, "cleavability": 0.4242761692650334}, "epi1_half_L15": {"feasibility": 0.39344262295081966, "masking": 0.5597826086956521, "cleavability": 0.37973273942093544}, "epi1_half_L20": {"feasibility": 0.35655737704918034, "masking": 0.23913043478260868, "cleavability": 0.3608017817371938}, "epi1_half_L30": {"feasibility": 0.3524590163934426, "masking": 0.29021739130434787, "cleavability": 0.16815144766146994}, "epi2_L5": {"feasibility": 1.0, "masking": 0.10326086956521739, "cleavability": 0.9766146993318485}, "epi2_L10": {"feasibility": 0.7991803278688525, "masking": 0.09565217391304347, "cleavability": 0.6414253897550112}, "epi2_L15": {"feasibility": 0.7459016393442623, "masking": 0.07391304347826087, "cleavability": 0.5434298440979956}, "epi2_L20": {"feasibility": 0.7377049180327869, "masking": 0.10434782608695653, "cleavability": 0.44097995545657015}, "epi2_L30": {"feasibility": 0.7377049180327869, "masking": 0.6119565217391305, "cleavability": 0.17149220489977732}, "epi1_noCys_L5": {"feasibility": 0.6352459016393442, "masking": 0.3673913043478261, "cleavability": 1.0}, "epi1_noCys_L10": {"feasibility": 0.7008196721311476, "masking": 0.6826086956521739, "cleavability": 0.3418708240534521}, "epi1_noCys_L15": {"feasibility": 0.6885245901639345, "masking": 0.7358695652173913, "cleavability": 0.28396436525612473}, "epi1_noCys_L20": {"feasibility": 0.6721311475409837, "masking": 0.6010869565217392, "cleavability": 0.19821826280623614}, "epi1_noCys_L30": {"feasibility": 0.7254098360655737, "masking": 0.5836956521739131, "cleavability": 0.032293986636971056}, "polyG_L5": {"feasibility": 0.7745901639344263, "masking": 0.0, "cleavability": 1.0}, "polyG_L10": {"feasibility": 0.7213114754098361, "masking": 0.0641304347826087, "cleavability": 0.5935412026726058}, "polyG_L15": {"feasibility": 0.7377049180327869, "masking": 0.8717391304347826, "cleavability": 0.45100222717149224}, "polyG_L20": {"feasibility": 0.7213114754098361, "masking": 1.0, "cleavability": 0.3296213808463252}, "polyG_L30": {"feasibility": 0.7418032786885246, "masking": 0.4108695652173913, "cleavability": 0.11915367483296213}, "mpnn000_epi1_L5": {"feasibility": 0.0, "masking": 0.1673913043478261, "cleavability": 1.0}, "mpnn001_epi1_L5": {"feasibility": 0.0, "masking": 0.1326086956521739, "cleavability": 0.9844097995545656}, "mpnn002_epi1_L5": {"feasibility": 0.0, "masking": 0.11304347826086956, "cleavability": 0.943207126948775}, "mpnn003_epi1_L5": {"feasibility": 0.0, "masking": 0.16956521739130434, "cleavability": 0.9365256124721603}, "mpnn004_epi1_L5": {"feasibility": 0.0, "masking": 0.11521739130434783, "cleavability": 0.965478841870824}, "mpnn005_epi1_L5": {"feasibility": 0.0, "masking": 0.1771739130434783, "cleavability": 0.9632516703786191}, "mpnn006_epi1_L5": {"feasibility": 0.0, "masking": 0.16521739130434782, "cleavability": 0.9398663697104677}, "mpnn007_epi1_L5": {"feasibility": 0.0, "masking": 0.15652173913043477, "cleavability": 0.9287305122494433}, "mpnn008_epi1_L5": {"feasibility": 0.0, "masking": 0.16521739130434782, "cleavability": 0.9376391982182628}, "mpnn009_epi1_L5": {"feasibility": 0.0, "masking": 0.1391304347826087, "cleavability": 0.9409799554565701}, "mpnn010_epi1_L5": {"feasibility": 0.0, "masking": 0.33152173913043476, "cleavability": 0.9788418708240534}, "mpnn011_epi1_L5": {"feasibility": 0.0, "masking": 0.013043478260869565, "cleavability": 0.9498886414253898}, "mpnn012_epi1_L5": {"feasibility": 0.5573770491803279, "masking": 0.2326086956521739, "cleavability": 1.0}, "mpnn013_epi1_L20": {"feasibility": 0.4918032786885246, "masking": 0.17826086956521736, "cleavability": 0.18930957683741653}, "mpnn014_epi1_L20": {"feasibility": 0.4426229508196721, "masking": 0.18369565217391304, "cleavability": 0.178173719376392}, "mpnn015_epi1_L20": {"feasibility": 0.430327868852459, "masking": 0.19565217391304351, "cleavability": 0.2806236080178174}, "mpnn016_epi1_L20": {"feasibility": 0.5122950819672131, "masking": 0.10869565217391305, "cleavability": 0.33296213808463254}, "mpnn017_epi1_L20": {"feasibility": 0.44672131147540983, "masking": 0.15217391304347827, "cleavability": 0.29398663697104677}, "mpnn018_epi1_L20": {"feasibility": 0.5532786885245902, "masking": 0.7543478260869566, "cleavability": 0.25055679287305127}, "mpnn019_epi1_L5": {"feasibility": 0.0, "masking": 0.19130434782608693, "cleavability": 0.9565701559020044}, "mpnn020_epi1_L10": {"feasibility": 0.6680327868852459, "masking": 0.6967391304347825, "cleavability": 0.43207126948775054}, "mpnn021_epi1_L10": {"feasibility": 0.7377049180327869, "masking": 0.48695652173913045, "cleavability": 0.4465478841870824}, "mpnn022_epi1_L20": {"feasibility": 0.4795081967213115, "masking": 0.19673913043478258, "cleavability": 0.28396436525612473}, "mpnn023_epi1_L5": {"feasibility": 0.0, "masking": 0.06195652173913044, "cleavability": 1.0}, "mpnn024_epi1_L10": {"feasibility": 0.7377049180327869, "masking": 0.8173913043478261, "cleavability": 0.4387527839643653}, "mpnn025_epi1_L5": {"feasibility": 0.34426229508196726, "masking": 0.030434782608695653, "cleavability": 1.0}, "mpnn026_epi1_L10": {"feasibility": 0.6803278688524591, "masking": 0.32282608695652176, "cleavability": 0.47772828507795106}, "mpnn027_epi1_L10": {"feasibility": 0.7581967213114754, "masking": 0.5760869565217391, "cleavability": 0.4832962138084633}, "mpnn028_epi1_L10": {"feasibility": 0.7090163934426229, "masking": 0.9228260869565218, "cleavability": 0.40979955456570155}, "mpnn029_epi1_L20": {"feasibility": 0.5450819672131147, "masking": 0.5086956521739131, "cleavability": 0.29510022271714925}};
 let v1 = null, v2 = null;
 
@@ -579,6 +590,32 @@ function colourFor(value) {
   return RAMP[i];
 }
 
+const CDR_COLOUR = {CDR1: '#2E7DBE', CDR2: '#B8860B', CDR3: '#A8324A'};
+
+function mountCdr(hostId) {
+  const host = document.getElementById(hostId);
+  if (!host || typeof CDRS === 'undefined') return;
+  const v = $3Dmol.createViewer(hostId, {backgroundColor: '#FFFFFF'});
+  jQuery.get('structures/VHH_only.pdb', function (data) {
+    const m = v.addModel(data, 'pdb');
+    v.setStyle({}, {cartoon: {color: '#C3CBD1'}});
+    Object.keys(CDRS).forEach(function (name) {
+      v.setStyle({resi: CDRS[name]},
+                 {cartoon: {color: CDR_COLOUR[name] || '#8C72AD'}});
+      const sel = m.selectedAtoms({resi: CDRS[name][Math.floor(CDRS[name].length / 2)],
+                                   atom: 'CA'});
+      if (sel.length) {
+        const a = sel[0];
+        v.addLabel(name, {position: {x: a.x, y: a.y, z: a.z},
+          backgroundColor: CDR_COLOUR[name], backgroundOpacity: 0.92,
+          fontColor: 'white', fontSize: 11, borderThickness: 0, inFront: true});
+      }
+    });
+    v.zoomTo(); v.zoom(1.25); v.render();
+    host.__viewer = v;
+  });
+}
+
 function mountEnsemble(hostId, scoreKey) {
   const host = document.getElementById(hostId);
   if (!host || typeof ENSEMBLE === 'undefined') return;
@@ -603,6 +640,7 @@ function mountEnsemble(hostId, scoreKey) {
 
 window.addEventListener('load', function () {
   boot();
+  document.querySelectorAll('[data-cdr]').forEach(function (el) { mountCdr(el.id); });
   document.querySelectorAll('[data-ensemble]').forEach(function (el) {
     mountEnsemble(el.id, el.dataset.ensemble || null);
   });

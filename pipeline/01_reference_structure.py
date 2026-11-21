@@ -50,6 +50,9 @@ print(f"  {meta['method'].lower()}, {meta['resolution_A']} A, deposited {meta['d
 print(f"  {len(res)} residues, CDR3 length {cdrs['CDR3']['length']}")
 print(f"  interface {ref['interface_area_A2']} A2, paratope {ref['n_paratope']}, "
       f"epitope {ref['n_epitope']}")
+print(f"  within {ref['contact_cutoff_A']} A: {ref['n_paratope_contacts']} paratope, "
+      f"{ref['n_epitope_contacts']} epitope -> "
+      f"{', '.join(ref['paratope_contact_labels'])}")
 print(f"  BSA across {len(bsa)} copies: {np.mean(bsa):.1f} +/- {np.std(bsa, ddof=1):.1f} A2")
 print(f"  paratope by region: " + ", ".join(f"{k} {len(v)}" for k, v in by_region.items()))
 print(f"  N-term to paratope {geometry['n_term_to_paratope_centroid_A']} A, "

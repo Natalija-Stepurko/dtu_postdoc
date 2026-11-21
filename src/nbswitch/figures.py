@@ -62,9 +62,19 @@ def paratope_footprint(ref, cdrs, chain="A"):
         ax.text((a + b) / 2, delta.max() * 1.10, name, ha="center", va="bottom",
                 fontsize=7.5, color=INK3)
     paratope = set(data["paratope_labels"])
+    contacts = set(data.get("paratope_contact_labels", []))
     hit = np.array([l in paratope for l in labels])
     ax.bar(x[~hit], delta[~hit], width=.8, color="#C9D1D6", linewidth=0)
     ax.bar(x[hit], delta[hit], width=.8, color=SEQ, linewidth=0)
+    for label in contacts:
+        if label in labels:
+            i = labels.index(label)
+            ax.plot([i], [values[i] + top * 0.04], marker="v", markersize=4.5,
+                    color=CHROME, linestyle="none", zorder=5)
+    if contacts:
+        ax.plot([], [], marker="v", markersize=4.5, color=CHROME, linestyle="none",
+                label=f"within {data.get('contact_cutoff_A', 3.0):.0f} \u00c5")
+        ax.legend(fontsize=7, loc="upper left", frameon=False)
     for label, value in sorted(data["paratope_delta_sasa"].items(), key=lambda kv: -kv[1])[:5]:
         ax.annotate(label, (index[label], value), textcoords="offset points",
                     xytext=(0, 3), ha="center", fontsize=6.5, color=INK)

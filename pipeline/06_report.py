@@ -561,10 +561,15 @@ N["fw2_para"] = ", ".join(l for l in _para_labels
                           if l not in _cdr_member
                           and 39 <= int("".join(c for c in l[1:] if c.isdigit())) <= 52)
 
+cdr_resi = {name: [int("".join(c for c in l[1:] if c.isdigit())) for l in v["residues"]]
+            for name, v in ref["cdrs"].items()}
+
 top_paratope = [
     {"resi": int("".join(c for c in lbl[1:] if c.isdigit())), "label": lbl}
-    for lbl, _ in sorted(iface["paratope_delta_sasa"].items(),
-                         key=lambda kv: -kv[1])[:6]]
+    for lbl in iface["paratope_contact_labels"]]
+N["n_contacts"] = iface["n_paratope_contacts"]
+N["contact_cutoff"] = iface["contact_cutoff_A"]
+N["contact_labels"] = ", ".join(iface["paratope_contact_labels"])
 
 SCORES = {}
 _feas_by = {r["id"]: r["feasibility_score"] for r in (feas_data["results"] if feas_data else [])}
@@ -695,18 +700,28 @@ measured.</p></div>
      "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
      "point used throughout. The agreement between the two pairs indicates the interface is "
      "consistently resolved within this crystal.")}
+{R.cdr_viewer()}
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>
 <span><i style="background:#C99555"></i>short neurotoxin 1</span>
-<span><i style="background:#C06014"></i>antigen-binding residues, sticks</span>
+<span><i style="background:#C06014"></i>buried on binding, sticks</span>
+<span><i style="background:#C06014"></i>within {N['contact_cutoff']:.0f} &#8491;, labelled</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 {chart_wide("paratope_footprint",
   "Surface buried per nanobody residue on complex formation. The six residues burying the most "
   "surface are labelled in the viewer above.")}
+<p>Two cutoffs describe this interface and they answer different questions. Taking a heavy-atom
+distance of {N['contact_cutoff']:.0f} &#8491;, the range of hydrogen bonds and salt bridges, gives
+{N['n_contacts']} residues: {N['contact_labels']}. These are labelled in the viewer and marked on the
+plot. Taking every residue that loses solvent-accessible surface gives {N['n_paratope']}, because
+van der Waals packing reaches further than a hydrogen bond. The smaller set is what is interacting
+chemically; the larger one is the surface a mask has to cover, so the pipeline targets the larger
+one. On one of the other complexes examined the {N['contact_cutoff']:.0f} &#8491; criterion returns a
+single residue, which is too little to define a footprint from.</p>
 <p>Of the {N['n_paratope']} residues that bury surface on binding, {N['n_cdr_para']} lie in the
 CDR loops and {N['n_fw_para']} in framework. Six of those framework residues
 ({N['fw2_para']}) sit in framework 2, the face that in a conventional antibody is buried against
@@ -916,7 +931,7 @@ Data Bank.</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
-<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__SCORES__", json.dumps(SCORES))}</script>
+<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES))}</script>
 </body></html>"""
 
 import re
