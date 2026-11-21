@@ -1,0 +1,1552 @@
+{
+  "all_scored": [
+    {
+      "selectivity": 1.481,
+      "substrate": "PMPTAFHGMA"
+    },
+    {
+      "selectivity": 1.417,
+      "substrate": "VTPMQYFGMV"
+    },
+    {
+      "selectivity": 1.365,
+      "substrate": "MGPYTLFGMF"
+    },
+    {
+      "selectivity": 1.268,
+      "substrate": "VMPSGFLGLS"
+    },
+    {
+      "selectivity": 1.249,
+      "substrate": "QGPWTILGMT"
+    },
+    {
+      "selectivity": 1.23,
+      "substrate": "VGPSTLFGMR"
+    },
+    {
+      "selectivity": 1.225,
+      "substrate": "QNPAQMFGMA"
+    },
+    {
+      "selectivity": 1.196,
+      "substrate": "SGPYKYTGTA"
+    },
+    {
+      "selectivity": 1.194,
+      "substrate": "RWPLQYRGLG"
+    },
+    {
+      "selectivity": 1.171,
+      "substrate": "TPPKQLYGIL"
+    },
+    {
+      "selectivity": 1.168,
+      "substrate": "VVPSTLYGLY"
+    },
+    {
+      "selectivity": 1.152,
+      "substrate": "VYPSKLYGLT"
+    },
+    {
+      "selectivity": 1.127,
+      "substrate": "PTPYYLAGMT"
+    },
+    {
+      "selectivity": 1.116,
+      "substrate": "GGPSTLYGIF"
+    },
+    {
+      "selectivity": 1.115,
+      "substrate": "VVPFRLNGQV"
+    },
+    {
+      "selectivity": 1.115,
+      "substrate": "GGPYKYTGAT"
+    },
+    {
+      "selectivity": 1.095,
+      "substrate": "PNVFWYRGIS"
+    },
+    {
+      "selectivity": 1.078,
+      "substrate": "GTPLKIYGMG"
+    },
+    {
+      "selectivity": 1.068,
+      "substrate": "KVPSTLTGNT"
+    },
+    {
+      "selectivity": 1.061,
+      "substrate": "FTVFWYMGAA"
+    },
+    {
+      "selectivity": 1.057,
+      "substrate": "RQPFLYIGNQ"
+    },
+    {
+      "selectivity": 1.044,
+      "substrate": "KNPAQMYGTY"
+    },
+    {
+      "selectivity": 1.035,
+      "substrate": "SGPSTLMGTA"
+    },
+    {
+      "selectivity": 1.03,
+      "substrate": "ITPIELYGQY"
+    },
+    {
+      "selectivity": 1.029,
+      "substrate": "GVPSKLFGSG"
+    },
+    {
+      "selectivity": 1.022,
+      "substrate": "WGPSSYFGQA"
+    },
+    {
+      "selectivity": 1.02,
+      "substrate": "NYPSKLYGVT"
+    },
+    {
+      "selectivity": 1.017,
+      "substrate": "RGPSTLFGVT"
+    },
+    {
+      "selectivity": 1.01,
+      "substrate": "FNPSAYAGVV"
+    },
+    {
+      "selectivity": 0.987,
+      "substrate": "GGPSTLYSVG"
+    },
+    {
+      "selectivity": 0.984,
+      "substrate": "PNPSRLYGMA"
+    },
+    {
+      "selectivity": 0.969,
+      "substrate": "RQVFWYTGMA"
+    },
+    {
+      "selectivity": 0.967,
+      "substrate": "GGPSTLYGGQ"
+    },
+    {
+      "selectivity": 0.958,
+      "substrate": "VGPSTLFALL"
+    },
+    {
+      "selectivity": 0.955,
+      "substrate": "RVPKLLVGTT"
+    },
+    {
+      "selectivity": 0.951,
+      "substrate": "FTPRQYLGAF"
+    },
+    {
+      "selectivity": 0.949,
+      "substrate": "PKVMLMYGVS"
+    },
+    {
+      "selectivity": 0.947,
+      "substrate": "TNPYKYLGPY"
+    },
+    {
+      "selectivity": 0.938,
+      "substrate": "SGPKLLMGTR"
+    },
+    {
+      "selectivity": 0.936,
+      "substrate": "MTPRQVMGMF"
+    },
+    {
+      "selectivity": 0.936,
+      "substrate": "TIPFYMWGMY"
+    },
+    {
+      "selectivity": 0.934,
+      "substrate": "VIPTAFWSMK"
+    },
+    {
+      "selectivity": 0.934,
+      "substrate": "YKAFTMIGAT"
+    },
+    {
+      "selectivity": 0.933,
+      "substrate": "SGPSTLYGTA"
+    },
+    {
+      "selectivity": 0.911,
+      "substrate": "FTVFWYTGNS"
+    },
+    {
+      "selectivity": 0.909,
+      "substrate": "VTPKQLSGSG"
+    },
+    {
+      "selectivity": 0.905,
+      "substrate": "YNAVAYYGMA"
+    },
+    {
+      "selectivity": 0.901,
+      "substrate": "TNPFRLLGLF"
+    },
+    {
+      "selectivity": 0.888,
+      "substrate": "GGPSTLHGMQ"
+    },
+    {
+      "selectivity": 0.883,
+      "substrate": "YGPSLYTGNR"
+    },
+    {
+      "selectivity": 0.871,
+      "substrate": "YQPRNVTGLT"
+    },
+    {
+      "selectivity": 0.869,
+      "substrate": "GRPSFLFSNG"
+    },
+    {
+      "selectivity": 0.866,
+      "substrate": "HVPRQVLSAG"
+    },
+    {
+      "selectivity": 0.862,
+      "substrate": "LRATALYGMG"
+    },
+    {
+      "selectivity": 0.861,
+      "substrate": "GAPKFLFGII"
+    },
+    {
+      "selectivity": 0.857,
+      "substrate": "HNPSGFYAMY"
+    },
+    {
+      "selectivity": 0.855,
+      "substrate": "RAPLHMYGTV"
+    },
+    {
+      "selectivity": 0.853,
+      "substrate": "TNVFWYIGPY"
+    },
+    {
+      "selectivity": 0.851,
+      "substrate": "GFPYKYQGNQ"
+    },
+    {
+      "selectivity": 0.842,
+      "substrate": "WIPTNFLGVT"
+    },
+    {
+      "selectivity": 0.841,
+      "substrate": "LIPPFYTGTY"
+    },
+    {
+      "selectivity": 0.84,
+      "substrate": "EYPSKLYGVR"
+    },
+    {
+      "selectivity": 0.838,
+      "substrate": "KMPSTLWSIL"
+    },
+    {
+      "selectivity": 0.838,
+      "substrate": "IFPAQVTASG"
+    },
+    {
+      "selectivity": 0.83,
+      "substrate": "SGPKLLYGTA"
+    },
+    {
+      "selectivity": 0.827,
+      "substrate": "NNVFWYTASG"
+    },
+    {
+      "selectivity": 0.827,
+      "substrate": "FTPSRFTGTW"
+    },
+    {
+      "selectivity": 0.817,
+      "substrate": "VLPRSYWGGY"
+    },
+    {
+      "selectivity": 0.809,
+      "substrate": "YKPASVFGVR"
+    },
+    {
+      "selectivity": 0.805,
+      "substrate": "VTPMLYYGTH"
+    },
+    {
+      "selectivity": 0.798,
+      "substrate": "TAPKLLYGSF"
+    },
+    {
+      "selectivity": 0.796,
+      "substrate": "TVTQNLYSMV"
+    },
+    {
+      "selectivity": 0.789,
+      "substrate": "SGVFWLYGTA"
+    },
+    {
+      "selectivity": 0.785,
+      "substrate": "IPPGAMFGTG"
+    },
+    {
+      "selectivity": 0.783,
+      "substrate": "WSAYNFQGMT"
+    },
+    {
+      "selectivity": 0.777,
+      "substrate": "TFPYFLFGPI"
+    },
+    {
+      "selectivity": 0.774,
+      "substrate": "LMLLNFTGMS"
+    },
+    {
+      "selectivity": 0.773,
+      "substrate": "LKFMAYFGVL"
+    },
+    {
+      "selectivity": 0.772,
+      "substrate": "YWPSRFTASG"
+    },
+    {
+      "selectivity": 0.77,
+      "substrate": "GTPRSYFGIF"
+    },
+    {
+      "selectivity": 0.763,
+      "substrate": "YQTMALFGIY"
+    },
+    {
+      "selectivity": 0.762,
+      "substrate": "VGTFALWGLA"
+    },
+    {
+      "selectivity": 0.754,
+      "substrate": "IMVWGIYGVG"
+    },
+    {
+      "selectivity": 0.749,
+      "substrate": "NSPMLYMGIW"
+    },
+    {
+      "selectivity": 0.745,
+      "substrate": "IEYLNYFSAA"
+    },
+    {
+      "selectivity": 0.74,
+      "substrate": "YQVFGLYGQA"
+    },
+    {
+      "selectivity": 0.736,
+      "substrate": "QGPKLLYGMY"
+    },
+    {
+      "selectivity": 0.724,
+      "substrate": "FHPSRFTASG"
+    },
+    {
+      "selectivity": 0.724,
+      "substrate": "WQPFRLSGNF"
+    },
+    {
+      "selectivity": 0.722,
+      "substrate": "NWPLRISGSV"
+    },
+    {
+      "selectivity": 0.719,
+      "substrate": "YQTMALMGSY"
+    },
+    {
+      "selectivity": 0.718,
+      "substrate": "TSPVAYSGVA"
+    },
+    {
+      "selectivity": 0.718,
+      "substrate": "GFPMSLFGMA"
+    },
+    {
+      "selectivity": 0.716,
+      "substrate": "VMVKQLYGPG"
+    },
+    {
+      "selectivity": 0.715,
+      "substrate": "RNPEWYTGMW"
+    },
+    {
+      "selectivity": 0.714,
+      "substrate": "FNPSYLFGMA"
+    },
+    {
+      "selectivity": 0.71,
+      "substrate": "YVTAALYGTS"
+    },
+    {
+      "selectivity": 0.707,
+      "substrate": "IVPSRILGSY"
+    },
+    {
+      "selectivity": 0.7,
+      "substrate": "YKPASVTGWF"
+    },
+    {
+      "selectivity": 0.699,
+      "substrate": "GQPSPFSTAS"
+    },
+    {
+      "selectivity": 0.698,
+      "substrate": "YMPSYLWGQY"
+    },
+    {
+      "selectivity": 0.691,
+      "substrate": "IQVFGLISNV"
+    },
+    {
+      "selectivity": 0.687,
+      "substrate": "SGPRTLWATA"
+    },
+    {
+      "selectivity": 0.685,
+      "substrate": "QTPRQYSGVS"
+    },
+    {
+      "selectivity": 0.673,
+      "substrate": "SKVLFLYGMS"
+    },
+    {
+      "selectivity": 0.666,
+      "substrate": "LMYYGLFGSQ"
+    },
+    {
+      "selectivity": 0.664,
+      "substrate": "NKPRLYTGSA"
+    },
+    {
+      "selectivity": 0.663,
+      "substrate": "SGPRLYIGTA"
+    },
+    {
+      "selectivity": 0.661,
+      "substrate": "YAAFFLWGMV"
+    },
+    {
+      "selectivity": 0.661,
+      "substrate": "TFVFWYKGMA"
+    },
+    {
+      "selectivity": 0.659,
+      "substrate": "FLPRYLTGST"
+    },
+    {
+      "selectivity": 0.656,
+      "substrate": "LMVMGIFGNI"
+    },
+    {
+      "selectivity": 0.653,
+      "substrate": "TQVFGLGGAY"
+    },
+    {
+      "selectivity": 0.652,
+      "substrate": "HTVYWMTASG"
+    },
+    {
+      "selectivity": 0.649,
+      "substrate": "VGPSTLHGHY"
+    },
+    {
+      "selectivity": 0.645,
+      "substrate": "YSPMLLVGTI"
+    },
+    {
+      "selectivity": 0.643,
+      "substrate": "PTLQYLYGIV"
+    },
+    {
+      "selectivity": 0.636,
+      "substrate": "MMVYSLFGLT"
+    },
+    {
+      "selectivity": 0.635,
+      "substrate": "YKAFTMYGWY"
+    },
+    {
+      "selectivity": 0.634,
+      "substrate": "MAYFSLMGVT"
+    },
+    {
+      "selectivity": 0.621,
+      "substrate": "WHPSFLKGVG"
+    },
+    {
+      "selectivity": 0.62,
+      "substrate": "VQVWGITGWY"
+    },
+    {
+      "selectivity": 0.614,
+      "substrate": "WNAMRMYGTY"
+    },
+    {
+      "selectivity": 0.614,
+      "substrate": "TVPRYWYGMQ"
+    },
+    {
+      "selectivity": 0.614,
+      "substrate": "DTVFWMTASG"
+    },
+    {
+      "selectivity": 0.609,
+      "substrate": "YATWSMTASG"
+    },
+    {
+      "selectivity": 0.609,
+      "substrate": "TVTQNLYGIG"
+    },
+    {
+      "selectivity": 0.608,
+      "substrate": "GNAMRMYGNA"
+    },
+    {
+      "selectivity": 0.604,
+      "substrate": "WVIYQLRGHA"
+    },
+    {
+      "selectivity": 0.603,
+      "substrate": "RKVYAWFALT"
+    },
+    {
+      "selectivity": 0.603,
+      "substrate": "MSPRKFYAPA"
+    },
+    {
+      "selectivity": 0.601,
+      "substrate": "IKVFSMYGML"
+    },
+    {
+      "selectivity": 0.598,
+      "substrate": "WNYLNYYSAF"
+    },
+    {
+      "selectivity": 0.598,
+      "substrate": "GQPYLYRGHY"
+    },
+    {
+      "selectivity": 0.597,
+      "substrate": "KFPRLYVGPA"
+    },
+    {
+      "selectivity": 0.593,
+      "substrate": "KQSFALYGMS"
+    },
+    {
+      "selectivity": 0.593,
+      "substrate": "GGPSTLYNGY"
+    },
+    {
+      "selectivity": 0.588,
+      "substrate": "YQTMALWGQF"
+    },
+    {
+      "selectivity": 0.587,
+      "substrate": "TAIYWFKGMA"
+    },
+    {
+      "selectivity": 0.586,
+      "substrate": "LPAQDLTGWV"
+    },
+    {
+      "selectivity": 0.585,
+      "substrate": "YMVYSLIGNL"
+    },
+    {
+      "selectivity": 0.571,
+      "substrate": "GDPSRILGQF"
+    },
+    {
+      "selectivity": 0.566,
+      "substrate": "FTVFSYRSWG"
+    },
+    {
+      "selectivity": 0.564,
+      "substrate": "ATMLALYGIQ"
+    },
+    {
+      "selectivity": 0.564,
+      "substrate": "TNPIMHFSMF"
+    },
+    {
+      "selectivity": 0.561,
+      "substrate": "MKWAAYFGAF"
+    },
+    {
+      "selectivity": 0.555,
+      "substrate": "MKVFSMHGWG"
+    },
+    {
+      "selectivity": 0.543,
+      "substrate": "FTVFSYSGMQ"
+    },
+    {
+      "selectivity": 0.542,
+      "substrate": "NVVAQMYGNY"
+    },
+    {
+      "selectivity": 0.542,
+      "substrate": "PSPRYYTGVY"
+    },
+    {
+      "selectivity": 0.541,
+      "substrate": "GSPSGLTASG"
+    },
+    {
+      "selectivity": 0.537,
+      "substrate": "LAYQSLYGIF"
+    },
+    {
+      "selectivity": 0.535,
+      "substrate": "MSPATLLGTG"
+    },
+    {
+      "selectivity": 0.535,
+      "substrate": "GKPFRLNGEW"
+    },
+    {
+      "selectivity": 0.532,
+      "substrate": "MDVLSLYGLV"
+    },
+    {
+      "selectivity": 0.53,
+      "substrate": "RPGYNLLGIF"
+    },
+    {
+      "selectivity": 0.529,
+      "substrate": "TSALDMYGVK"
+    },
+    {
+      "selectivity": 0.528,
+      "substrate": "WGTLALHGAQ"
+    },
+    {
+      "selectivity": 0.528,
+      "substrate": "IFPANHFGVT"
+    },
+    {
+      "selectivity": 0.527,
+      "substrate": "VNAYSLTGVY"
+    },
+    {
+      "selectivity": 0.525,
+      "substrate": "VYVRAHFAIT"
+    },
+    {
+      "selectivity": 0.514,
+      "substrate": "QIPRYFSSNS"
+    },
+    {
+      "selectivity": 0.514,
+      "substrate": "YSATNLFGVY"
+    },
+    {
+      "selectivity": 0.514,
+      "substrate": "TSPKLLFGIL"
+    },
+    {
+      "selectivity": 0.511,
+      "substrate": "YDISALFGMY"
+    },
+    {
+      "selectivity": 0.508,
+      "substrate": "WAVKLLTGTF"
+    },
+    {
+      "selectivity": 0.507,
+      "substrate": "SSPMDYSSNI"
+    },
+    {
+      "selectivity": 0.505,
+      "substrate": "GGTWALFSGG"
+    },
+    {
+      "selectivity": 0.499,
+      "substrate": "TYIGAIFGMT"
+    },
+    {
+      "selectivity": 0.498,
+      "substrate": "YSPMDYYSHG"
+    },
+    {
+      "selectivity": 0.495,
+      "substrate": "SEPSTLRALL"
+    },
+    {
+      "selectivity": 0.493,
+      "substrate": "TYPSWLWSTL"
+    },
+    {
+      "selectivity": 0.488,
+      "substrate": "QDVYGLHGTF"
+    },
+    {
+      "selectivity": 0.487,
+      "substrate": "RDALGMYGML"
+    },
+    {
+      "selectivity": 0.482,
+      "substrate": "MSALDMFGNL"
+    },
+    {
+      "selectivity": 0.478,
+      "substrate": "ISVSQLWGNY"
+    },
+    {
+      "selectivity": 0.477,
+      "substrate": "IMVFSIYGTT"
+    },
+    {
+      "selectivity": 0.475,
+      "substrate": "WYVSYLTASG"
+    },
+    {
+      "selectivity": 0.47,
+      "substrate": "YNVYRLSGSV"
+    },
+    {
+      "selectivity": 0.469,
+      "substrate": "IWVSYLWGAT"
+    },
+    {
+      "selectivity": 0.469,
+      "substrate": "YDISALYGIG"
+    },
+    {
+      "selectivity": 0.468,
+      "substrate": "GNPSRILGPG"
+    },
+    {
+      "selectivity": 0.466,
+      "substrate": "WSPSSYTASG"
+    },
+    {
+      "selectivity": 0.456,
+      "substrate": "LTAFHLYGMV"
+    },
+    {
+      "selectivity": 0.456,
+      "substrate": "SAVRALFGIF"
+    },
+    {
+      "selectivity": 0.456,
+      "substrate": "YRVALVFSMQ"
+    },
+    {
+      "selectivity": 0.452,
+      "substrate": "VTIAYLFGML"
+    },
+    {
+      "selectivity": 0.451,
+      "substrate": "YPMQLLHGVA"
+    },
+    {
+      "selectivity": 0.449,
+      "substrate": "GIPTSLQGMH"
+    },
+    {
+      "selectivity": 0.448,
+      "substrate": "TVSYALLSIF"
+    },
+    {
+      "selectivity": 0.448,
+      "substrate": "TMAYFLYGIH"
+    },
+    {
+      "selectivity": 0.447,
+      "substrate": "TNGMGMYSML"
+    },
+    {
+      "selectivity": 0.445,
+      "substrate": "MDVLSLFGLV"
+    },
+    {
+      "selectivity": 0.441,
+      "substrate": "SGLRQMYGTA"
+    },
+    {
+      "selectivity": 0.44,
+      "substrate": "RAYFSLMGMG"
+    },
+    {
+      "selectivity": 0.437,
+      "substrate": "YVLSALHGLY"
+    },
+    {
+      "selectivity": 0.435,
+      "substrate": "YMVWGIFAIF"
+    },
+    {
+      "selectivity": 0.434,
+      "substrate": "KKYFYMTASG"
+    },
+    {
+      "selectivity": 0.431,
+      "substrate": "IRYMFLFAIT"
+    },
+    {
+      "selectivity": 0.431,
+      "substrate": "TMGMNMFGQV"
+    },
+    {
+      "selectivity": 0.429,
+      "substrate": "ILVYSLIGGL"
+    },
+    {
+      "selectivity": 0.427,
+      "substrate": "YITYWLFSNI"
+    },
+    {
+      "selectivity": 0.425,
+      "substrate": "LKFWTLVGEV"
+    },
+    {
+      "selectivity": 0.424,
+      "substrate": "FSQLAMAGVT"
+    },
+    {
+      "selectivity": 0.415,
+      "substrate": "WAYQSLWGIY"
+    },
+    {
+      "selectivity": 0.411,
+      "substrate": "VSTLPLTGVS"
+    },
+    {
+      "selectivity": 0.41,
+      "substrate": "DPANGFTASG"
+    },
+    {
+      "selectivity": 0.41,
+      "substrate": "MAYQSLWGIW"
+    },
+    {
+      "selectivity": 0.408,
+      "substrate": "TATNWLYGTY"
+    },
+    {
+      "selectivity": 0.407,
+      "substrate": "LTYMSLFGMG"
+    },
+    {
+      "selectivity": 0.406,
+      "substrate": "YDISALTGIS"
+    },
+    {
+      "selectivity": 0.405,
+      "substrate": "YNVNYLFGMF"
+    },
+    {
+      "selectivity": 0.405,
+      "substrate": "AWFSQLLGLV"
+    },
+    {
+      "selectivity": 0.404,
+      "substrate": "GWPRFLLGIA"
+    },
+    {
+      "selectivity": 0.399,
+      "substrate": "WLPDLLSGEF"
+    },
+    {
+      "selectivity": 0.397,
+      "substrate": "FDISALTGLW"
+    },
+    {
+      "selectivity": 0.394,
+      "substrate": "GMPGRLSGLY"
+    },
+    {
+      "selectivity": 0.392,
+      "substrate": "EMYFSLMANV"
+    },
+    {
+      "selectivity": 0.39,
+      "substrate": "SGVRAIFATA"
+    },
+    {
+      "selectivity": 0.39,
+      "substrate": "SKVLFLWGNW"
+    },
+    {
+      "selectivity": 0.389,
+      "substrate": "TTSYWLVSIL"
+    },
+    {
+      "selectivity": 0.381,
+      "substrate": "DWPRFLIGTY"
+    },
+    {
+      "selectivity": 0.379,
+      "substrate": "TNPKWITASG"
+    },
+    {
+      "selectivity": 0.379,
+      "substrate": "GSVMGIYVMY"
+    },
+    {
+      "selectivity": 0.377,
+      "substrate": "WMYLNLFSNT"
+    },
+    {
+      "selectivity": 0.377,
+      "substrate": "GITMRYFGLF"
+    },
+    {
+      "selectivity": 0.373,
+      "substrate": "YTTLWLWGIQ"
+    },
+    {
+      "selectivity": 0.372,
+      "substrate": "QQTMALAGIG"
+    },
+    {
+      "selectivity": 0.372,
+      "substrate": "FIPMWSIAMY"
+    },
+    {
+      "selectivity": 0.371,
+      "substrate": "LDVYWLWGVF"
+    },
+    {
+      "selectivity": 0.37,
+      "substrate": "FTVFSIYSTG"
+    },
+    {
+      "selectivity": 0.365,
+      "substrate": "VFTRNLWGQS"
+    },
+    {
+      "selectivity": 0.365,
+      "substrate": "MGVNYLMGHT"
+    },
+    {
+      "selectivity": 0.365,
+      "substrate": "YTMLHLFGIV"
+    },
+    {
+      "selectivity": 0.364,
+      "substrate": "TRTAWLFGMI"
+    },
+    {
+      "selectivity": 0.363,
+      "substrate": "MSVRWYWSAQ"
+    },
+    {
+      "selectivity": 0.363,
+      "substrate": "VQLAYFHGQF"
+    },
+    {
+      "selectivity": 0.361,
+      "substrate": "SGAFHILGTA"
+    },
+    {
+      "selectivity": 0.361,
+      "substrate": "VLYMGLTASG"
+    },
+    {
+      "selectivity": 0.361,
+      "substrate": "LTVAWLYGPQ"
+    },
+    {
+      "selectivity": 0.36,
+      "substrate": "YVGLYLTASG"
+    },
+    {
+      "selectivity": 0.357,
+      "substrate": "WYVSSLLGNY"
+    },
+    {
+      "selectivity": 0.352,
+      "substrate": "YDIYNLYSGR"
+    },
+    {
+      "selectivity": 0.349,
+      "substrate": "KAGRALLGIS"
+    },
+    {
+      "selectivity": 0.346,
+      "substrate": "MVVRGLFGTV"
+    },
+    {
+      "selectivity": 0.341,
+      "substrate": "YNVNYLWGQL"
+    },
+    {
+      "selectivity": 0.341,
+      "substrate": "TIPSWSTASG"
+    },
+    {
+      "selectivity": 0.34,
+      "substrate": "IWGRALTGNT"
+    },
+    {
+      "selectivity": 0.34,
+      "substrate": "DGVSFLFSIA"
+    },
+    {
+      "selectivity": 0.337,
+      "substrate": "GSVYSLFSII"
+    },
+    {
+      "selectivity": 0.335,
+      "substrate": "LKYMFLWSVF"
+    },
+    {
+      "selectivity": 0.332,
+      "substrate": "KVYAYVTASG"
+    },
+    {
+      "selectivity": 0.329,
+      "substrate": "GFVLWWTASG"
+    },
+    {
+      "selectivity": 0.326,
+      "substrate": "LNYMNISGQY"
+    },
+    {
+      "selectivity": 0.319,
+      "substrate": "LSTFSLMGIW"
+    },
+    {
+      "selectivity": 0.318,
+      "substrate": "HNANYLFGLM"
+    },
+    {
+      "selectivity": 0.316,
+      "substrate": "MHTAWLAGMF"
+    },
+    {
+      "selectivity": 0.315,
+      "substrate": "FTMLHWMAIA"
+    },
+    {
+      "selectivity": 0.306,
+      "substrate": "SGAVSLYGTA"
+    },
+    {
+      "selectivity": 0.304,
+      "substrate": "QFYQSLYGLY"
+    },
+    {
+      "selectivity": 0.304,
+      "substrate": "EYVRATGQMF"
+    },
+    {
+      "selectivity": 0.3,
+      "substrate": "FTLLAWYNIG"
+    },
+    {
+      "selectivity": 0.3,
+      "substrate": "NNTFTLAAFL"
+    },
+    {
+      "selectivity": 0.3,
+      "substrate": "FSALDLKGMI"
+    },
+    {
+      "selectivity": 0.299,
+      "substrate": "STVFHMYGEG"
+    },
+    {
+      "selectivity": 0.299,
+      "substrate": "DVVRALAGII"
+    },
+    {
+      "selectivity": 0.295,
+      "substrate": "VSAWSLFSIT"
+    },
+    {
+      "selectivity": 0.291,
+      "substrate": "GYWFALQGLG"
+    },
+    {
+      "selectivity": 0.287,
+      "substrate": "MTSAWLFGVR"
+    },
+    {
+      "selectivity": 0.285,
+      "substrate": "SGIYGLTFTA"
+    },
+    {
+      "selectivity": 0.281,
+      "substrate": "TVLNSLFGTA"
+    },
+    {
+      "selectivity": 0.28,
+      "substrate": "KTTAWLYGLF"
+    },
+    {
+      "selectivity": 0.276,
+      "substrate": "GYVRAHLGIY"
+    },
+    {
+      "selectivity": 0.275,
+      "substrate": "IDTRWYSNMQ"
+    },
+    {
+      "selectivity": 0.266,
+      "substrate": "LDYLSLYSNA"
+    },
+    {
+      "selectivity": 0.264,
+      "substrate": "MVGLYLWALG"
+    },
+    {
+      "selectivity": 0.26,
+      "substrate": "WFYSELYAIH"
+    },
+    {
+      "selectivity": 0.257,
+      "substrate": "YFYQSLWGGV"
+    },
+    {
+      "selectivity": 0.256,
+      "substrate": "MNWESLVGIT"
+    },
+    {
+      "selectivity": 0.254,
+      "substrate": "YNVAWLKGVT"
+    },
+    {
+      "selectivity": 0.252,
+      "substrate": "LYWSNLVGLY"
+    },
+    {
+      "selectivity": 0.25,
+      "substrate": "TMGYNLTASG"
+    },
+    {
+      "selectivity": 0.248,
+      "substrate": "TATNWLSSIW"
+    },
+    {
+      "selectivity": 0.243,
+      "substrate": "TMGMNMKGMV"
+    },
+    {
+      "selectivity": 0.241,
+      "substrate": "LTVRYLYGWL"
+    },
+    {
+      "selectivity": 0.239,
+      "substrate": "MWVMGIFAQH"
+    },
+    {
+      "selectivity": 0.227,
+      "substrate": "WLVRYLLGIY"
+    },
+    {
+      "selectivity": 0.226,
+      "substrate": "QWMYGLTASG"
+    },
+    {
+      "selectivity": 0.226,
+      "substrate": "VNGRALTASG"
+    },
+    {
+      "selectivity": 0.225,
+      "substrate": "FLYFSLSALI"
+    },
+    {
+      "selectivity": 0.22,
+      "substrate": "MSVRKFHGQF"
+    },
+    {
+      "selectivity": 0.219,
+      "substrate": "NTSAWLYSVY"
+    },
+    {
+      "selectivity": 0.218,
+      "substrate": "TAYQSLTASG"
+    },
+    {
+      "selectivity": 0.211,
+      "substrate": "ILTWSLFALW"
+    },
+    {
+      "selectivity": 0.21,
+      "substrate": "LEVRFLWGQF"
+    },
+    {
+      "selectivity": 0.209,
+      "substrate": "TSTLRFTSTR"
+    },
+    {
+      "selectivity": 0.208,
+      "substrate": "TVTQNLFYQG"
+    },
+    {
+      "selectivity": 0.205,
+      "substrate": "YLVRYLWGQG"
+    },
+    {
+      "selectivity": 0.201,
+      "substrate": "INGSYLTASG"
+    },
+    {
+      "selectivity": 0.199,
+      "substrate": "TTSAWLFSVG"
+    },
+    {
+      "selectivity": 0.198,
+      "substrate": "VSTLHLAGTG"
+    },
+    {
+      "selectivity": 0.197,
+      "substrate": "GRTAWLYSMW"
+    },
+    {
+      "selectivity": 0.19,
+      "substrate": "TLTHHLYGET"
+    },
+    {
+      "selectivity": 0.189,
+      "substrate": "PFGRALTASG"
+    },
+    {
+      "selectivity": 0.186,
+      "substrate": "TGYANMYGGQ"
+    },
+    {
+      "selectivity": 0.183,
+      "substrate": "MGWMSLYSWF"
+    },
+    {
+      "selectivity": 0.17,
+      "substrate": "PTGMSLYNLT"
+    },
+    {
+      "selectivity": 0.17,
+      "substrate": "MIGFYYTMRQ"
+    },
+    {
+      "selectivity": 0.169,
+      "substrate": "VYVGSLFNVF"
+    },
+    {
+      "selectivity": 0.168,
+      "substrate": "NTFLHWYAEL"
+    },
+    {
+      "selectivity": 0.168,
+      "substrate": "MAHASLFGAW"
+    },
+    {
+      "selectivity": 0.166,
+      "substrate": "AFGRPLTASG"
+    },
+    {
+      "selectivity": 0.165,
+      "substrate": "TTSAWLFGGG"
+    },
+    {
+      "selectivity": 0.162,
+      "substrate": "MWVLSLWSLH"
+    },
+    {
+      "selectivity": 0.16,
+      "substrate": "TLTHHLHGMY"
+    },
+    {
+      "selectivity": 0.153,
+      "substrate": "WNFLHLIGMY"
+    },
+    {
+      "selectivity": 0.152,
+      "substrate": "MSWSALTASG"
+    },
+    {
+      "selectivity": 0.15,
+      "substrate": "TAVRSLIAVY"
+    },
+    {
+      "selectivity": 0.143,
+      "substrate": "LGYAWMYGQW"
+    },
+    {
+      "selectivity": 0.139,
+      "substrate": "FDISHLTGQF"
+    },
+    {
+      "selectivity": 0.137,
+      "substrate": "WNRQARSVMF"
+    },
+    {
+      "selectivity": 0.137,
+      "substrate": "TATNWLVYIG"
+    },
+    {
+      "selectivity": 0.131,
+      "substrate": "TVLNSLSGSW"
+    },
+    {
+      "selectivity": 0.131,
+      "substrate": "YNSFRLTASG"
+    },
+    {
+      "selectivity": 0.124,
+      "substrate": "KRYLPMTASG"
+    },
+    {
+      "selectivity": 0.124,
+      "substrate": "ETLLDLISGG"
+    },
+    {
+      "selectivity": 0.122,
+      "substrate": "DPAFHLYGET"
+    },
+    {
+      "selectivity": 0.122,
+      "substrate": "PNNVFHSMPA"
+    },
+    {
+      "selectivity": 0.12,
+      "substrate": "MNGMRLVNLT"
+    },
+    {
+      "selectivity": 0.116,
+      "substrate": "TTSAWLSSEI"
+    },
+    {
+      "selectivity": 0.115,
+      "substrate": "HSTRNLWGLH"
+    },
+    {
+      "selectivity": 0.113,
+      "substrate": "TTSLRLFNET"
+    },
+    {
+      "selectivity": 0.104,
+      "substrate": "GTLRSLIGIF"
+    },
+    {
+      "selectivity": 0.104,
+      "substrate": "PGRPVRTPAS"
+    },
+    {
+      "selectivity": 0.091,
+      "substrate": "VEAYGLLGQV"
+    },
+    {
+      "selectivity": 0.089,
+      "substrate": "YDTQHLTASG"
+    },
+    {
+      "selectivity": 0.087,
+      "substrate": "SYVNSLFTTA"
+    },
+    {
+      "selectivity": 0.084,
+      "substrate": "TGMKLLTASG"
+    },
+    {
+      "selectivity": 0.073,
+      "substrate": "GGSGPLKSMY"
+    },
+    {
+      "selectivity": 0.072,
+      "substrate": "FSMNSLSGGW"
+    },
+    {
+      "selectivity": 0.065,
+      "substrate": "EHGFNLTASG"
+    },
+    {
+      "selectivity": 0.06,
+      "substrate": "NHFWNLTASG"
+    },
+    {
+      "selectivity": 0.058,
+      "substrate": "HFWSSLTASG"
+    },
+    {
+      "selectivity": 0.054,
+      "substrate": "DNSYWLISHF"
+    },
+    {
+      "selectivity": 0.046,
+      "substrate": "FNFDAQPLPF"
+    },
+    {
+      "selectivity": 0.046,
+      "substrate": "QSFVALTASG"
+    },
+    {
+      "selectivity": 0.035,
+      "substrate": "LTSNWLTASG"
+    },
+    {
+      "selectivity": 0.027,
+      "substrate": "YSTLRHMKMA"
+    },
+    {
+      "selectivity": 0.021,
+      "substrate": "TSPRMLLSVK"
+    },
+    {
+      "selectivity": 0.005,
+      "substrate": "TVLNSLFDNQ"
+    },
+    {
+      "selectivity": 0.003,
+      "substrate": "PTTMHLYDGL"
+    },
+    {
+      "selectivity": 0.001,
+      "substrate": "FEAWSLMYVA"
+    },
+    {
+      "selectivity": -0.022,
+      "substrate": "FRFSNLKSGG"
+    },
+    {
+      "selectivity": -0.028,
+      "substrate": "KFSRGLFAIG"
+    },
+    {
+      "selectivity": -0.055,
+      "substrate": "MTSAWLIVMW"
+    },
+    {
+      "selectivity": -0.071,
+      "substrate": "LLYASLTASG"
+    },
+    {
+      "selectivity": -0.072,
+      "substrate": "MSVGALFNKW"
+    },
+    {
+      "selectivity": -0.162,
+      "substrate": "GRSAWLTASG"
+    },
+    {
+      "selectivity": -0.23,
+      "substrate": "TMNALHRMMT"
+    }
+  ],
+  "flank": "GGS",
+  "linkers": [
+    {
+      "id": "cn01",
+      "kind": "generated",
+      "off_target_z": -0.252,
+      "selectivity": 1.481,
+      "sequence": "GGSPMPTAFHGMAGGS",
+      "substrate": "PMPTAFHGMA",
+      "target_z": 1.228
+    },
+    {
+      "id": "cn02",
+      "kind": "generated",
+      "off_target_z": 0.061,
+      "selectivity": 1.417,
+      "sequence": "GGSVTPMQYFGMVGGS",
+      "substrate": "VTPMQYFGMV",
+      "target_z": 1.478
+    },
+    {
+      "id": "cn03",
+      "kind": "generated",
+      "off_target_z": 0.145,
+      "selectivity": 1.365,
+      "sequence": "GGSMGPYTLFGMFGGS",
+      "substrate": "MGPYTLFGMF",
+      "target_z": 1.51
+    },
+    {
+      "id": "cn04",
+      "kind": "generated",
+      "off_target_z": -0.059,
+      "selectivity": 1.268,
+      "sequence": "GGSVMPSGFLGLSGGS",
+      "substrate": "VMPSGFLGLS",
+      "target_z": 1.209
+    },
+    {
+      "id": "cn05",
+      "kind": "generated",
+      "off_target_z": 0.36,
+      "selectivity": 1.249,
+      "sequence": "GGSQGPWTILGMTGGS",
+      "substrate": "QGPWTILGMT",
+      "target_z": 1.609
+    },
+    {
+      "id": "cn06",
+      "kind": "generated",
+      "off_target_z": -0.046,
+      "selectivity": 1.23,
+      "sequence": "GGSVGPSTLFGMRGGS",
+      "substrate": "VGPSTLFGMR",
+      "target_z": 1.185
+    },
+    {
+      "id": "cn07",
+      "kind": "generated",
+      "off_target_z": 0.038,
+      "selectivity": 1.225,
+      "sequence": "GGSQNPAQMFGMAGGS",
+      "substrate": "QNPAQMFGMA",
+      "target_z": 1.262
+    },
+    {
+      "id": "cn08",
+      "kind": "generated",
+      "off_target_z": -0.539,
+      "selectivity": 1.196,
+      "sequence": "GGSSGPYKYTGTAGGS",
+      "substrate": "SGPYKYTGTA",
+      "target_z": 0.658
+    },
+    {
+      "id": "ctrl_gs",
+      "kind": "protease-resistant control",
+      "off_target_z": -0.4,
+      "selectivity": 0.161,
+      "sequence": "GGSGGGGSGGGGSGGS",
+      "substrate": "GGGGSGGGGS",
+      "target_z": -0.239
+    },
+    {
+      "id": "ctrl_scram",
+      "kind": "scrambled control",
+      "off_target_z": -1.14,
+      "selectivity": 0.05,
+      "sequence": "GGSMPAAHFMPTGGGS",
+      "substrate": "MPAAHFMPTG",
+      "target_z": -1.09
+    }
+  ],
+  "n_controls": 2,
+  "n_generated": 359,
+  "n_kept": 8,
+  "off_target_proteases": [
+    "MMP1",
+    "MMP3",
+    "MMP7",
+    "MMP14",
+    "MMP15",
+    "MMP16",
+    "MMP17",
+    "MMP24",
+    "MMP25"
+  ],
+  "target_proteases": [
+    "MMP2",
+    "MMP9",
+    "MMP8"
+  ]
+}

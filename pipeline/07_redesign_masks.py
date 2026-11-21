@@ -12,7 +12,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from nbswitch import design
 from nbswitch.config import load_json, save_json, STRUCTURES, RANDOM_SEED
 
-PARENTS = ["epi1_L5", "epi1_L10", "epi1_L20", "epi2_L5", "epi2_L10", "epi1_half_L5"]
+#: Parents are derived from the library rather than named, so renaming or
+#: regenerating linkers cannot silently leave this stage redesigning nothing.
+#: One construct per mask, on the most selective linker available.
 TEMPERATURES = (0.1, 0.2, 0.3)
 PER_TEMPERATURE = 8
 PYTHON = sys.executable
@@ -23,6 +25,26 @@ if not design.available():
 lib = load_json("03_constructs.json")
 by_id = {c["id"]: c for c in lib["constructs"]}
 vhh = lib["vhh_sequence"]
+
+
+def _parents(constructs):
+    """The best-scoring linker for each mask, by selectivity."""
+    best = {}
+    for c in constructs:
+        if not c.get("mask") or not c.get("linker_id"):
+            continue
+        score = c.get("linker_selectivity")
+        score = -1e9 if score is None else score
+        current = best.get(c["mask"])
+        if current is None or score > current[0]:
+            best[c["mask"]] = (score, c["id"])
+    return [cid for _, cid in sorted(best.values(), reverse=True)]
+
+
+PARENTS = _parents(lib["constructs"])
+if not PARENTS:
+    raise SystemExit("no constructs to redesign: the library is empty")
+print(f"  redesigning {len(PARENTS)} parents: {', '.join(PARENTS)}")
 
 designs, native_scores = [], {}
 for parent_id in PARENTS:
