@@ -234,6 +234,10 @@ def build_all():
     except FileNotFoundError:
         pass
     try:
+        made.append(pareto_panels(load_json("13_ranking.json")))
+    except FileNotFoundError:
+        pass
+    try:
         trig = load_json("10_trigger.json")
         made.append(trigger_tradeoff(tether, trig))
     except FileNotFoundError:
@@ -334,3 +338,26 @@ def trigger_tradeoff(tether, trig):
     ax2.annotate(f"accessibility prefers {lengths[0]}", (lengths[0], a[0]),
                  textcoords="offset points", xytext=(10, -4), fontsize=7.5, color=STR)
     return _save(fig, "trigger_tradeoff")
+
+
+def pareto_panels(ranking):
+    """The three objectives, pairwise, with the non-dominated designs marked."""
+    plt = _style()
+    rows = ranking["rows"]
+    objs = ranking["objectives"]
+    if len(objs) < 2:
+        return None
+    pairs = [(objs[i], objs[j]) for i in range(len(objs)) for j in range(i + 1, len(objs))]
+    fig, axes = plt.subplots(1, len(pairs), figsize=(3.1 * len(pairs), 3.0))
+    axes = np.atleast_1d(axes)
+    for ax, (a, b) in zip(axes, pairs):
+        dom = [r for r in rows if not r.get("on_front")]
+        front = [r for r in rows if r.get("on_front")]
+        ax.scatter([r[a] for r in dom], [r[b] for r in dom], s=16, color="#C9D1D6",
+                   linewidth=0, label="dominated", zorder=2)
+        ax.scatter([r[a] for r in front], [r[b] for r in front], s=34, color=SEQ,
+                   edgecolor="white", linewidth=1.1, label="on the front", zorder=3)
+        ax.set_xlabel(a); ax.set_ylabel(b)
+    axes[0].legend(fontsize=7, loc="best")
+    fig.tight_layout()
+    return _save(fig, "pareto_panels")

@@ -5,6 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import numpy as np
+import numpy as _np
 from nbswitch import report as R
 from nbswitch.config import (DOCS, PDB_ID, REPO_URL, NOTEBOOK_URL, load_json,
                              REFERENCE_VHH_CHAIN, TARGET_ID, TARGET, TARGETS,
@@ -17,7 +18,10 @@ try:
     fold = load_json("04_folding.json")
 except FileNotFoundError:
     fold = None
-for _name, _key in (("10_trigger.json", "trigger"),
+for _name, _key in (("13_ranking.json", "ranking_data"),
+                    ("12_feasibility.json", "feas_data"),
+                    ("11_complexes_msa.json", "complexes_msa"),
+                    ("10_trigger.json", "trigger"),
                     ("07_redesign.json", "redesign"),
                     ("08_redesign_folding.json", "redesign_fold"),
                     ("09_complexes.json", "complexes")):
@@ -234,6 +238,43 @@ correlation is <b>{corr:+.2f}</b> across {len(rrows)} designs.</div>
 else:
     redesign_html = ""
 
+# ---- ranking ----
+if ranking_data and ranking_data.get("objectives"):
+    _objs = ranking_data["objectives"]
+    _front = ranking_data["front"]
+    _rows = "".join(
+        "<tr><td>" + r["id"] + "</td>" +
+        "".join(f"<td>{r[o]:.3f}</td>" for o in _objs) + "</tr>"
+        for r in _front[:10])
+    _hdr = "".join(f"<th>{o}</th>" for o in _objs)
+    ranking_html = f"""
+<section class="sec">
+<div class="stack"><div class="eyebrow">Stage 05 · combine</div>
+<h2>Keeping the three scores separate</h2>
+<p>A design has to satisfy all three requirements. A construct that cannot be expressed is of no
+use however well it masks, and one that cannot be cut is of no use however well it expresses. If
+the three scores were averaged, a high score on one would hide a failure on another, so instead I
+keep a design unless some other design is at least as good on every score and better on at least
+one. No weights are applied.</p>
+<p>Of {ranking_data['n_total']} scored designs, {ranking_data['n_front']} survive this test. The
+rest are beaten outright by something else.</p></div>
+<div class="scroll"><table class="wrap"><thead><tr><th>construct</th>{_hdr}</tr></thead>
+<tbody>{_rows}</tbody></table></div>
+{chart("pareto_panels", "The three scores plotted against each other. Designs on the front are "
+       "marked; the rest are beaten on every axis by something else.")}
+<div class="note"><b>The front shows the conflict rather than resolving it.</b> Designs scoring
+highest on the trigger score sit at the shortest linker lengths, and those are the designs that
+score lowest on masking. The pipeline does not choose between them, because choosing requires
+knowing which failure is more expensive, and that is a question for measurement.</div>
+<div class="note warn"><b>One of the three inputs is unreliable.</b> The masking axis here is the
+occlusion measure, which I showed above does not separate designed masks from controls. The
+combining stage works as a mechanism, and it will give sensible answers when that axis is replaced
+by the tethered complex prediction. Until then the front should be read as a demonstration of the
+method rather than as a list of candidates.</div>
+</section>"""
+else:
+    ranking_html = ""
+
 # ---- trigger accessibility ----
 if trigger:
     import numpy as _np
@@ -329,6 +370,68 @@ seg_rows = "".join(
 options = "".join(f'<option value="{i}"{" selected" if i == default_id else ""}>{i}</option>'
                   for i in folded_ids)
 
+
+_graft = _np.mean([r["occlusion"] * 100 for r in fold["results"]
+                   if r["kind"] == "epitope graft"]) if fold else float("nan")
+_inert = _np.mean([r["occlusion"] * 100 for r in fold["results"]
+                   if r["kind"] == "inert control"]) if fold else float("nan")
+_acc_rows = trigger["results"] if trigger else []
+_acc_by = {}
+for _r in _acc_rows:
+    _acc_by.setdefault(_r["linker_residues"], []).append(_r["accessibility_score"])
+_msa_ctrl = None
+if complexes_msa:
+    _msa_ctrl = next((r for r in complexes_msa["results"]
+                      if r["case"].startswith("control") and r["status"] == "ok"), None)
+_ctrl = None
+if complexes:
+    _ctrl = next((r for r in complexes["results"]
+                  if r["case"] == "control_free_vhh" and r["status"] == "ok"), None)
+ceff_mM = bN["c_eff_M"] * 1e3
+from nbswitch.tether import fraction_toxin_bound as _ftb
+pt_1nM = _ftb(1e-9) * 100
+
+status_html = R.status_table([
+    ("Measure the complex", "run",
+     f"{meta['resolution_A']} Å structure, {iface['n_paratope']} paratope residues, "
+     f"N-terminus {geom['n_term_to_nearest_paratope_A']} Å from the nearest of them."),
+    ("Price the tether", "run",
+     f"Gives a usable mask affinity between {bN['km_min_for_release_M']*1e9:.0f} nM and "
+     f"{bN['km_max_for_masking_M']*1e6:.0f} µM, and says to attach at the N-terminus."),
+    ("Build a construct library", "run",
+     f"{lib['n_constructs']} constructs: grafted masks from the antigen, plus scrambled, "
+     f"truncated and inert controls."),
+    ("Fold them (ESMFold)", "run",
+     f"{fold['n_folded'] if fold else 0} structures predicted on CPU."),
+    ("Score masking by occlusion", "failed",
+     f"Grafts occlude {_graft:+.1f}% of the paratope and the inert control {_inert:+.1f}%. "
+     f"The control scores as well as the design, so the measure does not separate them."),
+    ("Redesign masks (ProteinMPNN)", "failed",
+     f"{redesign['n_unique'] if redesign else 0} masks, all scoring better than their parent by "
+     f"ProteinMPNN's own measure, but that score does not predict occlusion (r = {corr:+.2f})."
+     if redesign else "not run"),
+    ("Score the trigger: can a protease reach the linker", "run",
+     f"Works and separates the library. Accessibility falls from "
+     f"{_np.mean(_acc_by[min(_acc_by)]):.2f} at {min(_acc_by)} linker residues to "
+     f"{_np.mean(_acc_by[max(_acc_by)]):.2f} at {max(_acc_by)}."
+     if _acc_by else "not run"),
+    ("Score the trigger: will this protease cut this sequence", "proposed",
+     "Needs substrate specificity data for the proteases in question. No such dataset exists "
+     "for snake venom metalloproteinases."),
+    ("Predict the masked complex (Boltz-2)", "run" if _msa_ctrl else "failed",
+     (f"Without alignments the control put only "
+      f"{_ctrl['fraction_of_contacts_on_paratope']:.0%} of its toxin contacts on the known "
+      f"paratope, so the prediction was worthless. Giving the nanobody and antigen alignments "
+      f"raises that to {_msa_ctrl['fraction_of_contacts_on_paratope']:.0%}."
+      if _msa_ctrl and _ctrl else
+      f"The control put only {_ctrl['fraction_of_contacts_on_paratope']:.0%} of its toxin "
+      f"contacts on the known paratope, so it cannot be trusted." if _ctrl else "not run")),
+    ("Rank designs across the scores", "proposed",
+     "Two of the three scores work, so a Pareto front over all three cannot be built yet."),
+    ("Make anything", "proposed",
+     "Nothing has been synthesised. No measured affinity, expression or cleavage exists."),
+])
+
 HTML = f"""<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Designing a binder that is switched off until it arrives</title>
@@ -339,44 +442,48 @@ example on an experimental nanobody-toxin complex.">
 <style>{R.CSS}</style></head><body><div class="page">
 
 <header>
-<div class="kicker"><span>Concept demonstration</span><b>Method + worked example</b></div>
-<h1>Designing a binder that is switched off until it arrives</h1>
-<p class="lede">How do you design a protein that does nothing in circulation and starts working only
-where you want it to? This page sets out the question, proposes a design method, and then runs that
-method end to end on one experimental structure to see what it produces.</p>
-<div class="banner"><b>Read this as a method, not a molecule.</b> The worked example exists to
-exercise the pipeline on real coordinates. Its candidates are deliberately simple and none is
-proposed for synthesis.</div>
+<div class="kicker"><span>Concept demonstration</span><b>Proposal and what I have run so far</b></div>
+<h1>Designing a nanobody that a protease switches on</h1>
+<p class="lede">A nanobody that binds a toxin, with a mask tethered over its binding site so that
+it does nothing until a protease cuts the tether. This page sets out how I would design one, and
+shows what happened when I ran the parts of that design that can be run today.</p>
 </header>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">Summary</div>
+<h2>What exists and what does not</h2>
+<p>Everything below is computational. Nothing has been made in a laboratory, so no affinity,
+expression level or cleavage rate on this page has been measured. Where I ran something and it did
+not work, the row says so.</p></div>
+{status_html}
+<div class="note"><b>The short version.</b> The geometry and the thermodynamics work and give a
+usable answer. One scoring function works. One scoring function failed, and the controls are what
+showed me it had failed. One scoring function is half built, because half of it needs data that
+does not exist yet.</div>
+</section>
 
 <!-- ============================ PART 1 ============================ -->
 <section class="sec">
-<div class="stack"><div class="eyebrow">Part 1 · the question</div>
-<h2>A binder that is inert until something local switches it on</h2>
-<p>Most therapeutic binders work everywhere in the body at once, which is why their side effects so
-often come from hitting the right target in the wrong place. A conditionally active binder is meant
-to be inert while it circulates and active only where some local cue — a protease, an acidic
-pocket, a metal ion — tells it to switch on.</p>
-<p>The usual way to build one is to <b>tether a mask over the binding site</b> and give the tether a
-cleavable linker. Clinically this architecture has a long history and a mixed record. Two problems
-sit underneath it. One is biological: making the cue specific enough — the venom proteases and the
-host enzymes that respond to tissue damage share a P1&prime; preference, so a linker cut by one is
-likely cut by the other. The second is thermodynamic, and it is the one this page is about.</p>
-</div>
+<div class="stack"><div class="eyebrow">Part 1 · the problem</div>
+<h2>Why a mask has to be weak</h2>
+<p>Most binders act wherever they go. A conditionally active binder is meant to do nothing while
+it circulates and to start working only where a local signal tells it to. The usual way to build
+one is to tether a mask over the binding site through a linker that a protease can cut.</p>
+<p>The difficulty is that the tether itself does most of the blocking. Because the mask is
+covalently attached, it is held near the binding site at a very high local concentration, so even
+a weak mask occupies that site almost permanently. For the construct on this page that effective
+concentration is {ceff_mM:.0f} mM, which means a mask with a dissociation constant of
+{bN['km_max_for_masking_M']*1e6:.0f} µM still blocks {model['leak_max']*100:.0f}% of the
+time.</p>
+<p>After the protease cuts, the tether is gone and that advantage disappears. The mask now has to
+diffuse away. A mask chosen for how firmly it binds will not do this: at a dissociation constant
+of 1 nM only {pt_1nM:.0f}% of the nanobody ever reaches toxin, because the mask stays in place.
+The construct is permanently off.</p>
+<p>This means the design target is not affinity. It is a range: strong enough to block while
+tethered, weak enough to leave once cut. Every protein design tool I know of maximises affinity,
+so the obvious approach produces masks that would be scored as successes and would not
+work.</p></div>
 <div class="chart wide">{R.states_schematic()}</div>
-<div class="banner"><b>The tension.</b> The tether holds the mask at a high effective concentration
-near the site, so even a weak mask blocks well. Once the protease cuts, that advantage disappears —
-and a mask chosen for how firmly it blocks may simply stay put and keep blocking. <b>A mask can be
-too good.</b></div>
-<p>So the design target is not affinity. It is a <em>window</em>: tight enough to hold state A,
-loose enough to lose state B. That window may be wide, narrow, or empty, and which of those it is
-depends on geometry that can be measured before any candidate exists. That observation is what the
-method below is built around.</p>
-<div class="cards">
-{card("2", "states to satisfy", "masked and released, at once")}
-{card("opposed", "the two requirements", "one bounds K<sub>D</sub> above, one below")}
-{card("geometry", "what decides the window", "measurable before any design")}
-</div>
 </section>
 
 <!-- ============================ PART 2 ============================ -->
@@ -557,6 +664,8 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 
 {complex_html}
 
+{ranking_html}
+
 <section class="sec">
 <div class="stack"><div class="eyebrow">What the example does not settle</div>
 <h2>The gaps, named</h2></div>
@@ -599,8 +708,6 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 <a href="{REPO_URL}">{REPO_URL.split("//")[1]}</a></p>
 </section>
 
-{R.scale_section()}
-
 <section class="sec">
 <div class="stack"><div class="eyebrow">Prior work</div>
 <h2>Where this problem is familiar from</h2>
@@ -608,6 +715,8 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 during the PhD, in a protein that solves it naturally.</p></div>
 {background_html}
 </section>
+
+{R.scale_section()}
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">References</div><h2>Sources</h2></div>

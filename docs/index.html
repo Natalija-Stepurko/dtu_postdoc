@@ -153,6 +153,10 @@ details.fold>summary:hover b{color:var(--str)}
 .tstep{display:flex;gap:12px;align-items:baseline;margin:26px 0 2px}
 .tstep b{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--chrome)}
 .tstep span{font-size:1rem;color:var(--ink);font-weight:600}
+.stat-tag{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;
+  text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;
+  white-space:nowrap}
+h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55rem}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -161,48 +165,52 @@ footer{padding:36px 0 72px;color:var(--ink-3);font-size:.85rem}
 </style></head><body><div class="page">
 
 <header>
-<div class="kicker"><span>Concept demonstration</span><b>Method + worked example</b></div>
-<h1>Designing a binder that is switched off until it arrives</h1>
-<p class="lede">How do you design a protein that does nothing in circulation and starts working only
-where you want it to? This page sets out the question, proposes a design method, and then runs that
-method end to end on one experimental structure to see what it produces.</p>
-<div class="banner"><b>Read this as a method, not a molecule.</b> The worked example exists to
-exercise the pipeline on real coordinates. Its candidates are deliberately simple and none is
-proposed for synthesis.</div>
+<div class="kicker"><span>Concept demonstration</span><b>Proposal and what I have run so far</b></div>
+<h1>Designing a nanobody that a protease switches on</h1>
+<p class="lede">A nanobody that binds a toxin, with a mask tethered over its binding site so that
+it does nothing until a protease cuts the tether. This page sets out how I would design one, and
+shows what happened when I ran the parts of that design that can be run today.</p>
 </header>
 
+<section class="sec" id="s1" data-slide="01 / 18">
+<div class="stack"><div class="eyebrow">Summary</div>
+<h2>What exists and what does not</h2>
+<p>Everything below is computational. Nothing has been made in a laboratory, so no affinity,
+expression level or cleavage rate on this page has been measured. Where I ran something and it did
+not work, the row says so.</p></div>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:27%"><col style="width:21%"><col style="width:52%"></colgroup><thead><tr><th>step</th><th>status</th><th>what happened</th></tr></thead><tbody><tr><td>Measure the complex</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>2.5 Å structure, 19 paratope residues, N-terminus 12.42 Å from the nearest of them.</td></tr><tr><td>Price the tether</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Gives a usable mask affinity between 99 nM and 129 µM, and says to attach at the N-terminus.</td></tr><tr><td>Build a construct library</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>31 constructs: grafted masks from the antigen, plus scrambled, truncated and inert controls.</td></tr><tr><td>Fold them (ESMFold)</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>31 structures predicted on CPU.</td></tr><tr><td>Score masking by occlusion</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>Grafts occlude +4.0% of the paratope and the inert control +4.0%. The control scores as well as the design, so the measure does not separate them.</td></tr><tr><td>Redesign masks (ProteinMPNN)</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>93 masks, all scoring better than their parent by ProteinMPNN's own measure, but that score does not predict occlusion (r = -0.15).</td></tr><tr><td>Score the trigger: can a protease reach the linker</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Works and separates the library. Accessibility falls from 0.97 at 5 linker residues to 0.19 at 30.</td></tr><tr><td>Score the trigger: will this protease cut this sequence</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Needs substrate specificity data for the proteases in question. No such dataset exists for snake venom metalloproteinases.</td></tr><tr><td>Predict the masked complex (Boltz-2)</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>The control put only 7% of its toxin contacts on the known paratope, so it cannot be trusted.</td></tr><tr><td>Rank designs across the scores</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Two of the three scores work, so a Pareto front over all three cannot be built yet.</td></tr><tr><td>Make anything</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Nothing has been synthesised. No measured affinity, expression or cleavage exists.</td></tr></tbody></table></div>
+<div class="note"><b>The short version.</b> The geometry and the thermodynamics work and give a
+usable answer. One scoring function works. One scoring function failed, and the controls are what
+showed me it had failed. One scoring function is half built, because half of it needs data that
+does not exist yet.</div>
+</section>
+
 <!-- ============================ PART 1 ============================ -->
-<section class="sec" id="s1" data-slide="01 / 16">
-<div class="stack"><div class="eyebrow">Part 1 · the question</div>
-<h2>A binder that is inert until something local switches it on</h2>
-<p>Most therapeutic binders work everywhere in the body at once, which is why their side effects so
-often come from hitting the right target in the wrong place. A conditionally active binder is meant
-to be inert while it circulates and active only where some local cue — a protease, an acidic
-pocket, a metal ion — tells it to switch on.</p>
-<p>The usual way to build one is to <b>tether a mask over the binding site</b> and give the tether a
-cleavable linker. Clinically this architecture has a long history and a mixed record. Two problems
-sit underneath it. One is biological: making the cue specific enough — the venom proteases and the
-host enzymes that respond to tissue damage share a P1&prime; preference, so a linker cut by one is
-likely cut by the other. The second is thermodynamic, and it is the one this page is about.</p>
-</div>
+<section class="sec" id="s2" data-slide="02 / 18">
+<div class="stack"><div class="eyebrow">Part 1 · the problem</div>
+<h2>Why a mask has to be weak</h2>
+<p>Most binders act wherever they go. A conditionally active binder is meant to do nothing while
+it circulates and to start working only where a local signal tells it to. The usual way to build
+one is to tether a mask over the binding site through a linker that a protease can cut.</p>
+<p>The difficulty is that the tether itself does most of the blocking. Because the mask is
+covalently attached, it is held near the binding site at a very high local concentration, so even
+a weak mask occupies that site almost permanently. For the construct on this page that effective
+concentration is 13 mM, which means a mask with a dissociation constant of
+129 µM still blocks 1% of the
+time.</p>
+<p>After the protease cuts, the tether is gone and that advantage disappears. The mask now has to
+diffuse away. A mask chosen for how firmly it binds will not do this: at a dissociation constant
+of 1 nM only 9% of the nanobody ever reaches toxin, because the mask stays in place.
+The construct is permanently off.</p>
+<p>This means the design target is not affinity. It is a range: strong enough to block while
+tethered, weak enough to leave once cut. Every protein design tool I know of maximises affinity,
+so the obvious approach produces masks that would be scored as successes and would not
+work.</p></div>
 <div class="chart wide"><svg viewBox="0 0 1120 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three states"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.s-t{font:600 13px Inter,system-ui,sans-serif}.s-i{font:12px Inter,system-ui,sans-serif}.s-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.s-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.s-lbl{font:600 11px ui-monospace,monospace}</style><text x="0" y="13" class="s-h" fill="#0E7C7B">THE THREE STATES</text><rect x="0" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="58" class="s-t" fill="#12191F">A · masked</text><text x="16" y="230" class="s-i" fill="#3A464F">tethered mask sits over the paratope</text><path d="M 124 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="170 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 144 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="170" cy="104" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="170" y="109" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 140 128 q -12 -18 12 -26" stroke="#6E7880" stroke-width="1.6" fill="none"/><text x="112" y="116" class="s-m" fill="#6E7880">L</text><rect x="390" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="406" y="58" class="s-t" fill="#12191F">B · cleaved</text><text x="406" y="230" class="s-i" fill="#3A464F">protease cuts; the mask drifts off</text><path d="M 514 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="560 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 534 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="648" cy="92" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="648" y="97" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 576 118 L 622 96" stroke="#6E7880" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah2)" fill="none"/><text x="531" y="100" class="s-m" fill="#C06014">protease</text><path d="M 524 112 l 14 10 M 538 112 l -14 10" stroke="#C06014" stroke-width="1.8"/><rect x="780" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="796" y="58" class="s-t" fill="#12191F">C · active</text><text x="796" y="230" class="s-i" fill="#3A464F">the original paratope takes the toxin</text><path d="M 904 130 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="950 " y="165" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 924 127 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="926" y="86" width="48" height="34" rx="6" fill="#C06014" stroke="#FFFFFF" stroke-width="2"/><text x="950" y="108" class="s-lbl" fill="#FFFFFF" text-anchor="middle">T</text><rect x="0" y="258" width="1120" height="36" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="281" class="s-i" fill="#12191F">A mask tight enough to hold state A may refuse to leave in state B. That single sentence is the whole design problem, and stage 02 turns it into a range of allowed mask affinities.</text></svg></div>
-<div class="banner"><b>The tension.</b> The tether holds the mask at a high effective concentration
-near the site, so even a weak mask blocks well. Once the protease cuts, that advantage disappears —
-and a mask chosen for how firmly it blocks may simply stay put and keep blocking. <b>A mask can be
-too good.</b></div>
-<p>So the design target is not affinity. It is a <em>window</em>: tight enough to hold state A,
-loose enough to lose state B. That window may be wide, narrow, or empty, and which of those it is
-depends on geometry that can be measured before any candidate exists. That observation is what the
-method below is built around.</p>
-<div class="cards">
-<div class="card"><div class="cl">states to satisfy</div><div class="big">2</div><div class="sub">masked and released, at once</div></div>
-<div class="card"><div class="cl">the two requirements</div><div class="big">opposed</div><div class="sub">one bounds K<sub>D</sub> above, one below</div></div>
-<div class="card"><div class="cl">what decides the window</div><div class="big">geometry</div><div class="sub">measurable before any design</div></div>
-</div>
 </section>
 
 <!-- ============================ PART 2 ============================ -->
-<section class="sec" id="s2" data-slide="02 / 16">
+<section class="sec" id="s3" data-slide="03 / 18">
 <div class="stack"><div class="eyebrow">Part 2 · the method</div>
 <h2>A pipeline built around that window</h2>
 <p>The ordering is the design decision. Generative models are usually put first, and the structure
@@ -211,7 +219,7 @@ and the tether priced before anything is generated</b>, so the attachment point,
 and the usable range of mask affinities are already fixed when generation starts. Generation then
 searches a space the geometry has narrowed, rather than a space that has to be filtered down
 afterwards.</p></div>
-<div class="chart wide"><svg viewBox="0 0 1120 492" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline architecture"><defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.a-t{font:600 13.5px Inter,system-ui,sans-serif}.a-n{font:600 9.5px ui-monospace,monospace}.a-i{font:12px Inter,system-ui,sans-serif}.a-s{font:10.5px ui-monospace,monospace;letter-spacing:.03em}.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.d-edge{font:10px ui-monospace,monospace;letter-spacing:.04em}</style><text x="0" y="13" class="a-h" fill="#0E7C7B">THE PIPELINE AS A SET OF MODULES</text><rect x="0" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="26" width="340" height="3" fill="#0E7C7B"/><text x="14" y="50" class="a-n" fill="#0E7C7B">00</text><text x="38" y="51" class="a-t" fill="#12191F">Constrain</text><text x="14" y="72" class="a-i" fill="#3A464F">Measure the target complex. Where is the</text><text x="14" y="88" class="a-i" fill="#3A464F">binding site, and how far is each terminus</text><text x="14" y="104" class="a-i" fill="#3A464F">from it? Price the tether: what mask affinity</text><text x="14" y="120" class="a-i" fill="#3A464F">could work at all?</text><text x="14" y="140" class="a-s" fill="#0E7C7B">slot: any experimental or predicted complex</text><text x="328" y="177" class="a-g" fill="#0E7C7B" text-anchor="end">DECIDES THE SEARCH SPACE</text><rect x="390" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="390" y="26" width="340" height="3" fill="#2D5BD1"/><text x="404" y="50" class="a-n" fill="#2D5BD1">01</text><text x="428" y="51" class="a-t" fill="#12191F">Generate</text><text x="404" y="72" class="a-i" fill="#3A464F">Propose mask and linker candidates.</text><text x="404" y="88" class="a-i" fill="#3A464F">Unconditional, conditioned on the site, or</text><text x="404" y="104" class="a-i" fill="#3A464F">evolved from something that already works.</text><text x="404" y="124" class="a-s" fill="#2D5BD1">slot: graft · ProteinMPNN · RFdiffusion</text><text x="404" y="138" class="a-s" fill="#2D5BD1">slot: BindCraft · peptide models</text><text x="718" y="177" class="a-g" fill="#6E7880" text-anchor="end">SWAPPABLE</text><rect x="780" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="780" y="26" width="340" height="3" fill="#C06014"/><text x="794" y="50" class="a-n" fill="#C06014">02a</text><text x="818" y="51" class="a-t" fill="#12191F">Score the trigger</text><text x="794" y="72" class="a-i" fill="#3A464F">Does the environment open the switch here,</text><text x="794" y="88" class="a-i" fill="#3A464F">and leave it shut everywhere else?</text><text x="794" y="104" class="a-i" fill="#3A464F">Selectivity is the quantity, not cleavability.</text><text x="794" y="124" class="a-s" fill="#C06014">slot: protease · pH · metal ion</text><text x="794" y="138" class="a-s" fill="#C06014">needs: cleavage or titration data</text><text x="1108" y="177" class="a-g" fill="#C06014" text-anchor="end">NOT BUILT</text><rect x="390" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="390" y="222" width="340" height="3" fill="#2D5BD1"/><text x="404" y="246" class="a-n" fill="#2D5BD1">02b</text><text x="428" y="247" class="a-t" fill="#12191F">Score the binding</text><text x="404" y="268" class="a-i" fill="#3A464F">Two states, not one. Is the site covered</text><text x="404" y="284" class="a-i" fill="#3A464F">while tethered, and can the target still bind</text><text x="404" y="300" class="a-i" fill="#3A464F">once the tether is cut?</text><text x="404" y="320" class="a-s" fill="#2D5BD1">slot: ESMFold occlusion · tether model</text><text x="404" y="334" class="a-s" fill="#2D5BD1">slot: Boltz-2 · Chai-1 complex</text><text x="718" y="373" class="a-g" fill="#0E7C7B" text-anchor="end">BUILT</text><rect x="780" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="780" y="222" width="340" height="3" fill="#2D5BD1"/><text x="794" y="246" class="a-n" fill="#2D5BD1">03</text><text x="818" y="247" class="a-t" fill="#12191F">Rank</text><text x="794" y="268" class="a-i" fill="#3A464F">Combine the scores without averaging them.</text><text x="794" y="284" class="a-i" fill="#3A464F">Keep the trade-offs visible and the surviving</text><text x="794" y="300" class="a-i" fill="#3A464F">designs structurally different.</text><text x="794" y="320" class="a-s" fill="#2D5BD1">slot: Pareto front · uncertainty-aware</text><text x="1108" y="373" class="a-g" fill="#C06014" text-anchor="end">PARTIAL</text><rect x="0" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="222" width="340" height="3" fill="#0E7C7B"/><text x="14" y="246" class="a-n" fill="#0E7C7B">04</text><text x="38" y="247" class="a-t" fill="#12191F">Measure, then learn</text><text x="14" y="268" class="a-i" fill="#3A464F">Top candidates are expressed and measured.</text><text x="14" y="284" class="a-i" fill="#3A464F">What comes back is the only data that can</text><text x="14" y="300" class="a-i" fill="#3A464F">train the scorers, and it arrives slowly.</text><text x="14" y="320" class="a-s" fill="#0E7C7B">20-30 results: a validation set</text><text x="14" y="334" class="a-s" fill="#0E7C7B">~100: optimisation · 100-1000: training</text><text x="328" y="373" class="a-g" fill="#0E7C7B" text-anchor="end">THE RATE LIMIT</text><path d="M 340 107 L 384 107" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="362" y="98" class="a-e" fill="#6E7880" text-anchor="middle">candidates</text><path d="M 730 107 L 774 107" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 560 188 L 560 216" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 730 303 L 774 303" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="752" y="294" class="a-e" fill="#6E7880" text-anchor="middle">scores</text><path d="M 950 188 L 950 216" stroke="#C06014" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/><path d="M 950 384 L 950 404 L 170 404 L 170 390" stroke="#0E7C7B" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><text x="560" y="399" class="a-e" fill="#0E7C7B" text-anchor="middle">top candidates go to the lab</text><path d="M 170 222 L 170 204 L 560 204 L 560 192" stroke="#0E7C7B" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/><text x="365" y="199" class="a-e" fill="#0E7C7B" text-anchor="middle">measurements retrain the scorers</text><rect x="0" y="424" width="1120" height="62" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="447" class="a-i" fill="#12191F"><tspan font-weight="600">What makes it transferable:</tspan> every module takes the same inputs and returns the same kind of score.</text><text x="16" y="468" class="a-i" fill="#3A464F">The trigger can change from protease to pH, or the generator from a graft to a diffusion model, without touching anything else.</text></svg></div>
+<div class="chart wide"><svg viewBox="0 0 1120 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline architecture"><defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.a-t{font:600 13.5px Inter,system-ui,sans-serif}.a-n{font:600 9.5px ui-monospace,monospace}.a-i{font:12px Inter,system-ui,sans-serif}.a-s{font:10.5px ui-monospace,monospace;letter-spacing:.03em}.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="a-h" fill="#0E7C7B">THE COMPUTATIONAL PIPELINE</text><rect x="0" y="26" width="538" height="120" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="26" width="538" height="3" fill="#0E7C7B"/><text x="14" y="50" class="a-n" fill="#0E7C7B">00</text><text x="38" y="51" class="a-t" fill="#12191F">Constrain</text><text x="14" y="72" class="a-i" fill="#3A464F">Measure the antigen complex, then work out what</text><text x="14" y="88" class="a-i" fill="#3A464F">mask affinity and linker length could work at all.</text><text x="14" y="108" class="a-s" fill="#0E7C7B">input: an experimental or predicted complex</text><text x="526" y="135" class="a-g" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="582" y="26" width="538" height="120" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="582" y="26" width="538" height="3" fill="#2D5BD1"/><text x="596" y="50" class="a-n" fill="#2D5BD1">01</text><text x="620" y="51" class="a-t" fill="#12191F">Generate</text><text x="596" y="72" class="a-i" fill="#3A464F">Propose mask sequences and linkers inside the</text><text x="596" y="88" class="a-i" fill="#3A464F">range the previous stage allows.</text><text x="596" y="108" class="a-s" fill="#2D5BD1">graft · ProteinMPNN · RFdiffusion · BindCraft</text><text x="1108" y="135" class="a-g" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="0" y="176" width="358" height="134" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="176" width="358" height="3" fill="#2D5BD1"/><text x="14" y="200" class="a-n" fill="#2D5BD1">02</text><text x="38" y="201" class="a-t" fill="#12191F">Score: can it be made</text><text x="14" y="222" class="a-i" fill="#3A464F">Does it fold, does the nanobody survive the</text><text x="14" y="238" class="a-i" fill="#3A464F">fusion, is the surface a liability?</text><text x="14" y="258" class="a-s" fill="#2D5BD1">ESMFold confidence · core RMSD</text><text x="14" y="272" class="a-s" fill="#2D5BD1">exposed hydrophobic · free cysteine</text><text x="346" y="299" class="a-g" fill="#0E7C7B" text-anchor="end">RUN</text><rect x="380" y="176" width="358" height="134" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="380" y="176" width="358" height="3" fill="#2D5BD1"/><text x="394" y="200" class="a-n" fill="#2D5BD1">03</text><text x="418" y="201" class="a-t" fill="#12191F">Score: can it be cut</text><text x="394" y="222" class="a-i" fill="#3A464F">Is the linker reachable and extended, and does</text><text x="394" y="238" class="a-i" fill="#3A464F">this protease recognise this sequence?</text><text x="394" y="258" class="a-s" fill="#2D5BD1">accessibility: run</text><text x="394" y="272" class="a-s" fill="#2D5BD1">sequence recognition: needs data</text><text x="726" y="299" class="a-g" fill="#C06014" text-anchor="end">HALF BUILT</text><rect x="760" y="176" width="358" height="134" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="760" y="176" width="358" height="3" fill="#2D5BD1"/><text x="774" y="200" class="a-n" fill="#2D5BD1">04</text><text x="798" y="201" class="a-t" fill="#12191F">Score: does it mask</text><text x="774" y="222" class="a-i" fill="#3A464F">Is the site blocked while tethered, and does the</text><text x="774" y="238" class="a-i" fill="#3A464F">antigen return once the tether is cut?</text><text x="774" y="258" class="a-s" fill="#2D5BD1">occlusion: does not separate</text><text x="774" y="272" class="a-s" fill="#2D5BD1">tethered complex: run</text><text x="1106" y="299" class="a-g" fill="#C06014" text-anchor="end">PART RUN</text><path d="M 851 146 L 851 158" stroke="#6E7880" stroke-width="1.4" fill="none"/><path d="M 179 158 L 939 158" stroke="#6E7880" stroke-width="1.4" fill="none"/><path d="M 179 158 L 179 170" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 559 158 L 559 170" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 939 158 L 939 170" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><rect x="291" y="340" width="538" height="76" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="291" y="340" width="538" height="3" fill="#0E7C7B"/><text x="305" y="364" class="a-n" fill="#0E7C7B">05</text><text x="329" y="365" class="a-t" fill="#12191F">Combine</text><text x="305" y="386" class="a-i" fill="#3A464F">Keep a design unless another beats it on every score. No weights.</text><text x="817" y="405" class="a-g" fill="#0E7C7B" text-anchor="end">RUN</text><path d="M 179 310 L 179 326 L 560 326 L 560 336" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 560 310 L 560 336" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 939 310 L 939 326 L 560 326 L 560 336" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 538 86 L 576 86" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/></svg></div>
 
 <h3>Why each module is separate</h3>
 <div class="scroll"><table class="wrap"><colgroup><col style="width:17%"><col style="width:33%">
@@ -249,7 +257,7 @@ those measurements well, not as a substitute for them.</div>
 </section>
 
 <!-- ============================ PART 3 ============================ -->
-<section class="sec" id="s3" data-slide="03 / 16">
+<section class="sec" id="s4" data-slide="04 / 18">
 <div class="stack"><div class="eyebrow">Part 3 · the method in action</div>
 <h2>Running it on a real complex</h2>
 <p>The example below applies every built module to one deposited structure: Co-crystal of broadly neutralizing VHH in complex with short neurotoxin 1 (P01426) Naja pallida,
@@ -291,7 +299,7 @@ tell you that a target is unsuitable before you spend anything on it.</p>
 </details>
 </section>
 
-<section class="sec" id="s4" data-slide="04 / 16">
+<section class="sec" id="s5" data-slide="05 / 18">
 <div class="stack"><div class="eyebrow">Module 00 · constrain</div>
 <h3>Measuring the complex</h3>
 <p>The paratope is defined as the residues that lose solvent-accessible surface when the complex
@@ -328,7 +336,7 @@ interchangeable. Because that gap exists, a peptide only reaches the paratope if
 </div>
 </section>
 
-<section class="sec" id="s5" data-slide="05 / 16">
+<section class="sec" id="s6" data-slide="06 / 18">
 <div class="stack"><div class="eyebrow">Module 00 · constrain</div>
 <h3>Pricing the tether</h3>
 <p>A tethered mask behaves as though present at an effective concentration set by the linker.
@@ -362,7 +370,7 @@ affinity maturation would be the wrong move.</div>
 <figure class="chart"><img src="figures/release_sensitivity.svg" alt="The release floor moves with toxin affinity and concentration; the masking ceiling does not."><figcaption>The release floor moves with toxin affinity and concentration; the masking ceiling does not.</figcaption></figure>
 </section>
 
-<section class="sec" id="s6" data-slide="06 / 16">
+<section class="sec" id="s7" data-slide="07 / 18">
 <div class="stack"><div class="eyebrow">Module 01 · generate</div>
 <h3>Candidates, and the controls that make them legible</h3>
 <p>One peptide is already known to engage this paratope: the antigen's own contact segment. Grafting
@@ -382,12 +390,12 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <span class="mono">polyG</span> has no designed interaction and should fail.</div>
 </section>
 
-<section class="sec" id="s7" data-slide="07 / 16">
+<section class="sec" id="s8" data-slide="08 / 18">
 <div class="stack"><div class="eyebrow">Module 02b · score the binding</div>
 <h3>Is the site covered?</h3></div>
 <div class="chart wide"><svg viewBox="0 0 1120 238" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How occlusion is measured"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.o-t{font:600 12.5px Inter,system-ui,sans-serif}.o-i{font:11.5px Inter,system-ui,sans-serif}.o-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.o-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="o-h" fill="#0E7C7B">HOW THE MASKED STATE IS MEASURED</text><rect x="0" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="30" width="330" height="3" fill="#2D5BD1"/><text x="16" y="56" class="o-t" fill="#12191F">fold the free nanobody</text><text x="16" y="76" class="o-m" fill="#2D5BD1">ESMFold, sequence only</text><text x="16" y="100" class="o-i" fill="#3A464F">measure the paratope's exposed surface</text><path d="M 330 89 L 390 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="395" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="395" y="30" width="330" height="3" fill="#2D5BD1"/><text x="411" y="56" class="o-t" fill="#12191F">fold the whole fusion</text><text x="411" y="76" class="o-m" fill="#2D5BD1">mask + linker + nanobody</text><text x="411" y="100" class="o-i" fill="#3A464F">measure the same residues again</text><path d="M 725 89 L 785 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="790" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="790" y="30" width="330" height="3" fill="#2D5BD1"/><text x="806" y="56" class="o-t" fill="#12191F">take the difference</text><text x="806" y="76" class="o-m" fill="#2D5BD1">occlusion = 1 − fused / free</text><text x="806" y="100" class="o-i" fill="#3A464F">0% means the mask changed nothing</text><rect x="0" y="162" width="1120" height="64" rx="3" fill="#FFFFFF" stroke="#C06014" stroke-dasharray="5 4"/><text x="16" y="184" class="o-t" fill="#12191F">Why the controls carry the argument</text><text x="16" y="203" class="o-i" fill="#3A464F">A tethered peptide sits near its own anchor whatever its sequence, so a single occlusion number means very little on its own.</text><text x="16" y="219" class="o-i" fill="#3A464F">Only the gap between the designed mask and its scrambled, truncated and poly-glycine twins separates a design from a geometric accident.</text></svg></div>
 
-<section class="sec" id="s8" data-slide="08 / 16">
+<section class="sec" id="s9" data-slide="09 / 18">
 <div class="stack"><div class="eyebrow">Stage 4 · folded on CPU</div>
 <h2>Does the mask actually reach the paratope?</h2>
 <p>Every construct folded with ESMFold, then the paratope's solvent-accessible surface in the
@@ -430,7 +438,7 @@ competition below is the first candidate. Had the controls been left out, the gr
 </section>
 
 
-<section class="sec" id="s9" data-slide="09 / 16">
+<section class="sec" id="s10" data-slide="10 / 18">
 <div class="stack"><div class="eyebrow">Stage 5 · closing the loop</div>
 <h2>Redesigning the mask on its own backbone</h2>
 <p>The grafted mask is borrowed from the antigen, so nothing about its sequence is tuned to this
@@ -459,7 +467,7 @@ correlation is <b>-0.15</b> across 93 designs.</div>
 </section>
 
 
-<section class="sec" id="s10" data-slide="10 / 16">
+<section class="sec" id="s11" data-slide="11 / 18">
 <div class="stack"><div class="eyebrow">Module 02a · the trigger</div>
 <h2>Can the protease reach the linker at all?</h2>
 <p>A protease does not simply recognise a sequence; it threads the substrate through its
@@ -491,7 +499,7 @@ rule a linker out; it cannot rule one in.</div>
 </section>
 
 
-<section class="sec" id="s11" data-slide="11 / 16">
+<section class="sec" id="s12" data-slide="12 / 18">
 <div class="stack"><div class="eyebrow">Module 02b · the other half</div>
 <h3>With the mask on, can the antigen still bind?</h3>
 <p>Occlusion says the mask covers the site. It does not say the antigen is excluded — those are
@@ -509,7 +517,32 @@ deliberately. If the free nanobody does not reproduce a toxin pose on its known 
 masked numbers describe the model rather than the molecule.</div>
 </section>
 
-<section class="sec" id="s12" data-slide="12 / 16">
+
+<section class="sec" id="s13" data-slide="13 / 18">
+<div class="stack"><div class="eyebrow">Stage 05 · combine</div>
+<h2>Keeping the three scores separate</h2>
+<p>A design has to satisfy all three requirements. A construct that cannot be expressed is of no
+use however well it masks, and one that cannot be cut is of no use however well it expresses. If
+the three scores were averaged, a high score on one would hide a failure on another, so instead I
+keep a design unless some other design is at least as good on every score and better on at least
+one. No weights are applied.</p>
+<p>Of 123 scored designs, 21 survive this test. The
+rest are beaten outright by something else.</p></div>
+<div class="scroll"><table class="wrap"><thead><tr><th>construct</th><th>feasibility</th><th>trigger</th><th>unmasking</th></tr></thead>
+<tbody><tr><td>mpnn092_epi2_L5</td><td>0.395</td><td>1.000</td><td>0.004</td></tr><tr><td>mpnn065_epi1_half_L5</td><td>0.343</td><td>0.957</td><td>0.011</td></tr><tr><td>mpnn075_epi1_half_L5</td><td>0.322</td><td>0.974</td><td>0.010</td></tr><tr><td>epi2_L5</td><td>0.244</td><td>0.979</td><td>0.007</td></tr><tr><td>mpnn061_epi1_half_L5</td><td>0.193</td><td>1.000</td><td>0.006</td></tr><tr><td>epi1_noCys_L5</td><td>0.155</td><td>1.000</td><td>0.031</td></tr><tr><td>mpnn089_epi1_half_L5</td><td>0.178</td><td>1.000</td><td>0.006</td></tr><tr><td>mpnn049_epi2_L10</td><td>0.401</td><td>0.621</td><td>0.029</td></tr><tr><td>mpnn053_epi1_L10</td><td>0.364</td><td>0.431</td><td>0.087</td></tr><tr><td>mpnn048_epi2_L10</td><td>0.161</td><td>0.648</td><td>0.015</td></tr></tbody></table></div>
+<figure class="chart"><img src="figures/pareto_panels.svg" alt="The three scores plotted against each other. Designs on the front are marked; the rest are beaten on every axis by something else."><figcaption>The three scores plotted against each other. Designs on the front are marked; the rest are beaten on every axis by something else.</figcaption></figure>
+<div class="note"><b>The front shows the conflict rather than resolving it.</b> Designs scoring
+highest on the trigger score sit at the shortest linker lengths, and those are the designs that
+score lowest on masking. The pipeline does not choose between them, because choosing requires
+knowing which failure is more expensive, and that is a question for measurement.</div>
+<div class="note warn"><b>One of the three inputs is unreliable.</b> The masking axis here is the
+occlusion measure, which I showed above does not separate designed masks from controls. The
+combining stage works as a mechanism, and it will give sensible answers when that axis is replaced
+by the tethered complex prediction. Until then the front should be read as a demonstration of the
+method rather than as a list of candidates.</div>
+</section>
+
+<section class="sec" id="s14" data-slide="14 / 18">
 <div class="stack"><div class="eyebrow">What the example does not settle</div>
 <h2>The gaps, named</h2></div>
 <div class="scroll"><table class="wrap"><thead><tr><th>module</th><th>what is missing</th>
@@ -532,7 +565,7 @@ produce numbers. The trigger module is empty, and it is empty for want of data r
 of a model — which is the kind of gap that no amount of compute closes.</div>
 </section>
 
-<section class="sec" id="s13" data-slide="13 / 16">
+<section class="sec" id="s15" data-slide="15 / 18">
 <div class="stack"><div class="eyebrow">Provenance</div>
 <h2>Where the numbers come from</h2>
 <p>Every value and chart here is produced by the analysis code, run in stages against one deposited
@@ -551,54 +584,7 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 <a href="https://github.com/Natalija-Stepurko/dtu_postdoc">github.com/Natalija-Stepurko/dtu_postdoc</a></p>
 </section>
 
-
-<section class="sec" id="s14" data-slide="14 / 16">
-<div class="stack"><div class="eyebrow">Scale</div>
-<h2>What the campaign costs, and how the lab shrinks it</h2>
-<p>The counts below are projections, not results. They come from published hit rates for binder
-design — which for conditional binders are far lower than for ordinary ones — and the compute is
-scaled from runtimes measured on this machine.</p></div>
-<div class="chart wide"><svg viewBox="0 0 1120 352" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Design funnel"><style>.n-t{font:600 12.5px Inter,system-ui,sans-serif}.n-s{font:11px Inter,system-ui,sans-serif}.n-v{font:600 12px ui-monospace,monospace;font-variant-numeric:tabular-nums}.n-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="n-h" fill="#0E7C7B">HOW BIG THE CAMPAIGN HAS TO BE, PER COMPLEX</text><rect x="250" y="32" width="97" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="32" width="54" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="46" class="n-t" fill="#12191F" text-anchor="end">Candidate complexes</text><text x="356.5216587257262" y="46" class="n-v" fill="#12191F">2</text><text x="436.5216587257262" y="46" class="n-s" fill="#6E7880">geometry screen: is a terminus clear of the paratope?</text><rect x="250" y="62" width="457" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="62" width="457" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="76" class="n-t" fill="#12191F" text-anchor="end">Mask backbones</text><text x="716.8592143098429" y="76" class="n-v" fill="#12191F">10,000</text><text x="796.8592143098429" y="76" class="n-s" fill="#6E7880">RFdiffusion, per surviving complex</text><rect x="250" y="92" width="560" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="92" width="560" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="106" class="n-t" fill="#12191F" text-anchor="end">Sequences</text><text x="820.0" y="106" class="n-v" fill="#12191F">80,000</text><text x="900.0" y="106" class="n-s" fill="#6E7880">ProteinMPNN, 8 per backbone</text><rect x="250" y="122" width="560" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="122" width="411" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="136" class="n-t" fill="#12191F" text-anchor="end">Fold and developability</text><text x="820.0" y="136" class="n-v" fill="#12191F">4,000</text><text x="900.0" y="136" class="n-s" fill="#6E7880">ESMFold; filters cut cost, not failure rate</text><rect x="250" y="152" width="411" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="152" width="297" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="166" class="n-t" fill="#12191F" text-anchor="end">Two-state scoring</text><text x="671.4165068740208" y="166" class="n-v" fill="#12191F">400</text><text x="751.4165068740208" y="166" class="n-s" fill="#6E7880">tethered complex: masked and released</text><rect x="250" y="182" width="297" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="182" width="170" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="196" class="n-t" fill="#12191F" text-anchor="end">Pareto selection</text><text x="557.3143953139461" y="196" class="n-v" fill="#12191F">30</text><text x="637.3143953139461" y="196" class="n-s" fill="#6E7880">diverse, not just top-ranked</text><rect x="250" y="212" width="170" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="212" width="69" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="226" class="n-t" fill="#12191F" text-anchor="end">Ordered</text><text x="430.33373364167807" y="226" class="n-v" fill="#12191F">3</text><text x="510.33373364167807" y="226" class="n-s" fill="#6E7880">first cycle</text><text x="250" y="256" class="n-s" fill="#6E7880">Pale bar: entering the stage. Solid bar: leaving it. Log scale.</text><rect x="0" y="272" width="1120" height="56" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="294" class="n-t" fill="#12191F">About 660 CPU-hours per complex on eight cores, or roughly 33 GPU-hours.</text><text x="16" y="314" class="n-s" fill="#3A464F">Scaled from measured runtimes here: 0.4 s a sequence for ProteinMPNN, 22 s a construct for ESMFold, 148 s for a tethered three-chain complex.</text></svg></div>
-<div class="note"><b>Filtering buys time, not success.</b> The RFdiffusion antibody work reports
-that design success was no higher for filtered than for unfiltered designs. The in-silico stages
-here are therefore sized to make the campaign affordable, not to raise the hit rate. What raises
-the hit rate is the next part.</p></div>
-
-<div class="stack"><h3>Three first, and what they are for</h3>
-<p>The first order is three constructs, and its purpose is diagnosis rather than success. Each
-tells you which stage of the pipeline is wrong:</p></div>
-<div class="scroll"><table><thead><tr><th>measurement</th><th>reads out</th>
-<th>if it fails, the problem is</th></tr></thead><tbody>
-<tr><td>Purification — ÄKTA trace, single band on the gel</td><td>can it be made at all</td>
-<td>the feasibility score: fold, aggregation, developability</td></tr>
-<tr><td>Octet, toxin affinity with the protease absent</td><td>is it masked</td>
-<td>the masking half of the unmasking score</td></tr>
-<tr><td>Octet, toxin affinity with the protease present</td><td>does it activate</td>
-<td>the trigger score, or the release half</td></tr>
-</tbody></table></div>
-<div class="note good"><b>Each failure mode points at a different module.</b> That is why three is
-enough to start: a construct that will not express, one that expresses but never masks, and one
-that masks but never releases are three different diagnoses, and each sends the work back to a
-different part of the pipeline. Two or three cycles of this should give a pipeline that reliably
-proposes three producible, toxin-binding, switching variants.</div>
-
-<div class="stack"><h3>Then twenty to thirty, and the pipeline gets scored</h3>
-<p>Once the loop reliably produces working candidates, the point of a larger batch changes. It is
-no longer about finding a molecule; it is about measuring whether the scores predict anything. With
-twenty to thirty measured constructs, each score can be scored in turn.</p></div>
-<div class="chart wide"><svg viewBox="0 0 1120 360" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Validation outcomes"><style>.c-t{font:600 13px Inter,system-ui,sans-serif}.c-n{font:600 15px ui-monospace,monospace;font-variant-numeric:tabular-nums}.c-k{font:9.5px ui-monospace,monospace;letter-spacing:.06em}.c-s{font:11px Inter,system-ui,sans-serif}.c-m{font:600 11.5px ui-monospace,monospace;font-variant-numeric:tabular-nums}.c-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="c-h" fill="#0E7C7B">WHAT 24 MEASURED CONSTRUCTS SAY ABOUT A SCORE</text><text x="0" y="44" class="c-t" fill="#12191F">Perfect scorer</text><text x="0" y="62" class="c-s" fill="#6E7880">every switch found, nothing wasted</text><text x="121" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score keeps</text><text x="211" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score rejects</text><rect x="78" y="92" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="88" y="111" class="c-k" fill="#2D5BD1">TP</text><text x="88" y="139" class="c-n" fill="#12191F">8</text><rect x="168" y="92" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="178" y="111" class="c-k" fill="#C06014">FN</text><text x="178" y="139" class="c-n" fill="#12191F">0</text><rect x="78" y="156" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="88" y="175" class="c-k" fill="#C06014">FP</text><text x="88" y="203" class="c-n" fill="#12191F">0</text><rect x="168" y="156" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="178" y="175" class="c-k" fill="#2D5BD1">TN</text><text x="178" y="203" class="c-n" fill="#12191F">16</text><text x="72" y="126" class="c-k" fill="#6E7880" text-anchor="end">switches</text><text x="72" y="190" class="c-k" fill="#6E7880" text-anchor="end">does not</text><text x="78" y="240" class="c-s" fill="#3A464F">recall</text><text x="254" y="240" class="c-m" fill="#3A464F" text-anchor="end">1.00</text><text x="78" y="260" class="c-s" fill="#3A464F">precision</text><text x="254" y="260" class="c-m" fill="#3A464F" text-anchor="end">1.00</text><line x1="78" y1="265" x2="254" y2="265" stroke="#DDE4E7"/><text x="78" y="280" class="c-s" fill="#12191F">F1</text><text x="254" y="280" class="c-m" fill="#12191F" text-anchor="end">1.00</text><text x="380" y="44" class="c-t" fill="#12191F">Cautious scorer</text><text x="380" y="62" class="c-s" fill="#6E7880">keeps few designs and misses most real switches</text><text x="501" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score keeps</text><text x="591" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score rejects</text><rect x="458" y="92" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="468" y="111" class="c-k" fill="#2D5BD1">TP</text><text x="468" y="139" class="c-n" fill="#12191F">2</text><rect x="548" y="92" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="558" y="111" class="c-k" fill="#C06014">FN</text><text x="558" y="139" class="c-n" fill="#12191F">6</text><rect x="458" y="156" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="468" y="175" class="c-k" fill="#C06014">FP</text><text x="468" y="203" class="c-n" fill="#12191F">2</text><rect x="548" y="156" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="558" y="175" class="c-k" fill="#2D5BD1">TN</text><text x="558" y="203" class="c-n" fill="#12191F">14</text><text x="452" y="126" class="c-k" fill="#6E7880" text-anchor="end">switches</text><text x="452" y="190" class="c-k" fill="#6E7880" text-anchor="end">does not</text><text x="458" y="240" class="c-s" fill="#3A464F">recall</text><text x="634" y="240" class="c-m" fill="#3A464F" text-anchor="end">0.25</text><text x="458" y="260" class="c-s" fill="#3A464F">precision</text><text x="634" y="260" class="c-m" fill="#3A464F" text-anchor="end">0.50</text><line x1="458" y1="265" x2="634" y2="265" stroke="#DDE4E7"/><text x="458" y="280" class="c-s" fill="#12191F">F1</text><text x="634" y="280" class="c-m" fill="#12191F" text-anchor="end">0.33</text><text x="760" y="44" class="c-t" fill="#12191F">Permissive scorer</text><text x="760" y="62" class="c-s" fill="#6E7880">finds most real switches, but nearly everything it keeps is a dud</text><text x="881" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score keeps</text><text x="971" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score rejects</text><rect x="838" y="92" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="848" y="111" class="c-k" fill="#2D5BD1">TP</text><text x="848" y="139" class="c-n" fill="#12191F">6</text><rect x="928" y="92" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="938" y="111" class="c-k" fill="#C06014">FN</text><text x="938" y="139" class="c-n" fill="#12191F">2</text><rect x="838" y="156" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="848" y="175" class="c-k" fill="#C06014">FP</text><text x="848" y="203" class="c-n" fill="#12191F">15</text><rect x="928" y="156" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="938" y="175" class="c-k" fill="#2D5BD1">TN</text><text x="938" y="203" class="c-n" fill="#12191F">1</text><text x="832" y="126" class="c-k" fill="#6E7880" text-anchor="end">switches</text><text x="832" y="190" class="c-k" fill="#6E7880" text-anchor="end">does not</text><text x="838" y="240" class="c-s" fill="#3A464F">recall</text><text x="1014" y="240" class="c-m" fill="#3A464F" text-anchor="end">0.75</text><text x="838" y="260" class="c-s" fill="#3A464F">precision</text><text x="1014" y="260" class="c-m" fill="#3A464F" text-anchor="end">0.29</text><line x1="838" y1="265" x2="1014" y2="265" stroke="#DDE4E7"/><text x="838" y="280" class="c-s" fill="#12191F">F1</text><text x="1014" y="280" class="c-m" fill="#12191F" text-anchor="end">0.41</text><rect x="0" y="300" width="1120" height="54" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="322" class="c-t" fill="#12191F">F1 rises only when recall and precision are high together.</text><text x="16" y="342" class="c-s" fill="#3A464F">Both imperfect scorers look defensible on one metric and fail on F1. A score that keeps almost nothing and one that keeps almost everything are both useless, and a single headline number hides which failure you have.</text></svg></div>
-<div class="note warn"><b>The batch has to include designs the pipeline rejected.</b> If only
-top-ranked candidates are made, every measurement lands in the left-hand column: TP and FP can be
-counted, so precision is computable, but FN cannot, so recall is not. Spending perhaps a quarter of
-the batch on designs the score rejected is what turns a hit list into a validation set.</div>
-<div class="note"><b>Beyond that, the labels become training data.</b> At around a hundred measured
-constructs the measurements stop being only a scorecard and start being a dataset: a binary label —
-does it switch — against the sequence and structure representations already computed for every
-candidate. That is the point at which a learned scorer can replace a hand-built one, and it is the
-reason the representations are stored for designs that were never made.</div>
-</section>
-
-<section class="sec" id="s15" data-slide="15 / 16">
+<section class="sec" id="s16" data-slide="16 / 18">
 <div class="stack"><div class="eyebrow">Prior work</div>
 <h2>Where this problem is familiar from</h2>
 <p>The two-state, tethered-affinity problem on this page is one I characterised experimentally
@@ -651,7 +637,56 @@ affinity measurement — rather than predicted.</div>
 </details>
 </section>
 
-<section class="sec" id="s16" data-slide="16 / 16">
+
+<section class="sec" id="s17" data-slide="17 / 18">
+<div class="stack"><div class="eyebrow">Beyond the pipeline</div>
+<h2>Taking it to the laboratory</h2>
+<p>Everything above is computational. This section is separate from the pipeline because none of it
+has been done, and none of it is part of the design. It sets out how large the campaign would have
+to be and how the first measurements would be used. The counts come from published hit rates for
+binder design, which for conditional binders are far lower than for ordinary binders, and the
+compute is scaled from runtimes measured on this machine.</p></div>
+<div class="chart wide"><svg viewBox="0 0 1120 352" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Design funnel"><style>.n-t{font:600 12.5px Inter,system-ui,sans-serif}.n-s{font:11px Inter,system-ui,sans-serif}.n-v{font:600 12px ui-monospace,monospace;font-variant-numeric:tabular-nums}.n-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="n-h" fill="#0E7C7B">HOW BIG THE CAMPAIGN HAS TO BE, PER COMPLEX</text><rect x="250" y="32" width="97" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="32" width="54" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="46" class="n-t" fill="#12191F" text-anchor="end">Candidate complexes</text><text x="356.5216587257262" y="46" class="n-v" fill="#12191F">2</text><text x="436.5216587257262" y="46" class="n-s" fill="#6E7880">geometry screen: is a terminus clear of the paratope?</text><rect x="250" y="62" width="457" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="62" width="457" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="76" class="n-t" fill="#12191F" text-anchor="end">Mask backbones</text><text x="716.8592143098429" y="76" class="n-v" fill="#12191F">10,000</text><text x="796.8592143098429" y="76" class="n-s" fill="#6E7880">RFdiffusion, per surviving complex</text><rect x="250" y="92" width="560" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="92" width="560" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="106" class="n-t" fill="#12191F" text-anchor="end">Sequences</text><text x="820.0" y="106" class="n-v" fill="#12191F">80,000</text><text x="900.0" y="106" class="n-s" fill="#6E7880">ProteinMPNN, 8 per backbone</text><rect x="250" y="122" width="560" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="122" width="411" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="136" class="n-t" fill="#12191F" text-anchor="end">Fold and developability</text><text x="820.0" y="136" class="n-v" fill="#12191F">4,000</text><text x="900.0" y="136" class="n-s" fill="#6E7880">ESMFold; filters cut cost, not failure rate</text><rect x="250" y="152" width="411" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="152" width="297" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="166" class="n-t" fill="#12191F" text-anchor="end">Two-state scoring</text><text x="671.4165068740208" y="166" class="n-v" fill="#12191F">400</text><text x="751.4165068740208" y="166" class="n-s" fill="#6E7880">tethered complex: masked and released</text><rect x="250" y="182" width="297" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="182" width="170" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="196" class="n-t" fill="#12191F" text-anchor="end">Pareto selection</text><text x="557.3143953139461" y="196" class="n-v" fill="#12191F">30</text><text x="637.3143953139461" y="196" class="n-s" fill="#6E7880">diverse, not just top-ranked</text><rect x="250" y="212" width="170" height="20" rx="2" fill="#EAEFFB"/><rect x="250" y="212" width="69" height="20" rx="2" fill="#2D5BD1"/><text x="242" y="226" class="n-t" fill="#12191F" text-anchor="end">Ordered</text><text x="430.33373364167807" y="226" class="n-v" fill="#12191F">3</text><text x="510.33373364167807" y="226" class="n-s" fill="#6E7880">first cycle</text><text x="250" y="256" class="n-s" fill="#6E7880">Pale bar: entering the stage. Solid bar: leaving it. Log scale.</text><rect x="0" y="272" width="1120" height="56" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="294" class="n-t" fill="#12191F">About 660 CPU-hours per complex on eight cores, or roughly 33 GPU-hours.</text><text x="16" y="314" class="n-s" fill="#3A464F">Scaled from measured runtimes here: 0.4 s a sequence for ProteinMPNN, 22 s a construct for ESMFold, 148 s for a tethered three-chain complex.</text></svg></div>
+<div class="note"><b>Filtering buys time, not success.</b> The RFdiffusion antibody work reports
+that design success was no higher for filtered than for unfiltered designs. The in-silico stages
+here are therefore sized to make the campaign affordable, not to raise the hit rate. What raises
+the hit rate is the next part.</p></div>
+
+<div class="stack"><h3>Three first, and what they are for</h3>
+<p>The first order is three constructs, and its purpose is diagnosis rather than success. Each
+tells you which stage of the pipeline is wrong:</p></div>
+<div class="scroll"><table><thead><tr><th>measurement</th><th>reads out</th>
+<th>if it fails, the problem is</th></tr></thead><tbody>
+<tr><td>Purification — ÄKTA trace, single band on the gel</td><td>can it be made at all</td>
+<td>the feasibility score: fold, aggregation, developability</td></tr>
+<tr><td>Octet, toxin affinity with the protease absent</td><td>is it masked</td>
+<td>the masking half of the unmasking score</td></tr>
+<tr><td>Octet, toxin affinity with the protease present</td><td>does it activate</td>
+<td>the trigger score, or the release half</td></tr>
+</tbody></table></div>
+<div class="note good"><b>Each failure mode points at a different module.</b> That is why three is
+enough to start: a construct that will not express, one that expresses but never masks, and one
+that masks but never releases are three different diagnoses, and each sends the work back to a
+different part of the pipeline. Two or three cycles of this should give a pipeline that reliably
+proposes three producible, toxin-binding, switching variants.</div>
+
+<div class="stack"><h3>Then twenty to thirty, and the pipeline gets scored</h3>
+<p>Once the loop reliably produces working candidates, the point of a larger batch changes. It is
+no longer about finding a molecule; it is about measuring whether the scores predict anything. With
+twenty to thirty measured constructs, each score can be scored in turn.</p></div>
+<div class="chart wide"><svg viewBox="0 0 1120 360" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Validation outcomes"><style>.c-t{font:600 13px Inter,system-ui,sans-serif}.c-n{font:600 15px ui-monospace,monospace;font-variant-numeric:tabular-nums}.c-k{font:9.5px ui-monospace,monospace;letter-spacing:.06em}.c-s{font:11px Inter,system-ui,sans-serif}.c-m{font:600 11.5px ui-monospace,monospace;font-variant-numeric:tabular-nums}.c-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="c-h" fill="#0E7C7B">WHAT 24 MEASURED CONSTRUCTS SAY ABOUT A SCORE</text><text x="0" y="44" class="c-t" fill="#12191F">Perfect scorer</text><text x="0" y="62" class="c-s" fill="#6E7880">every switch found, nothing wasted</text><text x="121" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score keeps</text><text x="211" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score rejects</text><rect x="78" y="92" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="88" y="111" class="c-k" fill="#2D5BD1">TP</text><text x="88" y="139" class="c-n" fill="#12191F">8</text><rect x="168" y="92" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="178" y="111" class="c-k" fill="#C06014">FN</text><text x="178" y="139" class="c-n" fill="#12191F">0</text><rect x="78" y="156" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="88" y="175" class="c-k" fill="#C06014">FP</text><text x="88" y="203" class="c-n" fill="#12191F">0</text><rect x="168" y="156" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="178" y="175" class="c-k" fill="#2D5BD1">TN</text><text x="178" y="203" class="c-n" fill="#12191F">16</text><text x="72" y="126" class="c-k" fill="#6E7880" text-anchor="end">switches</text><text x="72" y="190" class="c-k" fill="#6E7880" text-anchor="end">does not</text><text x="78" y="240" class="c-s" fill="#3A464F">recall</text><text x="254" y="240" class="c-m" fill="#3A464F" text-anchor="end">1.00</text><text x="78" y="260" class="c-s" fill="#3A464F">precision</text><text x="254" y="260" class="c-m" fill="#3A464F" text-anchor="end">1.00</text><line x1="78" y1="265" x2="254" y2="265" stroke="#DDE4E7"/><text x="78" y="280" class="c-s" fill="#12191F">F1</text><text x="254" y="280" class="c-m" fill="#12191F" text-anchor="end">1.00</text><text x="380" y="44" class="c-t" fill="#12191F">Cautious scorer</text><text x="380" y="62" class="c-s" fill="#6E7880">keeps few designs and misses most real switches</text><text x="501" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score keeps</text><text x="591" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score rejects</text><rect x="458" y="92" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="468" y="111" class="c-k" fill="#2D5BD1">TP</text><text x="468" y="139" class="c-n" fill="#12191F">2</text><rect x="548" y="92" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="558" y="111" class="c-k" fill="#C06014">FN</text><text x="558" y="139" class="c-n" fill="#12191F">6</text><rect x="458" y="156" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="468" y="175" class="c-k" fill="#C06014">FP</text><text x="468" y="203" class="c-n" fill="#12191F">2</text><rect x="548" y="156" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="558" y="175" class="c-k" fill="#2D5BD1">TN</text><text x="558" y="203" class="c-n" fill="#12191F">14</text><text x="452" y="126" class="c-k" fill="#6E7880" text-anchor="end">switches</text><text x="452" y="190" class="c-k" fill="#6E7880" text-anchor="end">does not</text><text x="458" y="240" class="c-s" fill="#3A464F">recall</text><text x="634" y="240" class="c-m" fill="#3A464F" text-anchor="end">0.25</text><text x="458" y="260" class="c-s" fill="#3A464F">precision</text><text x="634" y="260" class="c-m" fill="#3A464F" text-anchor="end">0.50</text><line x1="458" y1="265" x2="634" y2="265" stroke="#DDE4E7"/><text x="458" y="280" class="c-s" fill="#12191F">F1</text><text x="634" y="280" class="c-m" fill="#12191F" text-anchor="end">0.33</text><text x="760" y="44" class="c-t" fill="#12191F">Permissive scorer</text><text x="760" y="62" class="c-s" fill="#6E7880">finds most real switches, but nearly everything it keeps is a dud</text><text x="881" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score keeps</text><text x="971" y="84" class="c-k" fill="#6E7880" text-anchor="middle">score rejects</text><rect x="838" y="92" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="848" y="111" class="c-k" fill="#2D5BD1">TP</text><text x="848" y="139" class="c-n" fill="#12191F">6</text><rect x="928" y="92" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="938" y="111" class="c-k" fill="#C06014">FN</text><text x="938" y="139" class="c-n" fill="#12191F">2</text><rect x="838" y="156" width="86" height="60" rx="2" fill="#FCF4EC" stroke="#DDE4E7"/><text x="848" y="175" class="c-k" fill="#C06014">FP</text><text x="848" y="203" class="c-n" fill="#12191F">15</text><rect x="928" y="156" width="86" height="60" rx="2" fill="#F2F7F6" stroke="#DDE4E7"/><text x="938" y="175" class="c-k" fill="#2D5BD1">TN</text><text x="938" y="203" class="c-n" fill="#12191F">1</text><text x="832" y="126" class="c-k" fill="#6E7880" text-anchor="end">switches</text><text x="832" y="190" class="c-k" fill="#6E7880" text-anchor="end">does not</text><text x="838" y="240" class="c-s" fill="#3A464F">recall</text><text x="1014" y="240" class="c-m" fill="#3A464F" text-anchor="end">0.75</text><text x="838" y="260" class="c-s" fill="#3A464F">precision</text><text x="1014" y="260" class="c-m" fill="#3A464F" text-anchor="end">0.29</text><line x1="838" y1="265" x2="1014" y2="265" stroke="#DDE4E7"/><text x="838" y="280" class="c-s" fill="#12191F">F1</text><text x="1014" y="280" class="c-m" fill="#12191F" text-anchor="end">0.41</text><rect x="0" y="300" width="1120" height="54" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="322" class="c-t" fill="#12191F">F1 rises only when recall and precision are high together.</text><text x="16" y="342" class="c-s" fill="#3A464F">Both imperfect scorers look defensible on one metric and fail on F1. A score that keeps almost nothing and one that keeps almost everything are both useless, and a single headline number hides which failure you have.</text></svg></div>
+<div class="note warn"><b>The batch has to include designs the pipeline rejected.</b> If only
+top-ranked candidates are made, every measurement lands in the left-hand column: TP and FP can be
+counted, so precision is computable, but FN cannot, so recall is not. Spending perhaps a quarter of
+the batch on designs the score rejected is what turns a hit list into a validation set.</div>
+<div class="note"><b>Beyond that, the labels become training data.</b> At around a hundred measured
+constructs the measurements stop being only a scorecard and start being a dataset: a binary label —
+does it switch — against the sequence and structure representations already computed for every
+candidate. That is the point at which a learned scorer can replace a hand-built one, and it is the
+reason the representations are stored for designs that were never made.</div>
+</section>
+
+<section class="sec" id="s18" data-slide="18 / 18">
 <div class="stack"><div class="eyebrow">References</div><h2>Sources</h2></div>
 <ul class="ref">
 <li>Damsbo A. <i>et al.</i> Co-crystal of VHH TPL1158_01_C09 with α-cobratoxin.
@@ -684,7 +719,7 @@ language model. <i>Science</i> 379:1123–1130 (2023).
 
 <footer>Figures and values generated by the analysis code. Structural data from the RCSB Protein
 Data Bank.</footer>
-<nav class="navbar"><div class="inner"><div class="dots"><a href="#s1" data-s="1">01</a><a href="#s2" data-s="2">02</a><a href="#s3" data-s="3">03</a><a href="#s4" data-s="4">04</a><a href="#s5" data-s="5">05</a><a href="#s6" data-s="6">06</a><a href="#s7" data-s="7">07</a><a href="#s8" data-s="8">08</a><a href="#s9" data-s="9">09</a><a href="#s10" data-s="10">10</a><a href="#s11" data-s="11">11</a><a href="#s12" data-s="12">12</a><a href="#s13" data-s="13">13</a><a href="#s14" data-s="14">14</a><a href="#s15" data-s="15">15</a><a href="#s16" data-s="16">16</a></div><span class="hint">← → to move</span></div></nav><script>(function(){var secs=[].slice.call(document.querySelectorAll("section.sec"));var dots=[].slice.call(document.querySelectorAll(".navbar .dots a"));function mark(){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});dots.forEach(function(d,i){d.setAttribute("aria-current",i===k?"true":"false");});}function go(d){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});var t=Math.max(0,Math.min(secs.length-1,k+d));window.scrollTo({top:secs[t].offsetTop-40,behavior:"smooth"});}document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1);}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1);}});window.addEventListener("scroll",mark,{passive:true});mark();})();</script></div>
+<nav class="navbar"><div class="inner"><div class="dots"><a href="#s1" data-s="1">01</a><a href="#s2" data-s="2">02</a><a href="#s3" data-s="3">03</a><a href="#s4" data-s="4">04</a><a href="#s5" data-s="5">05</a><a href="#s6" data-s="6">06</a><a href="#s7" data-s="7">07</a><a href="#s8" data-s="8">08</a><a href="#s9" data-s="9">09</a><a href="#s10" data-s="10">10</a><a href="#s11" data-s="11">11</a><a href="#s12" data-s="12">12</a><a href="#s13" data-s="13">13</a><a href="#s14" data-s="14">14</a><a href="#s15" data-s="15">15</a><a href="#s16" data-s="16">16</a><a href="#s17" data-s="17">17</a><a href="#s18" data-s="18">18</a></div><span class="hint">← → to move</span></div></nav><script>(function(){var secs=[].slice.call(document.querySelectorAll("section.sec"));var dots=[].slice.call(document.querySelectorAll(".navbar .dots a"));function mark(){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});dots.forEach(function(d,i){d.setAttribute("aria-current",i===k?"true":"false");});}function go(d){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});var t=Math.max(0,Math.min(secs.length-1,k+d));window.scrollTo({top:secs[t].offsetTop-40,behavior:"smooth"});}document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1);}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1);}});window.addEventListener("scroll",mark,{passive:true});mark();})();</script></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>

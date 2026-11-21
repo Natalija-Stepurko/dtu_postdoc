@@ -1,0 +1,1454 @@
+{
+  "front": [
+    {
+      "feasibility": 0.395,
+      "id": "mpnn092_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.0044
+    },
+    {
+      "feasibility": 0.343,
+      "id": "mpnn065_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 0.957,
+      "unmasking": 0.0107
+    },
+    {
+      "feasibility": 0.322,
+      "id": "mpnn075_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 0.974,
+      "unmasking": 0.0104
+    },
+    {
+      "feasibility": 0.244,
+      "id": "epi2_L5",
+      "kind": "epitope graft",
+      "linker_residues": 5,
+      "mask": "epi2",
+      "on_front": true,
+      "trigger": 0.979,
+      "unmasking": 0.0066
+    },
+    {
+      "feasibility": 0.193,
+      "id": "mpnn061_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.006
+    },
+    {
+      "feasibility": 0.155,
+      "id": "epi1_noCys_L5",
+      "kind": "epitope graft",
+      "linker_residues": 5,
+      "mask": "epi1_noCys",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.0309
+    },
+    {
+      "feasibility": 0.178,
+      "id": "mpnn089_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.0063
+    },
+    {
+      "feasibility": 0.401,
+      "id": "mpnn049_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": true,
+      "trigger": 0.621,
+      "unmasking": 0.0293
+    },
+    {
+      "feasibility": 0.364,
+      "id": "mpnn053_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.431,
+      "unmasking": 0.0867
+    },
+    {
+      "feasibility": 0.161,
+      "id": "mpnn048_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": true,
+      "trigger": 0.648,
+      "unmasking": 0.0154
+    },
+    {
+      "feasibility": 0.182,
+      "id": "mpnn046_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.505,
+      "unmasking": 0.1046
+    },
+    {
+      "feasibility": 0.178,
+      "id": "mpnn056_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.492,
+      "unmasking": 0.1182
+    },
+    {
+      "feasibility": 0.162,
+      "id": "mpnn047_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.506,
+      "unmasking": 0.1046
+    },
+    {
+      "feasibility": 0.185,
+      "id": "mpnn027_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.536,
+      "unmasking": 0.0501
+    },
+    {
+      "feasibility": 0.18,
+      "id": "polyG_L15",
+      "kind": "inert control",
+      "linker_residues": 15,
+      "mask": "polyG",
+      "on_front": true,
+      "trigger": 0.507,
+      "unmasking": 0.0773
+    },
+    {
+      "feasibility": 0.17,
+      "id": "mpnn035_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.519,
+      "unmasking": 0.0563
+    },
+    {
+      "feasibility": 0.186,
+      "id": "mpnn077_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.469,
+      "unmasking": 0.0697
+    },
+    {
+      "feasibility": 0.184,
+      "id": "mpnn041_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.462,
+      "unmasking": 0.0751
+    },
+    {
+      "feasibility": 0.201,
+      "id": "epi1_half_L10",
+      "kind": "truncated control",
+      "linker_residues": 10,
+      "mask": "epi1_half",
+      "on_front": true,
+      "trigger": 0.483,
+      "unmasking": 0.0361
+    },
+    {
+      "feasibility": 0.187,
+      "id": "mpnn050_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.445,
+      "unmasking": 0.0845
+    },
+    {
+      "feasibility": 0.189,
+      "id": "mpnn036_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.461,
+      "unmasking": 0.0463
+    }
+  ],
+  "n_front": 21,
+  "n_total": 123,
+  "note": "a design is kept unless another is at least as good on every objective and better on one; no weights are applied",
+  "objectives": [
+    "feasibility",
+    "trigger",
+    "unmasking"
+  ],
+  "rows": [
+    {
+      "feasibility": 0.0,
+      "id": "epi1_L5",
+      "kind": "epitope graft",
+      "linker_residues": 5,
+      "mask": "epi1",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0085
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_L10",
+      "kind": "epitope graft",
+      "linker_residues": 10,
+      "mask": "epi1",
+      "on_front": false,
+      "trigger": 0.453,
+      "unmasking": 0.0588
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_L15",
+      "kind": "epitope graft",
+      "linker_residues": 15,
+      "mask": "epi1",
+      "on_front": false,
+      "trigger": 0.258,
+      "unmasking": 0.0781
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_L20",
+      "kind": "epitope graft",
+      "linker_residues": 20,
+      "mask": "epi1",
+      "on_front": false,
+      "trigger": 0.153,
+      "unmasking": 0.0608
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_L30",
+      "kind": "epitope graft",
+      "linker_residues": 30,
+      "mask": "epi1",
+      "on_front": false,
+      "trigger": 0.102,
+      "unmasking": 0.0635
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_scram_L5",
+      "kind": "scrambled control",
+      "linker_residues": 5,
+      "mask": "epi1_scram",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0261
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_scram_L10",
+      "kind": "scrambled control",
+      "linker_residues": 10,
+      "mask": "epi1_scram",
+      "on_front": false,
+      "trigger": 0.661,
+      "unmasking": 0.0171
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_scram_L15",
+      "kind": "scrambled control",
+      "linker_residues": 15,
+      "mask": "epi1_scram",
+      "on_front": false,
+      "trigger": 0.449,
+      "unmasking": 0.042
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_scram_L20",
+      "kind": "scrambled control",
+      "linker_residues": 20,
+      "mask": "epi1_scram",
+      "on_front": false,
+      "trigger": 0.134,
+      "unmasking": 0.0708
+    },
+    {
+      "feasibility": 0.0,
+      "id": "epi1_scram_L30",
+      "kind": "scrambled control",
+      "linker_residues": 30,
+      "mask": "epi1_scram",
+      "on_front": false,
+      "trigger": 0.168,
+      "unmasking": 0.0845
+    },
+    {
+      "feasibility": 0.189,
+      "id": "epi1_half_L5",
+      "kind": "truncated control",
+      "linker_residues": 5,
+      "mask": "epi1_half",
+      "on_front": false,
+      "trigger": 0.993,
+      "unmasking": -0.001
+    },
+    {
+      "feasibility": 0.201,
+      "id": "epi1_half_L10",
+      "kind": "truncated control",
+      "linker_residues": 10,
+      "mask": "epi1_half",
+      "on_front": true,
+      "trigger": 0.483,
+      "unmasking": 0.0361
+    },
+    {
+      "feasibility": 0.096,
+      "id": "epi1_half_L15",
+      "kind": "truncated control",
+      "linker_residues": 15,
+      "mask": "epi1_half",
+      "on_front": false,
+      "trigger": 0.443,
+      "unmasking": 0.0486
+    },
+    {
+      "feasibility": 0.087,
+      "id": "epi1_half_L20",
+      "kind": "truncated control",
+      "linker_residues": 20,
+      "mask": "epi1_half",
+      "on_front": false,
+      "trigger": 0.426,
+      "unmasking": 0.0191
+    },
+    {
+      "feasibility": 0.086,
+      "id": "epi1_half_L30",
+      "kind": "truncated control",
+      "linker_residues": 30,
+      "mask": "epi1_half",
+      "on_front": false,
+      "trigger": 0.253,
+      "unmasking": 0.0238
+    },
+    {
+      "feasibility": 0.244,
+      "id": "epi2_L5",
+      "kind": "epitope graft",
+      "linker_residues": 5,
+      "mask": "epi2",
+      "on_front": true,
+      "trigger": 0.979,
+      "unmasking": 0.0066
+    },
+    {
+      "feasibility": 0.195,
+      "id": "epi2_L10",
+      "kind": "epitope graft",
+      "linker_residues": 10,
+      "mask": "epi2",
+      "on_front": false,
+      "trigger": 0.678,
+      "unmasking": 0.0059
+    },
+    {
+      "feasibility": 0.182,
+      "id": "epi2_L15",
+      "kind": "epitope graft",
+      "linker_residues": 15,
+      "mask": "epi2",
+      "on_front": false,
+      "trigger": 0.59,
+      "unmasking": 0.0039
+    },
+    {
+      "feasibility": 0.18,
+      "id": "epi2_L20",
+      "kind": "epitope graft",
+      "linker_residues": 20,
+      "mask": "epi2",
+      "on_front": false,
+      "trigger": 0.498,
+      "unmasking": 0.0067
+    },
+    {
+      "feasibility": 0.18,
+      "id": "epi2_L30",
+      "kind": "epitope graft",
+      "linker_residues": 30,
+      "mask": "epi2",
+      "on_front": false,
+      "trigger": 0.256,
+      "unmasking": 0.0534
+    },
+    {
+      "feasibility": 0.155,
+      "id": "epi1_noCys_L5",
+      "kind": "epitope graft",
+      "linker_residues": 5,
+      "mask": "epi1_noCys",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.0309
+    },
+    {
+      "feasibility": 0.171,
+      "id": "epi1_noCys_L10",
+      "kind": "epitope graft",
+      "linker_residues": 10,
+      "mask": "epi1_noCys",
+      "on_front": false,
+      "trigger": 0.409,
+      "unmasking": 0.0599
+    },
+    {
+      "feasibility": 0.168,
+      "id": "epi1_noCys_L15",
+      "kind": "epitope graft",
+      "linker_residues": 15,
+      "mask": "epi1_noCys",
+      "on_front": false,
+      "trigger": 0.357,
+      "unmasking": 0.0648
+    },
+    {
+      "feasibility": 0.164,
+      "id": "epi1_noCys_L20",
+      "kind": "epitope graft",
+      "linker_residues": 20,
+      "mask": "epi1_noCys",
+      "on_front": false,
+      "trigger": 0.28,
+      "unmasking": 0.0524
+    },
+    {
+      "feasibility": 0.177,
+      "id": "epi1_noCys_L30",
+      "kind": "epitope graft",
+      "linker_residues": 30,
+      "mask": "epi1_noCys",
+      "on_front": false,
+      "trigger": 0.131,
+      "unmasking": 0.0508
+    },
+    {
+      "feasibility": 0.189,
+      "id": "polyG_L5",
+      "kind": "inert control",
+      "linker_residues": 5,
+      "mask": "polyG",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": -0.0029
+    },
+    {
+      "feasibility": 0.176,
+      "id": "polyG_L10",
+      "kind": "inert control",
+      "linker_residues": 10,
+      "mask": "polyG",
+      "on_front": false,
+      "trigger": 0.635,
+      "unmasking": 0.003
+    },
+    {
+      "feasibility": 0.18,
+      "id": "polyG_L15",
+      "kind": "inert control",
+      "linker_residues": 15,
+      "mask": "polyG",
+      "on_front": true,
+      "trigger": 0.507,
+      "unmasking": 0.0773
+    },
+    {
+      "feasibility": 0.176,
+      "id": "polyG_L20",
+      "kind": "inert control",
+      "linker_residues": 20,
+      "mask": "polyG",
+      "on_front": false,
+      "trigger": 0.398,
+      "unmasking": 0.0891
+    },
+    {
+      "feasibility": 0.181,
+      "id": "polyG_L30",
+      "kind": "inert control",
+      "linker_residues": 30,
+      "mask": "polyG",
+      "on_front": false,
+      "trigger": 0.209,
+      "unmasking": 0.0349
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn000_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0125
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn001_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.986,
+      "unmasking": 0.0093
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn002_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.949,
+      "unmasking": 0.0075
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn003_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.943,
+      "unmasking": 0.0127
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn004_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.969,
+      "unmasking": 0.0077
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn005_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.967,
+      "unmasking": 0.0134
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn006_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.946,
+      "unmasking": 0.0123
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn007_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.936,
+      "unmasking": 0.0115
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn008_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.944,
+      "unmasking": 0.0123
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn009_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.947,
+      "unmasking": 0.0099
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn010_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.981,
+      "unmasking": 0.0276
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn011_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.955,
+      "unmasking": -0.0017
+    },
+    {
+      "feasibility": 0.136,
+      "id": "mpnn012_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0185
+    },
+    {
+      "feasibility": 0.12,
+      "id": "mpnn013_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.272,
+      "unmasking": 0.0135
+    },
+    {
+      "feasibility": 0.108,
+      "id": "mpnn014_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.262,
+      "unmasking": 0.014
+    },
+    {
+      "feasibility": 0.105,
+      "id": "mpnn015_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.354,
+      "unmasking": 0.0151
+    },
+    {
+      "feasibility": 0.125,
+      "id": "mpnn016_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.401,
+      "unmasking": 0.0071
+    },
+    {
+      "feasibility": 0.109,
+      "id": "mpnn017_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.366,
+      "unmasking": 0.0111
+    },
+    {
+      "feasibility": 0.135,
+      "id": "mpnn018_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.327,
+      "unmasking": 0.0665
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn019_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.961,
+      "unmasking": 0.0147
+    },
+    {
+      "feasibility": 0.163,
+      "id": "mpnn020_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.49,
+      "unmasking": 0.0612
+    },
+    {
+      "feasibility": 0.18,
+      "id": "mpnn021_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.503,
+      "unmasking": 0.0419
+    },
+    {
+      "feasibility": 0.117,
+      "id": "mpnn022_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.357,
+      "unmasking": 0.0152
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn023_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0028
+    },
+    {
+      "feasibility": 0.18,
+      "id": "mpnn024_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.496,
+      "unmasking": 0.0723
+    },
+    {
+      "feasibility": 0.084,
+      "id": "mpnn025_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": -0.0001
+    },
+    {
+      "feasibility": 0.166,
+      "id": "mpnn026_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.531,
+      "unmasking": 0.0268
+    },
+    {
+      "feasibility": 0.185,
+      "id": "mpnn027_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.536,
+      "unmasking": 0.0501
+    },
+    {
+      "feasibility": 0.173,
+      "id": "mpnn028_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.47,
+      "unmasking": 0.082
+    },
+    {
+      "feasibility": 0.133,
+      "id": "mpnn029_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.367,
+      "unmasking": 0.0439
+    },
+    {
+      "feasibility": 0.133,
+      "id": "mpnn030_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.361,
+      "unmasking": 0.0167
+    },
+    {
+      "feasibility": 0.177,
+      "id": "mpnn031_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.471,
+      "unmasking": 0.0827
+    },
+    {
+      "feasibility": 0.135,
+      "id": "mpnn032_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.015
+    },
+    {
+      "feasibility": 0.107,
+      "id": "mpnn033_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.363,
+      "unmasking": 0.0044
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn034_epi1_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_L5",
+      "on_front": false,
+      "trigger": 0.974,
+      "unmasking": 0.0168
+    },
+    {
+      "feasibility": 0.17,
+      "id": "mpnn035_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.519,
+      "unmasking": 0.0563
+    },
+    {
+      "feasibility": 0.189,
+      "id": "mpnn036_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.461,
+      "unmasking": 0.0463
+    },
+    {
+      "feasibility": 0.11,
+      "id": "mpnn037_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.306,
+      "unmasking": 0.0139
+    },
+    {
+      "feasibility": 0.163,
+      "id": "mpnn038_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.534,
+      "unmasking": 0.0469
+    },
+    {
+      "feasibility": 0.103,
+      "id": "mpnn039_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.444,
+      "unmasking": 0.0159
+    },
+    {
+      "feasibility": 0.187,
+      "id": "mpnn040_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": false,
+      "trigger": 0.976,
+      "unmasking": 0.0062
+    },
+    {
+      "feasibility": 0.184,
+      "id": "mpnn041_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.462,
+      "unmasking": 0.0751
+    },
+    {
+      "feasibility": 0.15,
+      "id": "mpnn042_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.453,
+      "unmasking": 0.016
+    },
+    {
+      "feasibility": 0.135,
+      "id": "mpnn043_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.308,
+      "unmasking": 0.0219
+    },
+    {
+      "feasibility": 0.144,
+      "id": "mpnn044_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.465,
+      "unmasking": 0.0237
+    },
+    {
+      "feasibility": 0.118,
+      "id": "mpnn045_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.294,
+      "unmasking": 0.0845
+    },
+    {
+      "feasibility": 0.182,
+      "id": "mpnn046_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.505,
+      "unmasking": 0.1046
+    },
+    {
+      "feasibility": 0.162,
+      "id": "mpnn047_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.506,
+      "unmasking": 0.1046
+    },
+    {
+      "feasibility": 0.161,
+      "id": "mpnn048_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": true,
+      "trigger": 0.648,
+      "unmasking": 0.0154
+    },
+    {
+      "feasibility": 0.401,
+      "id": "mpnn049_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": true,
+      "trigger": 0.621,
+      "unmasking": 0.0293
+    },
+    {
+      "feasibility": 0.187,
+      "id": "mpnn050_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.445,
+      "unmasking": 0.0845
+    },
+    {
+      "feasibility": 0.092,
+      "id": "mpnn051_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.433,
+      "unmasking": 0.0046
+    },
+    {
+      "feasibility": 0.185,
+      "id": "mpnn052_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": false,
+      "trigger": 0.953,
+      "unmasking": 0.0055
+    },
+    {
+      "feasibility": 0.364,
+      "id": "mpnn053_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.431,
+      "unmasking": 0.0867
+    },
+    {
+      "feasibility": 0.148,
+      "id": "mpnn054_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.415,
+      "unmasking": 0.0976
+    },
+    {
+      "feasibility": 0.15,
+      "id": "mpnn055_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.917,
+      "unmasking": 0.0055
+    },
+    {
+      "feasibility": 0.178,
+      "id": "mpnn056_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.492,
+      "unmasking": 0.1182
+    },
+    {
+      "feasibility": 0.153,
+      "id": "mpnn057_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.248,
+      "unmasking": 0.0665
+    },
+    {
+      "feasibility": 0.151,
+      "id": "mpnn058_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0082
+    },
+    {
+      "feasibility": 0.176,
+      "id": "mpnn059_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.971,
+      "unmasking": 0.0078
+    },
+    {
+      "feasibility": 0.171,
+      "id": "mpnn060_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.451,
+      "unmasking": 0.0729
+    },
+    {
+      "feasibility": 0.193,
+      "id": "mpnn061_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.006
+    },
+    {
+      "feasibility": 0.159,
+      "id": "mpnn062_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.914,
+      "unmasking": 0.0043
+    },
+    {
+      "feasibility": 0.0,
+      "id": "mpnn063_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.506,
+      "unmasking": 0.0285
+    },
+    {
+      "feasibility": 0.14,
+      "id": "mpnn064_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.368,
+      "unmasking": 0.0039
+    },
+    {
+      "feasibility": 0.343,
+      "id": "mpnn065_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 0.957,
+      "unmasking": 0.0107
+    },
+    {
+      "feasibility": 0.164,
+      "id": "mpnn066_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.963,
+      "unmasking": 0.0051
+    },
+    {
+      "feasibility": 0.343,
+      "id": "mpnn067_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": false,
+      "trigger": 0.947,
+      "unmasking": 0.0035
+    },
+    {
+      "feasibility": 0.148,
+      "id": "mpnn068_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.988,
+      "unmasking": 0.008
+    },
+    {
+      "feasibility": 0.152,
+      "id": "mpnn069_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.288,
+      "unmasking": 0.049
+    },
+    {
+      "feasibility": 0.135,
+      "id": "mpnn070_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": false,
+      "trigger": 0.481,
+      "unmasking": 0.0575
+    },
+    {
+      "feasibility": 0.144,
+      "id": "mpnn071_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.625,
+      "unmasking": 0.0046
+    },
+    {
+      "feasibility": 0.162,
+      "id": "mpnn072_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.933,
+      "unmasking": 0.0045
+    },
+    {
+      "feasibility": 0.111,
+      "id": "mpnn073_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.983,
+      "unmasking": 0.0067
+    },
+    {
+      "feasibility": 0.139,
+      "id": "mpnn074_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 0.953,
+      "unmasking": 0.0071
+    },
+    {
+      "feasibility": 0.322,
+      "id": "mpnn075_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 0.974,
+      "unmasking": 0.0104
+    },
+    {
+      "feasibility": 0.098,
+      "id": "mpnn076_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.455,
+      "unmasking": 0.0154
+    },
+    {
+      "feasibility": 0.186,
+      "id": "mpnn077_epi1_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi1_L10",
+      "on_front": true,
+      "trigger": 0.469,
+      "unmasking": 0.0697
+    },
+    {
+      "feasibility": 0.141,
+      "id": "mpnn078_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.666,
+      "unmasking": -0.0008
+    },
+    {
+      "feasibility": 0.14,
+      "id": "mpnn079_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0076
+    },
+    {
+      "feasibility": 0.123,
+      "id": "mpnn080_epi1_L20",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 20,
+      "mask": "mpnn_epi1_L20",
+      "on_front": false,
+      "trigger": 0.301,
+      "unmasking": 0.0124
+    },
+    {
+      "feasibility": 0.167,
+      "id": "mpnn081_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.606,
+      "unmasking": 0.005
+    },
+    {
+      "feasibility": 0.309,
+      "id": "mpnn082_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": false,
+      "trigger": 0.905,
+      "unmasking": 0.0054
+    },
+    {
+      "feasibility": 0.154,
+      "id": "mpnn083_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0053
+    },
+    {
+      "feasibility": 0.156,
+      "id": "mpnn084_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.698,
+      "unmasking": 0.0029
+    },
+    {
+      "feasibility": 0.16,
+      "id": "mpnn085_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.605,
+      "unmasking": -0.0027
+    },
+    {
+      "feasibility": 0.138,
+      "id": "mpnn086_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.661,
+      "unmasking": 0.0009
+    },
+    {
+      "feasibility": 0.146,
+      "id": "mpnn087_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": false,
+      "trigger": 1.0,
+      "unmasking": 0.0109
+    },
+    {
+      "feasibility": 0.16,
+      "id": "mpnn088_epi2_L10",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 10,
+      "mask": "mpnn_epi2_L10",
+      "on_front": false,
+      "trigger": 0.662,
+      "unmasking": -0.0015
+    },
+    {
+      "feasibility": 0.178,
+      "id": "mpnn089_epi1_half_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi1_half_L5",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.0063
+    },
+    {
+      "feasibility": 0.338,
+      "id": "mpnn090_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": false,
+      "trigger": 0.974,
+      "unmasking": 0.0044
+    },
+    {
+      "feasibility": 0.152,
+      "id": "mpnn091_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": false,
+      "trigger": 0.96,
+      "unmasking": 0.0007
+    },
+    {
+      "feasibility": 0.395,
+      "id": "mpnn092_epi2_L5",
+      "kind": "ProteinMPNN redesign",
+      "linker_residues": 5,
+      "mask": "mpnn_epi2_L5",
+      "on_front": true,
+      "trigger": 1.0,
+      "unmasking": 0.0044
+    }
+  ]
+}

@@ -157,6 +157,10 @@ details.fold>summary:hover b{color:var(--str)}
 .tstep{display:flex;gap:12px;align-items:baseline;margin:26px 0 2px}
 .tstep b{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--chrome)}
 .tstep span{font-size:1rem;color:var(--ink);font-weight:600}
+.stat-tag{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:.07em;
+  text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;
+  white-space:nowrap}
+h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55rem}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -675,8 +679,8 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 
 def architecture_schematic() -> str:
-    """The design, stated as modules rather than as one worked example."""
-    W, H = 1120, 492
+    """The computational pipeline. Three scores, then one stage that combines them."""
+    W, H = 1120, 430
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
          f'role="img" aria-label="Pipeline architecture">',
          '<defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" '
@@ -690,7 +694,6 @@ def architecture_schematic() -> str:
          '.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}'
          '.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}'
          '.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
-         '.d-edge{font:10px ui-monospace,monospace;letter-spacing:.04em}'
          '</style>']
 
     def mod(x, y, w, h, accent, num, title, role, slots, tag, tagcol, dashed=False):
@@ -713,80 +716,56 @@ def architecture_schematic() -> str:
         return "".join(o)
 
     s.append(f'<text x="0" y="13" class="a-h" fill="{CHROME}">'
-             'THE PIPELINE AS A SET OF MODULES</text>')
+             'THE COMPUTATIONAL PIPELINE</text>')
 
-    s.append(mod(0, 26, 340, 162, CHROME, "00", "Constrain", [
-        "Measure the target complex. Where is the",
-        "binding site, and how far is each terminus",
-        "from it? Price the tether: what mask affinity",
-        "could work at all?",
-    ], ["slot: any experimental or predicted complex"], "DECIDES THE SEARCH SPACE", CHROME))
+    s.append(mod(0, 26, 538, 120, CHROME, "00", "Constrain", [
+        "Measure the antigen complex, then work out what",
+        "mask affinity and linker length could work at all.",
+    ], ["input: an experimental or predicted complex"], "RUN", CHROME))
 
-    s.append(mod(390, 26, 340, 162, SEQ, "01", "Generate", [
-        "Propose mask and linker candidates.",
-        "Unconditional, conditioned on the site, or",
-        "evolved from something that already works.",
-    ], ["slot: graft · ProteinMPNN · RFdiffusion",
-        "slot: BindCraft · peptide models"], "SWAPPABLE", INK3))
+    s.append(mod(582, 26, 538, 120, SEQ, "01", "Generate", [
+        "Propose mask sequences and linkers inside the",
+        "range the previous stage allows.",
+    ], ["graft \u00b7 ProteinMPNN \u00b7 RFdiffusion \u00b7 BindCraft"], "RUN", CHROME))
 
-    s.append(mod(780, 26, 340, 162, STR, "02a", "Score the trigger", [
-        "Does the environment open the switch here,",
-        "and leave it shut everywhere else?",
-        "Selectivity is the quantity, not cleavability.",
-    ], ["slot: protease · pH · metal ion",
-        "needs: cleavage or titration data"], "NOT BUILT", STR))
+    # three scores, equal weight, side by side
+    for n, (num, title, role, slots, tag, col) in enumerate([
+        ("02", "Score: can it be made", [
+            "Does it fold, does the nanobody survive the",
+            "fusion, is the surface a liability?",
+        ], ["ESMFold confidence \u00b7 core RMSD",
+            "exposed hydrophobic \u00b7 free cysteine"], "RUN", CHROME),
+        ("03", "Score: can it be cut", [
+            "Is the linker reachable and extended, and does",
+            "this protease recognise this sequence?",
+        ], ["accessibility: run",
+            "sequence recognition: needs data"], "HALF BUILT", STR),
+        ("04", "Score: does it mask", [
+            "Is the site blocked while tethered, and does the",
+            "antigen return once the tether is cut?",
+        ], ["occlusion: does not separate",
+            "tethered complex: run"], "PART RUN", STR),
+    ]):
+        s.append(mod(n * 380, 176, 358, 134, SEQ, num, title, role, slots, tag, col))
 
-    s.append(mod(390, 222, 340, 162, SEQ, "02b", "Score the binding", [
-        "Two states, not one. Is the site covered",
-        "while tethered, and can the target still bind",
-        "once the tether is cut?",
-    ], ["slot: ESMFold occlusion · tether model",
-        "slot: Boltz-2 · Chai-1 complex"], "BUILT", CHROME))
-
-    s.append(mod(780, 222, 340, 162, SEQ, "03", "Rank", [
-        "Combine the scores without averaging them.",
-        "Keep the trade-offs visible and the surviving",
-        "designs structurally different.",
-    ], ["slot: Pareto front · uncertainty-aware"], "PARTIAL", STR))
-
-    s.append(mod(0, 222, 340, 162, CHROME, "04", "Measure, then learn", [
-        "Top candidates are expressed and measured.",
-        "What comes back is the only data that can",
-        "train the scorers, and it arrives slowly.",
-    ], ["20-30 results: a validation set",
-        "~100: optimisation · 100-1000: training"], "THE RATE LIMIT", CHROME))
-
-    s.append(_arrow(340, 107, 384, 107))
-    s.append(f'<text x="362" y="98" class="a-e" fill="{INK3}" text-anchor="middle">'
-             'candidates</text>')
-    s.append(_arrow(730, 107, 774, 107))
-    s.append(f'<path d="M 560 188 L 560 216" stroke="{NULL}" stroke-width="1.4" '
+    # Generate feeds all three scores through one bus
+    s.append(f'<path d="M 851 146 L 851 158" stroke="{NULL}" stroke-width="1.4" fill="none"/>')
+    s.append(f'<path d="M 179 158 L 939 158" stroke="{NULL}" stroke-width="1.4" '
+             f'fill="none"/>')
+    for n in range(3):
+        s.append(f'<path d="M {n*380+179} 158 L {n*380+179} 170" stroke="{NULL}" '
+                 f'stroke-width="1.4" fill="none" marker-end="url(#ah4)"/>')
+    s.append(mod(291, 340, 538, 76, CHROME, "05", "Combine", [
+        "Keep a design unless another beats it on every score. No weights.",
+    ], [], "RUN", CHROME))
+    for n in range(3):
+        s.append(f'<path d="M {n*380+179} 310 L {n*380+179} 326 L 560 326 L 560 336" '
+                 f'stroke="{NULL}" stroke-width="1.4" fill="none" '
+                 f'marker-end="url(#ah4)"/>' if n != 1 else
+                 f'<path d="M 560 310 L 560 336" stroke="{NULL}" stroke-width="1.4" '
+                 f'fill="none" marker-end="url(#ah4)"/>')
+    s.append(f'<path d="M 538 86 L 576 86" stroke="{NULL}" stroke-width="1.4" '
              f'fill="none" marker-end="url(#ah4)"/>')
-    s.append(_arrow(730, 303, 774, 303))
-    s.append(f'<text x="752" y="294" class="a-e" fill="{INK3}" text-anchor="middle">'
-             'scores</text>')
-    s.append(f'<path d="M 950 188 L 950 216" stroke="{STR}" stroke-width="1.4" '
-             f'fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/>')
-    # ranked candidates leave the loop along the bottom, clear of every box
-    s.append(f'<path d="M 950 384 L 950 404 L 170 404 L 170 390" stroke="{CHROME}" '
-             f'stroke-width="1.4" fill="none" marker-end="url(#ah4)"/>')
-    s.append(f'<text x="560" y="399" class="a-e" fill="{CHROME}" text-anchor="middle">'
-             'top candidates go to the lab</text>')
-    # measurements return along the gap between the two rows
-    s.append(f'<path d="M 170 222 L 170 204 L 560 204 L 560 192" stroke="{CHROME}" '
-             f'stroke-width="1.4" fill="none" stroke-dasharray="5 4" '
-             f'marker-end="url(#ah4)"/>')
-    s.append(f'<text x="365" y="199" class="a-e" fill="{CHROME}" text-anchor="middle">'
-             'measurements retrain the scorers</text>')
-
-    s.append(f'<rect x="0" y="424" width="{W}" height="62" rx="3" fill="#FFFFFF" '
-             f'stroke="{RULE}"/>')
-    s.append(f'<text x="16" y="447" class="a-i" fill="{INK}">'
-             '<tspan font-weight="600">What makes it transferable:</tspan> every module takes '
-             'the same inputs and returns the same kind of score.</text>')
-    s.append(f'<text x="16" y="468" class="a-i" fill="{INK2}">'
-             'The trigger can change from protease to pH, or the generator from a graft to a '
-             'diffusion model, without touching anything else.</text>')
     s.append("</svg>")
     return "".join(s)
 
@@ -981,11 +960,13 @@ def scale_section() -> str:
     cm = _confusion_matrix()
     return f"""
 <section class="sec">
-<div class="stack"><div class="eyebrow">Scale</div>
-<h2>What the campaign costs, and how the lab shrinks it</h2>
-<p>The counts below are projections, not results. They come from published hit rates for binder
-design — which for conditional binders are far lower than for ordinary ones — and the compute is
-scaled from runtimes measured on this machine.</p></div>
+<div class="stack"><div class="eyebrow">Beyond the pipeline</div>
+<h2>Taking it to the laboratory</h2>
+<p>Everything above is computational. This section is separate from the pipeline because none of it
+has been done, and none of it is part of the design. It sets out how large the campaign would have
+to be and how the first measurements would be used. The counts come from published hit rates for
+binder design, which for conditional binders are far lower than for ordinary binders, and the
+compute is scaled from runtimes measured on this machine.</p></div>
 <div class="chart wide">{funnel}</div>
 <div class="note"><b>Filtering buys time, not success.</b> The RFdiffusion antibody work reports
 that design success was no higher for filtered than for unfiltered designs. The in-silico stages
@@ -1101,3 +1082,37 @@ def _confusion_matrix() -> str:
              'and a single headline number hides which failure you have.</text>')
     s.append("</svg>")
     return "".join(s)
+
+
+#: Every claim on the page is one of these. The tag is shown beside the heading
+#: so the reader never has to infer whether something was done or proposed.
+STATUS = {
+    "run": ("I ran this", "#0E7C7B"),
+    "failed": ("I ran this and it did not work", "#C06014"),
+    "proposed": ("Proposed, not done", "#6E7880"),
+}
+
+
+def status_tag(kind: str) -> str:
+    label, colour = STATUS[kind]
+    return (f'<span class="stat-tag" style="color:{colour};border-color:{colour}">'
+            f'{label}</span>')
+
+
+def status_table(rows) -> str:
+    """One table, near the top, saying what exists and what does not.
+
+    Each row is (what, status key, outcome in one sentence).
+    """
+    body = ""
+    for what, kind, outcome in rows:
+        label, colour = STATUS[kind]
+        body += (f'<tr><td>{what}</td>'
+                 f'<td><span class="stat-tag" style="color:{colour};'
+                 f'border-color:{colour}">{label}</span></td>'
+                 f'<td>{outcome}</td></tr>')
+    return (f'<div class="scroll"><table class="wrap">'
+            f'<colgroup><col style="width:27%"><col style="width:21%">'
+            f'<col style="width:52%"></colgroup>'
+            f'<thead><tr><th>step</th><th>status</th><th>what happened</th></tr></thead>'
+            f'<tbody>{body}</tbody></table></div>')
