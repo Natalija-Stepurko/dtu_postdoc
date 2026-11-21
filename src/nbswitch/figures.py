@@ -272,6 +272,13 @@ def build_all():
     except FileNotFoundError:
         pass
     try:
+        trig = load_json("10_trigger.json")
+        for fig in (cleavability_panel(trig), cleavability_components(trig)):
+            if fig is not None:
+                made.append(fig)
+    except FileNotFoundError:
+        pass
+    try:
         made.append(feasibility_components(load_json("12_feasibility.json")))
     except FileNotFoundError:
         pass
@@ -428,3 +435,59 @@ def feasibility_components(feas):
     ax.set_ylabel("component score"); ax.set_ylim(0, 1.05)
     ax.legend(fontsize=7, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.22))
     return _save(fig, "feasibility_components")
+
+
+def cleavability_panel(trigger):
+    """Recognition against reach: the two halves of the cleavability score.
+
+    A linker has to be both recognised by the protease and physically
+    reachable in the folded construct. Plotting them against each other shows
+    whether the two agree, and the controls say whether either axis is
+    discriminating at all.
+    """
+    plt = _style()
+    rows = [r for r in trigger["results"] if r.get("selectivity") is not None]
+    if not rows:
+        return None
+    fig, ax = plt.subplots(figsize=(5.2, 3.6))
+
+    groups = {}
+    for r in rows:
+        groups.setdefault(r.get("linker_kind", "generated"), []).append(r)
+    style = {"generated": (SEQ, "o", "generated"),
+             "protease-resistant control": (NULL, "s", "Gly/Ser control"),
+             "scrambled control": (CHROME, "^", "scrambled control")}
+    for kind, items in groups.items():
+        colour, marker, label = style.get(kind, (STR, "D", kind))
+        ax.scatter([r["selectivity"] for r in items],
+                   [r["context_score"] for r in items],
+                   s=34, c=colour, marker=marker, linewidths=0, alpha=.85,
+                   label=label, zorder=3)
+
+    ax.axvline(0, color=RULE, lw=1, zorder=1)
+    ax.set_xlabel("sequence recognition  (selectivity, target − off-target)")
+    ax.set_ylabel("reach in the construct")
+    ax.legend(fontsize=7, loc="best", frameon=False)
+    return _save(fig, "cleavability_panel")
+
+
+def cleavability_components(trigger):
+    """The three necessary conditions, per construct, sorted by their product."""
+    plt = _style()
+    rows = sorted(trigger["results"], key=lambda r: -r["context_score"])[:28]
+    if not rows:
+        return None
+    fig, ax = plt.subplots(figsize=(7.4, 3.0))
+    x = np.arange(len(rows))
+    for key, colour, label in (("extension", SEQ, "extension"),
+                               ("exposure", CHROME, "exposure"),
+                               ("clearance_open_fraction", STR, "clearance")):
+        ax.plot(x, [r[key] for r in rows], lw=1.6, color=colour, label=label,
+                solid_capstyle="round")
+    ax.bar(x, [r["context_score"] for r in rows], width=.7, color="#E3E9EC",
+           zorder=0, label="product")
+    ax.set_xticks(x)
+    ax.set_xticklabels([r["id"] for r in rows], rotation=90, fontsize=5.5)
+    ax.set_ylabel("score"); ax.set_ylim(0, 1.05)
+    ax.legend(fontsize=7, ncol=4, loc="upper right", frameon=False)
+    return _save(fig, "cleavability_components")

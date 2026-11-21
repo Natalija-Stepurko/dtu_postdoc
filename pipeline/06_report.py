@@ -306,51 +306,53 @@ else:
 # ---- trigger accessibility ----
 if trigger:
     import numpy as _np
-    _by = {}
-    for _r in trigger["results"]:
-        _by.setdefault(_r["linker_residues"], []).append(_r)
+    _rows_all = trigger["results"]
+    _gen = [r for r in _rows_all if r.get("linker_kind") == "generated"]
+    _ctrl = [r for r in _rows_all if "control" in str(r.get("linker_kind", ""))]
     _win = {r["linker_residues"]: r["window_decades"]
             for r in tether["scan"] if r["terminus"] == "N"}
-    _rows = "".join(
-        f"<tr><td>{n} residues</td><td>{_win.get(n, float('nan')):.2f}</td>"
-        f"<td>{_np.mean([x['fraction_exposed'] for x in g]):.2f}</td>"
-        f"<td>{_np.mean([x['extension_ratio'] for x in g]):.2f}</td>"
-        f"<td>{_np.mean([x['accessibility_score'] for x in g]):.2f}</td></tr>"
-        for n, g in sorted(_by.items()))
-    _short = min(_by)
-    _bestwin = max(_win, key=_win.get)
-    _acc_short = _np.mean([x["accessibility_score"] for x in _by[_short]])
-    _acc_long = _np.mean([x["accessibility_score"] for x in _by[max(_by)]])
+    _bestwin = max(_win, key=_win.get) if _win else 0
+    _len = _gen[0]["linker_residues"] if _gen else 0
+
+    def _mean(rows, key):
+        vals = [r[key] for r in rows if r.get(key) is not None]
+        return float(_np.mean(vals)) if vals else float("nan")
+
+    _parts = "".join(
+        f"<tr><td>{label}</td><td>{len(rows)}</td>"
+        f"<td>{_mean(rows, 'extension'):.2f}</td>"
+        f"<td>{_mean(rows, 'exposure'):.2f}</td>"
+        f"<td>{_mean(rows, 'clearance_open_fraction'):.2f}</td>"
+        f"<td><b>{_mean(rows, 'context_score'):.3f}</b></td></tr>"
+        for label, rows in (("generated substrates", _gen),
+                            ("controls", _ctrl)) if rows)
+
     trigger_html = f"""
 <section class="sec">
 <div class="stack"><div class="eyebrow">Step 03 · can it be cut</div>
 <h2>Can the protease reach the linker at all?</h2>
-<p>A protease does not simply recognise a sequence; it threads the substrate through its
-active-site cleft, which requires the linker to be both exposed and extended. That is a
-<b>necessary condition</b> for cleavage and it is independent of sequence — a linker packed
-against the nanobody cannot be cut however good its motif. It is also computable from the folded
-constructs, with no specificity data at all.</p></div>
-<div class="scroll"><table class="wrap"><colgroup><col style="width:22%"><col style="width:22%">
-<col style="width:19%"><col style="width:19%"><col style="width:18%"></colgroup>
-<thead><tr><th>linker</th><th>design window (decades)</th><th>fraction exposed</th>
-<th>extension ratio</th><th>accessibility</th></tr></thead><tbody>{_rows}</tbody></table></div>
-<div class="note"><b>Every linker is exposed; not every linker is extended.</b> Solvent exposure
-is near 1.0 throughout, so nothing is buried. What collapses is extension — the end-to-end
-distance as a fraction of contour length falls from {_np.mean([x['extension_ratio'] for x in _by[_short]]):.2f}
-at {_short} residues to {_np.mean([x['extension_ratio'] for x in _by[max(_by)]]):.2f} at
-{max(_by)}. A long flexible linker balls up, and a balled-up linker is poorly presented to a
-protease.</div>
-{chart("trigger_tradeoff", "The two computable scores plotted against linker length.")}
-<div class="note warn"><b>The two scores disagree, and that is the point.</b> The tether model
-wants a <b>{_bestwin}-residue</b> linker, where the usable affinity window is widest at
-{_win[_bestwin]:.2f} decades. Accessibility wants <b>{_short}</b>, where it scores
-{_acc_short:.2f} against {_acc_long:.2f} at the longest. Neither is wrong. A single combined
-number would hide the conflict and pick one arbitrarily; keeping them apart makes the trade-off
-visible and leaves the choice to be made deliberately, or measured.</div>
-<div class="note"><b>What is still missing.</b> This is the accessibility half of the trigger
-score. The other half — does <em>this</em> protease cut <em>this</em> sequence, and leave other
-sequences alone — needs substrate specificity data for the enzymes in question. Accessibility can
-rule a linker out; it cannot rule one in.</div>
+<p>Recognition and reach are different questions. A protease threads its substrate through an
+active-site cleft, so the linker has to lie extended, stay exposed, and leave room beside the
+scissile bond for a catalytic domain roughly forty &#8491; across. Each is a
+<b>necessary condition</b>, independent of sequence: a linker packed against the nanobody cannot
+be cut however good its motif. All three are computable from the folded constructs alone.</p></div>
+<div class="scroll"><table class="wrap">
+<thead><tr><th>linkers</th><th>n</th><th>extension</th><th>exposure</th><th>clearance</th>
+<th>product</th></tr></thead><tbody>{_parts}</tbody></table></div>
+<div class="note"><b>Exposure is not the binding constraint.</b> Solvent exposure sits near
+{_mean(_rows_all, 'exposure'):.2f} across the library, so nothing is buried. What separates
+constructs is extension and clearance &mdash; whether the segment lies in a groove rather than
+balled up, and whether an enzyme-sized object can get to it.</div>
+<div class="note"><b>The generated linkers are one length, and it is close to the right one.</b>
+Every substrate is ten residues on three-residue flanks, so {_len} in all. The tether model wants
+<b>{_bestwin}</b> residues, where the usable affinity window is widest at {_win.get(_bestwin, float('nan')):.2f}
+decades. That agreement was not designed in: the substrate length is CleaveNet's, and the window
+comes from the worm-like chain model, which knows nothing about proteases.</div>
+<div class="note warn"><b>What this still cannot tell you.</b> Generation and verification share a
+model family, so a high selectivity score is weaker evidence than two independent models would
+give. More importantly, CleaveNet is trained on human matrix metalloproteinases, and the enzyme
+that arrives first at a bite site is a snake venom metalloproteinase, which is not in its training
+set. The gelatinases are a documented stand-in, not the enzyme itself.</div>
 </section>"""
 else:
     trigger_html = ""
@@ -987,7 +989,11 @@ over time.</p></div></details>
 predicted cleavage by {N['target_proteases']}; off-target is the mean over the membrane-type and
 constitutive enzymes.</p>
 {R.linker_table(LINKERS)}
-{chart("trigger_tradeoff", "Linker accessibility and the usable affinity window against linker length.")}
+<div class="two">
+{chart("cleavability_panel", "Recognition against reach. The controls say whether either axis "
+       "discriminates.")}
+{chart("cleavability_components", "The three necessary conditions and their product, by construct.")}
+</div>
 {R.ensemble_viewer("ens-cleave", "cleavability",
    "The same constructs, coloured by linker accessibility. Short linkers stay extended and are "
    "better presented; long ones adopt compact conformations.",
