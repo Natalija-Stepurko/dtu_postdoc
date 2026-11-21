@@ -337,23 +337,59 @@ if complexes:
         f"<td>{r['buried_surface_area_A2']:.0f}</td>"
         f"<td>{r['fraction_of_contacts_on_paratope']:.2f}</td>"
         f"<td>{r['seconds']/60:.0f}</td></tr>" for r in ok)
+    _m = {r["case"]: r for r in (complexes_msa["results"] if complexes_msa else [])
+          if r["status"] == "ok"}
+    _masked = [r for r in _m.values() if r.get("construct")]
+    _msa_lo = min((r["fraction_of_contacts_on_paratope"] for r in _masked), default=0.0)
+    _msa_hi = max((r["fraction_of_contacts_on_paratope"] for r in _masked), default=0.0)
+    _mrows = "".join(
+        f"<tr><td>{r['construct'] or 'free nanobody'}</td>"
+        f"<td>{r['fraction_of_contacts_on_paratope']:.2f}</td>"
+        f"<td>{r.get('mask_fraction_on_paratope', float('nan')):.2f}</td>"
+        f"<td>{r['buried_surface_area_A2']:.0f}</td></tr>"
+        if r.get("construct") else
+        f"<tr class='good'><td>free nanobody (control)</td>"
+        f"<td>{r['fraction_of_contacts_on_paratope']:.2f}</td><td>—</td>"
+        f"<td>{r['buried_surface_area_A2']:.0f}</td></tr>"
+        for r in _m.values())
     complex_html = f"""
 <section class="sec">
 <div class="stack"><div class="eyebrow">Step 04 · does it mask, second method</div>
-<h3>With the mask on, can the antigen still bind?</h3>
-<p>Occlusion says the mask covers the site. It does not say the antigen is excluded — those are
-different claims, and only a two-chain prediction separates them. The free nanobody with its toxin
-is the calibration case: the crystal structure already answers it, so how well the prediction
-recovers that answer sets how much the masked cases are worth.</p></div>
-<div class="scroll"><table class="wrap"><colgroup><col style="width:20%"><col style="width:36%">
-<col style="width:12%"><col style="width:11%"><col style="width:13%"><col style="width:8%">
-</colgroup><thead><tr><th>case</th><th>what it tests</th><th>contacts</th>
-<th>buried Å²</th><th>on paratope</th><th>min</th></tr></thead>
-<tbody>{crows}</tbody></table></div>
-<div class="banner"><b>How to read the control.</b> Predicted in single-sequence mode, with no
-alignment server, so designed sequences never leave the machine — accuracy was traded for that
-deliberately. If the free nanobody does not reproduce a toxin pose on its known paratope, the
-masked numbers describe the model rather than the molecule.</div>
+<h2>Asking whether the antigen can still bind</h2>
+<p>Occlusion measures whether the mask covers the site. It does not measure whether the antigen is
+excluded, and those are different things. To separate them I predicted the whole assembly: the
+nanobody, the tethered mask and the toxin together.</p>
+<p>The first attempt gave nothing, because every chain was predicted without an alignment. The
+control, which is the free nanobody with its toxin and whose answer the crystal structure already
+gives, put only {ctrl['fraction_of_contacts_on_paratope']:.0%} of its contacts on the known
+paratope. Giving the nanobody and the toxin alignments raised that to
+{_m['control_free_vhh_msa']['fraction_of_contacts_on_paratope']:.0%}. The failure had been the
+missing alignment rather than the model.</p>
+<p>An alignment over the whole fusion would have sent the designed mask to a remote server, so I
+split the construct into three chains joined by an explicit covalent bond. The nanobody and the
+toxin are both already public in the PDB and take real alignments. The designed peptide takes
+none and stays on this machine.</p></div>
+<div class="scroll"><table class="wrap">
+<colgroup><col style="width:34%"><col style="width:24%"><col style="width:22%">
+<col style="width:20%"></colgroup>
+<thead><tr><th>construct</th><th>toxin contacts on paratope</th>
+<th>mask contacts on paratope</th><th>buried Å²</th></tr></thead>
+<tbody>{_mrows}</tbody></table></div>
+<div class="note warn"><b>None of these masks block the toxin.</b> In every masked construct the
+toxin still reaches its own epitope, at {_msa_lo:.0%} to {_msa_hi:.0%} of contacts on the paratope
+against {_m['control_free_vhh_msa']['fraction_of_contacts_on_paratope']:.0%} for the free
+nanobody. The designed graft sits off the paratope altogether, and the inert poly-glycine control
+has more contact with it than the graft does. The masks are tethered near the site but are not
+occupying it.</div>
+<div class="note"><b>This is what a working score is for.</b> Occlusion could not separate a
+designed mask from a random one, so it could not have told me this. This measure reproduces a
+known epitope when it is given one, and when it is given the current designs it says they do not
+work. A negative answer from a calibrated measure is more useful than a positive one from an
+uncalibrated measure.</div>
+<div class="note"><b>Two limits worth stating.</b> Each case is a single prediction rather than a
+sampled ensemble, and the model is given the mask and the toxin at the same time, so it describes
+an assembly at equilibrium rather than a competition that unfolds over time. Both would need more
+samples and a kinetic treatment before any design decision rests on them.</div>
 </section>"""
 else:
     complex_html = ""
@@ -383,6 +419,10 @@ _msa_ctrl = None
 if complexes_msa:
     _msa_ctrl = next((r for r in complexes_msa["results"]
                       if r["case"].startswith("control") and r["status"] == "ok"), None)
+_msa_masked = [r for r in (complexes_msa["results"] if complexes_msa else [])
+               if r["status"] == "ok" and r.get("construct")]
+_msa_lo = min((r["fraction_of_contacts_on_paratope"] for r in _msa_masked), default=0)
+_msa_hi = max((r["fraction_of_contacts_on_paratope"] for r in _msa_masked), default=0)
 _ctrl = None
 if complexes:
     _ctrl = next((r for r in complexes["results"]
@@ -426,6 +466,12 @@ status_html = R.status_table([
       if _msa_ctrl and _ctrl else
       f"The control put only {_ctrl['fraction_of_contacts_on_paratope']:.0%} of its toxin "
       f"contacts on the known paratope, so it cannot be trusted." if _ctrl else "not run")),
+    ("Ask whether the masks block the toxin", "run",
+     f"They do not. With the nanobody and antigen aligned the toxin still reaches its own "
+     f"epitope in every masked construct ({_msa_lo:.0%} to {_msa_hi:.0%} of contacts on the "
+     f"paratope, against {_msa_ctrl['fraction_of_contacts_on_paratope']:.0%} for the free "
+     f"nanobody), and the designed mask sits off the paratope entirely."
+     if _msa_ctrl else "not run"),
     ("Rank designs across the scores", "proposed",
      "Two of the three scores work, so a Pareto front over all three cannot be built yet."),
     ("Make anything", "proposed",

@@ -297,7 +297,7 @@ combining stage takes the Pareto front instead.</div>
 <p>I ran the pipeline on an experimental nanobody-toxin complex from the same laboratory.
 Everything below is computational and nothing has been made, so no affinity, expression level or
 cleavage rate here has been measured.</p></div>
-<div class="scroll"><table class="wrap"><colgroup><col style="width:27%"><col style="width:21%"><col style="width:52%"></colgroup><thead><tr><th>step</th><th>status</th><th>what happened</th></tr></thead><tbody><tr><td>Measure the complex</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>2.5 Å structure, 19 paratope residues, N-terminus 12.42 Å from the nearest of them.</td></tr><tr><td>Price the tether</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Gives a usable mask affinity between 99 nM and 129 µM, and says to attach at the N-terminus.</td></tr><tr><td>Build a construct library</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>31 constructs: grafted masks from the antigen, plus scrambled, truncated and inert controls.</td></tr><tr><td>Fold them (ESMFold)</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>31 structures predicted on CPU.</td></tr><tr><td>Score masking by occlusion</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>Grafts occlude +4.0% of the paratope and the inert control +4.0%. The control scores as well as the design, so the measure does not separate them.</td></tr><tr><td>Redesign masks (ProteinMPNN)</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>93 masks, all scoring better than their parent by ProteinMPNN's own measure, but that score does not predict occlusion (r = -0.15).</td></tr><tr><td>Score the trigger: can a protease reach the linker</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Works and separates the library. Accessibility falls from 0.97 at 5 linker residues to 0.19 at 30.</td></tr><tr><td>Score the trigger: will this protease cut this sequence</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Needs substrate specificity data for the proteases in question. No such dataset exists for snake venom metalloproteinases.</td></tr><tr><td>Predict the masked complex (Boltz-2)</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>The control put only 7% of its toxin contacts on the known paratope, so it cannot be trusted.</td></tr><tr><td>Rank designs across the scores</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Two of the three scores work, so a Pareto front over all three cannot be built yet.</td></tr><tr><td>Make anything</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Nothing has been synthesised. No measured affinity, expression or cleavage exists.</td></tr></tbody></table></div>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:27%"><col style="width:21%"><col style="width:52%"></colgroup><thead><tr><th>step</th><th>status</th><th>what happened</th></tr></thead><tbody><tr><td>Measure the complex</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>2.5 Å structure, 19 paratope residues, N-terminus 12.42 Å from the nearest of them.</td></tr><tr><td>Price the tether</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Gives a usable mask affinity between 99 nM and 129 µM, and says to attach at the N-terminus.</td></tr><tr><td>Build a construct library</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>31 constructs: grafted masks from the antigen, plus scrambled, truncated and inert controls.</td></tr><tr><td>Fold them (ESMFold)</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>31 structures predicted on CPU.</td></tr><tr><td>Score masking by occlusion</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>Grafts occlude +4.0% of the paratope and the inert control +4.0%. The control scores as well as the design, so the measure does not separate them.</td></tr><tr><td>Redesign masks (ProteinMPNN)</td><td><span class="stat-tag" style="color:#C06014;border-color:#C06014">I ran this and it did not work</span></td><td>93 masks, all scoring better than their parent by ProteinMPNN's own measure, but that score does not predict occlusion (r = -0.15).</td></tr><tr><td>Score the trigger: can a protease reach the linker</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Works and separates the library. Accessibility falls from 0.97 at 5 linker residues to 0.19 at 30.</td></tr><tr><td>Score the trigger: will this protease cut this sequence</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Needs substrate specificity data for the proteases in question. No such dataset exists for snake venom metalloproteinases.</td></tr><tr><td>Predict the masked complex (Boltz-2)</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>Without alignments the control put only 7% of its toxin contacts on the known paratope, so the prediction was worthless. Giving the nanobody and antigen alignments raises that to 81%.</td></tr><tr><td>Ask whether the masks block the toxin</td><td><span class="stat-tag" style="color:#0E7C7B;border-color:#0E7C7B">I ran this</span></td><td>They do not. With the nanobody and antigen aligned the toxin still reaches its own epitope in every masked construct (74% to 85% of contacts on the paratope, against 81% for the free nanobody), and the designed mask sits off the paratope entirely.</td></tr><tr><td>Rank designs across the scores</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Two of the three scores work, so a Pareto front over all three cannot be built yet.</td></tr><tr><td>Make anything</td><td><span class="stat-tag" style="color:#6E7880;border-color:#6E7880">Proposed, not done</span></td><td>Nothing has been synthesised. No measured affinity, expression or cleavage exists.</td></tr></tbody></table></div>
 </section>
 
 
@@ -532,20 +532,41 @@ competition below is the first candidate. Had the controls been left out, the gr
 
 <section class="sec" id="s12" data-slide="12 / 17">
 <div class="stack"><div class="eyebrow">Step 04 · does it mask, second method</div>
-<h3>With the mask on, can the antigen still bind?</h3>
-<p>Occlusion says the mask covers the site. It does not say the antigen is excluded — those are
-different claims, and only a two-chain prediction separates them. The free nanobody with its toxin
-is the calibration case: the crystal structure already answers it, so how well the prediction
-recovers that answer sets how much the masked cases are worth.</p></div>
-<div class="scroll"><table class="wrap"><colgroup><col style="width:20%"><col style="width:36%">
-<col style="width:12%"><col style="width:11%"><col style="width:13%"><col style="width:8%">
-</colgroup><thead><tr><th>case</th><th>what it tests</th><th>contacts</th>
-<th>buried Å²</th><th>on paratope</th><th>min</th></tr></thead>
-<tbody><tr class="hl"><td>control_free_vhh</td><td>free nanobody with toxin — the crystal structure already answers this, so it calibrates the rest</td><td>240</td><td>847</td><td>0.07</td><td>1</td></tr><tr class=""><td>masked_epi1_L5</td><td>grafted mask on the shortest linker</td><td>601</td><td>2092</td><td>0.11</td><td>2</td></tr><tr class=""><td>masked_epi1_L20</td><td>same mask, linker four times longer</td><td>1190</td><td>2863</td><td>0.12</td><td>2</td></tr><tr class=""><td>masked_polyG_L5</td><td>inert mask — should not block</td><td>422</td><td>1460</td><td>0.26</td><td>2</td></tr></tbody></table></div>
-<div class="banner"><b>How to read the control.</b> Predicted in single-sequence mode, with no
-alignment server, so designed sequences never leave the machine — accuracy was traded for that
-deliberately. If the free nanobody does not reproduce a toxin pose on its known paratope, the
-masked numbers describe the model rather than the molecule.</div>
+<h2>Asking whether the antigen can still bind</h2>
+<p>Occlusion measures whether the mask covers the site. It does not measure whether the antigen is
+excluded, and those are different things. To separate them I predicted the whole assembly: the
+nanobody, the tethered mask and the toxin together.</p>
+<p>The first attempt gave nothing, because every chain was predicted without an alignment. The
+control, which is the free nanobody with its toxin and whose answer the crystal structure already
+gives, put only 7% of its contacts on the known
+paratope. Giving the nanobody and the toxin alignments raised that to
+81%. The failure had been the
+missing alignment rather than the model.</p>
+<p>An alignment over the whole fusion would have sent the designed mask to a remote server, so I
+split the construct into three chains joined by an explicit covalent bond. The nanobody and the
+toxin are both already public in the PDB and take real alignments. The designed peptide takes
+none and stays on this machine.</p></div>
+<div class="scroll"><table class="wrap">
+<colgroup><col style="width:34%"><col style="width:24%"><col style="width:22%">
+<col style="width:20%"></colgroup>
+<thead><tr><th>construct</th><th>toxin contacts on paratope</th>
+<th>mask contacts on paratope</th><th>buried Å²</th></tr></thead>
+<tbody><tr class='good'><td>free nanobody (control)</td><td>0.81</td><td>—</td><td>1309</td></tr><tr><td>epi1_L5</td><td>0.74</td><td>0.00</td><td>1301</td></tr><tr><td>epi1_L15</td><td>0.85</td><td>0.12</td><td>1289</td></tr><tr><td>polyG_L5</td><td>0.77</td><td>0.25</td><td>1341</td></tr></tbody></table></div>
+<div class="note warn"><b>None of these masks block the toxin.</b> In every masked construct the
+toxin still reaches its own epitope, at 74% to 85% of contacts on the paratope
+against 81% for the free
+nanobody. The designed graft sits off the paratope altogether, and the inert poly-glycine control
+has more contact with it than the graft does. The masks are tethered near the site but are not
+occupying it.</div>
+<div class="note"><b>This is what a working score is for.</b> Occlusion could not separate a
+designed mask from a random one, so it could not have told me this. This measure reproduces a
+known epitope when it is given one, and when it is given the current designs it says they do not
+work. A negative answer from a calibrated measure is more useful than a positive one from an
+uncalibrated measure.</div>
+<div class="note"><b>Two limits worth stating.</b> Each case is a single prediction rather than a
+sampled ensemble, and the model is given the mask and the toxin at the same time, so it describes
+an assembly at equilibrium rather than a competition that unfolds over time. Both would need more
+samples and a kinetic treatment before any design decision rests on them.</div>
 </section>
 
 

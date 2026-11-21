@@ -1,0 +1,68 @@
+{
+  "method": "Boltz-2, three chains joined by a bond; alignments for the public nanobody and antigen chains only",
+  "n_cases": 4,
+  "results": [
+    {
+      "atom_contacts": 576,
+      "buried_surface_area_A2": 1308.8,
+      "case": "control_free_vhh_msa",
+      "construct": null,
+      "fraction_of_contacts_on_paratope": 0.81,
+      "min_distance_A": 1.98,
+      "note": "free nanobody with its toxin; the crystal structure already answers this",
+      "paratope_contacts": 17,
+      "seconds": 119.0,
+      "status": "ok",
+      "structure": "complexes_msa/boltz_results_control_free_vhh_msa/predictions/control_free_vhh_msa/control_free_vhh_msa_model_0.pdb",
+      "total_contacting_residues": 21
+    },
+    {
+      "atom_contacts": 652,
+      "buried_surface_area_A2": 1301.4,
+      "case": "epi1_L5_msa",
+      "construct": "epi1_L5",
+      "fraction_of_contacts_on_paratope": 0.739,
+      "mask_fraction_on_paratope": 0.0,
+      "mask_paratope_contacts": 0,
+      "min_distance_A": 1.96,
+      "note": "epitope graft, 5-residue linker",
+      "paratope_contacts": 17,
+      "seconds": 138.9,
+      "status": "ok",
+      "structure": "complexes_msa/boltz_results_epi1_L5_msa/predictions/epi1_L5_msa/epi1_L5_msa_model_0.pdb",
+      "total_contacting_residues": 23
+    },
+    {
+      "atom_contacts": 581,
+      "buried_surface_area_A2": 1289.4,
+      "case": "epi1_L15_msa",
+      "construct": "epi1_L15",
+      "fraction_of_contacts_on_paratope": 0.85,
+      "mask_fraction_on_paratope": 0.125,
+      "mask_paratope_contacts": 4,
+      "min_distance_A": 2.41,
+      "note": "epitope graft, 15-residue linker",
+      "paratope_contacts": 17,
+      "seconds": 148.8,
+      "status": "ok",
+      "structure": "complexes_msa/boltz_results_epi1_L15_msa/predictions/epi1_L15_msa/epi1_L15_msa_model_0.pdb",
+      "total_contacting_residues": 20
+    },
+    {
+      "atom_contacts": 464,
+      "buried_surface_area_A2": 1341.3,
+      "case": "polyG_L5_msa",
+      "construct": "polyG_L5",
+      "fraction_of_contacts_on_paratope": 0.773,
+      "mask_fraction_on_paratope": 0.25,
+      "mask_paratope_contacts": 3,
+      "min_distance_A": 2.18,
+      "note": "inert control, 5-residue linker",
+      "paratope_contacts": 17,
+      "seconds": 129.9,
+      "status": "ok",
+      "structure": "complexes_msa/boltz_results_polyG_L5_msa/predictions/polyG_L5_msa/polyG_L5_msa_model_0.pdb",
+      "total_contacting_residues": 22
+    }
+  ]
+}
