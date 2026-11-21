@@ -586,6 +586,10 @@ for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability
 controls = load_json("15_interface_controls.json")
 _by = {r["pdb_id"]: r for r in controls["comparators"]}
 N["cdr3_share"] = _by.get(PDB_ID, {}).get("cdr3_percent_bsa", 0)
+N["iface_area"] = iface["interface_area_A2"]
+_lat = _by.get(PDB_ID, {}).get("lattice_contact", {})
+N["lattice_area"] = _lat.get("interface_area_A2", 0)
+N["lattice_n"] = _lat.get("n_paratope", 0)
 N["cdr3_other"] = _by.get("9GCN", {}).get("cdr3_percent_bsa", 0)
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
@@ -730,6 +734,13 @@ single residue, which is too little to define a footprint from.</p>
 independent VHH complexes: two further nanobody&ndash;three-finger-toxin structures from other
 groups, and a nanobody bound to a much larger toxin.</p>
 {R.interface_controls_table(controls, PDB_ID)}
+<p>One of the comparators is biparatopic: the same VHH binds through two surfaces that share a
+single residue, so its row describes one of two sites. That architecture is a poor candidate for
+this pipeline, since a mask would have to cover both surfaces at once, and it is listed here as a
+comparator rather than a target for that reason. The worked example is not biparatopic: its second
+toxin copy in the asymmetric unit buries {N['lattice_area']:.0f} &#8491;&#178; against
+{N['lattice_n']} residues, which is lattice packing next to a {N['iface_area']:.0f} &#8491;&#178;
+interface.</p>
 <p>The worked example sits inside the range on every quantity except one. Interface area and
 paratope size match the other toxin complexes closely, and binding is loop-mediated in all four.
 What is atypical is the CDR3 share: {N['cdr3_share']:.0f}% of the buried surface here against

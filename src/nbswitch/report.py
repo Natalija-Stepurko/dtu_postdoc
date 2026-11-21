@@ -1399,6 +1399,11 @@ def interface_controls_table(controls, target: str) -> str:
         here = r["pdb_id"] == target
         mark = ' class="here"' if here else ""
         name = f"<b>{r['pdb_id']}</b>" if here else r["pdb_id"]
+        if r.get("biparatopic"):
+            ss = r["second_site"]
+            name += (f' <span class="flag" title="second site {ss["chains"]}, '
+                     f'{ss["interface_area_A2"]:.0f} &#8491;&#178;, '
+                     f'{ss["shared_residues"]} residue shared">biparatopic</span>')
         body += (f'<tr{mark}><td>{name}</td>'
                  f'<td class="mono">{r["vhh_chain"]}:{r["antigen_chain"]}</td>'
                  f'<td>{r["interface_area_A2"]:.0f} &#8491;&#178;</td>'
