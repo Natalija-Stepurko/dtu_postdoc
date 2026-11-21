@@ -26,6 +26,7 @@ def superimpose_on_nanobody(constructs, structure_dir: Path, reference_id: str,
     ref_ca = reference[reference.atom_name == "CA"]
 
     kept, written = [], []
+    OVERLAP = 12  # nanobody residues kept past the linker, for visual continuity
     for item in constructs:
         path = structure_dir / f"{item['id']}.pdb"
         if not path.exists() or not item.get("mask_range"):
@@ -38,13 +39,14 @@ def superimpose_on_nanobody(constructs, structure_dir: Path, reference_id: str,
             continue
         _, transform = struc.superimpose(ref_ca[:n], ca[offset:offset + n])
         atoms = transform.apply(atoms)
-        res_ids = atoms.res_id
-        part = atoms[res_ids <= item["linker_range"][1]]
+        # carry a short run of the nanobody so the cartoon stays continuous
+        # through the junction: these are one chain, not a mask floating free
+        linker_end = item["linker_range"][1]
+        part = atoms[atoms.res_id <= linker_end + OVERLAP]
         if part.array_length() == 0:
             continue
-        part.chain_id[:] = "M"
         written.append((item["id"], part))
-        kept.append(item["id"])
+        kept.append({"id": item["id"], "linker_end": int(linker_end)})
         if len(written) >= max_models:
             break
 

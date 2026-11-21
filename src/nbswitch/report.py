@@ -294,10 +294,14 @@ function mountEnsemble(hostId, scoreKey) {
     v.setStyle({model: 0}, {cartoon: {color: '#337D79'}});
     v.addStyle({model: 0, resi: PARATOPE},
                {stick: {colorscheme: 'orangeCarbon', radius: 0.22}});
-    ENSEMBLE.forEach(function (id, n) {
-      const score = scoreKey ? (SCORES[id] || {})[scoreKey] : null;
+    ENSEMBLE.forEach(function (item, n) {
+      const score = scoreKey ? (SCORES[item.id] || {})[scoreKey] : null;
+      // the mask and linker carry the score colour; the short run of nanobody
+      // past the junction is drawn as nanobody, so the chain reads continuous
       v.setStyle({model: n + 1},
-                 {cartoon: {color: colourFor(score), opacity: 0.75, thickness: 0.3}});
+                 {cartoon: {color: colourFor(score), opacity: 0.85, thickness: 0.3}});
+      v.setStyle({model: n + 1, resi: item.linker_end + 1 + '-9999'},
+                 {cartoon: {color: '#337D79', opacity: 0.55, thickness: 0.3}});
     });
     v.zoomTo(); v.zoom(1.55); v.render();
   });

@@ -19,4 +19,4 @@ out = ensemble.superimpose_on_nanobody(
 save_json("14_ensemble.json", {"n_models": out["n_models"],
                                "constructs": out["constructs"],
                                "file": "structures/ensemble.pdb"})
-print(f"{out['n_models']} models written ({out['n_models']-1} masks on one nanobody)")
+print(f"{out['n_models']} models written ({out['n_models']-1} constructs on one nanobody)")

@@ -1,65 +1,245 @@
 {
   "constructs": [
-    "epi1_L5",
-    "epi1_L10",
-    "epi1_L15",
-    "epi1_L20",
-    "epi1_L30",
-    "epi1_scram_L5",
-    "epi1_scram_L10",
-    "epi1_scram_L15",
-    "epi1_scram_L20",
-    "epi1_scram_L30",
-    "epi1_half_L5",
-    "epi1_half_L10",
-    "epi1_half_L15",
-    "epi1_half_L20",
-    "epi1_half_L30",
-    "epi2_L5",
-    "epi2_L10",
-    "epi2_L15",
-    "epi2_L20",
-    "epi2_L30",
-    "epi1_noCys_L5",
-    "epi1_noCys_L10",
-    "epi1_noCys_L15",
-    "epi1_noCys_L20",
-    "epi1_noCys_L30",
-    "polyG_L5",
-    "polyG_L10",
-    "polyG_L15",
-    "polyG_L20",
-    "polyG_L30",
-    "mpnn000_epi1_L5",
-    "mpnn001_epi1_L5",
-    "mpnn002_epi1_L5",
-    "mpnn003_epi1_L5",
-    "mpnn004_epi1_L5",
-    "mpnn005_epi1_L5",
-    "mpnn006_epi1_L5",
-    "mpnn007_epi1_L5",
-    "mpnn008_epi1_L5",
-    "mpnn009_epi1_L5",
-    "mpnn010_epi1_L5",
-    "mpnn011_epi1_L5",
-    "mpnn012_epi1_L5",
-    "mpnn013_epi1_L20",
-    "mpnn014_epi1_L20",
-    "mpnn015_epi1_L20",
-    "mpnn016_epi1_L20",
-    "mpnn017_epi1_L20",
-    "mpnn018_epi1_L20",
-    "mpnn019_epi1_L5",
-    "mpnn020_epi1_L10",
-    "mpnn021_epi1_L10",
-    "mpnn022_epi1_L20",
-    "mpnn023_epi1_L5",
-    "mpnn024_epi1_L10",
-    "mpnn025_epi1_L5",
-    "mpnn026_epi1_L10",
-    "mpnn027_epi1_L10",
-    "mpnn028_epi1_L10",
-    "mpnn029_epi1_L20"
+    {
+      "id": "epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "epi1_L15",
+      "linker_end": 31
+    },
+    {
+      "id": "epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "epi1_L30",
+      "linker_end": 46
+    },
+    {
+      "id": "epi1_scram_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "epi1_scram_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "epi1_scram_L15",
+      "linker_end": 31
+    },
+    {
+      "id": "epi1_scram_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "epi1_scram_L30",
+      "linker_end": 46
+    },
+    {
+      "id": "epi1_half_L5",
+      "linker_end": 13
+    },
+    {
+      "id": "epi1_half_L10",
+      "linker_end": 18
+    },
+    {
+      "id": "epi1_half_L15",
+      "linker_end": 23
+    },
+    {
+      "id": "epi1_half_L20",
+      "linker_end": 28
+    },
+    {
+      "id": "epi1_half_L30",
+      "linker_end": 38
+    },
+    {
+      "id": "epi2_L5",
+      "linker_end": 8
+    },
+    {
+      "id": "epi2_L10",
+      "linker_end": 13
+    },
+    {
+      "id": "epi2_L15",
+      "linker_end": 18
+    },
+    {
+      "id": "epi2_L20",
+      "linker_end": 23
+    },
+    {
+      "id": "epi2_L30",
+      "linker_end": 33
+    },
+    {
+      "id": "epi1_noCys_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "epi1_noCys_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "epi1_noCys_L15",
+      "linker_end": 31
+    },
+    {
+      "id": "epi1_noCys_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "epi1_noCys_L30",
+      "linker_end": 46
+    },
+    {
+      "id": "polyG_L5",
+      "linker_end": 13
+    },
+    {
+      "id": "polyG_L10",
+      "linker_end": 18
+    },
+    {
+      "id": "polyG_L15",
+      "linker_end": 23
+    },
+    {
+      "id": "polyG_L20",
+      "linker_end": 28
+    },
+    {
+      "id": "polyG_L30",
+      "linker_end": 38
+    },
+    {
+      "id": "mpnn000_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn001_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn002_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn003_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn004_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn005_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn006_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn007_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn008_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn009_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn010_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn011_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn012_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn013_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn014_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn015_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn016_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn017_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn018_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn019_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn020_epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "mpnn021_epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "mpnn022_epi1_L20",
+      "linker_end": 36
+    },
+    {
+      "id": "mpnn023_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn024_epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "mpnn025_epi1_L5",
+      "linker_end": 21
+    },
+    {
+      "id": "mpnn026_epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "mpnn027_epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "mpnn028_epi1_L10",
+      "linker_end": 26
+    },
+    {
+      "id": "mpnn029_epi1_L20",
+      "linker_end": 36
+    }
   ],
   "file": "structures/ensemble.pdb",
   "n_models": 61

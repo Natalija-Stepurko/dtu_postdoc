@@ -574,7 +574,7 @@ for _src in (fold, redesign_fold):
         _occ_by[_r["id"]] = _r["occlusion"]
 _acc_by_id = {r["id"]: r["accessibility_score"] for r in (trigger["results"] if trigger else [])}
 for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability", _acc_by_id)):
-    _n = _norm({i: _d.get(i) for i in ENSEMBLE_IDS})
+    _n = _norm({it["id"]: _d.get(it["id"]) for it in ENSEMBLE_IDS})
     for _i, _v in _n.items():
         SCORES.setdefault(_i, {})[_key] = _v
 
@@ -758,9 +758,11 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
 </div>
 
 <h3 class="mod"><span>Module 03</span>Structural feasibility</h3>
-{mri("Each construct was folded with ESMFold. Preservation of the nanobody was assessed by "
-     "superimposing its core on the folded free nanobody, and sequence-based descriptors were "
-     "calculated for exposed hydrophobic surface and unpaired cysteines.",
+{mri("Each construct was folded with ESMFold as one chain: mask, linker and nanobody "
+     "together, not the mask alone. Preservation of the nanobody was assessed by "
+     "superimposing its core on the separately folded free nanobody, and sequence-based "
+     "descriptors were calculated over the whole construct for exposed hydrophobic "
+     "surface and unpaired cysteines.",
      f"{N['n_folded']} constructs were folded and {N['n_ensemble']} superimposed on the nanobody. "
      f"The mean core RMSD against the free nanobody is {N['rmsd_mean']:.2f} Å. The mask grafted "
      f"from the antigen carries {N['feas_cys']} unpaired cysteines and scores "
@@ -771,8 +773,10 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
 {chart("feasibility_components", "Feasibility components by construct family. A low score on any "
        "one component is enough to make a construct unusable.")}
 {R.ensemble_viewer("ens-feas", "feasibility",
-   "Every construct was predicted separately, so each was superimposed on the nanobody backbone "
-   "to bring them into a common frame. Masks are coloured by feasibility score.",
+   "Each construct is a single chain and was predicted on its own, so each was superimposed on "
+   "the nanobody backbone to bring them into a common frame. The mask and linker carry the "
+   "feasibility colour and the nanobody is drawn once, in teal, with a short run of it kept "
+   "past each junction to show the chain is continuous.",
    R.ramp_legend("low", "high"))}
 <details class="tech"><summary>Conformational heterogeneity</summary><div class="techbody">
 <p>A single predicted structure does not describe the conformational distribution of a tethered
