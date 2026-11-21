@@ -610,3 +610,120 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
              'poly-glycine twins separates a design from a geometric accident.</text>')
     s.append("</svg>")
     return "".join(s)
+
+
+def architecture_schematic() -> str:
+    """The design, stated as modules rather than as one worked example."""
+    W, H = 1120, 492
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
+         f'role="img" aria-label="Pipeline architecture">',
+         '<defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" '
+         f'markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{NULL}"/>'
+         '</marker></defs>',
+         '<style>'
+         '.a-t{font:600 13.5px Inter,system-ui,sans-serif}'
+         '.a-n{font:600 9.5px ui-monospace,monospace}'
+         '.a-i{font:12px Inter,system-ui,sans-serif}'
+         '.a-s{font:10.5px ui-monospace,monospace;letter-spacing:.03em}'
+         '.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}'
+         '.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}'
+         '.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '.d-edge{font:10px ui-monospace,monospace;letter-spacing:.04em}'
+         '</style>']
+
+    def mod(x, y, w, h, accent, num, title, role, slots, tag, tagcol, dashed=False):
+        d = ' stroke-dasharray="5 4"' if dashed else ""
+        o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="3" fill="#FFFFFF" '
+             f'stroke="{accent if dashed else RULE}"{d}/>',
+             f'<rect x="{x}" y="{y}" width="{w}" height="3" fill="{accent}"/>',
+             f'<text x="{x+14}" y="{y+24}" class="a-n" fill="{accent}">{num}</text>',
+             f'<text x="{x+38}" y="{y+25}" class="a-t" fill="{INK}">{title}</text>']
+        ty = y + 46
+        for line in role:
+            o.append(f'<text x="{x+14}" y="{ty}" class="a-i" fill="{INK2}">{line}</text>')
+            ty += 16
+        ty += 4
+        for line in slots:
+            o.append(f'<text x="{x+14}" y="{ty}" class="a-s" fill="{accent}">{line}</text>')
+            ty += 14
+        o.append(f'<text x="{x+w-12}" y="{y+h-11}" class="a-g" fill="{tagcol}" '
+                 f'text-anchor="end">{tag}</text>')
+        return "".join(o)
+
+    s.append(f'<text x="0" y="13" class="a-h" fill="{CHROME}">'
+             'THE PIPELINE AS A SET OF MODULES</text>')
+
+    s.append(mod(0, 26, 340, 162, CHROME, "00", "Constrain", [
+        "Measure the target complex. Where is the",
+        "binding site, and how far is each terminus",
+        "from it? Price the tether: what mask affinity",
+        "could work at all?",
+    ], ["slot: any experimental or predicted complex"], "DECIDES THE SEARCH SPACE", CHROME))
+
+    s.append(mod(390, 26, 340, 162, SEQ, "01", "Generate", [
+        "Propose mask and linker candidates.",
+        "Unconditional, conditioned on the site, or",
+        "evolved from something that already works.",
+    ], ["slot: graft · ProteinMPNN · RFdiffusion",
+        "slot: BindCraft · peptide models"], "SWAPPABLE", INK3))
+
+    s.append(mod(780, 26, 340, 162, STR, "02a", "Score the trigger", [
+        "Does the environment open the switch here,",
+        "and leave it shut everywhere else?",
+        "Selectivity is the quantity, not cleavability.",
+    ], ["slot: protease · pH · metal ion",
+        "needs: cleavage or titration data"], "NOT BUILT", STR))
+
+    s.append(mod(390, 222, 340, 162, SEQ, "02b", "Score the binding", [
+        "Two states, not one. Is the site covered",
+        "while tethered, and can the target still bind",
+        "once the tether is cut?",
+    ], ["slot: ESMFold occlusion · tether model",
+        "slot: Boltz-2 · Chai-1 complex"], "BUILT", CHROME))
+
+    s.append(mod(780, 222, 340, 162, SEQ, "03", "Rank", [
+        "Combine the scores without averaging them.",
+        "Keep the trade-offs visible and the surviving",
+        "designs structurally different.",
+    ], ["slot: Pareto front · uncertainty-aware"], "PARTIAL", STR))
+
+    s.append(mod(0, 222, 340, 162, CHROME, "04", "Measure, then learn", [
+        "Top candidates are expressed and measured.",
+        "What comes back is the only data that can",
+        "train the scorers, and it arrives slowly.",
+    ], ["20-30 results: a validation set",
+        "~100: optimisation · 100-1000: training"], "THE RATE LIMIT", CHROME))
+
+    s.append(_arrow(340, 107, 384, 107))
+    s.append(f'<text x="362" y="98" class="a-e" fill="{INK3}" text-anchor="middle">'
+             'candidates</text>')
+    s.append(_arrow(730, 107, 774, 107))
+    s.append(f'<path d="M 560 188 L 560 216" stroke="{NULL}" stroke-width="1.4" '
+             f'fill="none" marker-end="url(#ah4)"/>')
+    s.append(_arrow(730, 303, 774, 303))
+    s.append(f'<text x="752" y="294" class="a-e" fill="{INK3}" text-anchor="middle">'
+             'scores</text>')
+    s.append(f'<path d="M 950 188 L 950 216" stroke="{STR}" stroke-width="1.4" '
+             f'fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/>')
+    # ranked candidates leave the loop along the bottom, clear of every box
+    s.append(f'<path d="M 950 384 L 950 404 L 170 404 L 170 390" stroke="{CHROME}" '
+             f'stroke-width="1.4" fill="none" marker-end="url(#ah4)"/>')
+    s.append(f'<text x="560" y="399" class="a-e" fill="{CHROME}" text-anchor="middle">'
+             'top candidates go to the lab</text>')
+    # measurements return along the gap between the two rows
+    s.append(f'<path d="M 170 222 L 170 204 L 560 204 L 560 192" stroke="{CHROME}" '
+             f'stroke-width="1.4" fill="none" stroke-dasharray="5 4" '
+             f'marker-end="url(#ah4)"/>')
+    s.append(f'<text x="365" y="199" class="a-e" fill="{CHROME}" text-anchor="middle">'
+             'measurements retrain the scorers</text>')
+
+    s.append(f'<rect x="0" y="424" width="{W}" height="62" rx="3" fill="#FFFFFF" '
+             f'stroke="{RULE}"/>')
+    s.append(f'<text x="16" y="447" class="a-i" fill="{INK}">'
+             '<tspan font-weight="600">What makes it transferable:</tspan> every module takes '
+             'the same inputs and returns the same kind of score.</text>')
+    s.append(f'<text x="16" y="468" class="a-i" fill="{INK2}">'
+             'The trigger can change from protease to pH, or the generator from a graft to a '
+             'diffusion model, without touching anything else.</text>')
+    s.append("</svg>")
+    return "".join(s)
