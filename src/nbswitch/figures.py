@@ -219,9 +219,64 @@ def build_all():
     made = [paratope_footprint(ref, ref["cdrs"]),
             effective_concentration(tether), design_window(tether),
             tradeoff(tether), release_sensitivity(tether)]
+    fold = None
     try:
         fold = load_json("04_folding.json")
         made += [occlusion_by_linker(fold), occlusion_vs_confidence(fold)]
     except FileNotFoundError:
         pass
+    try:
+        redesign = load_json("08_redesign_folding.json")
+        if fold is not None:
+            made.append(redesign_landscape(redesign, fold))
+        made.append(redesign_score_vs_occlusion(redesign))
+    except FileNotFoundError:
+        pass
     return made
+
+
+def redesign_landscape(redesign_fold, base_fold):
+    """Where the redesigned masks land against the grafts and the controls."""
+    plt = _style()
+    rows = redesign_fold["results"]
+    base = base_fold["results"]
+    fig, ax = plt.subplots(figsize=(5.4, 3.2))
+    groups = [("inert control", NULL, "o"), ("scrambled control", STR, "o"),
+              ("truncated control", "#8A9BA8", "o"), ("epitope graft", SEQ, "o")]
+    for kind, colour, marker in groups:
+        pts = [r for r in base if r["kind"] == kind]
+        if pts:
+            ax.scatter([p["plddt_vhh"] for p in pts], [p["occlusion"] * 100 for p in pts],
+                       s=38, color=colour, marker=marker, edgecolor="white",
+                       linewidth=1.1, label=kind, zorder=3)
+    ax.scatter([r["plddt_vhh"] for r in rows], [r["occlusion"] * 100 for r in rows],
+               s=26, color=CHROME, marker="D", edgecolor="white", linewidth=.9,
+               label="ProteinMPNN redesign", zorder=2, alpha=.85)
+    ax.axhline(0, lw=1.1, color=NULL, ls=(0, (2, 3)))
+    ax.set_xlabel("VHH-region pLDDT"); ax.set_ylabel("paratope occluded  (%)")
+    ax.legend(fontsize=7, loc="best")
+    return _save(fig, "redesign_landscape")
+
+
+def redesign_score_vs_occlusion(redesign_fold):
+    """Does the design model's own score predict the thing we care about?"""
+    plt = _style()
+    rows = redesign_fold["results"]
+    parents = sorted({r["parent"] for r in rows})
+    colours = [SEQ, STR, CHROME, "#8A9BA8", "#7B5EA7", "#2E7D32"]
+    fig, ax = plt.subplots(figsize=(5.4, 3.2))
+    for parent, colour in zip(parents, colours):
+        pts = [r for r in rows if r["parent"] == parent]
+        ax.scatter([p["mpnn_score"] for p in pts], [p["occlusion"] * 100 for p in pts],
+                   s=30, color=colour, edgecolor="white", linewidth=.9, label=parent)
+    xs = np.array([r["mpnn_score"] for r in rows])
+    ys = np.array([r["occlusion"] * 100 for r in rows])
+    if len(xs) > 2:
+        r = float(np.corrcoef(xs, ys)[0, 1])
+        ax.annotate(f"Pearson r = {r:+.2f}  (n = {len(xs)})",
+                    xy=(.03, .95), xycoords="axes fraction", fontsize=7.5, color=INK2,
+                    va="top")
+    ax.set_xlabel("ProteinMPNN score  (lower is better)")
+    ax.set_ylabel("paratope occluded  (%)")
+    ax.legend(fontsize=6.5, loc="best", ncol=2)
+    return _save(fig, "redesign_score_vs_occlusion")

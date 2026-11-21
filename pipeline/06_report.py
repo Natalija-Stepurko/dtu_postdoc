@@ -16,6 +16,11 @@ try:
     fold = load_json("04_folding.json")
 except FileNotFoundError:
     fold = None
+try:
+    redesign = load_json("07_redesign.json")
+    redesign_fold = load_json("08_redesign_folding.json")
+except FileNotFoundError:
+    redesign = redesign_fold = None
 
 meta, geom = ref["metadata"], ref["terminal_geometry"]
 iface = ref["chain_pairs"][REFERENCE_VHH_CHAIN]
@@ -116,6 +121,53 @@ The informative quantity here is the contrast between graft and control, not any
 </section>"""
 else:
     folding_html = ""
+
+# ---- redesign section ----
+if redesign_fold and fold:
+    rrows = redesign_fold["results"]
+    grafts = [r["occlusion"] * 100 for r in fold["results"] if r["kind"] == "epitope graft"]
+    rocc = [r["occlusion"] * 100 for r in rrows]
+    rbest = max(rrows, key=lambda r: r["occlusion"])
+    improved = sum(1 for c in redesign["constructs"]
+                   if c["native_score"] and c["mpnn_score"] < c["native_score"])
+    xs = np.array([r["mpnn_score"] for r in rrows])
+    ys = np.array([r["occlusion"] * 100 for r in rrows])
+    corr = float(np.corrcoef(xs, ys)[0, 1]) if len(xs) > 2 else float("nan")
+    rtable = "".join(
+        f"<tr><td>{r['mask_seq']}</td><td>{r['parent']}</td><td>{r['mpnn_score']:.3f}</td>"
+        f"<td>{r['occlusion']*100:+.1f}</td><td>{r.get('min_mask_paratope_CA_A','—')}</td>"
+        f"<td>{r['plddt_vhh']:.0f}</td><td>{r['vhh_core_rmsd_A']:.2f}</td></tr>"
+        for r in sorted(rrows, key=lambda r: -r["occlusion"])[:12])
+    redesign_html = f"""
+<section class="sec">
+<div class="stack"><div class="eyebrow">Stage 5 · closing the loop</div>
+<h2>Redesigning the mask on its own backbone</h2>
+<p>The grafted mask is borrowed from the antigen, so nothing about its sequence is tuned to this
+paratope. Taking each folded graft as a backbone and letting ProteinMPNN rewrite only the mask
+positions — nanobody and linker held fixed — turns the graft into a starting point. The redesigned
+constructs are then folded and scored exactly as before, so the two sets are directly comparable.</p>
+</div>
+<div class="cards">
+{{card(redesign['n_unique'], "distinct masks designed", f"from {{redesign['n_designs']}} samples across {{len(redesign['temperatures'])}} temperatures")}}
+{{card(f"{{improved}}/{{redesign['n_unique']}}", "score better than parent", "by ProteinMPNN's own score")}}
+{{card(f"{{rbest['occlusion']*100:+.0f}}%", "best occlusion", f"mask {{rbest['mask_seq']}}", hl=True)}}
+{{card(f"{{np.mean(rocc):+.0f}}%", "redesign mean", f"grafts {{np.mean(grafts):+.0f}}%")}}
+{{card(f"{{corr:+.2f}}", "score vs occlusion", "Pearson r")}}
+</div>
+<div class="charts2">
+{{chart("redesign_landscape", "Redesigns against the grafts and controls, on the same axes.")}}
+{{chart("redesign_score_vs_occlusion", "The design model's own score against the quantity it was not optimising.")}}
+</div>
+<div class="scroll"><table><thead><tr><th>mask</th><th>parent</th><th>MPNN score</th>
+<th>occluded %</th><th>min CA–CA Å</th><th>VHH pLDDT</th><th>core RMSD Å</th>
+</tr></thead><tbody>{{rtable}}</tbody></table></div>
+<div class="banner"><b>What the correlation is for.</b> ProteinMPNN scores sequence likelihood given
+a backbone. It is not optimising paratope occlusion and has no way to know about it, so the
+relationship between the two is worth measuring rather than assuming. On this set the Pearson
+correlation is <b>{{corr:+.2f}}</b> across {{len(rrows)}} designs.</div>
+</section>"""
+else:
+    redesign_html = ""
 
 masks_rows = "".join(
     f"<tr class=\"{'ctrl' if 'control' in m['kind'] else ''}\"><td>{k}</td>"
@@ -278,6 +330,7 @@ directly.</p></div>
 </section>
 
 {folding_html}
+{redesign_html}
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">Beyond the demonstration</div>
