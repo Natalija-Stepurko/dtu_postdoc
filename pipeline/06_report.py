@@ -661,25 +661,35 @@ measured.</p></div>
 </div>
 {chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
 
-<details class="tech"><summary>Estimation of the usable mask affinity</summary>
-<div class="techbody">
-<p>Treating the Gly/Ser linker as a worm-like chain with persistence length
-{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue gives the
-effective concentration of the tethered mask at the distance measured above. Requiring that no
-more than {model['leak_max']*100:.0f}% of the construct is unmasked before cleavage places an
-upper bound on the mask dissociation constant, and requiring that at least
-{model['recovery_min']*100:.0f}% binds antigen afterwards places a lower bound.</p>
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
-<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
-<p>For an N-terminal attachment this gives a usable range of {N['km_lo']:.0f} nM to
-{N['km_hi']:.0f} µM, widest at a {N['linker_best']}-residue linker. These values depend on the
-assumptions of the polymer model and on the assumed antigen concentration, and should be treated
-as approximate constraints rather than design requirements.</p>
+<h3 class="mod"><span>Module 01</span>Estimation of the usable mask affinity</h3>
+{mri("The Gly/Ser linker was treated as a worm-like chain with persistence length "
+     f"{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue, giving "
+     "the effective concentration of the tethered mask at the distance measured above. An upper "
+     "bound on the mask dissociation constant follows from requiring that little of the construct "
+     "is unmasked before cleavage, and a lower bound from requiring that most of it binds antigen "
+     "afterwards.",
+     f"For an N-terminal attachment the effective concentration is {N['ceff']:.0f} mM and the "
+     f"usable range of mask dissociation constants is {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM, "
+     f"widest at a {N['linker_best']}-residue linker. A C-terminal attachment gives a narrower "
+     f"range.",
+     "Candidate masks should be designed towards micromolar rather than nanomolar affinity. The "
+     "values depend on the assumptions of the polymer model and on the assumed antigen "
+     "concentration, so they constrain the search rather than specify a target.")}
+<div class="two">
 {chart("design_window", "Usable mask affinity against linker length.")}
 {chart("tradeoff", "The two requirements as functions of mask affinity.")}
+</div>
+<details class="tech"><summary>Model and equations</summary><div class="techbody">
+<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
+<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
+<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
+<br>P<sub>bound</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,M</sub>)</div>
+<p>The bounds correspond to at most {model['leak_max']*100:.0f}% of the construct unmasked before
+cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.</p>
+{chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
 </div></details>
 
-<h3 class="mod"><span>Module 01</span>Generation of candidate constructs</h3>
+<h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
 {mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
      "poly-glycine controls, across five linker lengths. ProteinMPNN was then used to redesign the "
      "mask positions on each folded construct with the nanobody and linker held fixed.",
@@ -694,7 +704,7 @@ as approximate constraints rather than design requirements.</p>
 </tr></thead><tbody>{masks_rows_compact}</tbody></table></div>
 </div>
 
-<h3 class="mod"><span>Module 02</span>Structural feasibility</h3>
+<h3 class="mod"><span>Module 03</span>Structural feasibility</h3>
 {mri("Each construct was folded with ESMFold. Preservation of the nanobody was assessed by "
      "superimposing its core on the folded free nanobody, and sequence-based descriptors were "
      "calculated for exposed hydrophobic surface and unpaired cysteines.",
@@ -709,7 +719,7 @@ as approximate constraints rather than design requirements.</p>
 peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the appropriate
 extension of this module and are not implemented here.</p></div></details>
 
-<h3 class="mod"><span>Module 03</span>Mask binding and release</h3>
+<h3 class="mod"><span>Module 04</span>Mask binding and release</h3>
 {mri("Two approaches were applied. Paratope occlusion was calculated from the folded constructs "
      "by comparing the accessible surface of the paratope with that of the free nanobody. The "
      "assembly of nanobody, tethered mask and antigen was then predicted with Boltz-2, with "
@@ -748,7 +758,7 @@ nanobody and the antigen while the designed peptide takes none.</p>
 supplied simultaneously, so the result describes an assembly at equilibrium rather than competition
 over time.</p></div></details>
 
-<h3 class="mod"><span>Module 04</span>Linker cleavability</h3>
+<h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
 {mri("Solvent accessibility and extension of the linker were calculated for each folded construct, "
      "since a protease binds its substrate in an extended conformation threaded through the active "
      "site.",
@@ -762,7 +772,7 @@ over time.</p></div></details>
 <p>The two quantities favour different linker lengths: the affinity window is widest at
 {N['linker_best']} residues, while accessibility is highest at {N['acc_short_n']}.</p>
 
-<h3 class="mod"><span>Module 05</span>Multiobjective ranking</h3>
+<h3 class="mod"><span>Module 06</span>Multiobjective ranking</h3>
 {mri("The three per-construct scores were combined by identifying nondominated candidates. No "
      "weights were applied.",
      f"Of {N['rank_total']} scored constructs, {N['rank_front']} are nondominated.",
@@ -773,15 +783,17 @@ over time.</p></div></details>
 
 <h3 class="mod"><span>Summary</span>Implementation status</h3>
 {R.implementation_table([
-  ("01 Generation", "Candidate library and ProteinMPNN redesign",
+  ("01 Affinity estimation", "Interface geometry and tether model",
+   "Validation against measured mask affinities"),
+  ("02 Generation", "Candidate library and ProteinMPNN redesign",
    "De novo masking architectures"),
-  ("02 Structural feasibility", "Static predictions and structural descriptors",
+  ("03 Structural feasibility", "Static predictions and structural descriptors",
    "Conformational modelling; experimental expression data"),
-  ("03 Mask binding", "Occlusion and complex prediction",
+  ("04 Mask binding", "Occlusion and complex prediction",
    "Reliable affinity and release prediction"),
-  ("04 Linker cleavability", "Structural accessibility",
+  ("05 Linker cleavability", "Structural accessibility",
    "Protease-specific recognition and selectivity"),
-  ("05 Ranking", "Pareto analysis on preliminary scores",
+  ("06 Ranking", "Pareto analysis on preliminary scores",
    "Ranking on validated functional scores"),
 ])}
 {cautionary_html}

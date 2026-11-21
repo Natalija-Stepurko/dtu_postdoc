@@ -178,6 +178,17 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
   color:var(--chrome);margin-bottom:10px}
 h3.mod{font-size:1.18rem;margin:38px 0 8px}
 h3.mod span{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-right:12px}
+.states{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:18px 0 10px}
+.stfig{margin:0;background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+  padding:14px;display:flex;flex-direction:column;gap:10px}
+.stfig img{width:100%;height:210px;object-fit:contain;display:block}
+.stfig figcaption b{font-size:.95rem;display:block;color:var(--ink)}
+.stfig figcaption span{font-size:.85rem;color:var(--ink-2);display:block;margin-top:3px;
+  line-height:1.45}
+.stkey{display:flex;gap:18px;flex-wrap:wrap;font-size:.82rem;color:var(--ink-3)}
+.stkey i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;
+  vertical-align:-1px}
+@media(max-width:800px){.states{grid-template-columns:1fr}}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -280,10 +291,14 @@ def copy_assets(library):
     return DOCS
 
 
-def write_reference_pdb(chains=("A", "X")):
+def write_reference_pdb(chains=None):
     """One VHH-antigen pair from the deposited file, for the structure viewer."""
     import biotite.structure.io.pdb as pdb
     from .structure import read_atoms, fetch_structure
+    from .config import REFERENCE_VHH_CHAIN, load_json
+    if chains is None:
+        toxin = load_json("01_reference.json")["chain_pairs"][REFERENCE_VHH_CHAIN]["toxin_chain"]
+        chains = (REFERENCE_VHH_CHAIN, toxin)
     atoms = read_atoms(fetch_structure(PDB_ID))
     subset = atoms[__import__("numpy").isin(atoms.chain_id, list(chains))]
     out = DOCS / "structures" / f"{PDB_ID}_{''.join(chains)}.pdb"
@@ -579,73 +594,31 @@ def _unused_pipeline_schematic() -> str:
 
 
 def states_schematic() -> str:
-    """What the molecule is supposed to do, and why that is hard."""
-    W, H = 1120, 300
-    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
-         f'role="img" aria-label="The three states">',
-         '<defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" '
-         f'markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{NULL}"/>'
-         '</marker></defs>',
-         '<style>'
-         '.s-t{font:600 13px Inter,system-ui,sans-serif}'
-         '.s-i{font:12px Inter,system-ui,sans-serif}'
-         '.s-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}'
-         '.s-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
-         '.s-lbl{font:600 11px ui-monospace,monospace}'
-         '</style>',
-         f'<text x="0" y="13" class="s-h" fill="{CHROME}">THE THREE STATES</text>']
+    """The three states, drawn from coordinates rather than as blocks.
 
-    def nanobody(cx, cy, paratope_colour):
-        return (f'<path d="M {cx-46} {cy-30} q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 '
-                f'q -46 -14 -92 0 z" fill="#EEF2F7" stroke="{INK3}" stroke-width="1"/>'
-                f'<text x="{cx} " y="{cy+5}" class="s-lbl" fill="{INK2}" '
-                f'text-anchor="middle">VHH</text>'
-                f'<path d="M {cx-26} {cy-33} q 26 -9 52 0" stroke="{paratope_colour}" '
-                f'stroke-width="4" fill="none" stroke-linecap="round"/>')
-
-    def panel(x, title, note):
-        return (f'<rect x="{x}" y="34" width="340" height="212" rx="3" fill="#FFFFFF" '
-                f'stroke="{RULE}"/>'
-                f'<text x="{x+16}" y="{58}" class="s-t" fill="{INK}">{title}</text>'
-                f'<text x="{x+16}" y="{230}" class="s-i" fill="{INK2}">{note}</text>')
-
-    # A - masked
-    s.append(panel(0, "A · masked", "tethered mask sits over the paratope"))
-    s.append(nanobody(170, 150, SEQ))
-    s.append(f'<circle cx="170" cy="104" r="19" fill="{CHROME}" stroke="#FFFFFF" '
-             f'stroke-width="2"/>')
-    s.append(f'<text x="170" y="109" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text>')
-    s.append(f'<path d="M 140 128 q -12 -18 12 -26" stroke="{INK3}" stroke-width="1.6" '
-             f'fill="none"/>')
-    s.append(f'<text x="112" y="116" class="s-m" fill="{INK3}">L</text>')
-
-    # B - cleaved
-    s.append(panel(390, "B · cleaved", "protease cuts; the mask drifts off"))
-    s.append(nanobody(560, 150, SEQ))
-    s.append(f'<circle cx="648" cy="92" r="19" fill="{CHROME}" stroke="#FFFFFF" '
-             f'stroke-width="2"/>')
-    s.append(f'<text x="648" y="97" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text>')
-    s.append(f'<path d="M 576 118 L 622 96" stroke="{NULL}" stroke-width="1.4" '
-             f'stroke-dasharray="4 3" marker-end="url(#ah2)" fill="none"/>')
-    s.append(f'<text x="531" y="100" class="s-m" fill="{STR}">protease</text>')
-    s.append(f'<path d="M 524 112 l 14 10 M 538 112 l -14 10" stroke="{STR}" '
-             f'stroke-width="1.8"/>')
-
-    # C - bound
-    s.append(panel(780, "C · active", "the original paratope takes the toxin"))
-    s.append(nanobody(950, 160, SEQ))
-    s.append(f'<rect x="926" y="86" width="48" height="34" rx="6" fill="{STR}" '
-             f'stroke="#FFFFFF" stroke-width="2"/>')
-    s.append(f'<text x="950" y="108" class="s-lbl" fill="#FFFFFF" text-anchor="middle">T</text>')
-
-    s.append(f'<rect x="0" y="258" width="{W}" height="36" rx="3" fill="#FFFFFF" '
-             f'stroke="{RULE}"/>')
-    s.append(f'<text x="16" y="281" class="s-i" fill="{INK}">'
-             'A mask tight enough to hold state A may refuse to leave in state B. '
-             'That single sentence is the whole design problem, and stage 02 turns it '
-             'into a range of allowed mask affinities.</text>')
-    s.append("</svg>")
-    return "".join(s)
+    All three panels are superimposed on the nanobody, so the antigen-binding
+    surface faces the viewer identically. Panels A and B are the predicted
+    construct; panel C is the deposited complex.
+    """
+    panels = [
+        ("A", "a.png", "Intact construct",
+         "The mask and linker are attached at the N-terminus of the nanobody."),
+        ("B", "b.png", "After cleavage",
+         "Proteolysis separates the mask, which then diffuses away."),
+        ("C", "c.png", "Antigen bound",
+         "The antigen engages the same surface, as in the deposited complex."),
+    ]
+    cells = "".join(
+        f'<figure class="stfig"><img src="states/{img}" alt="{title}">'
+        f'<figcaption><b>{tag} · {title}</b><span>{text}</span></figcaption></figure>'
+        for tag, img, title, text in panels)
+    return (f'<div class="states">{cells}</div>'
+            f'<div class="stkey">'
+            f'<span><i style="background:#337D79"></i>nanobody</span>'
+            f'<span><i style="background:#8C72AD"></i>mask</span>'
+            f'<span><i style="background:#9AA7B1"></i>linker</span>'
+            f'<span><i style="background:#C06014"></i>antigen-binding residues</span>'
+            f'<span><i style="background:#C99555"></i>antigen</span></div>')
 
 
 def occlusion_schematic(free_sasa: float | None = None) -> str:
@@ -696,93 +669,96 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 
 def architecture_schematic() -> str:
-    """The computational pipeline. Three scores, then one stage that combines them."""
-    W, H = 1120, 430
+    """Six modules: one estimation, one generation, three scores and a ranking."""
+    W, H = 980, 760
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
-         f'role="img" aria-label="Pipeline architecture">',
-         '<defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" '
-         f'markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{NULL}"/>'
+         f'role="img" aria-label="Computational pipeline">',
+         '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
+         f'markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{NULL}"/>'
          '</marker></defs>',
          '<style>'
-         '.a-t{font:600 13.5px Inter,system-ui,sans-serif}'
-         '.a-n{font:600 9.5px ui-monospace,monospace}'
-         '.a-i{font:12px Inter,system-ui,sans-serif}'
-         '.a-s{font:10.5px ui-monospace,monospace;letter-spacing:.03em}'
-         '.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}'
-         '.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}'
-         '.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '.p-t{font:600 19px Inter,system-ui,sans-serif}'
+         '.p-n{font:600 13px ui-monospace,monospace}'
+         '.p-b{font:15px Inter,system-ui,sans-serif}'
+         '.p-m{font:13.5px ui-monospace,monospace;letter-spacing:.02em}'
+         '.p-io{font:600 14px ui-monospace,monospace;letter-spacing:.1em}'
+         '.p-s{font:600 12px ui-monospace,monospace;letter-spacing:.09em}'
          '</style>']
 
-    def mod(x, y, w, h, accent, num, title, role, slots, tag, tagcol, dashed=False):
-        d = ' stroke-dasharray="5 4"' if dashed else ""
-        o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="3" fill="#FFFFFF" '
-             f'stroke="{accent if dashed else RULE}"{d}/>',
-             f'<rect x="{x}" y="{y}" width="{w}" height="3" fill="{accent}"/>',
-             f'<text x="{x+14}" y="{y+24}" class="a-n" fill="{accent}">{num}</text>',
-             f'<text x="{x+38}" y="{y+25}" class="a-t" fill="{INK}">{title}</text>']
-        ty = y + 46
-        for line in role:
-            o.append(f'<text x="{x+14}" y="{ty}" class="a-i" fill="{INK2}">{line}</text>')
-            ty += 16
+    def box(x, y, w, h, accent, num, title, lines, methods, tag=None, tagcol=None):
+        o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#FFFFFF" '
+             f'stroke="{RULE}" stroke-width="1.2"/>',
+             f'<rect x="{x}" y="{y}" width="{w}" height="4" fill="{accent}"/>',
+             f'<text x="{x+20}" y="{y+34}" class="p-n" fill="{accent}">{num}</text>',
+             f'<text x="{x+56}" y="{y+35}" class="p-t" fill="{INK}">{title}</text>']
+        ty = y + 60
+        for line in lines:
+            o.append(f'<text x="{x+20}" y="{ty}" class="p-b" fill="{INK2}">{line}</text>')
+            ty += 21
         ty += 4
-        for line in slots:
-            o.append(f'<text x="{x+14}" y="{ty}" class="a-s" fill="{accent}">{line}</text>')
-            ty += 14
-        o.append(f'<text x="{x+w-12}" y="{y+h-11}" class="a-g" fill="{tagcol}" '
-                 f'text-anchor="end">{tag}</text>')
+        for line in methods:
+            o.append(f'<text x="{x+20}" y="{ty}" class="p-m" fill="{accent}">{line}</text>')
+            ty += 19
+        if tag:
+            o.append(f'<text x="{x+w-16}" y="{y+h-14}" class="p-s" fill="{tagcol}" '
+                     f'text-anchor="end">{tag}</text>')
         return "".join(o)
 
-    s.append(f'<text x="0" y="13" class="a-h" fill="{CHROME}">'
-             'THE COMPUTATIONAL PIPELINE</text>')
+    def band(y, text):
+        return (f'<rect x="0" y="{y}" width="{W}" height="40" rx="4" fill="#F4F8F8" '
+                f'stroke="{CHROME}" stroke-width="1"/>'
+                f'<text x="{W/2}" y="{y+26}" class="p-io" fill="{CHROME}" '
+                f'text-anchor="middle">{text}</text>')
 
-    s.append(mod(0, 26, 538, 120, CHROME, "00", "Constrain", [
-        "Measure the antigen complex, then work out what",
-        "mask affinity and linker length could work at all.",
-    ], ["input: an experimental or predicted complex"], "RUN", CHROME))
+    s.append(band(0, "INPUT · EXPERIMENTAL OR PREDICTED NANOBODY–ANTIGEN STRUCTURE"))
+    s.append(f'<path d="M {W/2} 40 L {W/2} 58" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none" marker-end="url(#ar)"/>')
 
-    s.append(mod(582, 26, 538, 120, SEQ, "01", "Generate", [
-        "Propose mask sequences and linkers inside the",
-        "range the previous stage allows.",
-    ], ["graft \u00b7 ProteinMPNN \u00b7 RFdiffusion \u00b7 BindCraft"], "RUN", CHROME))
+    s.append(box(0, 64, 478, 148, CHROME, "01", "Usable mask affinity",
+                 ["Interface geometry sets the attachment", "point, linker length and the range of",
+                  "mask affinity that both states allow."],
+                 ["interface analysis · tether model"], "RUN", CHROME))
+    s.append(box(502, 64, 478, 148, SEQ, "02", "Generate constructs",
+                 ["Propose mask sequences and cleavable", "linkers inside that range."],
+                 ["RFdiffusion · ProteinMPNN · BindCraft",
+                  "CleaveNet for linkers"], "PART RUN", STR))
+    s.append(f'<path d="M 478 138 L 496 138" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none" marker-end="url(#ar)"/>')
+    s.append(f'<path d="M 741 212 L 741 232 L 160 232 L 160 268" stroke="{NULL}" '
+             f'stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 490 232 L 490 268" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none" marker-end="url(#ar)"/>')
+    s.append(f'<path d="M 160 232 L 160 268" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none" marker-end="url(#ar)"/>')
+    s.append(f'<path d="M 820 232 L 820 268" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none" marker-end="url(#ar)"/>')
+    s.append(f'<path d="M 160 232 L 820 232" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
 
-    # three scores, equal weight, side by side
-    for n, (num, title, role, slots, tag, col) in enumerate([
-        ("02", "Score: can it be made", [
-            "Does it fold, does the nanobody survive the",
-            "fusion, is the surface a liability?",
-        ], ["ESMFold confidence \u00b7 core RMSD",
-            "exposed hydrophobic \u00b7 free cysteine"], "RUN", CHROME),
-        ("03", "Score: can it be cut", [
-            "Is the linker reachable and extended, and does",
-            "this protease recognise this sequence?",
-        ], ["accessibility: run",
-            "sequence recognition: needs data"], "HALF BUILT", STR),
-        ("04", "Score: does it mask", [
-            "Is the site blocked while tethered, and does the",
-            "antigen return once the tether is cut?",
-        ], ["occlusion: does not separate",
-            "tethered complex: run"], "PART RUN", STR),
+    for n, (num, title, lines, methods, tag, col) in enumerate([
+        ("03", "Structural feasibility",
+         ["Does it fold and can", "it be produced?"],
+         ["ESMFold · AlphaFold", "Boltz · Rosetta"], "RUN", CHROME),
+        ("04", "Mask binding and release",
+         ["Is the site blocked, and", "freed after cleavage?"],
+         ["complex prediction", "interface analysis"], "RUN", CHROME),
+        ("05", "Linker cleavability",
+         ["Is the linker recognised", "and reachable?"],
+         ["CleaveNet · MEROPS", "accessibility"], "PART RUN", STR),
     ]):
-        s.append(mod(n * 380, 176, 358, 134, SEQ, num, title, role, slots, tag, col))
+        s.append(box(n * 330, 274, 320, 176, SEQ, num, title, lines, methods, tag, col))
+        s.append(f'<text x="{n*330+300}" y="{468}" class="p-m" fill="{INK3}" '
+                 f'text-anchor="end">S<tspan dy="4" font-size="11">{n+1}</tspan></text>')
+        s.append(f'<path d="M {n*330+160} 450 L {n*330+160} 486 L 490 486 L 490 516" '
+                 f'stroke="{NULL}" stroke-width="1.6" fill="none"'
+                 + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    # Generate feeds all three scores through one bus
-    s.append(f'<path d="M 851 146 L 851 158" stroke="{NULL}" stroke-width="1.4" fill="none"/>')
-    s.append(f'<path d="M 179 158 L 939 158" stroke="{NULL}" stroke-width="1.4" '
-             f'fill="none"/>')
-    for n in range(3):
-        s.append(f'<path d="M {n*380+179} 158 L {n*380+179} 170" stroke="{NULL}" '
-                 f'stroke-width="1.4" fill="none" marker-end="url(#ah4)"/>')
-    s.append(mod(291, 340, 538, 76, CHROME, "05", "Combine", [
-        "Keep a design unless another beats it on every score. No weights.",
-    ], [], "RUN", CHROME))
-    for n in range(3):
-        s.append(f'<path d="M {n*380+179} 310 L {n*380+179} 326 L 560 326 L 560 336" '
-                 f'stroke="{NULL}" stroke-width="1.4" fill="none" '
-                 f'marker-end="url(#ah4)"/>' if n != 1 else
-                 f'<path d="M 560 310 L 560 336" stroke="{NULL}" stroke-width="1.4" '
-                 f'fill="none" marker-end="url(#ah4)"/>')
-    s.append(f'<path d="M 538 86 L 576 86" stroke="{NULL}" stroke-width="1.4" '
-             f'fill="none" marker-end="url(#ah4)"/>')
+    s.append(box(166, 522, 648, 140, CHROME, "06", "Multiobjective ranking",
+                 ["Hard constraints, then the nondominated set.",
+                  "No weights, so no score compensates for another."],
+                 ["Pareto front · uncertainty · diversity"], "RUN", CHROME))
+    s.append(f'<path d="M 490 662 L 490 700" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none" marker-end="url(#ar)"/>')
+    s.append(band(706, "OUTPUT · RANKED CANDIDATE SEQUENCES WITH THEIR THREE SCORES"))
     s.append("</svg>")
     return "".join(s)
 
@@ -880,12 +856,10 @@ the same surface that binds heparan sulphate. The tail is an <b>endogenous mask<
 {f("fst_topology", "Topology of the full-length molecule, from the N-terminus to the tail.", "wide")}
 
 {step("02", "The tail binds back, and the strength can be measured")}
-<div class="tgrid c2">
-{f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding each isoform.")}
+{f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding each isoform.", "full")}
 {f("fig4_1_8_d", "Fluorescence polarisation, tail against FS12 at three ionic strengths. "
-   "K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM — the interaction "
-   "is largely electrostatic.")}
-</div>
+   "K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM and 34.6 µM at 300 mM, indicating a "
+   "largely electrostatic interaction.", "full")}
 
 {step("03", "What the tail competes with")}
 {f("fig4_1_4_e", "Isoform binding to heparan sulphate, the ligand the tail displaces from that "
@@ -904,12 +878,10 @@ rather than that the model is right.</div>
    "activin A complex, fitted to the SAXS envelope. (b) A model of FST315 adding the tails. "
    "(c) The solution structure is not one conformation but two — 65% open and 35% closed, "
    "interconverting, with the tail engaged in the closed state.", "portrait")}
-<div class="tgrid c2">
 {f("fig4_1_14_f", "SEC-SAXS scattering with fits from each model. The two-state model gives the "
-   "lowest chi-squared, 1.058, beating either single structure.", "tall")}
+   "lowest chi-squared, 1.058, beating either single structure.", "full")}
 {f("fig4_1_23_a_isoforms", "Conformational space explored for each isoform, radius of gyration "
-   "against maximum dimension. The longer the tail, the more closed states appear.", "tall")}
-</div>
+   "against maximum dimension. The longer the tail, the more closed states appear.", "full")}
 
 <div class="note"><b>Why this is the relevant experience.</b> The problem on this page is a
 two-state one: hold a conformation while tethered, lose it when cut, at an affinity inside a narrow
@@ -1211,19 +1183,23 @@ def mri(method: str, result: str, interpretation: str) -> str:
 
 #: One compact table in place of five, as a module summary.
 MODULE_SUMMARY = [
-    ("01", "Generation of candidate constructs",
+    ("01", "Estimation of the usable mask affinity",
+     "Define the attachment point, linker length and the range of mask affinity "
+     "that can satisfy both states",
+     "Interface analysis, polymer models of the tether, competitive binding equilibria"),
+    ("02", "Generation of candidate constructs",
      "Generate candidate masking architectures",
      "RFdiffusion, ProteinMPNN, BindCraft, peptide language models, evolutionary approaches"),
-    ("02", "Structural feasibility",
+    ("03", "Structural feasibility",
      "Assess preservation of the VHH fold and structural plausibility",
      "ESMFold, AlphaFold, Boltz, BioEmu, Rosetta, FoldX"),
-    ("03", "Mask binding and release",
+    ("04", "Mask binding and release",
      "Assess binding in the tethered and cleaved states",
      "Complex prediction, interface analysis, thermodynamic modelling"),
-    ("04", "Linker cleavability",
+    ("05", "Linker cleavability",
      "Assess protease responsiveness and selectivity",
      "CleaveNet, MEROPS, substrate specificity models, accessibility analysis"),
-    ("05", "Multiobjective ranking",
+    ("06", "Multiobjective ranking",
      "Select candidates satisfying the three objectives",
      "Hard filtering, Pareto optimisation, uncertainty and diversity-based selection"),
 ]
