@@ -161,6 +161,12 @@ details.fold>summary:hover b{color:var(--str)}
   text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;
   white-space:nowrap}
 h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55rem}
+.modblock{margin:22px 0}
+.modhead{display:flex;gap:16px;align-items:baseline;margin-bottom:10px}
+.modnum{font-family:var(--mono);font-size:.72rem;color:var(--chrome);font-weight:650;
+  border:1px solid var(--rule);border-radius:3px;padding:3px 9px}
+.modhead b{font-size:1.08rem;display:block;color:var(--ink)}
+.modhead span{font-size:.95rem;color:var(--ink-2);display:block;margin-top:2px}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -1116,3 +1122,68 @@ def status_table(rows) -> str:
             f'<col style="width:52%"></colgroup>'
             f'<thead><tr><th>step</th><th>status</th><th>what happened</th></tr></thead>'
             f'<tbody>{body}</tbody></table></div>')
+
+
+#: Candidate methods for each module. Listing several makes the point that the
+#: module is a slot, and that the pipeline does not depend on any one tool.
+MODULE_METHODS = [
+    ("Generate constructs",
+     "Propose mask sequences and linkers inside the range the geometry allows.",
+     [("Epitope graft", "take the antigen's own contact segment", "used here"),
+      ("ProteinMPNN", "redesign a mask onto a fixed backbone", "used here"),
+      ("RFdiffusion / RFantibody", "generate new mask backbones", "needs a GPU"),
+      ("BindCraft", "one-shot binder design against the paratope", "needs a GPU"),
+      ("Peptide language models", "sequence-only proposals for short masks", "not tried")]),
+    ("Score: can it fold and be produced",
+     "Reject constructs that will not express or will aggregate, before anything else.",
+     [("ESMFold confidence", "whether a fold was predicted at all", "used here"),
+      ("Core RMSD against the free nanobody", "whether the fusion disturbs it", "used here"),
+      ("Exposed hydrophobic surface", "aggregation liability", "used here"),
+      ("Unpaired cysteine count", "disulfide scrambling", "used here"),
+      ("AlphaFold 3 / Boltz-2", "a second opinion on the fold", "GPU, or slow on CPU"),
+      ("Rosetta or FoldX", "approximate stability", "not tried")]),
+    ("Score: does the mask bind and release",
+     "Two states. The site must be blocked while tethered and free once the tether is cut.",
+     [("Worm-like-chain tether model", "the affinity range that can work", "used here"),
+      ("Paratope occlusion from a predicted fold", "whether the site is covered",
+       "used here, did not separate designs from controls"),
+      ("Tethered three-chain complex (Boltz-2)", "whether the antigen still binds",
+       "used here"),
+      ("BioEmu or molecular dynamics", "an ensemble instead of one structure", "needs a GPU"),
+      ("Constant-pH or free-energy methods", "quantitative affinity", "not tried")]),
+    ("Score: can the linker be cleaved",
+     "The protease must reach the linker and recognise it.",
+     [("Linker accessibility and extension", "whether a protease can reach it", "used here"),
+      ("CleaveNet", "generate linkers with a target cleavage profile",
+       "trained on human MMPs"),
+      ("ProsperousPlus / UniZyme", "cleavage-site prediction", "not tried"),
+      ("Substrate profiling data", "the specificity the above models lack",
+       "does not exist for these proteases")]),
+    ("Combine into a ranking",
+     "Turn three scores into one ordered list without letting them hide each other.",
+     [("Pareto front", "keep a design unless another beats it on every score", "used here"),
+      ("Hard filters first", "drop anything that cannot fold or cannot be cut", "used here"),
+      ("Diversity selection", "keep structurally different designs, not one family",
+       "not tried"),
+      ("Uncertainty-aware ranking", "penalise designs the models disagree about",
+       "not tried")]),
+]
+
+
+def module_tables() -> str:
+    """One table per module, listing the methods that could fill it."""
+    out = []
+    for n, (title, blurb, methods) in enumerate(MODULE_METHODS):
+        rows = "".join(
+            f"<tr><td>{name}</td><td>{what}</td><td>{status}</td></tr>"
+            for name, what, status in methods)
+        out.append(
+            f'<div class="modblock"><div class="modhead">'
+            f'<span class="modnum">{n+1:02d}</span>'
+            f'<div><b>{title}</b><span>{blurb}</span></div></div>'
+            f'<div class="scroll"><table class="wrap">'
+            f'<colgroup><col style="width:30%"><col style="width:43%">'
+            f'<col style="width:27%"></colgroup>'
+            f'<thead><tr><th>method</th><th>what it gives</th><th>status</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div></div>')
+    return "".join(out)

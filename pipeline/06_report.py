@@ -161,7 +161,7 @@ if fold:
         for r in sorted(rows, key=lambda r: -r["occlusion"]))
     folding_html = f"""
 <section class="sec">
-<div class="stack"><div class="eyebrow">Stage 4 · folded on CPU</div>
+<div class="stack"><div class="eyebrow">Step 04 · does it mask</div>
 <h2>Does the mask actually reach the paratope?</h2>
 <p>Every construct folded with ESMFold, then the paratope's solvent-accessible surface in the
 fusion compared against the same residues in the folded free nanobody. The grafts are read against
@@ -209,7 +209,7 @@ if redesign_fold and fold:
         for r in sorted(rrows, key=lambda r: -r["occlusion"])[:12])
     redesign_html = f"""
 <section class="sec">
-<div class="stack"><div class="eyebrow">Stage 5 · closing the loop</div>
+<div class="stack"><div class="eyebrow">Step 02 · generate, second method</div>
 <h2>Redesigning the mask on its own backbone</h2>
 <p>The grafted mask is borrowed from the antigen, so nothing about its sequence is tuned to this
 paratope. Taking each folded graft as a backbone and letting ProteinMPNN rewrite only the mask
@@ -249,7 +249,7 @@ if ranking_data and ranking_data.get("objectives"):
     _hdr = "".join(f"<th>{o}</th>" for o in _objs)
     ranking_html = f"""
 <section class="sec">
-<div class="stack"><div class="eyebrow">Stage 05 · combine</div>
+<div class="stack"><div class="eyebrow">Step 05 · combine the three scores</div>
 <h2>Keeping the three scores separate</h2>
 <p>A design has to satisfy all three requirements. A construct that cannot be expressed is of no
 use however well it masks, and one that cannot be cut is of no use however well it expresses. If
@@ -295,7 +295,7 @@ if trigger:
     _acc_long = _np.mean([x["accessibility_score"] for x in _by[max(_by)]])
     trigger_html = f"""
 <section class="sec">
-<div class="stack"><div class="eyebrow">Module 02a · the trigger</div>
+<div class="stack"><div class="eyebrow">Step 03 · can it be cut</div>
 <h2>Can the protease reach the linker at all?</h2>
 <p>A protease does not simply recognise a sequence; it threads the substrate through its
 active-site cleft, which requires the linker to be both exposed and extended. That is a
@@ -339,7 +339,7 @@ if complexes:
         f"<td>{r['seconds']/60:.0f}</td></tr>" for r in ok)
     complex_html = f"""
 <section class="sec">
-<div class="stack"><div class="eyebrow">Module 02b · the other half</div>
+<div class="stack"><div class="eyebrow">Step 04 · does it mask, second method</div>
 <h3>With the mask on, can the antigen still bind?</h3>
 <p>Occlusion says the mask covers the site. It does not say the antigen is excluded — those are
 different claims, and only a two-chain prediction separates them. The free nanobody with its toxin
@@ -442,114 +442,94 @@ example on an experimental nanobody-toxin complex.">
 <style>{R.CSS}</style></head><body><div class="page">
 
 <header>
-<div class="kicker"><span>Concept demonstration</span><b>Proposal and what I have run so far</b></div>
-<h1>Designing a nanobody that a protease switches on</h1>
-<p class="lede">A nanobody that binds a toxin, with a mask tethered over its binding site so that
-it does nothing until a protease cuts the tether. This page sets out how I would design one, and
-shows what happened when I ran the parts of that design that can be run today.</p>
+<div class="kicker"><span>DTU Bioengineering</span><b>Interview case</b>
+<span>Computational design</span></div>
+<h1>A universal, protease-activated mask for nanobodies</h1>
+<p class="lede">The case asked how to design a nanobody that stays inactive in circulation and
+switches on at a snakebite site. I chose the protease as the trigger and made the regulatory part
+reusable, so the same design works on other nanobodies. This page gives the design, then what
+happened when I ran it.</p>
 </header>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Summary</div>
-<h2>What exists and what does not</h2>
-<p>Everything below is computational. Nothing has been made in a laboratory, so no affinity,
-expression level or cleavage rate on this page has been measured. Where I ran something and it did
-not work, the row says so.</p></div>
-{status_html}
-<div class="note"><b>The short version.</b> The geometry and the thermodynamics work and give a
-usable answer. One scoring function works. One scoring function failed, and the controls are what
-showed me it had failed. One scoring function is half built, because half of it needs data that
-does not exist yet.</div>
+<div class="stack"><div class="eyebrow">Background</div>
+<h2>Where I have met this problem before</h2>
+<p>My PhD was on follistatin, a protein that carries its own tethered mask. The C-terminal tail of
+FST315 folds back onto the domain that binds heparan sulphate and competes with it, so the molecule
+has two states and the switch between them is set by how tightly the tail binds. I measured those
+affinities and resolved the two states by SEC-SAXS. The design problem on this page is the same
+problem, approached from the other direction.</p></div>
+{background_html}
 </section>
 
-<!-- ============================ PART 1 ============================ -->
 <section class="sec">
-<div class="stack"><div class="eyebrow">Part 1 · the problem</div>
-<h2>Why a mask has to be weak</h2>
-<p>Most binders act wherever they go. A conditionally active binder is meant to do nothing while
-it circulates and to start working only where a local signal tells it to. The usual way to build
-one is to tether a mask over the binding site through a linker that a protease can cut.</p>
-<p>The difficulty is that the tether itself does most of the blocking. Because the mask is
-covalently attached, it is held near the binding site at a very high local concentration, so even
-a weak mask occupies that site almost permanently. For the construct on this page that effective
-concentration is {ceff_mM:.0f} mM, which means a mask with a dissociation constant of
-{bN['km_max_for_masking_M']*1e6:.0f} µM still blocks {model['leak_max']*100:.0f}% of the
-time.</p>
-<p>After the protease cuts, the tether is gone and that advantage disappears. The mask now has to
-diffuse away. A mask chosen for how firmly it binds will not do this: at a dissociation constant
-of 1 nM only {pt_1nM:.0f}% of the nanobody ever reaches toxin, because the mask stays in place.
-The construct is permanently off.</p>
-<p>This means the design target is not affinity. It is a range: strong enough to block while
-tethered, weak enough to leave once cut. Every protein design tool I know of maximises affinity,
-so the obvious approach produces masks that would be scored as successes and would not
-work.</p></div>
-<div class="chart wide">{R.states_schematic()}</div>
-</section>
+<div class="stack"><div class="eyebrow">The case</div>
+<h2>The question, and what I chose to work on</h2>
+<p>The brief described a viper bite site as having three local signals that are absent from
+circulation: an acidic pH of around 6.0 to 6.5, raised protease activity from tissue damage and
+from the venom itself, and local hypoxia. It asked for a computational pipeline that designs a
+nanobody masked in circulation and activated at the bite site by one or more of these signals, and
+asked whether a universal switch and standardised methods are possible.</p>
+<p>I made two choices before designing anything.</p></div>
 
-<!-- ============================ PART 2 ============================ -->
-<section class="sec">
-<div class="stack"><div class="eyebrow">Part 2 · the method</div>
-<h2>A pipeline built around that window</h2>
-<p>The ordering is the design decision. Generative models are usually put first, and the structure
-used afterwards to filter what they produce. Here it runs the other way: <b>the complex is measured
-and the tether priced before anything is generated</b>, so the attachment point, the linker length
-and the usable range of mask affinities are already fixed when generation starts. Generation then
-searches a space the geometry has narrowed, rather than a space that has to be filtered down
-afterwards.</p></div>
-<div class="chart wide">{R.architecture_schematic()}</div>
-
-<h3>Why each module is separate</h3>
-<div class="scroll"><table class="wrap"><colgroup><col style="width:17%"><col style="width:33%">
-<col style="width:50%"></colgroup><thead><tr><th>module</th><th>what it answers</th>
-<th>why it is its own box</th></tr></thead><tbody>
-<tr><td><b>00 Constrain</b></td><td>Where could a mask attach, and what mask affinity could
-possibly work?</td><td>It runs once per target and bounds everything downstream. Skipping it means
-generating candidates that no affinity could rescue.</td></tr>
-<tr><td><b>01 Generate</b></td><td>What masks and linkers are worth trying?</td>
-<td>Grafts, language models and diffusion models are interchangeable here. Nothing downstream needs
-to know which was used.</td></tr>
-<tr><td><b>02a Trigger</b></td><td>Does the cue open the switch here and nowhere else?</td>
-<td>Selectivity, not cleavability, is the quantity. The cue itself is a parameter — protease, pH or
-metal ion all plug into the same slot.</td></tr>
-<tr><td><b>02b Binding</b></td><td>Is the site covered while tethered, and free once cut?</td>
-<td>Two states, scored separately. Collapsing them to one number is what hides the failure mode.</td></tr>
-<tr><td><b>03 Rank</b></td><td>Which designs survive all the constraints at once?</td>
-<td>Trade-offs are kept visible. Averaging the scores would let a design that cannot release
-compensate with a high masking score.</td></tr>
-<tr><td><b>04 Measure</b></td><td>What is actually true?</td><td>The only module producing data the
-others can learn from, and the slowest.</td></tr>
+<div class="scroll"><table class="wrap">
+<colgroup><col style="width:22%"><col style="width:46%"><col style="width:32%"></colgroup>
+<thead><tr><th>signal</th><th>what the evidence shows</th><th>decision</th></tr></thead><tbody>
+<tr><td><b>Protease</b></td><td>Gelatinolytic activity in exudate next to envenomed muscle peaks
+about an hour after the bite and comes from the venom's own metalloproteinases. Host enzymes
+arrive later. The signal is therefore early, abundant and proportional to the thing being
+neutralised.</td><td><b>Chosen as the trigger.</b></td></tr>
+<tr><td>pH</td><td>No study has measured pH at a bite site. The nearest proxies, inflamed and
+infected tissue, sit near pH 6.8 to 7.0 rather than 6.0. A mask switching at 6.0 would rarely
+open.</td><td>Not used. I would measure it before designing against it.</td></tr>
+<tr><td>Hypoxia</td><td>Argued from microvascular damage, never measured in envenomed tissue. No
+validated protein switch responds directly to oxygen.</td><td>Not used.</td></tr>
 </tbody></table></div>
 
-<div class="banner"><b>What "universal" can honestly mean.</b> A single mask sequence that works on
-every binder is unlikely: paratopes differ. What can transfer is the <em>architecture</em> — a fixed
-attachment geometry, a reusable mask family, an interchangeable trigger linker and one scoring
-protocol. That is a cassette, and it is a realistic target.</div>
+<div class="note"><b>The second choice was to make the regulatory part reusable.</b> A single mask
+sequence that works on every nanobody is unlikely, because paratopes differ. What can transfer is
+the architecture: a fixed attachment point, a mask family, an interchangeable cleavable linker and
+one scoring protocol. The nanobody stays unchanged and only the mask is redesigned, so the same
+pipeline can be pointed at a different toxin without rebuilding it.</p></div>
 
-<div class="banner" style="border-left-color:#C06014"><b>The rate limit is the lab, not the
-compute.</b> Every module except 04 runs in minutes to hours. Module 04 returns a handful of
-measurements a month, and conventional supervised learning wants 20–30 results before it can even
-validate, around 100 to optimise against, and hundreds more to train on. At three measurements a
-month that is years, which is why the computational modules are posed as a way to <em>spend</em>
-those measurements well, not as a substitute for them.</div>
+<div class="chart wide">{R.states_schematic()}</div>
+<div class="note"><b>Why the mask has to be weak.</b> The tether holds the mask near the site at
+an effective concentration of {ceff_mM:.0f} mM, so a mask with a dissociation constant of
+{bN['km_max_for_masking_M']*1e6:.0f} µM still blocks almost all of the time. After cleavage that
+advantage is gone and the mask has to leave. A mask at 1 nM would block beautifully and then stay
+put, so only {pt_1nM:.0f}% of the nanobody would ever reach toxin. Every protein design tool
+maximises affinity, which means the obvious approach produces masks that score as successes and do
+not work.</div>
 </section>
 
-<!-- ============================ PART 3 ============================ -->
 <section class="sec">
-<div class="stack"><div class="eyebrow">Part 3 · the method in action</div>
-<h2>Running it on a real complex</h2>
-<p>The example below applies every built module to one deposited structure: {meta['title']},
-{meta['method'].lower()} at {meta['resolution_A']} Å, deposited {meta['deposition_date']}. Four
-independent copies of the complex sit in the asymmetric unit, so the interface is measured four
-times and the spread between them is a free reproducibility check.</p></div>
-<div class="chart wide">{R.pipeline_schematic(schematic_facts)}</div>
-<p>This complex was not the first one tried. The constraint module is also a screening step: it
-reports, before anything is generated, whether a target can support a measurable mask at all. The
-first candidate failed that test, and the record of it is kept below.</p>
+<div class="stack"><div class="eyebrow">The design</div>
+<h2>Five modules</h2>
+<p>The pipeline generates constructs, scores them three separate ways, and combines the three
+scores into one ranked list. Each module is a slot. The methods listed under it are
+interchangeable, so a better generator or a better cleavage model can be dropped in without
+changing anything else.</p></div>
+<div class="chart wide">{R.architecture_schematic()}</div>
+{R.module_tables()}
+<div class="note"><b>The three scores are kept apart on purpose.</b> A construct that cannot be
+expressed is of no use however well it masks, and one that cannot be cut is of no use however well
+it expresses. Averaging them would let a high score on one hide a failure on another, so the
+combining stage takes the Pareto front instead.</div>
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">What I ran</div>
+<h2>The example, step by step</h2>
+<p>I ran the pipeline on an experimental nanobody-toxin complex from the same laboratory.
+Everything below is computational and nothing has been made, so no affinity, expression level or
+cleavage rate here has been measured.</p></div>
+{status_html}
+</section>
+
 {cautionary_html}
-</section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Module 00 · constrain</div>
+<div class="stack"><div class="eyebrow">Step 01 · the reference structure</div>
 <h3>Measuring the complex</h3>
 <p>The paratope is defined as the residues that lose solvent-accessible surface when the complex
 forms, and the geometry that matters for a tether is how far each terminus sits from that
@@ -586,7 +566,7 @@ interchangeable. {n_term_verdict}</div>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Module 00 · constrain</div>
+<div class="stack"><div class="eyebrow">Step 01 · the design window</div>
 <h3>Pricing the tether</h3>
 <p>A tethered mask behaves as though present at an effective concentration set by the linker.
 Treating the Gly/Ser linker as a worm-like chain with persistence length
@@ -620,7 +600,7 @@ affinity maturation would be the wrong move.</div>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Module 01 · generate</div>
+<div class="stack"><div class="eyebrow">Step 02 · generate constructs</div>
 <h3>Candidates, and the controls that make them legible</h3>
 <p>One peptide is already known to engage this paratope: the antigen's own contact segment. Grafting
 it needs no generative model and brings its own negative controls.</p></div>
@@ -639,9 +619,13 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <span class="mono">polyG</span> has no designed interaction and should fail.</div>
 </section>
 
+{redesign_html}
+
+{trigger_html}
+
 <section class="sec">
-<div class="stack"><div class="eyebrow">Module 02b · score the binding</div>
-<h3>Is the site covered?</h3></div>
+<div class="stack"><div class="eyebrow">Step 04 · does it mask</div>
+<h3>Measuring whether the site is covered</h3></div>
 <div class="chart wide">{R.occlusion_schematic()}</div>
 {folding_html}
 <div class="viewer">
@@ -657,10 +641,6 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
 </section>
-
-{redesign_html}
-
-{trigger_html}
 
 {complex_html}
 
@@ -706,14 +686,6 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 </tbody></table></div>
 <p class="dim" style="font-size:.88rem">Code and stage outputs:
 <a href="{REPO_URL}">{REPO_URL.split("//")[1]}</a></p>
-</section>
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">Prior work</div>
-<h2>Where this problem is familiar from</h2>
-<p>The two-state, tethered-affinity problem on this page is one I characterised experimentally
-during the PhD, in a protein that solves it naturally.</p></div>
-{background_html}
 </section>
 
 {R.scale_section()}
