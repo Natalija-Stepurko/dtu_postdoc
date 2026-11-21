@@ -69,3 +69,15 @@ def test_the_score_is_a_product_so_one_failure_is_fatal():
     atoms.chain_id = np.array(["A"] * n)
     out = CC.cleavage_accessibility(atoms, (1, n))
     assert out["context_score"] < 0.2
+
+
+def test_conditioning_profile_is_one_row():
+    """CleaveNet draws num_seqs samples per row of this file, reloading weights
+    each time, so extra rows multiply the work instead of the diversity."""
+    from nbswitch import linkers as L
+    frame = L.conditioning_profile()
+    assert len(frame) == 1
+    assert list(frame.columns) == L.PROTEASES
+    row = frame.iloc[0]
+    assert all(row[p] > 0 for p in L.TARGET_PROTEASES)
+    assert all(row[p] < 0 for p in L.OFF_TARGET_PROTEASES)

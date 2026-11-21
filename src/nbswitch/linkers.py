@@ -61,9 +61,14 @@ FLANK = "GGS"
 CLEAVENET = Path("/scratch/cleavenet")
 
 
-def conditioning_profile(n_rows: int, target_z: float = 2.0,
+def conditioning_profile(target_z: float = 2.0,
                          off_target_z: float = -1.0) -> pd.DataFrame:
     """The z-score profile to generate against: cut by the first group, not the second.
+
+    Exactly one row. CleaveNet's generator loops over every row of this file
+    and draws ``--num-seqs`` samples for each, reloading its weights on every
+    draw, so a file with n rows asks for n x num_seqs sequences rather than
+    num_seqs of them.
 
     Proteases in neither group are left at zero, meaning no preference
     expressed, rather than being pushed either way on evidence we do not have.
@@ -76,7 +81,7 @@ def conditioning_profile(n_rows: int, target_z: float = 2.0,
             row[protease] = off_target_z
         else:
             row[protease] = 0.0
-    return pd.DataFrame([row] * n_rows)
+    return pd.DataFrame([row])
 
 
 def generate(n: int, temperature: float = 0.9, seed_dir: Path | None = None,
@@ -85,7 +90,7 @@ def generate(n: int, temperature: float = 0.9, seed_dir: Path | None = None,
     work = Path(seed_dir or tempfile.mkdtemp(prefix="cleavenet-"))
     work.mkdir(parents=True, exist_ok=True)
     profile = work / "profile.csv"
-    conditioning_profile(n).to_csv(profile, index=False)
+    conditioning_profile().to_csv(profile, index=False)
     out = work / "generated"
     subprocess.run(
         [python, "src/generate.py", "--num-seqs", str(n),
