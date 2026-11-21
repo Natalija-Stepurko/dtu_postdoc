@@ -47,39 +47,67 @@ def _save(fig, name):
     return path
 
 
+CDR_COLOUR = {"CDR1": "#2E7DBE", "CDR2": "#B8860B", "CDR3": "#A8324A"}
+FRAMEWORK_COLOUR = "#7E8A93"
+
+
 def paratope_footprint(ref, cdrs, chain="A"):
+    """Surface buried per residue, each bar coloured by the region it sits in."""
     plt = _style()
     data = ref["chain_pairs"][chain]
     delta = np.array(data["vhh_delta_sasa_all"])
     labels = data["vhh_residue_labels"]
     index = {l: i for i, l in enumerate(labels)}
     x = np.arange(len(delta))
-    fig, ax = plt.subplots(figsize=(8.6, 2.5))
+    top = delta.max()
+
+    region = {}
+    for name in ("CDR1", "CDR2", "CDR3"):
+        for r in cdrs[name]["residues"]:
+            region[r] = name
+
+    paratope = set(data["paratope_labels"])
+    contacts = set(data.get("paratope_contact_labels", []))
+
+    fig, ax = plt.subplots(figsize=(8.6, 2.7))
     for name in ("CDR1", "CDR2", "CDR3"):
         res = cdrs[name]["residues"]
         a, b = index[res[0]], index[res[-1]]
-        ax.axvspan(a - .5, b + .5, color=SEQ_WASH, zorder=0, linewidth=0)
-        ax.text((a + b) / 2, delta.max() * 1.10, name, ha="center", va="bottom",
-                fontsize=7.5, color=INK3)
-    paratope = set(data["paratope_labels"])
-    contacts = set(data.get("paratope_contact_labels", []))
-    hit = np.array([l in paratope for l in labels])
-    ax.bar(x[~hit], delta[~hit], width=.8, color="#C9D1D6", linewidth=0)
-    ax.bar(x[hit], delta[hit], width=.8, color=SEQ, linewidth=0)
+        ax.axvspan(a - .5, b + .5, color=CDR_COLOUR[name], alpha=0.08, zorder=0,
+                   linewidth=0)
+        ax.text((a + b) / 2, top * 1.11, name, ha="center", va="bottom",
+                fontsize=7.5, color=CDR_COLOUR[name])
+
+    # one bar colour per region, pale where the residue buries nothing
+    for name, colour in list(CDR_COLOUR.items()) + [("framework", FRAMEWORK_COLOUR)]:
+        sel = np.array([region.get(l, "framework") == name for l in labels])
+        buried = sel & np.array([l in paratope for l in labels])
+        if (sel & ~buried).any():
+            ax.bar(x[sel & ~buried], delta[sel & ~buried], width=.8, color=colour,
+                   alpha=0.22, linewidth=0)
+        if buried.any():
+            ax.bar(x[buried], delta[buried], width=.8, color=colour, linewidth=0,
+                   label=name if name != "framework" else "framework")
+
     for label in contacts:
-        if label in labels:
-            i = labels.index(label)
-            ax.plot([i], [values[i] + top * 0.04], marker="v", markersize=4.5,
-                    color=CHROME, linestyle="none", zorder=5)
+        if label in index:
+            i = index[label]
+            ax.plot([i], [delta[i] + top * 0.05], marker="v", markersize=4.5,
+                    color="#12191F", linestyle="none", zorder=5)
     if contacts:
-        ax.plot([], [], marker="v", markersize=4.5, color=CHROME, linestyle="none",
-                label=f"within {data.get('contact_cutoff_A', 3.0):.0f} \u00c5")
-        ax.legend(fontsize=7, loc="upper left", frameon=False)
-    for label, value in sorted(data["paratope_delta_sasa"].items(), key=lambda kv: -kv[1])[:5]:
+        cut = data.get("contact_cutoff_A", 3.0)
+        ax.plot([], [], marker="v", markersize=4.5, color="#12191F", linestyle="none",
+                label=f"within {cut:.0f} \u00c5")
+
+    for label, value in sorted(data["paratope_delta_sasa"].items(),
+                               key=lambda kv: -kv[1])[:5]:
         ax.annotate(label, (index[label], value), textcoords="offset points",
-                    xytext=(0, 3), ha="center", fontsize=6.5, color=INK)
-    ax.set_xlim(-1, len(delta)); ax.set_ylim(0, delta.max() * 1.28)
-    ax.set_xlabel("VHH residue, N to C"); ax.set_ylabel("buried on binding  (Å²)")
+                    xytext=(0, 9), ha="center", fontsize=6.5, color=INK)
+
+    ax.legend(fontsize=6.8, ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.30),
+              frameon=False, handlelength=1.1, columnspacing=1.2)
+    ax.set_xlim(-1, len(delta)); ax.set_ylim(0, top * 1.30)
+    ax.set_xlabel("VHH residue, N to C"); ax.set_ylabel("buried on binding  (\u00c5\u00b2)")
     ticks = list(range(0, len(labels), 10))
     ax.set_xticks(ticks); ax.set_xticklabels([labels[t] for t in ticks], fontsize=6.5)
     return _save(fig, "paratope_footprint")

@@ -15,7 +15,7 @@ import biotite.structure as struc
 import biotite.structure.io.pdbx as pdbx
 
 from .config import (
-    CONTACT_CUTOFF_A, DATA, PDB_ID, BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINTS)
+    CONTACT_CUTOFF_A, CDR_SCHEME, DATA, PDB_ID, BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINTS)
 
 RCSB = "https://files.rcsb.org/download/{pdb_id}.cif.gz"
 
@@ -186,12 +186,46 @@ def interface(atoms, vhh_chain: str, toxin_chain: str) -> dict:
     }
 
 
-def find_cdrs(sequence: str, anchors: dict = CDR_ANCHORS) -> dict:
-    """CDR spans as half-open 0-based intervals, from framework anchors.
+def find_cdrs(sequence: str, anchors: dict = CDR_ANCHORS,
+              scheme: str = CDR_SCHEME) -> dict:
+    """CDR spans under a published numbering scheme.
 
-    A ``None`` start anchor means the span begins at the last ``VA`` before the
-    end anchor, which is how framework 2 closes in every VHH family checked.
+    Numbering is delegated to riot_na, which implements Kabat, Chothia and
+    IMGT. The schemes disagree substantially: on the worked example Kabat
+    CDR2 is 17 residues and IMGT CDR2 is 7, so the scheme has to be named
+    whenever a CDR count is quoted.
+
+    The regex anchors are a fallback for when riot_na is unavailable. They
+    were written before the numbering tool was installed and they do not
+    reproduce any single scheme: they match Kabat at CDR2 and IMGT at CDR3.
     """
+    try:
+        spans = _cdr_spans_riot(sequence, scheme)
+    except Exception:
+        spans = _cdr_spans_anchors(sequence, anchors)
+    return spans
+
+
+def _cdr_spans_riot(sequence: str, scheme: str) -> dict:
+    from riot_na import create_riot_aa, Scheme
+
+    wanted = {"kabat": Scheme.KABAT, "chothia": Scheme.CHOTHIA,
+              "imgt": Scheme.IMGT}[scheme.lower()]
+    result = create_riot_aa().run_on_sequence("vhh", sequence, scheme=wanted)
+    spans = {}
+    for attr, name in (("cdr1_aa", "CDR1"), ("cdr2_aa", "CDR2"), ("cdr3_aa", "CDR3")):
+        sub = getattr(result, attr, None)
+        if not sub:
+            raise ValueError(f"{name} not assigned under {scheme}")
+        start = sequence.find(sub)
+        if start < 0:
+            raise ValueError(f"{name} sequence not found in the chain")
+        spans[name] = (start, start + len(sub))
+    return spans
+
+
+def _cdr_spans_anchors(sequence: str, anchors: dict) -> dict:
+    """Framework-motif fallback. See find_cdrs for why this is not preferred."""
     spans = {}
     for name, (before, after) in anchors.items():
         end_match = None

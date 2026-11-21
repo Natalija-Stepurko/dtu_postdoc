@@ -125,3 +125,8 @@ def plt_style():
 #: bridges fall at or below this. Van der Waals packing extends further, which
 #: is why the masking footprint uses buried surface rather than this cutoff.
 CONTACT_CUTOFF_A = 3.0
+
+#: Antibody numbering scheme for CDR assignment: "kabat", "chothia" or "imgt".
+#: The schemes disagree: on 9RIU, Kabat CDR2 is 17 residues and IMGT CDR2 is 7,
+#: so anything quoting a CDR count has to name the scheme alongside it.
+CDR_SCHEME = "imgt"

@@ -583,6 +583,10 @@ for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability
     for _i, _v in _n.items():
         SCORES.setdefault(_i, {})[_key] = _v
 
+controls = load_json("15_interface_controls.json")
+_by = {r["pdb_id"]: r for r in controls["comparators"]}
+N["cdr3_share"] = _by.get(PDB_ID, {}).get("cdr3_percent_bsa", 0)
+N["cdr3_other"] = _by.get("9GCN", {}).get("cdr3_percent_bsa", 0)
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
 
@@ -705,7 +709,7 @@ measured.</p></div>
 <div class="vbar"><span class="eyebrow">Deposited structure</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
-<div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>
+<div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
 <span><i style="background:#C99555"></i>short neurotoxin 1</span>
 <span><i style="background:#C06014"></i>buried on binding, sticks</span>
 <span><i style="background:#C06014"></i>within {N['contact_cutoff']:.0f} &#8491;, labelled</span>
@@ -722,6 +726,16 @@ van der Waals packing reaches further than a hydrogen bond. The smaller set is w
 chemically; the larger one is the surface a mask has to cover, so the pipeline targets the larger
 one. On one of the other complexes examined the {N['contact_cutoff']:.0f} &#8491; criterion returns a
 single residue, which is too little to define a footprint from.</p>
+<p>One interface measured on its own says little, so the same quantities were measured on
+independent VHH complexes: two further nanobody&ndash;three-finger-toxin structures from other
+groups, and a nanobody bound to a much larger toxin.</p>
+{R.interface_controls_table(controls, PDB_ID)}
+<p>The worked example sits inside the range on every quantity except one. Interface area and
+paratope size match the other toxin complexes closely, and binding is loop-mediated in all four.
+What is atypical is the CDR3 share: {N['cdr3_share']:.0f}% of the buried surface here against
+{N['cdr3_other']:.0f}% for the comparator with the same antigen class. This nanobody binds
+substantially through framework&nbsp;2 and CDR2 rather than predominantly through CDR3. That is a
+property of this binder, not an artefact, and it widens the surface a mask has to cover.</p>
 <p>Of the {N['n_paratope']} residues that bury surface on binding, {N['n_cdr_para']} lie in the
 CDR loops and {N['n_fw_para']} in framework. Six of those framework residues
 ({N['fw2_para']}) sit in framework 2, the face that in a conventional antibody is buried against
@@ -825,7 +839,7 @@ extension of this module and are not implemented here.</p></div></details>
 <div class="vbar"><select id="pick">{options}</select>
 <button data-spin="designed">spin</button></div>
 <div class="vstage" id="stage-designed"></div>
-<div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>
+<div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
 <span><i style="background:#8C72AD"></i>mask</span>
 <span><i style="background:#9AA7B1"></i>linker</span>
 <span><i style="background:#C06014"></i>antigen-binding residues</span></div>

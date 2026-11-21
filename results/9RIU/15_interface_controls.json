@@ -1,0 +1,44 @@
+{
+  "comparators": [
+    {
+      "antigen_chain": "B",
+      "cdr3_percent_bsa": 26.2,
+      "interface_area_A2": 630.9,
+      "loop_percent_bsa": 95.6,
+      "n_contacts": 6,
+      "n_paratope": 19,
+      "pdb_id": "9RIU",
+      "vhh_chain": "A"
+    },
+    {
+      "antigen_chain": "X",
+      "cdr3_percent_bsa": 80.0,
+      "interface_area_A2": 599.5,
+      "loop_percent_bsa": 80.9,
+      "n_contacts": 5,
+      "n_paratope": 16,
+      "pdb_id": "9GCN",
+      "vhh_chain": "A"
+    },
+    {
+      "antigen_chain": "C",
+      "cdr3_percent_bsa": 34.3,
+      "interface_area_A2": 605.2,
+      "loop_percent_bsa": 89.8,
+      "n_contacts": 1,
+      "n_paratope": 18,
+      "pdb_id": "9S9E",
+      "vhh_chain": "A"
+    },
+    {
+      "antigen_chain": "A",
+      "cdr3_percent_bsa": 18.8,
+      "interface_area_A2": 1246.0,
+      "loop_percent_bsa": 93.6,
+      "n_contacts": 7,
+      "n_paratope": 35,
+      "pdb_id": "9EA9",
+      "vhh_chain": "F"
+    }
+  ]
+}

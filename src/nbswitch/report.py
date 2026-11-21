@@ -231,7 +231,9 @@ function boot() {
   v1 = $3Dmol.createViewer('stage-solved', {backgroundColor: '#FFFFFF'});
   jQuery.get(SOLVED_FILE, function (data) {
     const m = v1.addModel(data, 'pdb');
-    v1.setStyle({chain: 'A'}, {cartoon: {color: '#337D79'}});
+    v1.setStyle({chain: 'A'}, {cartoon: {colorfunc: function (atom) {
+      return nanobodyColour(atom.resi, 0, '#337D79');
+    }}});
     v1.setStyle({chain: 'B'}, {cartoon: {color: '#C99555'}});
     v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
     (typeof TOP_PARATOPE !== 'undefined' ? TOP_PARATOPE : []).forEach(function (r) {
@@ -263,16 +265,30 @@ function loadDesigned(id) {
   v2.clear();
   jQuery.get('structures/' + id + '.pdb', function (data) {
     const m = v2.addModel(data, 'pdb');
-    v2.setStyle({}, {cartoon: {color: '#C9D1D6'}});
-    if (spec.vhh) v2.setStyle({resi: spec.vhh}, {cartoon: {color: '#337D79'}});
-    if (spec.linker) v2.setStyle({resi: spec.linker}, {cartoon: {color: '#9AA7B1'}});
-    if (spec.mask) {
-      v2.setStyle({resi: spec.mask}, {cartoon: {color: '#8C72AD'}});
-      v2.addStyle({resi: spec.mask}, STICK_MASK);
-    }
+    // One setStyle over the whole chain. Restyling residue ranges one at a
+    // time makes 3Dmol draw each range as its own cartoon, so the construct
+    // renders as separate pieces even though it is a single chain.
+    // ranges arrive as "a-b" strings
+    const rangeEnd = function (r) {
+      if (!r) return 0;
+      const parts = String(r).split('-');
+      return parseInt(parts[parts.length - 1], 10) || 0;
+    };
+    const maskEnd = rangeEnd(spec.mask);
+    const linkEnd = rangeEnd(spec.linker) || maskEnd;
+    const vhhStart = spec.vhh ? parseInt(String(spec.vhh).split('-')[0], 10) : 1;
+    v2.setStyle({}, {cartoon: {colorfunc: function (atom) {
+      if (maskEnd && atom.resi <= maskEnd) return '#8C72AD';
+      if (linkEnd && atom.resi <= linkEnd) return '#9AA7B1';
+      return nanobodyColour(atom.resi, vhhStart - 1, '#337D79');
+    }}});
+    // a thin backbone trace, so the linker reads as connected even where it is
+    // coil and the cartoon renderer draws almost nothing
+    v2.addStyle({atom: ['N', 'CA', 'C']}, {stick: {radius: 0.12, color: '#7E8A93'}});
+    if (spec.mask) v2.addStyle({resi: spec.mask}, STICK_MASK);
     if (spec.paratope) v2.addStyle({resi: spec.paratope}, STICK_PARATOPE);
     termini(v2, m, {}, '');
-    v2.zoomTo(); v2.zoom(1.75); v2.render();
+    v2.zoomTo(); v2.zoom(1.15); v2.render();
     document.getElementById('dcap').textContent = spec.caption;
   });
 }
@@ -287,6 +303,23 @@ function colourFor(value) {
 }
 
 const CDR_COLOUR = {CDR1: '#2E7DBE', CDR2: '#B8860B', CDR3: '#A8324A'};
+
+// Which CDR a nanobody residue belongs to, built once from the numbering of
+// the free nanobody. offset shifts construct numbering back onto it.
+const CDR_OF = (function () {
+  const m = {};
+  if (typeof CDRS !== 'undefined') {
+    Object.keys(CDRS).forEach(function (name) {
+      CDRS[name].forEach(function (r) { m[r] = name; });
+    });
+  }
+  return m;
+})();
+
+function nanobodyColour(resi, offset, base) {
+  const name = CDR_OF[resi - (offset || 0)];
+  return name ? CDR_COLOUR[name] : (base || '#337D79');
+}
 
 function mountCdr(hostId) {
   const host = document.getElementById(hostId);
@@ -318,17 +351,23 @@ function mountEnsemble(hostId, scoreKey) {
   const v = $3Dmol.createViewer(hostId, {backgroundColor: '#FFFFFF'});
   jQuery.get('structures/ensemble.pdb', function (data) {
     v.addModels(data, 'pdb');
-    v.setStyle({model: 0}, {cartoon: {color: '#337D79'}});
+    v.setStyle({model: 0}, {cartoon: {colorfunc: function (atom) {
+      return nanobodyColour(atom.resi, 0, '#337D79');
+    }}});
     v.addStyle({model: 0, resi: PARATOPE},
                {stick: {colorscheme: 'orangeCarbon', radius: 0.22}});
     ENSEMBLE.forEach(function (item, n) {
       const score = scoreKey ? (SCORES[item.id] || {})[scoreKey] : null;
       // the mask and linker carry the score colour; the short run of nanobody
       // past the junction is drawn as nanobody, so the chain reads continuous
-      v.setStyle({model: n + 1},
-                 {cartoon: {color: colourFor(score), opacity: 0.85, thickness: 0.3}});
-      v.setStyle({model: n + 1, resi: item.linker_end + 1 + '-9999'},
-                 {cartoon: {color: '#337D79', opacity: 0.55, thickness: 0.3}});
+      const end = item.linker_end;
+      const c = colourFor(score);
+      v.setStyle({model: n + 1}, {cartoon: {opacity: 0.85, thickness: 0.3,
+        colorfunc: function (atom) {
+          return atom.resi <= end ? c : nanobodyColour(atom.resi - end, 0, '#337D79');
+        }}});
+      v.addStyle({model: n + 1, atom: ['N', 'CA', 'C']},
+                 {stick: {radius: 0.1, color: '#8A949B'}});
     });
     v.zoomTo(); v.zoom(1.55); v.render();
   });
@@ -1321,11 +1360,16 @@ def ensemble_viewer(element_id: str, score_key: str | None, caption: str,
             f'<p class="dim" style="font-size:.85rem">{caption}</p></div>')
 
 
+CDR_KEY = ('<span><i style="background:#2E7DBE"></i>CDR1</span>'
+           '<span><i style="background:#B8860B"></i>CDR2</span>'
+           '<span><i style="background:#A8324A"></i>CDR3</span>')
+
+
 def ramp_legend(low: str, high: str) -> str:
     stops = ["#2C5F8A", "#4E8FB0", "#8FBDC9", "#D8C9A3", "#D79A5B", "#C06014"]
     swatches = "".join(f'<i style="background:{c};width:18px;border-radius:0"></i>'
                        for c in stops)
-    return (f'<span><i style="background:#337D79"></i>nanobody</span>'
+    return (f'<span><i style="background:#337D79"></i>framework</span>{CDR_KEY}'
             f'<span><i style="background:#C06014"></i>antigen-binding residues</span>'
             f'<span style="display:flex;align-items:center;gap:0">{low}&nbsp;{swatches}'
             f'&nbsp;{high}</span>')
@@ -1342,3 +1386,23 @@ def cdr_viewer(element_id: str = "stage-cdr") -> str:
             f'<div class="vstage" id="{element_id}" data-cdr=""></div>'
             f'<div class="vkey"><span><i style="background:#C3CBD1"></i>framework</span>{key}</div>'
             f'</div>')
+
+
+def interface_controls_table(controls, target: str) -> str:
+    """The worked example read against independent VHH complexes."""
+    rows = controls["comparators"]
+    head = ("<tr><th>complex</th><th>chains</th><th>interface</th>"
+            "<th>paratope</th><th>within 3 &#8491;</th><th>CDR3 share</th>"
+            "<th>from loops</th></tr>")
+    body = ""
+    for r in rows:
+        here = r["pdb_id"] == target
+        mark = ' class="here"' if here else ""
+        name = f"<b>{r['pdb_id']}</b>" if here else r["pdb_id"]
+        body += (f'<tr{mark}><td>{name}</td>'
+                 f'<td class="mono">{r["vhh_chain"]}:{r["antigen_chain"]}</td>'
+                 f'<td>{r["interface_area_A2"]:.0f} &#8491;&#178;</td>'
+                 f'<td>{r["n_paratope"]}</td><td>{r["n_contacts"]}</td>'
+                 f'<td>{r["cdr3_percent_bsa"]:.0f}%</td>'
+                 f'<td>{r["loop_percent_bsa"]:.0f}%</td></tr>')
+    return f'<table class="tbl controls">{head}{body}</table>'
