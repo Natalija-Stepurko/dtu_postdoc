@@ -618,6 +618,74 @@ _lat = _by.get(PDB_ID, {}).get("lattice_contact", {})
 N["lattice_area"] = _lat.get("interface_area_A2", 0)
 N["lattice_n"] = _lat.get("n_paratope", 0)
 N["cdr3_other"] = _by.get("9GCN", {}).get("cdr3_percent_bsa", 0)
+def _count_rows():
+    """Read the per-stage counts back out of the stage outputs."""
+    rows = []
+    try:
+        lk = load_json("02b_linkers.json")
+        rows.append({"stage": "02", "what": "protease substrates generated, "
+                     "conditioned on the target profile", "made": lk["n_generated"],
+                     "kept": lk["n_kept"]})
+        rows.append({"stage": "02", "what": "controls: a protease-resistant "
+                     "Gly/Ser repeat and a scramble of the best substrate",
+                     "made": lk.get("n_controls", 0),
+                     "kept": lk.get("n_controls", 0)})
+        rows.append({"stage": "02", "what": "linkers entering the library",
+                     "made": len(lk["linkers"]), "kept": len(lk["linkers"])})
+    except FileNotFoundError:
+        pass
+    try:
+        cl = load_json("03_constructs.json")
+        rows.append({"stage": "02", "what": "masks: epitope grafts, a truncation, "
+                     "a scramble and an inert poly-glycine",
+                     "made": len(cl["masks"]), "kept": len(cl["masks"])})
+        rows.append({"stage": "02", "what": "constructs: every mask on every "
+                     "linker, plus the free nanobody",
+                     "made": cl["n_constructs"], "kept": cl["n_constructs"]})
+    except FileNotFoundError:
+        pass
+    for name, stage, what in (
+            ("04_folded.json", "03", "constructs folded with ESMFold"),
+            ("07_redesign.json", "02", "mask sequences redesigned with ProteinMPNN"),
+            ("08_folded_redesigns.json", "03", "redesigns folded"),
+            ("11_complexes_msa.json", "04", "complexes predicted with alignments"),
+    ):
+        try:
+            d = load_json(name)
+            n = len(d.get("results", d.get("constructs", [])))
+            rows.append({"stage": stage, "what": what, "made": n, "kept": None})
+        except FileNotFoundError:
+            pass
+    try:
+        rk = load_json("13_ranking.json")
+        rows.append({"stage": "06", "what": "carried all three scores and were "
+                     "ranked", "made": rk["n_total"],
+                     "kept": len(rk.get("pareto", []))})
+    except (FileNotFoundError, KeyError):
+        pass
+    return rows
+
+
+try:
+    _lk = load_json("02b_linkers.json")
+    _gen = [x for x in _lk["linkers"] if x.get("kind") == "generated"]
+    _sel = [x["selectivity"] for x in _gen if x.get("selectivity") is not None]
+    _ctrl = next((x["selectivity"] for x in _lk["linkers"]
+                  if x["id"] == "ctrl_gs" and x.get("selectivity") is not None), 0.0)
+    N["n_linkers"] = len(_lk["linkers"])
+    N["n_generated"] = _lk["n_generated"]
+    N["sel_min"] = min(_sel) if _sel else 0.0
+    N["sel_max"] = max(_sel) if _sel else 0.0
+    N["sel_ctrl"] = _ctrl
+    N["target_proteases"] = ", ".join(_lk["target_proteases"])
+    N["off_target_proteases"] = ", ".join(_lk["off_target_proteases"])
+    LINKERS = _lk["linkers"]
+except FileNotFoundError:
+    N.update({"n_linkers": 0, "n_generated": 0, "sel_min": 0.0, "sel_max": 0.0,
+              "sel_ctrl": 0.0, "target_proteases": "", "off_target_proteases": ""})
+    LINKERS = []
+
+COUNTS = _count_rows()
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
 
@@ -722,7 +790,11 @@ order candidates within a front.</p>
 <p>The pipeline was implemented in part and applied to {meta['title'][:66]}, a {N['resolution']} Å
 X-ray structure deposited in {meta['deposition_date'][:4]}. All results below are computational.
 No construct has been expressed and no affinity, expression level or cleavage rate has been
-measured.</p></div>
+measured.</p>
+<p>What was produced at each stage, and how much of it survived:</p>
+{R.generation_table(COUNTS)}
+<p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
+that produced it.</p></div>
 
 <h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
 {mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
@@ -811,8 +883,11 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
 {mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
-     "poly-glycine controls, across five linker lengths. ProteinMPNN was then used to redesign the "
-     "mask positions on each folded construct with the nanobody and linker held fixed.",
+     "poly-glycine controls. Linkers were not fixed sequences but generated: CleaveNet was "
+     "conditioned on a profile that asks for substrates the bite-site proteases cut and the "
+     "circulating ones do not, so cleavability constrains generation rather than filtering it "
+     "afterwards. ProteinMPNN then redesigned the mask positions on each folded construct with "
+     "the nanobody and linker held fixed.",
      f"{N['n_constructs']} constructs in the initial library and {N['n_redesign']} distinct "
      f"redesigned masks. Every redesign scored better than its parent graft by ProteinMPNN's own "
      f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
@@ -894,15 +969,24 @@ supplied simultaneously, so the result describes an assembly at equilibrium rath
 over time.</p></div></details>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
-{mri("Solvent accessibility and extension of the linker were calculated for each folded construct, "
-     "since a protease binds its substrate in an extended conformation threaded through the active "
-     "site.",
-     f"Accessibility falls from {N['acc_short']:.2f} at {N['acc_short_n']} linker residues to "
-     f"{N['acc_long']:.2f} at {N['acc_long_n']}. Solvent exposure remains near 1.0 throughout, so "
-     f"the change is in extension rather than burial.",
-     "Longer linkers adopt compact conformations and present the cleavage site less well. This "
-     "describes presentation of the linker only. Prediction of recognition by a particular "
-     "protease, and of selectivity against host enzymes, remains to be incorporated.")}
+{mri("Two questions, kept apart. Sequence recognition is verified with CleaveNet's predictor and "
+     "scored as a contrast, since a linker cut by everything would unmask in circulation. Reach is "
+     "then checked in the folded construct against three necessary conditions: the segment lies "
+     "extended enough for a catalytic groove, its backbone is exposed, and a sphere the size of a "
+     "catalytic domain fits beside the scissile bond. Their product is taken, because a "
+     "requirement that can be compensated for is not a requirement.",
+     f"{N['n_linkers']} linkers were carried forward from {N['n_generated']} generated. "
+     f"Selectivity spans {N['sel_min']:+.2f} to {N['sel_max']:+.2f}; the Gly/Ser control scores "
+     f"{N['sel_ctrl']:+.2f}. The two halves disagree: the most selective sequence is not the most "
+     f"reachable, and the longest linkers are the most solvent-exposed and the least extended.",
+     "Generation and verification share a model family, so their agreement is weaker evidence "
+     "than two independent models would be. CleaveNet is trained on human MMPs; the protease that "
+     "arrives first at a bite site is a snake venom metalloproteinase, which is not in its "
+     "training set, so the gelatinases stand in for it.")}
+<p>The linkers carried forward, and the two controls they are read against. Target is the mean
+predicted cleavage by {N['target_proteases']}; off-target is the mean over the membrane-type and
+constitutive enzymes.</p>
+{R.linker_table(LINKERS)}
 {chart("trigger_tradeoff", "Linker accessibility and the usable affinity window against linker length.")}
 {R.ensemble_viewer("ens-cleave", "cleavability",
    "The same constructs, coloured by linker accessibility. Short linkers stay extended and are "

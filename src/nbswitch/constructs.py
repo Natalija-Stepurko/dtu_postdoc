@@ -79,26 +79,37 @@ def mask_candidates(segments, seed: int = RANDOM_SEED) -> dict:
     return masks
 
 
-def build_library(vhh_sequence, masks, lengths=DEFAULT_LINKER_LENGTHS) -> list[dict]:
+def build_library(vhh_sequence, masks, linkers) -> list[dict]:
     """Every mask x linker combination, plus the free nanobody as reference.
+
+    ``linkers`` are explicit sequences, not lengths: they carry a generated
+    protease substrate, so a length alone no longer describes one.
 
     Ranges are 1-based inclusive positions in the construct sequence.
     """
     library = []
     for name, mask in masks.items():
-        for n in lengths:
-            link = linker(n)
+        for link in linkers:
+            seq = link["sequence"]
+            n = len(seq)
             mask_end = len(mask["seq"])
             library.append({
-                "id": f"{name}_L{n}", "mask": name, "mask_seq": mask["seq"],
-                "mask_kind": mask["kind"], "linker_residues": n, "linker_seq": link,
-                "sequence": mask["seq"] + link + vhh_sequence,
+                "id": f"{name}_{link['id']}", "mask": name,
+                "mask_seq": mask["seq"], "mask_kind": mask["kind"],
+                "linker_id": link["id"], "linker_residues": n, "linker_seq": seq,
+                "linker_substrate": link.get("substrate", ""),
+                "linker_kind": link.get("kind", "generated"),
+                "linker_selectivity": link.get("selectivity"),
+                "sequence": mask["seq"] + seq + vhh_sequence,
                 "length": mask_end + n + len(vhh_sequence),
                 "mask_range": [1, mask_end],
                 "linker_range": [mask_end + 1, mask_end + n],
                 "vhh_range": [mask_end + n + 1, mask_end + n + len(vhh_sequence)]})
     library.append({"id": "VHH_only", "mask": None, "mask_seq": "",
-                    "mask_kind": "reference", "linker_residues": 0, "linker_seq": "",
+                    "mask_kind": "reference", "linker_id": None,
+                    "linker_residues": 0, "linker_seq": "",
+                    "linker_substrate": "", "linker_kind": "reference",
+                    "linker_selectivity": None,
                     "sequence": vhh_sequence, "length": len(vhh_sequence),
                     "mask_range": None, "linker_range": None,
                     "vhh_range": [1, len(vhh_sequence)]})

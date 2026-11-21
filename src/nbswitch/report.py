@@ -1411,3 +1411,37 @@ def interface_controls_table(controls, target: str) -> str:
                  f'<td>{r["cdr3_percent_bsa"]:.0f}%</td>'
                  f'<td>{r["loop_percent_bsa"]:.0f}%</td></tr>')
     return f'<table class="tbl controls">{head}{body}</table>'
+
+
+def generation_table(counts) -> str:
+    """How many of what, at each stage. Every figure read from a stage output."""
+    head = ("<tr><th>stage</th><th>what is produced</th><th>how many</th>"
+            "<th>kept</th></tr>")
+    body = ""
+    for row in counts:
+        kept = row.get("kept")
+        kept = "&mdash;" if kept is None else f"<b>{kept}</b>"
+        body += (f'<tr><td class="mono">{row["stage"]}</td><td>{row["what"]}</td>'
+                 f'<td>{row["made"]}</td><td>{kept}</td></tr>')
+    return f'<table class="tbl gen">{head}{body}</table>'
+
+
+def linker_table(linkers) -> str:
+    """The generated substrates and their controls, with the contrast they scored."""
+    head = ("<tr><th>linker</th><th>sequence</th><th>kind</th>"
+            "<th>target</th><th>off&#8209;target</th><th>selectivity</th></tr>")
+    body = ""
+    for item in linkers:
+        sel = item.get("selectivity")
+        sel = "&mdash;" if sel is None else f"{sel:+.2f}"
+        tz = item.get("target_z")
+        oz = item.get("off_target_z")
+        control = "control" in str(item.get("kind", ""))
+        row_class = ' class="ctrl"' if control else ""
+        body += (f'<tr{row_class}><td class="mono">{item["id"]}</td>'
+                 f'<td class="mono">{item["sequence"]}</td>'
+                 f'<td>{item.get("kind", "")}</td>'
+                 f'<td>{"&mdash;" if tz is None else f"{tz:+.2f}"}</td>'
+                 f'<td>{"&mdash;" if oz is None else f"{oz:+.2f}"}</td>'
+                 f'<td><b>{sel}</b></td></tr>')
+    return f'<table class="tbl linkers">{head}{body}</table>'

@@ -21,16 +21,29 @@ def test_segments_split_on_a_wider_gap():
 
 
 def test_ranges_index_the_sequence_correctly():
+    """Linkers are explicit sequences now, since a generated substrate is not
+    described by its length."""
     masks = {"m": {"seq": "RGKRV", "kind": "graft", "note": ""}}
-    lib = C.build_library("QVQLX" * 4, masks, lengths=(5,))
-    item = next(c for c in lib if c["id"] == "m_L5")
+    linkers = [{"id": "cn01", "sequence": "GGSHMGSNLTGMYGGS",
+                "substrate": "HMGSNLTGMY", "kind": "generated",
+                "selectivity": 1.5}]
+    lib = C.build_library("QVQLX" * 4, masks, linkers)
+    item = next(c for c in lib if c["id"] == "m_cn01")
     seq = item["sequence"]
     a, b = item["mask_range"]
     assert seq[a - 1:b] == "RGKRV"
     a, b = item["linker_range"]
-    assert seq[a - 1:b] == C.linker(5)
+    assert seq[a - 1:b] == "GGSHMGSNLTGMYGGS"
     a, b = item["vhh_range"]
     assert seq[a - 1:b] == "QVQLX" * 4
+    assert item["linker_substrate"] == "HMGSNLTGMY"
+
+
+def test_the_reference_carries_no_linker():
+    masks = {"m": {"seq": "RGKRV", "kind": "graft", "note": ""}}
+    lib = C.build_library("QVQLX" * 4, masks, [])
+    assert [c["id"] for c in lib] == ["VHH_only"]
+    assert lib[0]["linker_range"] is None
 
 
 def test_scramble_is_a_permutation():

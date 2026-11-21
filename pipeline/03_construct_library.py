@@ -18,7 +18,9 @@ if removed:
 
 segments = C.epitope_segments(ref["toxin_residue_labels"], toxin_seq, ref["epitope_labels"])
 masks = C.mask_candidates(segments)
-library = C.build_library(vhh_seq, masks)
+linker_data = load_json("02b_linkers.json")
+linkers = linker_data["linkers"]
+library = C.build_library(vhh_seq, masks, linkers)
 
 save_json("03_constructs.json", {
     "vhh_sequence": vhh_seq, "vhh_sequence_deposited": ref_data["sequence"],
@@ -26,7 +28,10 @@ save_json("03_constructs.json", {
     "paratope_labels": ref["paratope_labels"],
     "vhh_residue_labels": ref["vhh_residue_labels"],
     "epitope_segments": segments, "masks": masks,
-    "linker_lengths": list(C.DEFAULT_LINKER_LENGTHS), "linker_motif": C.LINKER_MOTIF,
+    "linkers": linkers, "n_linkers": len(linkers),
+    "n_substrates_generated": linker_data["n_generated"],
+    "target_proteases": linker_data["target_proteases"],
+    "off_target_proteases": linker_data["off_target_proteases"],
     "n_constructs": len(library), "constructs": library})
 
 print(f"epitope segments (>=3 residues): {len(segments)}")
