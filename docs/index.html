@@ -1,249 +1,375 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Computational design of a universal protease-activated nanobody switch</title>
-<meta name="description" content="A structure-grounded pipeline for designing protease-activated
-nanobody masks, with results computed from PDB 9GCN.">
+<title>A protease-activated nanobody mask</title>
+<meta name="description" content="Concept demonstration: geometry and thermodynamics of a tethered
+nanobody mask, computed from an experimental nanobody–toxin complex.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light;--bg:#f9f9f7;--sf:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;
---ink3:#8a8984;--line:#e4e3de;--blue:#2a78d6;--orange:#eb6834;--aqua:#1baf7a;--yellow:#eda100;}
-@media(prefers-color-scheme:dark){:root:where(:not([data-theme=light])){
---bg:#0d0d0d;--sf:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--ink3:#8d8c85;--line:#2e2e2c;
---blue:#3987e5;--orange:#d95926;--aqua:#199e70;--yellow:#c98500;color-scheme:dark;}}
+:root{
+  --ink:#12191F; --ink-2:#3A464F; --ink-3:#6E7880;
+  --ground:#FFFFFF; --panel:#FFFFFF; --rule:#DDE4E7; --rule-2:#EBF0F2;
+  --seq:#2D5BD1; --str:#C06014; --null:#6E7880; --chrome:#0E7C7B;
+  --seq-wash:#EAEFFB; --str-wash:#FAEEE5;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-font:16px/1.65 ui-sans-serif,-apple-system,"Segoe UI",Inter,system-ui,sans-serif;
--webkit-font-smoothing:antialiased}
-.wrap{max-width:980px;margin:0 auto;padding:0 24px 96px}
-header{padding:72px 0 28px;border-bottom:1px solid var(--line);margin-bottom:40px}
-h1{font-size:34px;line-height:1.2;margin:0 0 12px;letter-spacing:-.02em;font-weight:650}
-.sub{color:var(--ink2);font-size:17px;margin:0 0 18px;max-width:72ch}
-.meta{color:var(--ink3);font-size:13px}
-.demo{background:var(--sf);border:1px solid var(--line);border-left:2px solid var(--yellow);
-border-radius:8px;padding:11px 15px;font-size:14px;margin:0 0 16px;max-width:74ch}
-.demo b{color:var(--ink)}
-.meta a{color:var(--ink2)}
-h2{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);
-margin:64px 0 14px;font-weight:650}
-h3{font-size:20px;margin:34px 0 10px;font-weight:600;letter-spacing:-.01em}
-p{margin:0 0 14px;max-width:74ch;color:var(--ink2)}
-p strong,li strong{color:var(--ink);font-weight:600}
-a{color:var(--blue)}
-figure{margin:22px 0;background:var(--sf);border:1px solid var(--line);
-border-radius:12px;padding:16px;overflow:hidden}
-figure img{width:100%;height:auto;display:block;border-radius:4px}
-figcaption{color:var(--ink3);font-size:12.5px;margin-top:10px;line-height:1.5}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0}
-.kpi{background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-.kv{font-size:25px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.kl{font-size:12.5px;color:var(--ink2);margin-top:3px}
-.ks{font-size:11.5px;color:var(--ink3);margin-top:4px}
-table{border-collapse:collapse;width:100%;font-size:13.5px;margin:18px 0}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--ink3);font-weight:600;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}
-td.n{text-align:right;font-variant-numeric:tabular-nums}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
-code{background:var(--sf);border:1px solid var(--line);padding:1px 5px;border-radius:4px}
-.note{border-left:2px solid var(--orange);padding:4px 0 4px 16px;margin:20px 0;
-color:var(--ink2);font-size:14.5px}
-.note b{color:var(--ink)}
-.ok{border-left-color:var(--aqua)}
-.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
-.steps li{counter-increment:s;position:relative;padding:0 0 16px 40px;color:var(--ink2);
-border-left:1px solid var(--line);margin-left:11px}
-.steps li:last-child{border-left-color:transparent}
-.steps li::before{content:counter(s);position:absolute;left:-11px;top:0;width:22px;height:22px;
-border-radius:50%;background:var(--sf);border:1px solid var(--line);color:var(--ink2);
-font-size:11.5px;font-weight:650;display:grid;place-items:center}
-.steps b{color:var(--ink);display:block;margin-bottom:2px}
-.pill{display:inline-block;font-size:11px;padding:2px 9px;border-radius:999px;
-border:1px solid var(--line);color:var(--ink2);margin-right:6px}
-.pill.run{border-color:var(--aqua);color:var(--aqua)}
-.pill.gpu{border-color:var(--yellow);color:var(--yellow)}
-.pill.no{border-color:var(--line);color:var(--ink3)}
-.eq{background:var(--sf);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
-margin:16px 0;font-family:ui-monospace,monospace;font-size:13.5px;color:var(--ink);overflow-x:auto}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:720px){.two{grid-template-columns:1fr}h1{font-size:27px}}
-footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--line);
-color:var(--ink3);font-size:13px}
-ul.ref{list-style:none;padding:0;font-size:13.5px}
-ul.ref li{padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink2)}
-</style></head><body><div class="wrap">
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+     font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.page{max-width:1140px;margin:0 auto;padding:0 36px}
+h1,h2,h3{text-wrap:balance;line-height:1.16;margin:0}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:650;letter-spacing:-.025em}
+h2{font-size:clamp(1.25rem,2.3vw,1.7rem);font-weight:650;letter-spacing:-.018em}
+h3{font-size:1.06rem;font-weight:600}
+p{margin:0;max-width:74ch}
+a{color:var(--seq)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono)}
+.dim{color:var(--ink-3)}
+.sec{padding:52px 0;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:24px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
+         color:var(--chrome);font-weight:600}
+header{padding:76px 0 50px;display:flex;flex-direction:column;gap:22px}
+.kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+        color:var(--ink-3);display:flex;gap:12px;flex-wrap:wrap}
+.kicker b{color:var(--seq);font-weight:600}
+.lede{font-size:1.2rem;color:var(--ink-2);line-height:1.52;font-weight:400}
+.banner{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--chrome);
+        border-radius:3px;padding:16px 20px;font-size:.96rem;color:var(--ink-2);max-width:none}
+.banner b{color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:18px 20px;
+      display:flex;flex-direction:column;gap:5px}
+.card .big{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.72rem;
+           font-weight:500;letter-spacing:-.02em;line-height:1.05}
+.card .cl{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--ink-3)}
+.card .sub{font-size:.85rem;color:var(--ink-2);line-height:1.45}
+.card.hl{border-top:3px solid var(--seq)}
+.chart{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+       padding:18px 18px 12px;display:flex;flex-direction:column;gap:9px;overflow-x:auto}
+.chart img,.chart svg{width:100%;height:auto;display:block;max-width:760px;margin:0 auto}
+.chart figcaption{font-size:.85rem;color:var(--ink-3);line-height:1.5}
+.charts2{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
+.charts2 .chart img{max-width:none}
+.chart.wide img{max-width:none}
+.scroll{overflow-x:auto;background:var(--panel);border:1px solid var(--rule);border-radius:3px}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);
+      font-variant-numeric:tabular-nums;font-size:.76rem}
+th,td{padding:9px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--rule-2)}
+th:first-child,td:first-child{text-align:left;font-family:var(--sans);font-size:.88rem;
+      white-space:normal}
+thead th{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
+         font-weight:600;border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+tr.hl td{background:var(--seq-wash)}
+tr.ctrl td{color:var(--ink-3)}
+.tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
+     color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:1px 7px}
+.tag.run{color:var(--chrome);border-color:#A9CFCE}
+.tag.gap{color:var(--str);border-color:#E3C3A8}
+.steps{display:grid;gap:0;background:var(--panel);border:1px solid var(--rule);border-radius:3px}
+.step{display:grid;grid-template-columns:2.2rem 1fr auto;gap:16px;align-items:start;
+      padding:15px 20px;border-bottom:1px solid var(--rule-2)}
+.step:last-child{border-bottom:0}
+.step .n{font-family:var(--mono);font-size:.78rem;color:var(--ink-3);padding-top:2px}
+.step b{display:block;font-size:.98rem}
+.step span{font-size:.87rem;color:var(--ink-2);line-height:1.45}
+.eq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:15px 20px;
+    font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
+.viewer{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:18px;
+        display:flex;flex-direction:column;gap:12px}
+.vstage{position:relative;width:100%;height:460px;border:1px solid var(--rule-2);
+        border-radius:2px;background:#FFFFFF;overflow:hidden}
+.vbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.vbar select,.vbar button{font-family:var(--mono);font-size:.72rem;padding:5px 10px;
+    border:1px solid var(--rule);border-radius:2px;background:var(--panel);color:var(--ink-2);
+    cursor:pointer}
+.vbar button:hover,.vbar select:hover{border-color:var(--ink-3)}
+.vkey{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.66rem;
+      color:var(--ink-3)}
+.vkey i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;
+        vertical-align:middle}
+ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
+ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
+ul.ref li:last-child{border-bottom:0}
+footer{padding:36px 0 72px;color:var(--ink-3);font-size:.85rem}
+@media(max-width:720px){.page{padding:0 20px}.vstage{height:320px}}
+</style></head><body><div class="page">
 
 <header>
-<h1>Computational design of a universal protease-activated nanobody switch</h1>
-<p class="sub">A nanobody that stays masked in circulation and binds venom toxin only after local
-proteolysis. The regulatory function lives in a separately designed mask and linker, so the
-neutralizing VHH is carried over unchanged.</p>
-<p class="demo"><b>Concept demonstration.</b> This is a worked example showing the pipeline
-running end to end on a real structure. It is not a therapeutic design campaign: the mask candidates
-are deliberately simple, and no candidate here is proposed for synthesis.</p>
-<p class="meta">Results computed from <a href="https://www.rcsb.org/structure/9GCN">PDB 9GCN</a> ·
-every number on this page is produced by the code in the
-<a href="https://github.com/Natalija-Stepurko/dtu_postdoc">repository</a> · <a href="https://colab.research.google.com/github/Natalija-Stepurko/dtu_postdoc/blob/main/colab/esmfold_masked_vhh.ipynb">companion Colab notebook</a></p>
+<div class="kicker"><span>Concept demonstration</span><b>9GCN</b>
+<span>3.0 Å</span><span>26 constructs folded</span></div>
+<h1>A protease-activated nanobody mask</h1>
+<p class="lede">A nanobody that stays inert in circulation and binds toxin only after a protease
+cuts its tether. The regulatory part lives in a separate mask and linker, so an established
+neutralizing nanobody carries over unchanged. Everything below is computed from one experimental
+structure.</p>
+<div class="banner"><b>What this is.</b> A worked example showing the pipeline running end to end
+on real coordinates. The mask candidates are deliberately simple and nothing here is proposed for
+synthesis. The point is the method and the numbers it produces, not the molecules.</div>
 </header>
 
-<h2>The construct</h2>
-<p>The molecule is a single polypeptide: a designed mask <span class="mono">M</span>, a
-protease-cleavable linker <span class="mono">L</span>, and the fixed nanobody
-<span class="mono">N</span>. Proteolysis severs the tether and the mask diffuses away, leaving the
-original paratope free to engage toxin <span class="mono">T</span>.</p>
-<div class="eq">N–L–M &nbsp;--protease--&gt;&nbsp; N + M &nbsp;&nbsp;then&nbsp;&nbsp; N + T ⇌ NT</div>
-<figure><img src="figures/fig2_states.png" alt="The three design states. Masking must be effective while the tether holds and must fail once it is cut."><figcaption>The three design states. Masking must be effective while the tether holds and must fail once it is cut.</figcaption></figure>
-<div class="note"><b>The central tension.</b> The strongest mask is not the best mask. A mask tight
-enough to block the paratope while tethered may stay bound after cleavage and keep blocking it. The
-pipeline below turns that statement into a number.</div>
+<section class="sec">
+<div class="stack"><div class="eyebrow">The construct</div>
+<h2>Three states, one chain</h2>
+<p>A single polypeptide: designed mask <span class="mono">M</span>, protease-cleavable linker
+<span class="mono">L</span>, fixed nanobody <span class="mono">N</span>. Cleavage severs the tether,
+the mask diffuses away, and the original paratope is free to take toxin
+<span class="mono">T</span>.</p></div>
+<div class="eq">N–L–M &nbsp;&nbsp;<span class="dim">──protease──▶</span>&nbsp;&nbsp; N + M
+&nbsp;&nbsp;&nbsp;<span class="dim">then</span>&nbsp;&nbsp;&nbsp; N + T &nbsp;⇌&nbsp; NT</div>
+<div class="banner"><b>The tension that defines the problem.</b> The strongest mask is not the best
+mask. One tight enough to block the paratope while tethered may stay bound after cleavage and keep
+blocking it. The stages below turn that sentence into a bounded range.</div>
+</section>
 
-<h2>Pipeline</h2>
-<ol class="steps">
-<li><b>Reference complex</b><span class="pill run">runs on CPU</span>
-Define the paratope from buried surface area on an experimental VHH–toxin structure, and measure
-where a mask could be attached.</li>
-<li><b>Tether thermodynamics</b><span class="pill run">runs on CPU</span>
-Convert linker length and attachment geometry into an effective concentration, then into bounds on
-the mask–VHH affinity.</li>
-<li><b>Mask candidates</b><span class="pill run">runs on CPU</span>
-Derive candidate masks from the structure, with scrambled and inert controls.</li>
-<li><b>Fusion structure prediction</b><span class="pill gpu">needs a GPU</span>
-Fold each construct and measure whether the mask reaches and covers the paratope.</li>
-<li><b>Protease trigger</b><span class="pill no">needs new data</span>
-Rank linkers for cleavage by the venom protease ensemble against a host negative panel.</li>
-<li><b>Ranking</b><span class="pill no">needs 4 and 5</span>
-Filter on feasibility, then take the Pareto front over the three scores with uncertainty attached.</li>
-</ol>
-
-<h2>Step 1 · The reference complex</h2>
-<p>Co-crystal VHH (TPL1158_01_C09) - alpha-cobratoxin (Naja kaouthia), solved by x-ray diffraction at 3.0 Å and deposited
-2024-08-02. The asymmetric unit holds four independent copies of the complex, which
-gives a free reproducibility check: the interface is measured four times.</p>
-<div class="kpis">
-<div class="kpi"><div class="kv">3.0 Å</div><div class="kl">resolution</div><div class="ks">X-ray</div></div>
-<div class="kpi"><div class="kv">600 Å²</div><div class="kl">interface area</div><div class="ks">1199–1216 Å² buried across 4 copies</div></div>
-<div class="kpi"><div class="kv">16</div><div class="kl">paratope residues</div><div class="ks">&gt;1 Å² buried on binding</div></div>
-<div class="kpi"><div class="kv">17</div><div class="kl">CDR3 length</div><div class="ks">residues</div></div>
+<section class="sec">
+<div class="stack"><div class="eyebrow">Stage 1 · the reference complex</div>
+<h2>Where the paratope is, and where a mask could attach</h2>
+<p>Co-crystal VHH (TPL1158_01_C09) - alpha-cobratoxin (Naja kaouthia), x-ray diffraction at 3.0 Å, deposited
+2024-08-02. Four independent copies sit in the asymmetric unit, so the interface is
+measured four times and the spread is a free reproducibility check.</p></div>
+<div class="cards">
+<div class="card"><div class="cl">interface area</div><div class="big">600 Å²</div><div class="sub">1208.2 ± 6.9 Å² buried, 4 copies</div></div>
+<div class="card"><div class="cl">paratope residues</div><div class="big">16</div><div class="sub">burying &gt;1 Å² on binding</div></div>
+<div class="card hl"><div class="cl">paratope in CDR3</div><div class="big">11/16</div><div class="sub">CDR1 4 · CDR2 0 · framework 1</div></div>
+<div class="card"><div class="cl">CDR3 length</div><div class="big">17</div><div class="sub">residues</div></div>
 </div>
-<figure><img src="figures/fig1_paratope.png" alt="Surface buried on complex formation, per VHH residue. 11 of the 16 paratope residues lie in CDR3; CDR2 contributes none."><figcaption>Surface buried on complex formation, per VHH residue. 11 of the 16 paratope residues lie in CDR3; CDR2 contributes none.</figcaption></figure>
-<div class="note ok"><b>Two findings that set up everything downstream.</b>
-The paratope is concentrated in CDR3 — 11 of 16 residues, against
-4 in CDR1 and 0 in CDR2. And the N-terminal residue
-<span class="mono">Q1</span> is itself part of the paratope, burying
-52 Å². The two termini are not interchangeable
-attachment points.</div>
-<table><thead><tr><th>Geometry</th><th class="n">Distance (Å)</th><th>Consequence for the design</th></tr></thead><tbody>
-<tr><td>N-terminus → paratope centroid</td><td class="n">11.78</td><td>a short linker already reaches</td></tr>
-<tr><td>N-terminus → nearest paratope residue</td><td class="n">0.0</td><td>the N-terminus is in the paratope</td></tr>
-<tr><td>C-terminus → paratope centroid</td><td class="n">41.95</td><td>3.6× further to span</td></tr>
-<tr><td>paratope maximum extent</td><td class="n">21.75</td><td>surface a mask must cover</td></tr>
-<tr><td>VHH radius of gyration</td><td class="n">14.84</td><td>scale reference</td></tr>
-</tbody></table>
+<figure class="chart wide"><img src="figures/paratope_footprint.svg" alt="Surface buried per nanobody residue on complex formation. The binding site is almost entirely CDR3."><figcaption>Surface buried per nanobody residue on complex formation. The binding site is almost entirely CDR3.</figcaption></figure>
+<div class="banner"><b>Two findings that set up everything downstream.</b> The paratope is
+concentrated in CDR3 — 11 of 16 residues, with CDR2 contributing
+none. And the N-terminal residue <span class="mono">Q1</span> is itself part
+of the paratope, burying
+52 Å². The two termini are not
+interchangeable places to hang a mask.</div>
+<div class="scroll"><table><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
+<tbody>
+<tr class="hl"><td>N-terminus to paratope centroid</td><td>11.78</td><td>a short linker already reaches</td></tr>
+<tr><td>N-terminus to nearest paratope residue</td><td>0.0</td><td>the N-terminus is in the paratope</td></tr>
+<tr><td>C-terminus to paratope centroid</td><td>41.95</td><td>3.6× further to span</td></tr>
+<tr><td>paratope maximum extent</td><td>21.75</td><td>surface a mask must cover</td></tr>
+<tr><td>nanobody radius of gyration</td><td>14.84</td><td>scale reference</td></tr>
+</tbody></table></div>
 
-<h2>Step 2 · What the tether is worth</h2>
-<p>A tethered mask is held near the paratope at an effective concentration set by the linker.
-Treating the Gly/Ser linker as a worm-like chain with persistence length
+<div class="viewer">
+<div class="vbar"><span class="eyebrow">Solved structure</span>
+<button data-spin="solved">spin</button></div>
+<div class="vstage" id="stage-solved"></div>
+<div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
+<span><i style="background:#C06014"></i>α-cobratoxin</span>
+<span><i style="background:#0E7C7B"></i>paratope (16 residues)</span></div>
+<p class="dim" style="font-size:.85rem">9GCN chains A and
+X, as deposited.</p>
+</div>
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">Stage 2 · what the tether is worth</div>
+<h2>Masking and release pull in opposite directions</h2>
+<p>A tethered mask behaves as if present at an effective concentration set by the linker. Treating
+the Gly/Ser linker as a worm-like chain with persistence length
 4.5 Å and 3.8 Å per residue, the end-to-end
 distribution gives C<sub>eff</sub> at the distance the linker has to span — a distance measured in
-step 1, not assumed.</p>
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]<br>
-C<sub>eff</sub>(d) = 1660.54 · (3/2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup> &nbsp;&nbsp;[M]</div>
-<figure><img src="figures/fig3_ceff.png" alt="Effective concentration against linker length, for the two attachment points. The N-terminal span of 11.78 Å and the C-terminal span of 41.95 Å come from the structure."><figcaption>Effective concentration against linker length, for the two attachment points. The N-terminal span of 11.78 Å and the C-terminal span of 41.95 Å come from the structure.</figcaption></figure>
-<p>Masking and release then pull the mask affinity in opposite directions:</p>
-<div class="eq">P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)<br>
-P<sub>NT</sub> = (T/K<sub>D,T</sub>) / (1 + T/K<sub>D,T</sub> + M/K<sub>D,M</sub>)</div>
-<figure><img src="figures/fig5_tradeoff.png" alt="Requiring ≤1% systemic leak puts a ceiling on the mask K<sub>D</sub>; requiring ≥90% toxin binding after cleavage puts a floor under it."><figcaption>Requiring ≤1% systemic leak puts a ceiling on the mask K<sub>D</sub>; requiring ≥90% toxin binding after cleavage puts a floor under it.</figcaption></figure>
-
-<h2>Step 2 · result — the design window</h2>
-<p>Imposing both requirements at once leaves a window of usable mask affinities. Whether that window
-is open at all, and how wide it is, follows from the attachment geometry.</p>
-<figure><img src="figures/fig4_window.png" alt="Usable mask affinity against linker length. Shaded region satisfies both requirements simultaneously."><figcaption>Usable mask affinity against linker length. Shaded region satisfies both requirements simultaneously.</figcaption></figure>
-<div class="kpis">
-<div class="kpi"><div class="kv">3.9</div><div class="kl">decades of usable K<sub>D</sub></div><div class="ks">N-terminal, 5-residue linker</div></div>
-<div class="kpi"><div class="kv">2.2</div><div class="kl">decades of usable K<sub>D</sub></div><div class="ks">C-terminal, 53-residue linker</div></div>
-<div class="kpi"><div class="kv">≤9</div><div class="kl">residues where C-terminal fails</div><div class="ks">window entirely closed</div></div>
-<div class="kpi"><div class="kv">753 µM</div><div class="kl">loosest mask that still blocks</div><div class="ks">at 5 residues, N-terminal</div></div>
+stage 1, not assumed.</p></div>
+<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
+<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup> &nbsp;&nbsp;[M]
+<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
+<br>P<sub>NT</sub> = (T/K<sub>D,T</sub>) / (1 + T/K<sub>D,T</sub> + M/K<sub>D,M</sub>)</div>
+<div class="charts2">
+<figure class="chart"><img src="figures/effective_concentration.svg" alt="Effective concentration against linker length, for both attachment points."><figcaption>Effective concentration against linker length, for both attachment points.</figcaption></figure>
+<figure class="chart"><img src="figures/tradeoff.svg" alt="The two requirements as functions of mask affinity."><figcaption>The two requirements as functions of mask affinity.</figcaption></figure>
 </div>
-<div class="note ok"><b>The quantitative result.</b> An N-terminal fusion with a short linker gives
-about <b>3.9 decades</b> of usable mask affinity. A C-terminal fusion gives
+<figure class="chart wide"><img src="figures/design_window.svg" alt="Usable mask affinity against linker length. Shaded where both requirements hold at once."><figcaption>Usable mask affinity against linker length. Shaded where both requirements hold at once.</figcaption></figure>
+<div class="cards">
+<div class="card hl"><div class="cl">decades of usable K<sub>D</sub></div><div class="big">3.9</div><div class="sub">N-terminal, 5-residue linker</div></div>
+<div class="card"><div class="cl">decades, C-terminal</div><div class="big">2.2</div><div class="sub">best at 53 residues</div></div>
+<div class="card"><div class="cl">residues where C-terminal fails</div><div class="big">≤9</div><div class="sub">no window at any affinity</div></div>
+<div class="card"><div class="cl">loosest mask that still blocks</div><div class="big">753 µM</div><div class="sub">N-terminal, 5 residues</div></div>
+</div>
+<div class="banner"><b>The quantitative result.</b> An N-terminal fusion with a short linker leaves
+about <b>3.9 decades</b> of usable mask affinity; a C-terminal fusion leaves
 <b>2.2</b>, and below <b>10 residues it has no window at all</b> —
-no mask affinity satisfies both requirements. The tether is worth so much that the mask can be
-<b>micromolar</b> and still block: at 5 residues the ceiling is
-753 µM, roughly
+no mask affinity satisfies both requirements at once. The tether is worth so much that a
+<b>micromolar</b> mask still blocks: at 5 residues the ceiling is
+753 µM, about
 7619× above the release floor. Masks do not
-need to be affinity-matured, and tight masks are actively harmful.</div>
-<p>The release floor is the softer of the two bounds, because it depends on quantities a design does
-not control: how tightly the nanobody holds toxin, and how much toxin is present.</p>
-<figure><img src="figures/fig6_sensitivity.png" alt="The release floor against free toxin concentration, for three VHH–toxin affinities. The masking ceiling is unaffected."><figcaption>The release floor against free toxin concentration, for three VHH–toxin affinities. The masking ceiling is unaffected.</figcaption></figure>
+need affinity maturation, and tight masks are actively harmful.</div>
+<figure class="chart"><img src="figures/release_sensitivity.svg" alt="The release floor moves with toxin affinity and concentration. The masking ceiling does not."><figcaption>The release floor moves with toxin affinity and concentration. The masking ceiling does not.</figcaption></figure>
+</section>
 
-<h2>Step 3 · Mask candidates from the structure</h2>
-<p>A mask has to engage this paratope. One peptide is already known to do that: the toxin's own
-contact segment. Grafting it needs no generative model and brings its own controls.</p>
-<table><thead><tr><th>Mask</th><th>Sequence</th><th>Kind</th><th>Origin</th></tr></thead><tbody>
-<tr><td><span class='mono'>epi1</span></td><td><span class='mono'>RGKRV</span></td><td>epitope graft</td><td>cobratoxin 33-37, 5 epitope residues</td></tr><tr><td><span class='mono'>epi1_half</span></td><td><span class='mono'>RGK</span></td><td>truncated</td><td>N-terminal half of the graft</td></tr><tr><td><span class='mono'>epi1_scram</span></td><td><span class='mono'>RGKVR</span></td><td>scrambled control</td><td>same composition, shuffled (seed 42)</td></tr><tr><td><span class='mono'>epi2</span></td><td><span class='mono'>WCDAF</span></td><td>epitope graft</td><td>cobratoxin 25-29, 4 epitope residues</td></tr><tr><td><span class='mono'>polyG</span></td><td><span class='mono'>GGGGGGGG</span></td><td>inert control</td><td>no designed interaction; masking should fail</td></tr>
-</tbody></table>
-<div class="note"><b>Note on the candidates.</b> <span class="mono">epi1</span> is the tip of
-α-cobratoxin loop II, the region carrying the residues that drive receptor binding — so this VHH
-neutralizes by covering the toxin's functional site, and that same peptide is the natural mask.
-<span class="mono">epi2</span> carries a free cysteine and is retained as a deliberate
-counter-example: it would scramble disulfides in a real graft. <span class="mono">polyG</span> has
-no designed interaction and should fail.</div>
-<p>26 constructs span 5 masks ×
-5 linker lengths (5, 10, 15, 20, 30
-residues) plus the free VHH, from 122 to
-160 residues.</p>
+<section class="sec">
+<div class="stack"><div class="eyebrow">Stage 3 · mask candidates</div>
+<h2>Taken from the structure, with controls</h2>
+<p>A mask has to engage this paratope. One peptide is already known to: the antigen's own contact
+segment. Grafting it needs no generative model, and the scrambled, truncated and inert versions give
+the comparison its meaning.</p></div>
+<div class="charts2">
+<div class="scroll"><table><thead><tr><th>antigen segment</th><th>sequence</th><th>length</th>
+<th>contacts</th></tr></thead><tbody><tr><td>R33–V37</td><td>RGKRV</td><td>5</td><td>5</td></tr><tr><td>W25–F29</td><td>WCDAF</td><td>5</td><td>4</td></tr><tr><td>T6–I9</td><td>TPDI</td><td>4</td><td>3</td></tr></tbody></table></div>
+<div class="scroll"><table><thead><tr><th>mask</th><th>sequence</th><th>aa</th><th>kind</th>
+<th>origin</th></tr></thead><tbody><tr class=""><td>epi1</td><td>RGKRV</td><td>5</td><td>epitope graft</td><td>antigen R33-V37, 5 contact residues</td></tr><tr class="ctrl"><td>epi1_half</td><td>RGK</td><td>3</td><td>truncated control</td><td>leading half of the graft</td></tr><tr class="ctrl"><td>epi1_scram</td><td>RGKVR</td><td>5</td><td>scrambled control</td><td>same composition, shuffled (seed 42)</td></tr><tr class=""><td>epi2</td><td>WCDAF</td><td>5</td><td>epitope graft</td><td>antigen W25-F29, 4 contact residues</td></tr><tr class="ctrl"><td>polyG</td><td>GGGGGGGG</td><td>8</td><td>inert control</td><td>no designed interaction; masking should fail</td></tr></tbody></table></div>
+</div>
+<div class="banner"><b>On the candidates.</b> <span class="mono">epi1</span> is the tip of
+α-cobratoxin loop II, the region carrying the residues that drive receptor binding — this nanobody
+neutralizes by covering the toxin's functional site, and that same peptide is the obvious mask.
+<span class="mono">epi2</span> carries a free cysteine and is kept as a deliberate counter-example:
+it would scramble disulfides in a real graft. <span class="mono">polyG</span> has no designed
+interaction and should fail.</div>
+</section>
 
-<h2>Step 4 · Folding the fusion <span class="pill gpu">needs a GPU</span></h2>
-<p>Steps 1–3 settle geometry and thermodynamics. They cannot say whether a particular mask sequence
-folds back and covers the paratope. Because the fusion is a <b>single chain</b>, ESMFold predicts it
-from sequence alone with no MSA, and a 160-residue construct folds in seconds on a free T4 — which
-AlphaFold 3, Boltz-2, RFdiffusion and BindCraft would not do comfortably.</p>
-<p><a href="https://colab.research.google.com/github/Natalija-Stepurko/dtu_postdoc/blob/main/colab/esmfold_masked_vhh.ipynb"><b>Open the notebook in Colab →</b></a> It folds all 26
-constructs, measures paratope occlusion against the free VHH, and contrasts the grafted mask with
-its scrambled and poly-glycine controls. The contrast is the informative quantity: without it, a
-prediction showing a tethered peptide near its anchor says nothing about design.</p>
-<div class="note"><b>What a predicted structure is not.</b> ESMFold returns one structure per
-sequence. A mask lying against the paratope is a hypothesis about the masked state, not a masking
-efficiency and not a K<sub>D</sub>. pLDDT is a confidence measure, not a folding free energy.</div>
+<section class="sec">
+<div class="stack"><div class="eyebrow">Designed constructs</div>
+<h2>Predicted structures</h2>
+<p>Each construct folded from sequence alone. Pick one to inspect: the mask is tethered at the
+N-terminus and the paratope is drawn as sticks, so whether the mask covers it is visible
+directly.</p></div>
+<div class="viewer">
+<div class="vbar"><select id="pick"><option value="epi1_L10">epi1_L10</option><option value="epi1_L15">epi1_L15</option><option value="epi1_L20">epi1_L20</option><option value="epi1_L30">epi1_L30</option><option value="epi1_L5" selected>epi1_L5</option><option value="epi1_half_L10">epi1_half_L10</option><option value="epi1_half_L5">epi1_half_L5</option><option value="epi1_scram_L10">epi1_scram_L10</option><option value="epi1_scram_L15">epi1_scram_L15</option><option value="epi1_scram_L20">epi1_scram_L20</option><option value="epi1_scram_L30">epi1_scram_L30</option><option value="epi1_scram_L5">epi1_scram_L5</option></select>
+<button data-spin="designed">spin</button></div>
+<div class="vstage" id="stage-designed"></div>
+<div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
+<span><i style="background:#0E7C7B"></i>mask</span>
+<span><i style="background:#8A9BA8"></i>linker</span>
+<span><i style="background:#C06014"></i>paratope</span></div>
+<p class="dim" id="dcap" style="font-size:.85rem"></p>
+</div>
+</section>
 
-<h2>Steps 5–6 · What is not computed here</h2>
-<table><thead><tr><th>Component</th><th>What it would contribute</th><th>What it needs</th></tr></thead><tbody>
-<tr><td>RFdiffusion / BindCraft</td><td>mask backbones beyond grafted epitopes</td><td>GPU; BindCraft also needs AF2 weights and PyRosetta</td></tr>
-<tr><td>AlphaFold 3 / Boltz-2 / Chai-1</td><td>the VHH–toxin complex and mask–toxin competition</td><td>GPU, model access</td></tr>
-<tr><td>BioEmu-2</td><td>conformational ensembles instead of one structure</td><td>GPU; multichain support is recent</td></tr>
-<tr><td>CleaveNet</td><td>generated linkers with a target cleavage profile</td><td>trained on 18 human MMPs; snake venom metalloproteinases are out of distribution</td></tr>
-<tr><td>Score 2, protease trigger</td><td>selectivity for the bite-site protease ensemble</td><td>peptide-cleavage data on venom proteases against a host negative panel — this does not exist yet</td></tr>
-</tbody></table>
-<div class="note"><b>The honest gap.</b> Score 2 is not a modelling problem that better software
-solves. The training data for venom-protease substrate specificity has to be generated, and that is
-wet-lab work. Published SVMP profiling shows a P1′ leucine preference shared with host MMPs, so
-selectivity between venom protease and host protease is the real obstacle.</div>
 
-<h2>Reproducing this</h2>
-<div class="eq">git clone https://github.com/Natalija-Stepurko/dtu_postdoc<br>cd dtu_postdoc &amp;&amp; uv venv &amp;&amp; uv pip install -r requirements.txt<br>
-for s in src/s0*.py; do python "$s"; done</div>
-<p>Each stage writes a JSON file of its results; the figures and this page are generated from those
-files, so no number here is typed by hand.</p>
 
-<h2>References</h2>
+<section class="sec">
+<div class="stack"><div class="eyebrow">Beyond the demonstration</div>
+<h2>What is not computed here</h2></div>
+<div class="scroll"><table><thead><tr><th>component</th><th>what it would add</th>
+<th>what it needs</th></tr></thead><tbody>
+<tr><td>RFdiffusion · BindCraft</td><td>mask backbones beyond grafted epitopes</td><td><span class="tag">GPU</span> BindCraft also wants AF2 weights and PyRosetta</td></tr>
+<tr><td>AlphaFold 3 · Boltz-2 · Chai-1</td><td>the nanobody–toxin complex and mask–toxin competition</td><td><span class="tag">GPU</span> model access</td></tr>
+<tr><td>BioEmu-2</td><td>conformational ensembles in place of one structure</td><td><span class="tag">GPU</span> multichain support is recent</td></tr>
+<tr><td>CleaveNet</td><td>linkers generated against a target cleavage profile</td><td><span class="tag gap">data</span> trained on 18 human MMPs; venom metalloproteinases are out of distribution</td></tr>
+<tr><td>Trigger selectivity</td><td>cleavage by the local protease ensemble, resistance elsewhere</td><td><span class="tag gap">data</span> peptide-cleavage measurements that do not exist yet</td></tr>
+</tbody></table></div>
+<div class="banner"><b>The honest gap.</b> Trigger selectivity is not a modelling problem waiting on
+better software. The substrate specificity data for venom proteases has to be generated first, and
+published profiling shows a P1′ leucine preference shared with host MMPs — so telling venom protease
+from host protease is the real obstacle, and it is wet-lab work.</div>
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">Reproducing this</div>
+<h2>Six stages, no hand-entered numbers</h2></div>
+<div class="steps">
+<div class="step"><div class="n">01</div><div><b>Reference structure</b>
+<span>Fetch the complex, key residues on number and insertion code, measure the interface and the
+terminal geometry.</span></div><span class="tag run">CPU</span></div>
+<div class="step"><div class="n">02</div><div><b>Tether model</b>
+<span>Worm-like-chain effective concentration, masking ceiling, release floor, design window.</span>
+</div><span class="tag run">CPU</span></div>
+<div class="step"><div class="n">03</div><div><b>Construct library</b>
+<span>Epitope segments to mask candidates, with controls; enumerate mask × linker.</span></div>
+<span class="tag run">CPU</span></div>
+<div class="step"><div class="n">04</div><div><b>Folding</b>
+<span>ESMFold on every construct, then paratope occlusion against the folded free nanobody.
+Resumable.</span></div><span class="tag run">CPU or GPU</span></div>
+<div class="step"><div class="n">05</div><div><b>Figures</b>
+<span>Every chart on this page.</span></div><span class="tag run">CPU</span></div>
+<div class="step"><div class="n">06</div><div><b>Report</b>
+<span>This page, rendered from the stage outputs.</span></div><span class="tag run">CPU</span></div>
+</div>
+<div class="eq">git clone https://github.com/Natalija-Stepurko/dtu_postdoc<br>uv venv &amp;&amp; uv pip install -e .<br>
+for s in pipeline/0*.py; do python "$s"; done</div>
+<p>Each stage writes a JSON file; figures and this page are generated from those files. The folding
+stage runs on CPU — a GPU only makes it faster — and a
+<a href="https://colab.research.google.com/github/Natalija-Stepurko/dtu_postdoc/blob/main/notebooks/esmfold_masked_vhh.ipynb">Colab notebook</a> runs the same step on a free T4.</p>
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">References</div><h2>Sources</h2></div>
 <ul class="ref">
-<li>Damsbo A. et al. Co-crystal structure of VHH TPL1158_01_C09 with α-cobratoxin.
+<li>Damsbo A. <i>et al.</i> Co-crystal of VHH TPL1158_01_C09 with α-cobratoxin.
 <a href="https://www.rcsb.org/structure/9GCN">PDB 9GCN</a></li>
-<li>Ahmadi S. et al. Nanobody-based recombinant antivenom for cobra, mamba and rinkhals bites.
-<i>Nature</i> 647:716–725 (2025). <a href="https://doi.org/10.1038/s41586-025-09661-0">doi:10.1038/s41586-025-09661-0</a></li>
-<li>Desnoyers L.R. et al. Tumor-specific activation of an EGFR-targeting probody enhances therapeutic index.
-<i>Sci Transl Med</i> 5:207ra144 (2013). <a href="https://doi.org/10.1126/scitranslmed.3006682">doi:10.1126/scitranslmed.3006682</a></li>
+<li>Ahmadi S. <i>et al.</i> Nanobody-based recombinant antivenom for cobra, mamba and rinkhals
+bites. <i>Nature</i> 647:716–725 (2025).
+<a href="https://doi.org/10.1038/s41586-025-09661-0">10.1038/s41586-025-09661-0</a></li>
+<li>Desnoyers L.R. <i>et al.</i> Tumor-specific activation of an EGFR-targeting probody.
+<i>Science Translational Medicine</i> 5:207ra144 (2013).
+<a href="https://doi.org/10.1126/scitranslmed.3006682">10.1126/scitranslmed.3006682</a></li>
 <li>Zhou H.-X. Loops in proteins can be modeled as worm-like chains.
-<i>J Phys Chem B</i> 105:6763–6766 (2001). <a href="https://doi.org/10.1021/jp011355n">doi:10.1021/jp011355n</a></li>
-<li>Lin Z. et al. Evolutionary-scale prediction of atomic-level protein structure with a language model (ESMFold).
-<i>Science</i> 379:1123–1130 (2023). <a href="https://doi.org/10.1126/science.ade2574">doi:10.1126/science.ade2574</a></li>
-<li>Martin-Alonso C. et al. Deep learning guided design of protease substrates (CleaveNet).
-<i>Nat Commun</i> 17:54 (2026). <a href="https://doi.org/10.1038/s41467-025-67226-1">doi:10.1038/s41467-025-67226-1</a></li>
-<li>Pacesa M. et al. One-shot design of functional protein binders with BindCraft.
-<i>Nature</i> 646:483–492 (2025). <a href="https://doi.org/10.1038/s41586-025-09429-6">doi:10.1038/s41586-025-09429-6</a></li>
-<li>Bennett N.R. et al. Atomically accurate de novo design of antibodies with RFdiffusion.
-<i>Nature</i> 649:183–193 (2025). <a href="https://doi.org/10.1038/s41586-025-09721-5">doi:10.1038/s41586-025-09721-5</a></li>
+<i>Journal of Physical Chemistry B</i> 105:6763–6766 (2001).
+<a href="https://doi.org/10.1021/jp011355n">10.1021/jp011355n</a></li>
+<li>Lin Z. <i>et al.</i> Evolutionary-scale prediction of atomic-level protein structure with a
+language model. <i>Science</i> 379:1123–1130 (2023).
+<a href="https://doi.org/10.1126/science.ade2574">10.1126/science.ade2574</a></li>
 <li>Shrake A., Rupley J.A. Environment and exposure to solvent of protein atoms.
-<i>J Mol Biol</i> 79:351–371 (1973). <a href="https://doi.org/10.1016/0022-2836(73)90011-9">doi:10.1016/0022-2836(73)90011-9</a></li>
+<i>Journal of Molecular Biology</i> 79:351–371 (1973).
+<a href="https://doi.org/10.1016/0022-2836(73)90011-9">10.1016/0022-2836(73)90011-9</a></li>
+<li>Martin-Alonso C. <i>et al.</i> Deep learning guided design of protease substrates.
+<i>Nature Communications</i> 17:54 (2026).
+<a href="https://doi.org/10.1038/s41467-025-67226-1">10.1038/s41467-025-67226-1</a></li>
+<li>Pacesa M. <i>et al.</i> One-shot design of functional protein binders with BindCraft.
+<i>Nature</i> 646:483–492 (2025).
+<a href="https://doi.org/10.1038/s41586-025-09429-6">10.1038/s41586-025-09429-6</a></li>
+<li>Bennett N.R. <i>et al.</i> Atomically accurate de novo design of antibodies with RFdiffusion.
+<i>Nature</i> 649:183–193 (2025).
+<a href="https://doi.org/10.1038/s41586-025-09721-5">10.1038/s41586-025-09721-5</a></li>
 </ul>
+</section>
 
 <footer>Figures and values generated by the analysis code in the
 <a href="https://github.com/Natalija-Stepurko/dtu_postdoc">repository</a>. Structural data from the RCSB Protein Data Bank.</footer>
-</div></body></html>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
+<script>
+const MODELS = {"epi1_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi1_L10 \u2014 epitope graft, mask RGKRV, 10-residue linker", "mask": "1-5", "linker": "6-15"}, "epi1_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi1_L15 \u2014 epitope graft, mask RGKRV, 15-residue linker", "mask": "1-5", "linker": "6-20"}, "epi1_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi1_L20 \u2014 epitope graft, mask RGKRV, 20-residue linker", "mask": "1-5", "linker": "6-25"}, "epi1_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi1_L30 \u2014 epitope graft, mask RGKRV, 30-residue linker", "mask": "1-5", "linker": "6-35"}, "epi1_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi1_L5 \u2014 epitope graft, mask RGKRV, 5-residue linker", "mask": "1-5", "linker": "6-10"}, "epi1_half_L10": {"vhh": "14-135", "paratope": [14, 40, 42, 43, 45, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123, 125], "caption": "epi1_half_L10 \u2014 truncated control, mask RGK, 10-residue linker", "mask": "1-3", "linker": "4-13"}, "epi1_half_L5": {"vhh": "9-130", "paratope": [9, 35, 37, 38, 40, 108, 109, 110, 111, 112, 113, 114, 115, 116, 118, 120], "caption": "epi1_half_L5 \u2014 truncated control, mask RGK, 5-residue linker", "mask": "1-3", "linker": "4-8"}, "epi1_scram_L10": {"vhh": "16-137", "paratope": [16, 42, 44, 45, 47, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 127], "caption": "epi1_scram_L10 \u2014 scrambled control, mask RGKVR, 10-residue linker", "mask": "1-5", "linker": "6-15"}, "epi1_scram_L15": {"vhh": "21-142", "paratope": [21, 47, 49, 50, 52, 120, 121, 122, 123, 124, 125, 126, 127, 128, 130, 132], "caption": "epi1_scram_L15 \u2014 scrambled control, mask RGKVR, 15-residue linker", "mask": "1-5", "linker": "6-20"}, "epi1_scram_L20": {"vhh": "26-147", "paratope": [26, 52, 54, 55, 57, 125, 126, 127, 128, 129, 130, 131, 132, 133, 135, 137], "caption": "epi1_scram_L20 \u2014 scrambled control, mask RGKVR, 20-residue linker", "mask": "1-5", "linker": "6-25"}, "epi1_scram_L30": {"vhh": "36-157", "paratope": [36, 62, 64, 65, 67, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 147], "caption": "epi1_scram_L30 \u2014 scrambled control, mask RGKVR, 30-residue linker", "mask": "1-5", "linker": "6-35"}, "epi1_scram_L5": {"vhh": "11-132", "paratope": [11, 37, 39, 40, 42, 110, 111, 112, 113, 114, 115, 116, 117, 118, 120, 122], "caption": "epi1_scram_L5 \u2014 scrambled control, mask RGKVR, 5-residue linker", "mask": "1-5", "linker": "6-10"}};
+const PARATOPE = [1, 27, 29, 30, 32, 97, 98, 99, 100, 102];
+let v1 = null, v2 = null;
+
+function style(view, spec) {
+  view.setStyle({}, {cartoon: {color: '#C9D1D6', opacity: 0.95}});
+  if (spec.vhh) view.setStyle({resi: spec.vhh}, {cartoon: {color: '#2D5BD1'}});
+  if (spec.toxin) view.setStyle({chain: spec.toxin}, {cartoon: {color: '#C06014'}});
+  if (spec.mask) {
+    view.setStyle({resi: spec.mask}, {cartoon: {color: '#0E7C7B'}});
+    view.addStyle({resi: spec.mask}, {stick: {color: '#0E7C7B', radius: 0.17}});
+  }
+  if (spec.linker) view.setStyle({resi: spec.linker}, {cartoon: {color: '#8A9BA8'}});
+  if (spec.paratope) view.addStyle({resi: spec.paratope},
+      {stick: {color: '#C06014', radius: 0.19}});
+}
+
+function boot() {
+  v1 = $3Dmol.createViewer('stage-solved', {backgroundColor: '#FFFFFF'});
+  jQuery.get('structures/9GCN_AX.pdb', function (data) {
+    v1.addModel(data, 'pdb');
+    v1.setStyle({chain: 'A'}, {cartoon: {color: '#2D5BD1'}});
+    v1.setStyle({chain: 'X'}, {cartoon: {color: '#C06014'}});
+    v1.addStyle({chain: 'A', resi: PARATOPE}, {stick: {color: '#0E7C7B', radius: 0.19}});
+    v1.zoomTo(); v1.zoom(1.3); v1.render();
+  });
+
+  v2 = $3Dmol.createViewer('stage-designed', {backgroundColor: '#FFFFFF'});
+  loadDesigned(document.getElementById('pick').value);
+  document.getElementById('pick').addEventListener('change', e => loadDesigned(e.target.value));
+  document.querySelectorAll('[data-spin]').forEach(b => b.addEventListener('click', () => {
+    const v = b.dataset.spin === 'solved' ? v1 : v2;
+    v.spin(v.isSpinning && v.isSpinning() ? false : 'y');
+  }));
+}
+
+function loadDesigned(id) {
+  const m = MODELS[id];
+  v2.clear();
+  jQuery.get('structures/' + id + '.pdb', function (data) {
+    v2.addModel(data, 'pdb');
+    style(v2, {vhh: m.vhh, mask: m.mask, linker: m.linker, paratope: m.paratope});
+    v2.zoomTo(); v2.zoom(1.3); v2.render();
+    document.getElementById('dcap').textContent = m.caption;
+  });
+}
+window.addEventListener('load', boot);
+</script>
+</body></html>
