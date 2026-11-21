@@ -7,7 +7,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import numpy as np
 from nbswitch import report as R
 from nbswitch.config import (DOCS, PDB_ID, REPO_URL, NOTEBOOK_URL, load_json,
-                             REFERENCE_VHH_CHAIN)
+                             REFERENCE_VHH_CHAIN, TARGET_ID, TARGET, TARGETS,
+                             results_dir)
 
 ref = load_json("01_reference.json")
 tether = load_json("02_tether.json")
@@ -33,6 +34,16 @@ closed_C = max(r["linker_residues"] for r in tether["scan"]
                if r["terminus"] == "C" and not r["window_open"])
 model = tether["model"]
 
+region_summary = ", ".join(
+    f"{v['n']} in {k}" for k, v in ref["paratope_by_region"].items() if v["n"])
+_n_in_paratope = geom["n_term_residue"] in set(iface["paratope_labels"])
+n_term_verdict = (
+    "The N-terminal residue is itself part of the paratope, which makes masking easy and "
+    "measuring it impossible — see the set-aside case above."
+    if _n_in_paratope else
+    "Because that gap exists, a peptide only reaches the paratope if its linker is long enough "
+    "and it folds back, which is what makes the controls able to fail.")
+
 schematic_facts = dict(
     n_paratope=iface["n_paratope"], cdr3_frac=str(region["CDR3"]),
     span_n=geom["n_term_to_paratope_centroid_A"],
@@ -44,6 +55,27 @@ schematic_facts = dict(
     n_folded=(fold["n_folded"] if fold else lib["n_constructs"]),
     n_redesigns=(redesign["n_unique"] if redesign else 0),
     boltz_tag=("RUN" if complexes else "RUNNING"))
+
+# the complex the pipeline was run on first and then set aside
+CAUTIONARY = "9GCN"
+cautionary_html = ""
+if TARGET_ID != CAUTIONARY:
+    import json as _json
+    _d = results_dir(CAUTIONARY)
+    try:
+        _ref = _json.loads((_d / "01_reference.json").read_text())
+        _teth = _json.loads((_d / "02_tether.json").read_text())
+        _fold = _json.loads((_d / "04_folding.json").read_text())
+        try:
+            _cplx = _json.loads((_d / "09_complexes.json").read_text())
+        except FileNotFoundError:
+            _cplx = None
+        cautionary_html = R.cautionary_section(
+            _ref, _teth, _fold, _cplx,
+            TARGETS[CAUTIONARY]["label"], CAUTIONARY,
+            TARGETS[CAUTIONARY]["reference_vhh_chain"])
+    except FileNotFoundError:
+        cautionary_html = ""
 
 R.copy_assets(lib["constructs"])
 R.write_reference_pdb()
@@ -341,6 +373,10 @@ those measurements well, not as a substitute for them.</div>
 independent copies of the complex sit in the asymmetric unit, so the interface is measured four
 times and the spread between them is a free reproducibility check.</p></div>
 <div class="chart wide">{R.pipeline_schematic(schematic_facts)}</div>
+<p>This complex was not the first one tried. The constraint module is also a screening step: it
+reports, before anything is generated, whether a target can support a measurable mask at all. The
+first candidate failed that test, and the record of it is kept below.</p>
+{cautionary_html}
 </section>
 
 <section class="sec">
@@ -356,11 +392,11 @@ surface.</p></div>
 {card(ref['cdrs']['CDR3']['length'], "CDR3 length", "residues")}
 </div>
 {chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
-<div class="banner"><b>Two findings that decide the rest.</b> The binding site is almost entirely
-CDR3 — {region['CDR3']} of {iface['n_paratope']} residues, with CDR2 contributing none. And the
-N-terminal residue <span class="mono">{geom['n_term_residue']}</span> is itself part of the
-paratope, burying {iface['paratope_delta_sasa'][geom['n_term_residue']]:.0f} Å². The two termini are
-not interchangeable places to hang a mask.</div>
+<div class="banner"><b>What this fixes before anything is designed.</b> The binding site spans
+{region_summary}. The N-terminus sits <b>{geom['n_term_to_nearest_paratope_A']} Å</b> from the
+nearest paratope residue and the C-terminus <b>{geom['c_term_to_nearest_paratope_A']} Å</b> — so a
+mask tethered at the N-terminus has a real gap to span, and the two termini are not
+interchangeable. {n_term_verdict}</div>
 <div class="scroll"><table><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
 <tbody>
 <tr class="hl"><td>N-terminus to paratope centroid</td><td>{geom['n_term_to_paratope_centroid_A']}</td><td>a short linker already reaches</td></tr>

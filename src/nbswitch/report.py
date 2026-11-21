@@ -96,6 +96,19 @@ tr.ctrl td{color:var(--ink-3)}
       color:var(--ink-3)}
 .vkey i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;
         vertical-align:middle}
+details.fold{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+    margin:4px 0}
+details.fold>summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;
+    gap:14px;align-items:baseline;flex-wrap:wrap}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:"+";font-family:var(--mono);font-size:1rem;
+    color:var(--str);width:14px;flex:none;line-height:1}
+details.fold[open]>summary::before{content:"−"}
+details.fold>summary b{font-size:1.02rem;font-weight:600;color:var(--ink)}
+details.fold>summary span{font-size:.9rem;color:var(--ink-2);flex:1 1 24ch}
+details.fold>summary:hover b{color:var(--str)}
+.foldbody{padding:0 20px 22px;display:flex;flex-direction:column;gap:18px;
+    border-top:1px solid var(--rule-2);margin-top:-2px;padding-top:20px}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -727,3 +740,63 @@ def architecture_schematic() -> str:
              'diffusion model, without touching anything else.</text>')
     s.append("</svg>")
     return "".join(s)
+
+
+def cautionary_section(ref: dict, tether: dict, fold: dict, complexes: dict | None,
+                       label: str, pdb_id: str, chain: str) -> str:
+    """A target the pipeline was run on and then set aside, folded away by default.
+
+    Keeping it is the point: the same code on a different complex returns
+    nothing usable, and the reason is geometry rather than code.
+    """
+    import numpy as np
+    iface = ref["chain_pairs"][chain]
+    geom = ref["terminal_geometry"]
+    region = {k: v["n"] for k, v in ref["paratope_by_region"].items()}
+    kinds: dict[str, list[float]] = {}
+    for row in fold["results"]:
+        kinds.setdefault(row["kind"], []).append(row["occlusion"] * 100)
+    graft = float(np.mean(kinds.get("epitope graft", [0])))
+    inert = float(np.mean(kinds.get("inert control", [0])))
+    scram = float(np.mean(kinds.get("scrambled control", [0])))
+    ctrl = None
+    if complexes:
+        ctrl = next((r for r in complexes["results"]
+                     if r["case"] == "control_free_vhh" and r["status"] == "ok"), None)
+
+    rows = "".join(
+        f"<tr><td>{k}</td><td>{np.mean(v):+.1f}</td><td>{len(v)}</td></tr>"
+        for k, v in sorted(kinds.items(), key=lambda kv: -float(np.mean(kv[1]))))
+    ctrl_html = ""
+    if ctrl:
+        ctrl_html = f"""<p><b>The second control failed too.</b> Predicting the free nanobody with
+its toxin should have reproduced a pose the crystal structure already shows. Only
+<b>{ctrl['fraction_of_contacts_on_paratope']:.0%}</b> of the predicted contacts landed on the known
+paratope, so the complex module could not adjudicate masking here either.</p>"""
+
+    return f"""
+<details class="fold">
+<summary><b>Set aside: {pdb_id}, where the geometry defeats the measurement</b>
+<span>The pipeline was run end to end on this complex first. Both controls failed, for a
+reason worth keeping.</span></summary>
+<div class="foldbody">
+<p>{label}, {ref['metadata']['resolution_A']} Å. The paratope sits almost entirely in CDR3
+({region['CDR3']} of {iface['n_paratope']} residues, with CDR2 contributing none) — and the
+N-terminal residue <span class="mono">{geom['n_term_residue']}</span> is <b>itself part of the
+paratope</b>, burying {iface['paratope_delta_sasa'][geom['n_term_residue']]:.0f} Å².</p>
+<p>That makes masking trivially easy and measuring it impossible. Any peptide tethered at that
+terminus starts on top of the binding site, whatever its sequence, so occlusion cannot tell a
+designed mask from a random one.</p>
+<div class="scroll"><table><thead><tr><th>mask kind</th><th>mean occlusion %</th><th>n</th>
+</tr></thead><tbody>{rows}</tbody></table></div>
+<p>The inert poly-glycine control occluded <b>{inert:+.1f}%</b> of the paratope against
+<b>{graft:+.1f}%</b> for the designed grafts and {scram:+.1f}% for the scrambled ones. The control
+scored <em>highest</em>. There is no separation to rank on.</p>
+{ctrl_html}
+<p><b>Why it is still here.</b> The constraint module had already flagged it: the N-terminus was
+0.0 Å from the nearest paratope residue, against {geom['c_term_to_paratope_centroid_A']:.0f} Å for
+the C-terminus. That number was visible before a single construct was folded, and it is the
+criterion the replacement system was chosen on. A pipeline that measures the geometry first can
+tell you that a target is unsuitable before you spend anything on it.</p>
+</div>
+</details>"""

@@ -1,0 +1,764 @@
+{
+  "constructs": [
+    {
+      "id": "epi1_L5",
+      "length": 132,
+      "linker_range": [
+        10,
+        14
+      ],
+      "linker_residues": 5,
+      "linker_seq": "GGGGS",
+      "mask": "epi1",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPMVPVKR",
+      "sequence": "AAPMVPVKRGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        15,
+        132
+      ]
+    },
+    {
+      "id": "epi1_L10",
+      "length": 137,
+      "linker_range": [
+        10,
+        19
+      ],
+      "linker_residues": 10,
+      "linker_seq": "GGGGSGGGGS",
+      "mask": "epi1",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPMVPVKR",
+      "sequence": "AAPMVPVKRGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        20,
+        137
+      ]
+    },
+    {
+      "id": "epi1_L15",
+      "length": 142,
+      "linker_range": [
+        10,
+        24
+      ],
+      "linker_residues": 15,
+      "linker_seq": "GGGGSGGGGSGGGGS",
+      "mask": "epi1",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPMVPVKR",
+      "sequence": "AAPMVPVKRGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        25,
+        142
+      ]
+    },
+    {
+      "id": "epi1_L20",
+      "length": 147,
+      "linker_range": [
+        10,
+        29
+      ],
+      "linker_residues": 20,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi1",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPMVPVKR",
+      "sequence": "AAPMVPVKRGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        30,
+        147
+      ]
+    },
+    {
+      "id": "epi1_L30",
+      "length": 157,
+      "linker_range": [
+        10,
+        39
+      ],
+      "linker_residues": 30,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi1",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPMVPVKR",
+      "sequence": "AAPMVPVKRGGGGSGGGGSGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        40,
+        157
+      ]
+    },
+    {
+      "id": "epi1_scram_L5",
+      "length": 132,
+      "linker_range": [
+        10,
+        14
+      ],
+      "linker_residues": 5,
+      "linker_seq": "GGGGS",
+      "mask": "epi1_scram",
+      "mask_kind": "scrambled control",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "MVKVRPPAA",
+      "sequence": "MVKVRPPAAGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        15,
+        132
+      ]
+    },
+    {
+      "id": "epi1_scram_L10",
+      "length": 137,
+      "linker_range": [
+        10,
+        19
+      ],
+      "linker_residues": 10,
+      "linker_seq": "GGGGSGGGGS",
+      "mask": "epi1_scram",
+      "mask_kind": "scrambled control",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "MVKVRPPAA",
+      "sequence": "MVKVRPPAAGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        20,
+        137
+      ]
+    },
+    {
+      "id": "epi1_scram_L15",
+      "length": 142,
+      "linker_range": [
+        10,
+        24
+      ],
+      "linker_residues": 15,
+      "linker_seq": "GGGGSGGGGSGGGGS",
+      "mask": "epi1_scram",
+      "mask_kind": "scrambled control",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "MVKVRPPAA",
+      "sequence": "MVKVRPPAAGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        25,
+        142
+      ]
+    },
+    {
+      "id": "epi1_scram_L20",
+      "length": 147,
+      "linker_range": [
+        10,
+        29
+      ],
+      "linker_residues": 20,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi1_scram",
+      "mask_kind": "scrambled control",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "MVKVRPPAA",
+      "sequence": "MVKVRPPAAGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        30,
+        147
+      ]
+    },
+    {
+      "id": "epi1_scram_L30",
+      "length": 157,
+      "linker_range": [
+        10,
+        39
+      ],
+      "linker_residues": 30,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi1_scram",
+      "mask_kind": "scrambled control",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "MVKVRPPAA",
+      "sequence": "MVKVRPPAAGGGGSGGGGSGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        40,
+        157
+      ]
+    },
+    {
+      "id": "epi1_half_L5",
+      "length": 127,
+      "linker_range": [
+        5,
+        9
+      ],
+      "linker_residues": 5,
+      "linker_seq": "GGGGS",
+      "mask": "epi1_half",
+      "mask_kind": "truncated control",
+      "mask_range": [
+        1,
+        4
+      ],
+      "mask_seq": "AAPM",
+      "sequence": "AAPMGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        10,
+        127
+      ]
+    },
+    {
+      "id": "epi1_half_L10",
+      "length": 132,
+      "linker_range": [
+        5,
+        14
+      ],
+      "linker_residues": 10,
+      "linker_seq": "GGGGSGGGGS",
+      "mask": "epi1_half",
+      "mask_kind": "truncated control",
+      "mask_range": [
+        1,
+        4
+      ],
+      "mask_seq": "AAPM",
+      "sequence": "AAPMGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        15,
+        132
+      ]
+    },
+    {
+      "id": "epi1_half_L15",
+      "length": 137,
+      "linker_range": [
+        5,
+        19
+      ],
+      "linker_residues": 15,
+      "linker_seq": "GGGGSGGGGSGGGGS",
+      "mask": "epi1_half",
+      "mask_kind": "truncated control",
+      "mask_range": [
+        1,
+        4
+      ],
+      "mask_seq": "AAPM",
+      "sequence": "AAPMGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        20,
+        137
+      ]
+    },
+    {
+      "id": "epi1_half_L20",
+      "length": 142,
+      "linker_range": [
+        5,
+        24
+      ],
+      "linker_residues": 20,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi1_half",
+      "mask_kind": "truncated control",
+      "mask_range": [
+        1,
+        4
+      ],
+      "mask_seq": "AAPM",
+      "sequence": "AAPMGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        25,
+        142
+      ]
+    },
+    {
+      "id": "epi1_half_L30",
+      "length": 152,
+      "linker_range": [
+        5,
+        34
+      ],
+      "linker_residues": 30,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi1_half",
+      "mask_kind": "truncated control",
+      "mask_range": [
+        1,
+        4
+      ],
+      "mask_seq": "AAPM",
+      "sequence": "AAPMGGGGSGGGGSGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        35,
+        152
+      ]
+    },
+    {
+      "id": "epi2_L5",
+      "length": 131,
+      "linker_range": [
+        9,
+        13
+      ],
+      "linker_residues": 5,
+      "linker_seq": "GGGGS",
+      "mask": "epi2",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "QLIPPFWK",
+      "sequence": "QLIPPFWKGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        14,
+        131
+      ]
+    },
+    {
+      "id": "epi2_L10",
+      "length": 136,
+      "linker_range": [
+        9,
+        18
+      ],
+      "linker_residues": 10,
+      "linker_seq": "GGGGSGGGGS",
+      "mask": "epi2",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "QLIPPFWK",
+      "sequence": "QLIPPFWKGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        19,
+        136
+      ]
+    },
+    {
+      "id": "epi2_L15",
+      "length": 141,
+      "linker_range": [
+        9,
+        23
+      ],
+      "linker_residues": 15,
+      "linker_seq": "GGGGSGGGGSGGGGS",
+      "mask": "epi2",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "QLIPPFWK",
+      "sequence": "QLIPPFWKGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        24,
+        141
+      ]
+    },
+    {
+      "id": "epi2_L20",
+      "length": 146,
+      "linker_range": [
+        9,
+        28
+      ],
+      "linker_residues": 20,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi2",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "QLIPPFWK",
+      "sequence": "QLIPPFWKGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        29,
+        146
+      ]
+    },
+    {
+      "id": "epi2_L30",
+      "length": 156,
+      "linker_range": [
+        9,
+        38
+      ],
+      "linker_residues": 30,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGSGGGGSGGGGS",
+      "mask": "epi2",
+      "mask_kind": "epitope graft",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "QLIPPFWK",
+      "sequence": "QLIPPFWKGGGGSGGGGSGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        39,
+        156
+      ]
+    },
+    {
+      "id": "polyG_L5",
+      "length": 131,
+      "linker_range": [
+        9,
+        13
+      ],
+      "linker_residues": 5,
+      "linker_seq": "GGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GGGGGGGG",
+      "sequence": "GGGGGGGGGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        14,
+        131
+      ]
+    },
+    {
+      "id": "polyG_L10",
+      "length": 136,
+      "linker_range": [
+        9,
+        18
+      ],
+      "linker_residues": 10,
+      "linker_seq": "GGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GGGGGGGG",
+      "sequence": "GGGGGGGGGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        19,
+        136
+      ]
+    },
+    {
+      "id": "polyG_L15",
+      "length": 141,
+      "linker_range": [
+        9,
+        23
+      ],
+      "linker_residues": 15,
+      "linker_seq": "GGGGSGGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GGGGGGGG",
+      "sequence": "GGGGGGGGGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        24,
+        141
+      ]
+    },
+    {
+      "id": "polyG_L20",
+      "length": 146,
+      "linker_range": [
+        9,
+        28
+      ],
+      "linker_residues": 20,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GGGGGGGG",
+      "sequence": "GGGGGGGGGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        29,
+        146
+      ]
+    },
+    {
+      "id": "polyG_L30",
+      "length": 156,
+      "linker_range": [
+        9,
+        38
+      ],
+      "linker_residues": 30,
+      "linker_seq": "GGGGSGGGGSGGGGSGGGGSGGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GGGGGGGG",
+      "sequence": "GGGGGGGGGGGGSGGGGSGGGGSGGGGSGGGGSGGGGSQVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        39,
+        156
+      ]
+    },
+    {
+      "id": "VHH_only",
+      "length": 118,
+      "linker_range": null,
+      "linker_residues": 0,
+      "linker_seq": "",
+      "mask": null,
+      "mask_kind": "reference",
+      "mask_range": null,
+      "mask_seq": "",
+      "sequence": "QVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS",
+      "vhh_range": [
+        1,
+        118
+      ]
+    }
+  ],
+  "epitope_segments": [
+    {
+      "end_label": "R36",
+      "length": 9,
+      "n_epitope": 9,
+      "seq": "AAPMVPVKR",
+      "start_label": "A28"
+    },
+    {
+      "end_label": "K12",
+      "length": 8,
+      "n_epitope": 7,
+      "seq": "QLIPPFWK",
+      "start_label": "Q5"
+    }
+  ],
+  "linker_lengths": [
+    5,
+    10,
+    15,
+    20,
+    30
+  ],
+  "linker_motif": "GGGGS",
+  "masks": {
+    "epi1": {
+      "kind": "epitope graft",
+      "note": "antigen A28-R36, 9 contact residues",
+      "seq": "AAPMVPVKR"
+    },
+    "epi1_half": {
+      "kind": "truncated control",
+      "note": "leading half of the graft",
+      "seq": "AAPM"
+    },
+    "epi1_scram": {
+      "kind": "scrambled control",
+      "note": "same composition, shuffled (seed 42)",
+      "seq": "MVKVRPPAA"
+    },
+    "epi2": {
+      "kind": "epitope graft",
+      "note": "antigen Q5-K12, 7 contact residues",
+      "seq": "QLIPPFWK"
+    },
+    "polyG": {
+      "kind": "inert control",
+      "note": "no designed interaction; masking should fail",
+      "seq": "GGGGGGGG"
+    }
+  },
+  "n_constructs": 26,
+  "paratope_labels": [
+    "Y32",
+    "A33",
+    "A35",
+    "F37",
+    "E44",
+    "R45",
+    "F47",
+    "S50",
+    "S52",
+    "S57",
+    "Y59",
+    "T98",
+    "E99",
+    "E101",
+    "S103",
+    "G104",
+    "T105",
+    "Y106"
+  ],
+  "toxin_sequence": "LKCNQLIPPFWKTCPKGKNLCYKMTMRAAPMVPVKRGCIDVCPKSSLLIKYMCCNTDKCN",
+  "vhh_residue_labels": [
+    "Q1",
+    "V2",
+    "Q3",
+    "L4",
+    "Q5",
+    "E6",
+    "S7",
+    "G8",
+    "G9",
+    "G10",
+    "L11",
+    "V12",
+    "Q13",
+    "A14",
+    "G15",
+    "G16",
+    "S17",
+    "L18",
+    "R19",
+    "L20",
+    "S21",
+    "C22",
+    "A23",
+    "A24",
+    "S25",
+    "G26",
+    "R27",
+    "T28",
+    "F29",
+    "S30",
+    "S31",
+    "Y32",
+    "A33",
+    "M34",
+    "A35",
+    "W36",
+    "F37",
+    "R38",
+    "Q39",
+    "A40",
+    "P41",
+    "G42",
+    "K43",
+    "E44",
+    "R45",
+    "E46",
+    "F47",
+    "V48",
+    "A49",
+    "S50",
+    "I51",
+    "S52",
+    "W53",
+    "N54",
+    "G55",
+    "D56",
+    "S57",
+    "T58",
+    "Y59",
+    "Y60",
+    "A61",
+    "D62",
+    "S63",
+    "V64",
+    "K65",
+    "G66",
+    "R67",
+    "F68",
+    "T69",
+    "I70",
+    "S71",
+    "G72",
+    "D73",
+    "N74",
+    "A75",
+    "K76",
+    "N77",
+    "T78",
+    "W79",
+    "Y80",
+    "L81",
+    "Q82",
+    "M83",
+    "K84",
+    "S85",
+    "L86",
+    "K87",
+    "P88",
+    "E89",
+    "D90",
+    "T91",
+    "A92",
+    "V93",
+    "Y94",
+    "Y95",
+    "C96",
+    "N97",
+    "T98",
+    "E99",
+    "D100",
+    "E101",
+    "G102",
+    "S103",
+    "G104",
+    "T105",
+    "Y106",
+    "Y107",
+    "E108",
+    "W109",
+    "G110",
+    "Q111",
+    "G112",
+    "T113",
+    "Q114",
+    "V115",
+    "T116",
+    "V117",
+    "S118"
+  ],
+  "vhh_sequence": "QVQLQESGGGLVQAGGSLRLSCAASGRTFSSYAMAWFRQAPGKEREFVASISWNGDSTYYADSVKGRFTISGDNAKNTWYLQMKSLKPEDTAVYYCNTEDEGSGTYYEWGQGTQVTVS"
+}

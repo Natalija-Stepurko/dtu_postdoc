@@ -64,6 +64,16 @@ def mask_candidates(segments, seed: int = RANDOM_SEED) -> dict:
         masks["epi2"] = {"seq": second["seq"], "kind": "epitope graft",
                          "note": f"antigen {second['start_label']}-{second['end_label']}, "
                                  f"{second['n_epitope']} contact residues"}
+    # A grafted segment taken from a disulfide-rich antigen can carry free
+    # cysteines, which would scramble the nanobody's own disulfides. The
+    # substituted variant keeps the shape of the graft without that liability.
+    for name in [k for k in list(masks) if "C" in masks[k]["seq"]
+                 and masks[k]["kind"] == "epitope graft"]:
+        masks[f"{name}_noCys"] = {
+            "seq": masks[name]["seq"].replace("C", "S"),
+            "kind": "epitope graft",
+            "note": f"{name} with cysteines substituted to serine"}
+
     masks["polyG"] = {"seq": "GGGGGGGG", "kind": "inert control",
                       "note": "no designed interaction; masking should fail"}
     return masks

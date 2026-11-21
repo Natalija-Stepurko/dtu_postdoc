@@ -19,10 +19,13 @@ from .config import (DATA, PDB_ID, BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINT
 RCSB = "https://files.rcsb.org/download/{pdb_id}.cif.gz"
 
 #: Conserved VHH framework motifs bracketing each CDR. Anchoring on these makes
-#: the CDR boundaries reproducible from sequence alone.
-CDR_ANCHORS = {"CDR1": (r"SC[AV][AV]S", r"W[YF]RQ"),
-               "CDR2": (r"ELVA", r"RFTIS"),
-               "CDR3": (r"YYC", r"WGQG")}
+#: the CDR boundaries reproducible from sequence alone. CDR2 is bracketed by the
+#: end of framework 2 and the start of framework 3; the framework-2 motif varies
+#: between VHHs, so its anchor is found by searching back from framework 3 for
+#: the last "VA" rather than by matching one family's sequence.
+CDR_ANCHORS = {"CDR1": (r"SC[AVTG][AVTGS]S", r"W[YFVG]RQ"),
+               "CDR2": (None, r"RF[TAVS][IVL]S"),
+               "CDR3": (r"TA[VILMF][YFH][YFHILV]C", r"WG[QRKP]G")}
 
 
 def fetch_structure(pdb_id: str = PDB_ID, directory: Path = DATA) -> Path:
@@ -141,11 +144,35 @@ def interface(atoms, vhh_chain: str, toxin_chain: str) -> dict:
 
 
 def find_cdrs(sequence: str, anchors: dict = CDR_ANCHORS) -> dict:
-    """CDR spans as half-open 0-based intervals, from framework anchors."""
+    """CDR spans as half-open 0-based intervals, from framework anchors.
+
+    A ``None`` start anchor means the span begins at the last ``VA`` before the
+    end anchor, which is how framework 2 closes in every VHH family checked.
+    """
     spans = {}
     for name, (before, after) in anchors.items():
-        start = re.search(before, sequence).end()
-        stop = re.search(after, sequence[start:]).start() + start
+        end_match = None
+        if before is None:
+            end_match = re.search(after, sequence)
+            if end_match is None:
+                raise ValueError(f"no framework anchor {after!r} for {name}")
+            prefix = sequence[:end_match.start()]
+            va = list(re.finditer(r"VA", prefix))
+            if not va:
+                raise ValueError(f"no framework-2 anchor before {name}")
+            start = va[-1].end()
+        else:
+            m = re.search(before, sequence)
+            if m is None:
+                raise ValueError(f"no framework anchor {before!r} for {name}")
+            start = m.end()
+        if end_match is None:
+            m = re.search(after, sequence[start:])
+            if m is None:
+                raise ValueError(f"no framework anchor {after!r} for {name}")
+            stop = m.start() + start
+        else:
+            stop = end_match.start()
         spans[name] = (start, stop)
     return spans
 

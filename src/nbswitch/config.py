@@ -5,19 +5,47 @@ from pathlib import Path
 
 ROOT = Path(os.environ.get("NBSWITCH_ROOT", Path(__file__).resolve().parents[2]))
 DATA = ROOT / "data"
-RESULTS = ROOT / "results"
-FIGURES = RESULTS / "figures"
-STRUCTURES = RESULTS / "structures"
 DOCS = ROOT / "docs"
 
-for _d in (DATA, RESULTS, FIGURES, STRUCTURES, DOCS):
-    _d.mkdir(parents=True, exist_ok=True)
+#: Complexes the pipeline can be pointed at. Each is an experimental VHH-toxin
+#: structure from the same laboratory, which makes them comparable, and they
+#: differ in the one property that decides whether masking is even testable:
+#: how far the N-terminus sits from the binding site.
+TARGETS = {
+    "9RIU": {
+        "pdb_id": "9RIU",
+        "vhh_chains": ("A", "C"), "toxin_chains": ("B", "D"),
+        "reference_vhh_chain": "A",
+        "label": "broadly neutralizing VHH with short neurotoxin 1",
+        "note": "one paratope, consistent between copies, N-terminus clear of it",
+    },
+    "9S9E": {
+        "pdb_id": "9S9E",
+        "vhh_chains": ("A", "B"), "toxin_chains": ("C", "D"),
+        "reference_vhh_chain": "A",
+        "label": "VHH TPL0870_0 with cytotoxin 1",
+        "note": "biparatopic: the two copies share one paratope residue, so there is "
+                "no single site to mask - rejected as a demonstration system",
+    },
+    "9GCN": {
+        "pdb_id": "9GCN",
+        "vhh_chains": ("A", "B", "C", "D"), "toxin_chains": ("V", "X", "Y", "Z"),
+        "reference_vhh_chain": "A",
+        "label": "VHH TPL1158_01_C09 with alpha-cobratoxin",
+        "note": "N-terminal residue is itself part of the paratope",
+    },
+}
 
-#: Reference complex: VHH TPL1158_01_C09 bound to alpha-cobratoxin.
-PDB_ID = "9GCN"
-VHH_CHAINS = ("A", "B", "C", "D")
-TOXIN_CHAINS = ("V", "X", "Y", "Z")
-REFERENCE_VHH_CHAIN = "A"
+#: Which complex this run uses. Override with NBSWITCH_TARGET.
+TARGET_ID = os.environ.get("NBSWITCH_TARGET", "9RIU")
+if TARGET_ID not in TARGETS:
+    raise SystemExit(f"unknown target {TARGET_ID}; choose from {sorted(TARGETS)}")
+TARGET = TARGETS[TARGET_ID]
+
+PDB_ID = TARGET["pdb_id"]
+VHH_CHAINS = TARGET["vhh_chains"]
+TOXIN_CHAINS = TARGET["toxin_chains"]
+REFERENCE_VHH_CHAIN = TARGET["reference_vhh_chain"]
 
 #: Worm-like-chain parameters for a Gly/Ser linker (Zhou 2001, J Phys Chem B).
 PERSISTENCE_LENGTH_A = 4.5
@@ -54,6 +82,19 @@ PALETTE = {
     "ink": "#0b0b0b", "ink2": "#52514e", "grid": "#d8d7d2",
     "surface": "#fcfcfb", "band": "#e8eef7",
 }
+
+
+#: Per-target output directories, so two complexes never overwrite each other.
+RESULTS = ROOT / "results" / TARGET_ID
+FIGURES = RESULTS / "figures"
+STRUCTURES = RESULTS / "structures"
+for _d in (DATA, DOCS, RESULTS, FIGURES, STRUCTURES):
+    _d.mkdir(parents=True, exist_ok=True)
+
+
+def results_dir(target_id: str) -> Path:
+    """Where another target's outputs live, for cross-target comparison."""
+    return ROOT / "results" / target_id
 
 
 def save_json(name: str, obj) -> Path:
