@@ -11,6 +11,7 @@ dependencies = [
   "matplotlib>=3.8",
   "pandas>=2.1",
   "biotite>=1.0",
+  "riot-na>=5.3",            # antibody numbering: Kabat, Chothia, IMGT
 ]
 
 [project.optional-dependencies]
