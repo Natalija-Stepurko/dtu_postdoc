@@ -786,7 +786,7 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 def architecture_schematic() -> str:
     """Six modules: one estimation, one generation, three scores and a ranking."""
-    W, H = 980, 760
+    W, H = 980, 838
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
          f'role="img" aria-label="Computational pipeline">',
          '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
@@ -826,6 +826,17 @@ def architecture_schematic() -> str:
                 f'<text x="{W/2}" y="{y+26}" class="p-io" fill="{CHROME}" '
                 f'text-anchor="middle">{text}</text>')
 
+    def shared(y, title, note, methods):
+        """A step every downstream module depends on, drawn across the width."""
+        return (f'<rect x="0" y="{y}" width="{W}" height="76" rx="4" fill="#FBF8F3" '
+                f'stroke="{STR}" stroke-width="1.2" stroke-dasharray="5 3"/>'
+                f'<text x="24" y="{y+30}" class="p-t" fill="{INK}">{title}</text>'
+                f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>'
+                f'<text x="{W-24}" y="{y+30}" class="p-m" fill="{STR}" '
+                f'text-anchor="end">{methods}</text>'
+                f'<text x="{W-24}" y="{y+54}" class="p-s" fill="{STR}" '
+                f'text-anchor="end">RUN</text>')
+
     s.append(band(0, "INPUT · EXPERIMENTAL OR PREDICTED NANOBODY–ANTIGEN STRUCTURE"))
     s.append(f'<path d="M {W/2} 40 L {W/2} 58" stroke="{NULL}" stroke-width="1.6" '
              f'fill="none" marker-end="url(#ar)"/>')
@@ -840,41 +851,45 @@ def architecture_schematic() -> str:
                   "CleaveNet for linkers"], "PART RUN", STR))
     s.append(f'<path d="M 478 138 L 496 138" stroke="{NULL}" stroke-width="1.6" '
              f'fill="none" marker-end="url(#ar)"/>')
-    s.append(f'<path d="M 741 212 L 741 232 L 160 232 L 160 268" stroke="{NULL}" '
-             f'stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 490 232 L 490 268" stroke="{NULL}" stroke-width="1.6" '
+    # every construct is folded once, and all three scores read those coordinates
+    s.append(f'<path d="M 741 212 L 741 228" stroke="{NULL}" stroke-width="1.6" '
              f'fill="none" marker-end="url(#ar)"/>')
-    s.append(f'<path d="M 160 232 L 160 268" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none" marker-end="url(#ar)"/>')
-    s.append(f'<path d="M 820 232 L 820 268" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none" marker-end="url(#ar)"/>')
-    s.append(f'<path d="M 160 232 L 820 232" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(shared(232, "Structure prediction",
+                    "Every construct folded once, as a single chain: mask, linker "
+                    "and nanobody together.",
+                    "ESMFold \u00b7 CPU"))
+    s.append(f'<path d="M 490 308 L 490 324" stroke="{NULL}" stroke-width="1.6" '
+             f'fill="none"/>')
+    s.append(f'<path d="M 160 324 L 820 324" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    for x in (160, 490, 820):
+        s.append(f'<path d="M {x} 324 L {x} 350" stroke="{NULL}" stroke-width="1.6" '
+                 f'fill="none" marker-end="url(#ar)"/>')
 
     for n, (num, title, lines, methods, tag, col) in enumerate([
         ("03", "Structural feasibility",
-         ["Does it fold and can", "it be produced?"],
-         ["ESMFold · AlphaFold", "Boltz · Rosetta"], "RUN", CHROME),
+         ["Is the fold kept, and can", "it be produced?"],
+         ["pLDDT \u00b7 core RMSD", "surface \u00b7 cysteines"], "RUN", CHROME),
         ("04", "Mask binding and release",
          ["Is the site blocked, and", "freed after cleavage?"],
-         ["complex prediction", "interface analysis"], "RUN", CHROME),
+         ["Boltz-2 with alignments", "interface analysis"], "RUN", CHROME),
         ("05", "Linker cleavability",
-         ["Is the linker recognised", "and reachable?"],
-         ["CleaveNet · MEROPS", "accessibility"], "PART RUN", STR),
+         ["Is the linker recognised,", "and can a protease reach it?"],
+         ["CleaveNet selectivity", "extension \u00b7 clearance"], "RUN", CHROME),
     ]):
-        s.append(box(n * 330, 274, 320, 176, SEQ, num, title, lines, methods, tag, col))
-        s.append(f'<text x="{n*330+300}" y="{468}" class="p-m" fill="{INK3}" '
+        s.append(box(n * 330, 356, 320, 176, SEQ, num, title, lines, methods, tag, col))
+        s.append(f'<text x="{n*330+300}" y="{550}" class="p-m" fill="{INK3}" '
                  f'text-anchor="end">S<tspan dy="4" font-size="11">{n+1}</tspan></text>')
-        s.append(f'<path d="M {n*330+160} 450 L {n*330+160} 486 L 490 486 L 490 516" '
+        s.append(f'<path d="M {n*330+160} 532 L {n*330+160} 566 L 490 566 L 490 596" '
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    s.append(box(166, 522, 648, 140, CHROME, "06", "Multiobjective ranking",
+    s.append(box(166, 602, 648, 140, CHROME, "06", "Multiobjective ranking",
                  ["Hard constraints, then the nondominated set.",
                   "No weights, so no score compensates for another."],
                  ["Pareto front · uncertainty · diversity"], "RUN", CHROME))
-    s.append(f'<path d="M 490 662 L 490 700" stroke="{NULL}" stroke-width="1.6" '
+    s.append(f'<path d="M 490 742 L 490 778" stroke="{NULL}" stroke-width="1.6" '
              f'fill="none" marker-end="url(#ar)"/>')
-    s.append(band(706, "OUTPUT · RANKED CANDIDATE SEQUENCES WITH THEIR THREE SCORES"))
+    s.append(band(784, "OUTPUT · RANKED CANDIDATE SEQUENCES WITH THEIR THREE SCORES"))
     s.append("</svg>")
     return "".join(s)
 
