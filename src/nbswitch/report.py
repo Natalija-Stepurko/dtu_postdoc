@@ -47,7 +47,18 @@ a{color:var(--seq)}
 .navbar .dots a[aria-current=true]{background:var(--ink);color:#fff}
 .navbar .hint{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--ink-3)}
 body{padding-bottom:44px}
-@media print{.navbar{display:none}.sec{break-inside:avoid;page-break-inside:avoid}}
+@media print{
+  .navbar{display:none}
+  body{padding-bottom:0;font-size:15px}
+  .sec{padding:26px 0 30px;break-inside:auto}
+  .sec::after{top:8px}
+  figure.chart,.card,.viewer,.scroll,.kpis,.steps,details.fold,details.tech{
+    break-inside:avoid;page-break-inside:avoid}
+  h2,h3{break-after:avoid;page-break-after:avoid}
+  .tfig{break-inside:avoid}
+  .vstage{height:360px}
+  a{text-decoration:none;color:inherit}
+}
 .stack{display:flex;flex-direction:column;gap:12px}
 .eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
          color:var(--chrome);font-weight:600}
