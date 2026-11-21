@@ -2,3 +2,14 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+
+# Structure files are downloaded from RCSB by stage 1, so there is no reason to
+# keep a copy here. They also carry the depositors' contact details, which
+# belong in the PDB rather than in this repository.
+data/*.cif
+
+# Boltz writes confidence arrays alongside each prediction. The structures are
+# kept; these are regenerated with them.
+results/**/pae_*.npz
+results/**/pde_*.npz
+results/**/plddt_*.npz
