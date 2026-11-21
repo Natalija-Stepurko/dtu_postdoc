@@ -17,7 +17,8 @@ try:
     fold = load_json("04_folding.json")
 except FileNotFoundError:
     fold = None
-for _name, _key in (("07_redesign.json", "redesign"),
+for _name, _key in (("10_trigger.json", "trigger"),
+                    ("07_redesign.json", "redesign"),
                     ("08_redesign_folding.json", "redesign_fold"),
                     ("09_complexes.json", "complexes")):
     try:
@@ -232,6 +233,58 @@ correlation is <b>{corr:+.2f}</b> across {len(rrows)} designs.</div>
 </section>"""
 else:
     redesign_html = ""
+
+# ---- trigger accessibility ----
+if trigger:
+    import numpy as _np
+    _by = {}
+    for _r in trigger["results"]:
+        _by.setdefault(_r["linker_residues"], []).append(_r)
+    _win = {r["linker_residues"]: r["window_decades"]
+            for r in tether["scan"] if r["terminus"] == "N"}
+    _rows = "".join(
+        f"<tr><td>{n} residues</td><td>{_win.get(n, float('nan')):.2f}</td>"
+        f"<td>{_np.mean([x['fraction_exposed'] for x in g]):.2f}</td>"
+        f"<td>{_np.mean([x['extension_ratio'] for x in g]):.2f}</td>"
+        f"<td>{_np.mean([x['accessibility_score'] for x in g]):.2f}</td></tr>"
+        for n, g in sorted(_by.items()))
+    _short = min(_by)
+    _bestwin = max(_win, key=_win.get)
+    _acc_short = _np.mean([x["accessibility_score"] for x in _by[_short]])
+    _acc_long = _np.mean([x["accessibility_score"] for x in _by[max(_by)]])
+    trigger_html = f"""
+<section class="sec">
+<div class="stack"><div class="eyebrow">Module 02a · the trigger</div>
+<h2>Can the protease reach the linker at all?</h2>
+<p>A protease does not simply recognise a sequence; it threads the substrate through its
+active-site cleft, which requires the linker to be both exposed and extended. That is a
+<b>necessary condition</b> for cleavage and it is independent of sequence — a linker packed
+against the nanobody cannot be cut however good its motif. It is also computable from the folded
+constructs, with no specificity data at all.</p></div>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:22%"><col style="width:22%">
+<col style="width:19%"><col style="width:19%"><col style="width:18%"></colgroup>
+<thead><tr><th>linker</th><th>design window (decades)</th><th>fraction exposed</th>
+<th>extension ratio</th><th>accessibility</th></tr></thead><tbody>{_rows}</tbody></table></div>
+<div class="note"><b>Every linker is exposed; not every linker is extended.</b> Solvent exposure
+is near 1.0 throughout, so nothing is buried. What collapses is extension — the end-to-end
+distance as a fraction of contour length falls from {_np.mean([x['extension_ratio'] for x in _by[_short]]):.2f}
+at {_short} residues to {_np.mean([x['extension_ratio'] for x in _by[max(_by)]]):.2f} at
+{max(_by)}. A long flexible linker balls up, and a balled-up linker is poorly presented to a
+protease.</div>
+{chart("trigger_tradeoff", "The two computable scores plotted against linker length.")}
+<div class="note warn"><b>The two scores disagree, and that is the point.</b> The tether model
+wants a <b>{_bestwin}-residue</b> linker, where the usable affinity window is widest at
+{_win[_bestwin]:.2f} decades. Accessibility wants <b>{_short}</b>, where it scores
+{_acc_short:.2f} against {_acc_long:.2f} at the longest. Neither is wrong. A single combined
+number would hide the conflict and pick one arbitrarily; keeping them apart makes the trade-off
+visible and leaves the choice to be made deliberately, or measured.</div>
+<div class="note"><b>What is still missing.</b> This is the accessibility half of the trigger
+score. The other half — does <em>this</em> protease cut <em>this</em> sequence, and leave other
+sequences alone — needs substrate specificity data for the enzymes in question. Accessibility can
+rule a linker out; it cannot rule one in.</div>
+</section>"""
+else:
+    trigger_html = ""
 
 # ---- complex-prediction section ----
 if complexes:
@@ -499,6 +552,8 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 </section>
 
 {redesign_html}
+
+{trigger_html}
 
 {complex_html}
 

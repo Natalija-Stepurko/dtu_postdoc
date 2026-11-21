@@ -172,7 +172,7 @@ proposed for synthesis.</div>
 </header>
 
 <!-- ============================ PART 1 ============================ -->
-<section class="sec" id="s1" data-slide="01 / 15">
+<section class="sec" id="s1" data-slide="01 / 16">
 <div class="stack"><div class="eyebrow">Part 1 · the question</div>
 <h2>A binder that is inert until something local switches it on</h2>
 <p>Most therapeutic binders work everywhere in the body at once, which is why their side effects so
@@ -202,7 +202,7 @@ method below is built around.</p>
 </section>
 
 <!-- ============================ PART 2 ============================ -->
-<section class="sec" id="s2" data-slide="02 / 15">
+<section class="sec" id="s2" data-slide="02 / 16">
 <div class="stack"><div class="eyebrow">Part 2 · the method</div>
 <h2>A pipeline built around that window</h2>
 <p>The ordering is the design decision. Generative models are usually put first, and the structure
@@ -249,7 +249,7 @@ those measurements well, not as a substitute for them.</div>
 </section>
 
 <!-- ============================ PART 3 ============================ -->
-<section class="sec" id="s3" data-slide="03 / 15">
+<section class="sec" id="s3" data-slide="03 / 16">
 <div class="stack"><div class="eyebrow">Part 3 · the method in action</div>
 <h2>Running it on a real complex</h2>
 <p>The example below applies every built module to one deposited structure: Co-crystal of broadly neutralizing VHH in complex with short neurotoxin 1 (P01426) Naja pallida,
@@ -291,7 +291,7 @@ tell you that a target is unsuitable before you spend anything on it.</p>
 </details>
 </section>
 
-<section class="sec" id="s4" data-slide="04 / 15">
+<section class="sec" id="s4" data-slide="04 / 16">
 <div class="stack"><div class="eyebrow">Module 00 · constrain</div>
 <h3>Measuring the complex</h3>
 <p>The paratope is defined as the residues that lose solvent-accessible surface when the complex
@@ -328,7 +328,7 @@ interchangeable. Because that gap exists, a peptide only reaches the paratope if
 </div>
 </section>
 
-<section class="sec" id="s5" data-slide="05 / 15">
+<section class="sec" id="s5" data-slide="05 / 16">
 <div class="stack"><div class="eyebrow">Module 00 · constrain</div>
 <h3>Pricing the tether</h3>
 <p>A tethered mask behaves as though present at an effective concentration set by the linker.
@@ -362,7 +362,7 @@ affinity maturation would be the wrong move.</div>
 <figure class="chart"><img src="figures/release_sensitivity.svg" alt="The release floor moves with toxin affinity and concentration; the masking ceiling does not."><figcaption>The release floor moves with toxin affinity and concentration; the masking ceiling does not.</figcaption></figure>
 </section>
 
-<section class="sec" id="s6" data-slide="06 / 15">
+<section class="sec" id="s6" data-slide="06 / 16">
 <div class="stack"><div class="eyebrow">Module 01 · generate</div>
 <h3>Candidates, and the controls that make them legible</h3>
 <p>One peptide is already known to engage this paratope: the antigen's own contact segment. Grafting
@@ -382,12 +382,12 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <span class="mono">polyG</span> has no designed interaction and should fail.</div>
 </section>
 
-<section class="sec" id="s7" data-slide="07 / 15">
+<section class="sec" id="s7" data-slide="07 / 16">
 <div class="stack"><div class="eyebrow">Module 02b · score the binding</div>
 <h3>Is the site covered?</h3></div>
 <div class="chart wide"><svg viewBox="0 0 1120 238" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How occlusion is measured"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.o-t{font:600 12.5px Inter,system-ui,sans-serif}.o-i{font:11.5px Inter,system-ui,sans-serif}.o-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.o-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="o-h" fill="#0E7C7B">HOW THE MASKED STATE IS MEASURED</text><rect x="0" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="30" width="330" height="3" fill="#2D5BD1"/><text x="16" y="56" class="o-t" fill="#12191F">fold the free nanobody</text><text x="16" y="76" class="o-m" fill="#2D5BD1">ESMFold, sequence only</text><text x="16" y="100" class="o-i" fill="#3A464F">measure the paratope's exposed surface</text><path d="M 330 89 L 390 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="395" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="395" y="30" width="330" height="3" fill="#2D5BD1"/><text x="411" y="56" class="o-t" fill="#12191F">fold the whole fusion</text><text x="411" y="76" class="o-m" fill="#2D5BD1">mask + linker + nanobody</text><text x="411" y="100" class="o-i" fill="#3A464F">measure the same residues again</text><path d="M 725 89 L 785 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="790" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="790" y="30" width="330" height="3" fill="#2D5BD1"/><text x="806" y="56" class="o-t" fill="#12191F">take the difference</text><text x="806" y="76" class="o-m" fill="#2D5BD1">occlusion = 1 − fused / free</text><text x="806" y="100" class="o-i" fill="#3A464F">0% means the mask changed nothing</text><rect x="0" y="162" width="1120" height="64" rx="3" fill="#FFFFFF" stroke="#C06014" stroke-dasharray="5 4"/><text x="16" y="184" class="o-t" fill="#12191F">Why the controls carry the argument</text><text x="16" y="203" class="o-i" fill="#3A464F">A tethered peptide sits near its own anchor whatever its sequence, so a single occlusion number means very little on its own.</text><text x="16" y="219" class="o-i" fill="#3A464F">Only the gap between the designed mask and its scrambled, truncated and poly-glycine twins separates a design from a geometric accident.</text></svg></div>
 
-<section class="sec" id="s8" data-slide="08 / 15">
+<section class="sec" id="s8" data-slide="08 / 16">
 <div class="stack"><div class="eyebrow">Stage 4 · folded on CPU</div>
 <h2>Does the mask actually reach the paratope?</h2>
 <p>Every construct folded with ESMFold, then the paratope's solvent-accessible surface in the
@@ -430,7 +430,7 @@ competition below is the first candidate. Had the controls been left out, the gr
 </section>
 
 
-<section class="sec" id="s9" data-slide="09 / 15">
+<section class="sec" id="s9" data-slide="09 / 16">
 <div class="stack"><div class="eyebrow">Stage 5 · closing the loop</div>
 <h2>Redesigning the mask on its own backbone</h2>
 <p>The grafted mask is borrowed from the antigen, so nothing about its sequence is tuned to this
@@ -459,7 +459,39 @@ correlation is <b>-0.15</b> across 93 designs.</div>
 </section>
 
 
-<section class="sec" id="s10" data-slide="10 / 15">
+<section class="sec" id="s10" data-slide="10 / 16">
+<div class="stack"><div class="eyebrow">Module 02a · the trigger</div>
+<h2>Can the protease reach the linker at all?</h2>
+<p>A protease does not simply recognise a sequence; it threads the substrate through its
+active-site cleft, which requires the linker to be both exposed and extended. That is a
+<b>necessary condition</b> for cleavage and it is independent of sequence — a linker packed
+against the nanobody cannot be cut however good its motif. It is also computable from the folded
+constructs, with no specificity data at all.</p></div>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:22%"><col style="width:22%">
+<col style="width:19%"><col style="width:19%"><col style="width:18%"></colgroup>
+<thead><tr><th>linker</th><th>design window (decades)</th><th>fraction exposed</th>
+<th>extension ratio</th><th>accessibility</th></tr></thead><tbody><tr><td>5 residues</td><td>2.34</td><td>1.00</td><td>0.69</td><td>0.97</td></tr><tr><td>10 residues</td><td>3.06</td><td>1.00</td><td>0.37</td><td>0.53</td></tr><tr><td>15 residues</td><td>3.12</td><td>0.98</td><td>0.31</td><td>0.43</td></tr><tr><td>20 residues</td><td>3.08</td><td>0.98</td><td>0.24</td><td>0.34</td></tr><tr><td>30 residues</td><td>2.96</td><td>0.95</td><td>0.14</td><td>0.19</td></tr></tbody></table></div>
+<div class="note"><b>Every linker is exposed; not every linker is extended.</b> Solvent exposure
+is near 1.0 throughout, so nothing is buried. What collapses is extension — the end-to-end
+distance as a fraction of contour length falls from 0.69
+at 5 residues to 0.14 at
+30. A long flexible linker balls up, and a balled-up linker is poorly presented to a
+protease.</div>
+<figure class="chart"><img src="figures/trigger_tradeoff.svg" alt="The two computable scores plotted against linker length."><figcaption>The two computable scores plotted against linker length.</figcaption></figure>
+<div class="note warn"><b>The two scores disagree, and that is the point.</b> The tether model
+wants a <b>14-residue</b> linker, where the usable affinity window is widest at
+3.12 decades. Accessibility wants <b>5</b>, where it scores
+0.97 against 0.19 at the longest. Neither is wrong. A single combined
+number would hide the conflict and pick one arbitrarily; keeping them apart makes the trade-off
+visible and leaves the choice to be made deliberately, or measured.</div>
+<div class="note"><b>What is still missing.</b> This is the accessibility half of the trigger
+score. The other half — does <em>this</em> protease cut <em>this</em> sequence, and leave other
+sequences alone — needs substrate specificity data for the enzymes in question. Accessibility can
+rule a linker out; it cannot rule one in.</div>
+</section>
+
+
+<section class="sec" id="s11" data-slide="11 / 16">
 <div class="stack"><div class="eyebrow">Module 02b · the other half</div>
 <h3>With the mask on, can the antigen still bind?</h3>
 <p>Occlusion says the mask covers the site. It does not say the antigen is excluded — those are
@@ -477,7 +509,7 @@ deliberately. If the free nanobody does not reproduce a toxin pose on its known 
 masked numbers describe the model rather than the molecule.</div>
 </section>
 
-<section class="sec" id="s11" data-slide="11 / 15">
+<section class="sec" id="s12" data-slide="12 / 16">
 <div class="stack"><div class="eyebrow">What the example does not settle</div>
 <h2>The gaps, named</h2></div>
 <div class="scroll"><table class="wrap"><thead><tr><th>module</th><th>what is missing</th>
@@ -500,7 +532,7 @@ produce numbers. The trigger module is empty, and it is empty for want of data r
 of a model — which is the kind of gap that no amount of compute closes.</div>
 </section>
 
-<section class="sec" id="s12" data-slide="12 / 15">
+<section class="sec" id="s13" data-slide="13 / 16">
 <div class="stack"><div class="eyebrow">Provenance</div>
 <h2>Where the numbers come from</h2>
 <p>Every value and chart here is produced by the analysis code, run in stages against one deposited
@@ -520,7 +552,7 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 </section>
 
 
-<section class="sec" id="s13" data-slide="13 / 15">
+<section class="sec" id="s14" data-slide="14 / 16">
 <div class="stack"><div class="eyebrow">Scale</div>
 <h2>What the campaign costs, and how the lab shrinks it</h2>
 <p>The counts below are projections, not results. They come from published hit rates for binder
@@ -566,7 +598,7 @@ candidate. That is the point at which a learned scorer can replace a hand-built 
 reason the representations are stored for designs that were never made.</div>
 </section>
 
-<section class="sec" id="s14" data-slide="14 / 15">
+<section class="sec" id="s15" data-slide="15 / 16">
 <div class="stack"><div class="eyebrow">Prior work</div>
 <h2>Where this problem is familiar from</h2>
 <p>The two-state, tethered-affinity problem on this page is one I characterised experimentally
@@ -584,7 +616,7 @@ C-terminus, and the longest, FST315, carries an acidic tail that folds back onto
 the same surface that binds heparan sulphate. The tail is an <b>endogenous mask</b>.</p>
 
 <div class="tstep"><b>01</b><span>The molecule, and where the isoforms differ</span></div>
-<figure class="tfig tall"><img src="thesis/fst_domains.png" alt="Domain organisation, charge and conservation. FST288, FST303 and FST315 differ only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against a basic heparan-sulphate binding site (HSB) on FS1."><figcaption>Domain organisation, charge and conservation. FST288, FST303 and FST315 differ only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against a basic heparan-sulphate binding site (HSB) on FS1.</figcaption></figure>
+<figure class="tfig full"><img src="thesis/fst_domains.png" alt="Domain organisation, charge and conservation. FST288, FST303 and FST315 differ only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against a basic heparan-sulphate binding site (HSB) on FS1."><figcaption>Domain organisation, charge and conservation. FST288, FST303 and FST315 differ only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against a basic heparan-sulphate binding site (HSB) on FS1.</figcaption></figure>
 <figure class="tfig wide"><img src="thesis/fst_topology.png" alt="Topology of the full-length molecule, from the N-terminus to the tail."><figcaption>Topology of the full-length molecule, from the N-terminus to the tail.</figcaption></figure>
 
 <div class="tstep"><b>02</b><span>The tail binds back, and the strength can be measured</span></div>
@@ -619,7 +651,7 @@ affinity measurement — rather than predicted.</div>
 </details>
 </section>
 
-<section class="sec" id="s15" data-slide="15 / 15">
+<section class="sec" id="s16" data-slide="16 / 16">
 <div class="stack"><div class="eyebrow">References</div><h2>Sources</h2></div>
 <ul class="ref">
 <li>Damsbo A. <i>et al.</i> Co-crystal of VHH TPL1158_01_C09 with α-cobratoxin.
@@ -652,7 +684,7 @@ language model. <i>Science</i> 379:1123–1130 (2023).
 
 <footer>Figures and values generated by the analysis code. Structural data from the RCSB Protein
 Data Bank.</footer>
-<nav class="navbar"><div class="inner"><div class="dots"><a href="#s1" data-s="1">01</a><a href="#s2" data-s="2">02</a><a href="#s3" data-s="3">03</a><a href="#s4" data-s="4">04</a><a href="#s5" data-s="5">05</a><a href="#s6" data-s="6">06</a><a href="#s7" data-s="7">07</a><a href="#s8" data-s="8">08</a><a href="#s9" data-s="9">09</a><a href="#s10" data-s="10">10</a><a href="#s11" data-s="11">11</a><a href="#s12" data-s="12">12</a><a href="#s13" data-s="13">13</a><a href="#s14" data-s="14">14</a><a href="#s15" data-s="15">15</a></div><span class="hint">← → to move</span></div></nav><script>(function(){var secs=[].slice.call(document.querySelectorAll("section.sec"));var dots=[].slice.call(document.querySelectorAll(".navbar .dots a"));function mark(){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});dots.forEach(function(d,i){d.setAttribute("aria-current",i===k?"true":"false");});}function go(d){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});var t=Math.max(0,Math.min(secs.length-1,k+d));window.scrollTo({top:secs[t].offsetTop-40,behavior:"smooth"});}document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1);}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1);}});window.addEventListener("scroll",mark,{passive:true});mark();})();</script></div>
+<nav class="navbar"><div class="inner"><div class="dots"><a href="#s1" data-s="1">01</a><a href="#s2" data-s="2">02</a><a href="#s3" data-s="3">03</a><a href="#s4" data-s="4">04</a><a href="#s5" data-s="5">05</a><a href="#s6" data-s="6">06</a><a href="#s7" data-s="7">07</a><a href="#s8" data-s="8">08</a><a href="#s9" data-s="9">09</a><a href="#s10" data-s="10">10</a><a href="#s11" data-s="11">11</a><a href="#s12" data-s="12">12</a><a href="#s13" data-s="13">13</a><a href="#s14" data-s="14">14</a><a href="#s15" data-s="15">15</a><a href="#s16" data-s="16">16</a></div><span class="hint">← → to move</span></div></nav><script>(function(){var secs=[].slice.call(document.querySelectorAll("section.sec"));var dots=[].slice.call(document.querySelectorAll(".navbar .dots a"));function mark(){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});dots.forEach(function(d,i){d.setAttribute("aria-current",i===k?"true":"false");});}function go(d){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});var t=Math.max(0,Math.min(secs.length-1,k+d));window.scrollTo({top:secs[t].offsetTop-40,behavior:"smooth"});}document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1);}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1);}});window.addEventListener("scroll",mark,{passive:true});mark();})();</script></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>

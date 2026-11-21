@@ -234,6 +234,11 @@ def build_all():
     except FileNotFoundError:
         pass
     try:
+        trig = load_json("10_trigger.json")
+        made.append(trigger_tradeoff(tether, trig))
+    except FileNotFoundError:
+        pass
+    try:
         redesign = load_json("08_redesign_folding.json")
         if fold is not None:
             made.append(redesign_landscape(redesign, fold))
@@ -288,3 +293,44 @@ def redesign_score_vs_occlusion(redesign_fold):
     ax.set_ylabel("paratope occluded  (%)")
     ax.legend(fontsize=6.5, loc="best", ncol=2)
     return _save(fig, "redesign_score_vs_occlusion")
+
+
+def trigger_tradeoff(tether, trig):
+    """The two computable scores disagree about linker length."""
+    plt = _style()
+    win = {r["linker_residues"]: r["window_decades"]
+           for r in tether["scan"] if r["terminus"] == "N"}
+    acc = {}
+    for r in trig["results"]:
+        acc.setdefault(r["linker_residues"], []).append(r["accessibility_score"])
+    lengths = sorted(acc)
+    a = [float(np.mean(acc[n])) for n in lengths]
+    w = [win.get(n, np.nan) for n in lengths]
+
+    fig, ax = plt.subplots(figsize=(5.6, 3.3))
+    ax.plot(lengths, w, lw=2, marker="o", ms=5, color=SEQ,
+            markeredgecolor="white", markeredgewidth=1.1,
+            label="design window  (decades of usable $K_D$)")
+    ax.set_xlabel("linker length  (residues)")
+    ax.set_ylabel("decades of usable $K_D$", color=SEQ)
+    ax.tick_params(axis="y", labelcolor=SEQ)
+    ax.set_ylim(0, 3.6)
+
+    ax2 = ax.twinx()
+    ax2.plot(lengths, a, lw=2, marker="s", ms=5, color=STR,
+             markeredgecolor="white", markeredgewidth=1.1,
+             label="linker accessibility")
+    ax2.set_ylabel("linker accessibility", color=STR)
+    ax2.tick_params(axis="y", labelcolor=STR)
+    ax2.set_ylim(0, 1.08)
+    ax2.grid(False)
+    for spine in ("top",):
+        ax2.spines[spine].set_visible(False)
+
+    best_w = max(win, key=win.get)
+    ax.annotate(f"tether model prefers {best_w}", (best_w, win[best_w]),
+                textcoords="offset points", xytext=(-6, 10), fontsize=7.5,
+                color=SEQ, ha="right")
+    ax2.annotate(f"accessibility prefers {lengths[0]}", (lengths[0], a[0]),
+                 textcoords="offset points", xytext=(10, -4), fontsize=7.5, color=STR)
+    return _save(fig, "trigger_tradeoff")

@@ -880,7 +880,7 @@ the same surface that binds heparan sulphate. The tail is an <b>endogenous mask<
 {step("01", "The molecule, and where the isoforms differ")}
 {f("fst_domains", "Domain organisation, charge and conservation. FST288, FST303 and FST315 differ "
    "only in how much C-terminal tail they carry; the tail is strongly acidic (red, right) against "
-   "a basic heparan-sulphate binding site (HSB) on FS1.", "tall")}
+   "a basic heparan-sulphate binding site (HSB) on FS1.", "full")}
 {f("fst_topology", "Topology of the full-length molecule, from the N-terminus to the tail.", "wide")}
 
 {step("02", "The tail binds back, and the strength can be measured")}
