@@ -53,6 +53,10 @@ TARGET_PROTEASES = ("MMP2", "MMP9", "MMP8")
 OFF_TARGET_PROTEASES = ("MMP1", "MMP3", "MMP7", "MMP14", "MMP15", "MMP16",
                         "MMP17", "MMP24", "MMP25")
 
+#: The model's positional embedding is sized for this; longer input fails
+#: inside TensorFlow with a shape error rather than a useful message.
+SUBSTRATE_LENGTH = 10
+
 #: Flanks between the mask, the substrate and the nanobody. Short Gly/Ser runs
 #: keep the substrate accessible without contributing a cleavage site of their
 #: own, which is the one job a Gly/Ser repeat is right for.
@@ -111,6 +115,11 @@ def generate(n: int, temperature: float = 0.9, seed_dir: Path | None = None,
 def predict(sequences, work_dir: Path | None = None,
             python: str = "python") -> pd.DataFrame:
     """Predicted z-score per protease for each substrate, from the same model family."""
+    wrong = sorted({len(x) for x in sequences} - {SUBSTRATE_LENGTH})
+    if wrong:
+        raise ValueError(
+            f"CleaveNet scores {SUBSTRATE_LENGTH}-residue substrates only; got "
+            f"lengths {wrong}. Pass the substrate, not the flanked linker.")
     work = Path(work_dir or tempfile.mkdtemp(prefix="cleavenet-pred-"))
     work.mkdir(parents=True, exist_ok=True)
     seq_csv = work / "sequences.csv"

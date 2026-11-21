@@ -25,8 +25,12 @@ best = out["linkers"][0]["substrate"]
 import random
 rng = random.Random(42)
 scrambled = "".join(rng.sample(best, len(best)))
+# Controls carry a substrate of the same length as the generated ones and are
+# built the same way, so every linker in the library is the same size and only
+# the sequence differs.
 controls = [
-    {"id": "ctrl_gs", "substrate": "", "sequence": "GGGGSGGGGS",
+    {"id": "ctrl_gs", "substrate": "GGGGSGGGGS",
+     "sequence": L.build_linker("GGGGSGGGGS"),
      "kind": "protease-resistant control", "selectivity": None,
      "target_z": None, "off_target_z": None},
     {"id": "ctrl_scram", "substrate": scrambled,
@@ -40,7 +44,7 @@ out["linkers"] = out["linkers"] + controls
 out["n_controls"] = len(controls)
 
 # score the controls with the same predictor, so the comparison is like for like
-frame = L.selectivity(L.predict([c["sequence"] for c in controls],
+frame = L.selectivity(L.predict([c["substrate"] for c in controls],
                                 work_dir=work / "ctrl", python=PYTHON))
 for c, row in zip(controls, frame.itertuples()):
     c["target_z"] = round(float(row.target_z), 3)

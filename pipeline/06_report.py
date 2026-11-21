@@ -442,9 +442,6 @@ _graft = _np.mean([r["occlusion"] * 100 for r in fold["results"]
 _inert = _np.mean([r["occlusion"] * 100 for r in fold["results"]
                    if r["kind"] == "inert control"]) if fold else float("nan")
 _acc_rows = trigger["results"] if trigger else []
-_acc_by = {}
-for _r in _acc_rows:
-    _acc_by.setdefault(_r["linker_residues"], []).append(_r["accessibility_score"])
 _msa_ctrl = None
 if complexes_msa:
     _msa_ctrl = next((r for r in complexes_msa["results"]
@@ -537,13 +534,9 @@ N["occ_inert"] = _np.mean(_k.get("inert control", [0]))
 N["n_redesign"] = redesign["n_unique"] if redesign else 0
 N["mpnn_corr"] = corr if redesign else float("nan")
 
-_acc = {}
-for _r in (trigger["results"] if trigger else []):
-    _acc.setdefault(_r["linker_residues"], []).append(_r["accessibility_score"])
-N["acc_short_n"] = min(_acc) if _acc else 0
-N["acc_long_n"] = max(_acc) if _acc else 0
-N["acc_short"] = _np.mean(_acc[min(_acc)]) if _acc else 0
-N["acc_long"] = _np.mean(_acc[max(_acc)]) if _acc else 0
+_ctx = [_r["context_score"] for _r in (trigger["results"] if trigger else [])]
+N["ctx_mean"] = float(_np.mean(_ctx)) if _ctx else 0.0
+N["ctx_max"] = float(max(_ctx)) if _ctx else 0.0
 
 _mm = {r["case"]: r for r in (complexes_msa["results"] if complexes_msa else [])
        if r["status"] == "ok"}
@@ -606,7 +599,7 @@ _occ_by = {}
 for _src in (fold, redesign_fold):
     for _r in (_src["results"] if _src else []):
         _occ_by[_r["id"]] = _r["occlusion"]
-_acc_by_id = {r["id"]: r["accessibility_score"] for r in (trigger["results"] if trigger else [])}
+_acc_by_id = {r["id"]: r["context_score"] for r in (trigger["results"] if trigger else [])}
 for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability", _acc_by_id)):
     _n = _norm({it["id"]: _d.get(it["id"]) for it in ENSEMBLE_IDS})
     for _i, _v in _n.items():
@@ -995,11 +988,12 @@ constitutive enzymes.</p>
 {chart("cleavability_components", "The three necessary conditions and their product, by construct.")}
 </div>
 {R.ensemble_viewer("ens-cleave", "cleavability",
-   "The same constructs, coloured by linker accessibility. Short linkers stay extended and are "
-   "better presented; long ones adopt compact conformations.",
-   R.ramp_legend("least accessible", "most"))}
-<p>The two quantities favour different linker lengths: the affinity window is widest at
-{N['linker_best']} residues, while accessibility is highest at {N['acc_short_n']}.</p>
+   "The same constructs, coloured by how reachable their linker is in the folded model.",
+   R.ramp_legend("least reachable", "most"))}
+<p>Every linker is the same length, so length is held constant and only sequence varies. Reach in
+the construct averages {N['ctx_mean']:.2f} and reaches {N['ctx_max']:.2f} at best; the affinity
+window of Module 01 is widest at {N['linker_best']} residues, which the generated linkers sit
+close to.</p>
 
 <h3 class="mod"><span>Module 06</span>Multiobjective ranking</h3>
 {mri("The three per-construct scores were combined by identifying nondominated candidates. No "

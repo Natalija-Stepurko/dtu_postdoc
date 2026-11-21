@@ -40,7 +40,12 @@ def combine(feasibility_rows, trigger_rows, unmasking_rows=None) -> list[dict]:
         table[r["id"]]["feasibility"] = r["feasibility_score"]
     for r in trigger_rows:
         if r["id"] in table:
-            table[r["id"]]["trigger"] = r["accessibility_score"]
+            # cleavability is recognition times reach; fall back to reach alone
+            # for constructs whose linker carries no selectivity score
+            table[r["id"]]["trigger"] = (
+                r.get("cleavability_score")
+                if r.get("cleavability_score") is not None
+                else r.get("context_score"))
     for r in (unmasking_rows or []):
         if r["id"] in table:
             table[r["id"]]["unmasking"] = r.get("occlusion")
