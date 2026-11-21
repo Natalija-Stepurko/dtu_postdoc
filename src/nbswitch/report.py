@@ -167,6 +167,17 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
   border:1px solid var(--rule);border-radius:3px;padding:3px 9px}
 .modhead b{font-size:1.08rem;display:block;color:var(--ink)}
 .modhead span{font-size:.95rem;color:var(--ink-2);display:block;margin-top:2px}
+.mri{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:16px 0}
+.mri>div{padding:15px 18px;border-right:1px solid var(--rule-2)}
+.mri>div:last-child{border-right:0}
+.mri .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:6px}
+.mri .v{font-size:.95rem;color:var(--ink);line-height:1.5}
+.modnote{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--chrome);margin-bottom:10px}
+h3.mod{font-size:1.18rem;margin:38px 0 8px}
+h3.mod span{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-right:12px}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -1187,3 +1198,54 @@ def module_tables() -> str:
             f'<thead><tr><th>method</th><th>what it gives</th><th>status</th></tr></thead>'
             f'<tbody>{rows}</tbody></table></div></div>')
     return "".join(out)
+
+
+def mri(method: str, result: str, interpretation: str) -> str:
+    """Method, result, interpretation. The order used throughout the thesis."""
+    return (f'<div class="mri">'
+            f'<div><div class="k">Method</div><div class="v">{method}</div></div>'
+            f'<div><div class="k">Result</div><div class="v">{result}</div></div>'
+            f'<div><div class="k">Interpretation</div><div class="v">{interpretation}</div></div>'
+            f'</div>')
+
+
+#: One compact table in place of five, as a module summary.
+MODULE_SUMMARY = [
+    ("01", "Generation of candidate constructs",
+     "Generate candidate masking architectures",
+     "RFdiffusion, ProteinMPNN, BindCraft, peptide language models, evolutionary approaches"),
+    ("02", "Structural feasibility",
+     "Assess preservation of the VHH fold and structural plausibility",
+     "ESMFold, AlphaFold, Boltz, BioEmu, Rosetta, FoldX"),
+    ("03", "Mask binding and release",
+     "Assess binding in the tethered and cleaved states",
+     "Complex prediction, interface analysis, thermodynamic modelling"),
+    ("04", "Linker cleavability",
+     "Assess protease responsiveness and selectivity",
+     "CleaveNet, MEROPS, substrate specificity models, accessibility analysis"),
+    ("05", "Multiobjective ranking",
+     "Select candidates satisfying the three objectives",
+     "Hard filtering, Pareto optimisation, uncertainty and diversity-based selection"),
+]
+
+
+def module_summary_table() -> str:
+    rows = "".join(
+        f"<tr><td><b>{num}. {title}</b></td><td>{objective}</td><td>{methods}</td></tr>"
+        for num, title, objective, methods in MODULE_SUMMARY)
+    return ('<div class="scroll"><table class="wrap">'
+            '<colgroup><col style="width:26%"><col style="width:30%">'
+            '<col style="width:44%"></colgroup>'
+            '<thead><tr><th>module</th><th>objective</th><th>methods</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>')
+
+
+def implementation_table(rows) -> str:
+    """Implemented against remaining, one row per module."""
+    body = "".join(f"<tr><td><b>{m}</b></td><td>{done}</td><td>{todo}</td></tr>"
+                   for m, done, todo in rows)
+    return ('<div class="scroll"><table class="wrap">'
+            '<colgroup><col style="width:24%"><col style="width:38%">'
+            '<col style="width:38%"></colgroup>'
+            '<thead><tr><th>module</th><th>implemented</th><th>remaining work</th></tr></thead>'
+            f'<tbody>{body}</tbody></table></div>')

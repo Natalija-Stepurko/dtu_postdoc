@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import numpy as np
 import numpy as _np
 from nbswitch import report as R
+from nbswitch.report import mri
 from nbswitch.config import (DOCS, PDB_ID, REPO_URL, NOTEBOOK_URL, load_json,
                              REFERENCE_VHH_CHAIN, TARGET_ID, TARGET, TARGETS,
                              results_dir)
@@ -478,202 +479,255 @@ status_html = R.status_table([
      "Nothing has been synthesised. No measured affinity, expression or cleavage exists."),
 ])
 
+
+# ---------------------------------------------------------------- figures
+N = {}
+N["resolution"] = meta["resolution_A"]
+N["paratope"] = iface["n_paratope"]
+N["iface_area"] = iface["interface_area_A2"]
+N["copies"] = repro["n_copies"]
+N["bsa_mean"], N["bsa_sd"] = repro["bsa_mean_A2"], repro["bsa_sd_A2"]
+N["cdr3"] = region["CDR3"]
+N["n_term"] = geom["n_term_to_nearest_paratope_A"]
+N["c_term"] = geom["c_term_to_nearest_paratope_A"]
+N["window"] = bN["window_decades"]
+N["linker_best"] = bN["linker_residues"]
+N["km_lo"] = bN["km_min_for_release_M"] * 1e9
+N["km_hi"] = bN["km_max_for_masking_M"] * 1e6
+N["ceff"] = bN["c_eff_M"] * 1e3
+N["n_constructs"] = lib["n_constructs"]
+N["n_folded"] = fold["n_folded"] if fold else 0
+
+_k = {}
+for _r in (fold["results"] if fold else []):
+    _k.setdefault(_r["kind"], []).append(_r["occlusion"] * 100)
+N["occ_graft"] = _np.mean(_k.get("epitope graft", [0]))
+N["occ_scram"] = _np.mean(_k.get("scrambled control", [0]))
+N["occ_inert"] = _np.mean(_k.get("inert control", [0]))
+
+N["n_redesign"] = redesign["n_unique"] if redesign else 0
+N["mpnn_corr"] = corr if redesign else float("nan")
+
+_acc = {}
+for _r in (trigger["results"] if trigger else []):
+    _acc.setdefault(_r["linker_residues"], []).append(_r["accessibility_score"])
+N["acc_short_n"] = min(_acc) if _acc else 0
+N["acc_long_n"] = max(_acc) if _acc else 0
+N["acc_short"] = _np.mean(_acc[min(_acc)]) if _acc else 0
+N["acc_long"] = _np.mean(_acc[max(_acc)]) if _acc else 0
+
+_mm = {r["case"]: r for r in (complexes_msa["results"] if complexes_msa else [])
+       if r["status"] == "ok"}
+_mk = [r for r in _mm.values() if r.get("construct")]
+N["boltz_ctrl_noalign"] = (_ctrl["fraction_of_contacts_on_paratope"] if _ctrl else 0) * 100
+N["boltz_ctrl"] = (_mm["control_free_vhh_msa"]["fraction_of_contacts_on_paratope"] * 100
+                   if "control_free_vhh_msa" in _mm else 0)
+N["boltz_lo"] = min((r["fraction_of_contacts_on_paratope"] for r in _mk), default=0) * 100
+N["boltz_hi"] = max((r["fraction_of_contacts_on_paratope"] for r in _mk), default=0) * 100
+N["boltz_rows"] = "".join(
+    (f"<tr class='good'><td>free nanobody, control</td>"
+     f"<td>{r['fraction_of_contacts_on_paratope']:.2f}</td><td>—</td></tr>"
+     if not r.get("construct") else
+     f"<tr><td>{r['construct']}</td>"
+     f"<td>{r['fraction_of_contacts_on_paratope']:.2f}</td>"
+     f"<td>{r.get('mask_fraction_on_paratope', 0):.2f}</td></tr>")
+    for r in _mm.values())
+
+N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
+N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
+
+_feas = {r["id"]: r for r in (feas_data["results"] if feas_data else [])}
+_graft_feas = [r for r in _feas.values() if r["mask"] == "epi1"]
+N["feas_graft"] = _np.mean([r["feasibility_score"] for r in _graft_feas]) if _graft_feas else 0
+N["feas_cys"] = _graft_feas[0]["unpaired_cysteines"] if _graft_feas else 0
+N["rmsd_mean"] = _np.mean([r["vhh_core_rmsd_A"] for r in _feas.values()
+                           if r.get("vhh_core_rmsd_A")]) if _feas else 0
+
+
+masks_rows_compact = "".join(
+    f"<tr><td>{k}</td><td class='mono'>{m['seq']}</td><td>{m['kind']}</td></tr>"
+    for k, m in lib["masks"].items())
+
 HTML = f"""<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Designing a binder that is switched off until it arrives</title>
-<meta name="description" content="A design method for conditionally active binders, and a worked
-example on an experimental nanobody-toxin complex.">
+<title>Computational design of protease-responsive nanobodies</title>
+<meta name="description" content="A computational approach to designing nanobodies whose antigen
+binding is restored by proteolysis, with a partial implementation on an experimental complex.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <style>{R.CSS}</style></head><body><div class="page">
 
 <header>
-<div class="kicker"><span>DTU Bioengineering</span><b>Interview case</b>
-<span>Computational design</span></div>
-<h1>A universal, protease-activated mask for nanobodies</h1>
-<p class="lede">The case asked how to design a nanobody that stays inactive in circulation and
-switches on at a snakebite site. I chose the protease as the trigger and made the regulatory part
-reusable, so the same design works on other nanobodies. This page gives the design, then what
-happened when I ran it.</p>
+<div class="kicker"><span>Natalija Stepurko</span><b>DTU · postdoctoral interview</b></div>
+<h1>Computational design of protease-responsive nanobodies</h1>
+<p class="lede">A proposed pipeline for designing nanobodies that are masked in circulation and
+restored to antigen binding by proteolysis, together with a partial implementation on an
+experimental nanobody–antigen complex.</p>
 </header>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">Background</div>
-<h2>Where I have met this problem before</h2>
-<p>My PhD was on follistatin, a protein that carries its own tethered mask. The C-terminal tail of
-FST315 folds back onto the domain that binds heparan sulphate and competes with it, so the molecule
-has two states and the switch between them is set by how tightly the tail binds. I measured those
-affinities and resolved the two states by SEC-SAXS. The design problem on this page is the same
-problem, approached from the other direction.</p></div>
+<div class="stack"><div class="eyebrow">01</div><h2>Previous research</h2>
+<p>During my PhD at the University of Cambridge I investigated how structural components of
+TGF-β superfamily receptors and their extracellular inhibitors contribute to biological function.
+I used SAXS-based structural modelling and biophysical assays to characterise the C-terminal tail
+of follistatin, showing that it interacts with the FS1 domain and alters heparan sulphate binding,
+and that SEC-SAXS data are best described by two distinct solution conformations. I also
+investigated the contribution of receptor transmembrane helices to assembly and signalling, for
+which I developed a bacterial signalling assay for transmembrane helix heterodimerisation.</p>
+<p>The follistatin work is directly relevant here, since it concerns an intramolecular interaction
+that regulates access to a protein-binding surface, which is the arrangement the present design
+introduces deliberately.</p></div>
 {background_html}
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">The case</div>
-<h2>The question, and what I chose to work on</h2>
-<p>The brief described a viper bite site as having three local signals that are absent from
-circulation: an acidic pH of around 6.0 to 6.5, raised protease activity from tissue damage and
-from the venom itself, and local hypoxia. It asked for a computational pipeline that designs a
-nanobody masked in circulation and activated at the bite site by one or more of these signals, and
-asked whether a universal switch and standardised methods are possible.</p>
-<p>I made two choices before designing anything.</p></div>
+<div class="stack"><div class="eyebrow">02</div><h2>Research question and molecular architecture</h2>
+<p>The question concerned nanobodies against snake venom toxins that would remain inactive in
+circulation and become active at the site of a bite, where the local environment differs from
+plasma. Three environmental cues were proposed: acidic pH, raised protease activity and local
+hypoxia.</p></div>
 
 <div class="scroll"><table class="wrap">
-<colgroup><col style="width:22%"><col style="width:46%"><col style="width:32%"></colgroup>
-<thead><tr><th>signal</th><th>what the evidence shows</th><th>decision</th></tr></thead><tbody>
-<tr><td><b>Protease</b></td><td>Gelatinolytic activity in exudate next to envenomed muscle peaks
-about an hour after the bite and comes from the venom's own metalloproteinases. Host enzymes
-arrive later. The signal is therefore early, abundant and proportional to the thing being
-neutralised.</td><td><b>Chosen as the trigger.</b></td></tr>
-<tr><td>pH</td><td>No study has measured pH at a bite site. The nearest proxies, inflamed and
-infected tissue, sit near pH 6.8 to 7.0 rather than 6.0. A mask switching at 6.0 would rarely
-open.</td><td>Not used. I would measure it before designing against it.</td></tr>
-<tr><td>Hypoxia</td><td>Argued from microvascular damage, never measured in envenomed tissue. No
-validated protein switch responds directly to oxygen.</td><td>Not used.</td></tr>
+<colgroup><col style="width:22%"><col style="width:52%"><col style="width:26%"></colgroup>
+<thead><tr><th>environmental cue</th><th>consideration</th><th>decision</th></tr></thead><tbody>
+<tr><td>Acidic pH</td><td>The physiological range at a bite site would require further
+characterisation before a switching threshold could be chosen.</td><td>Not selected</td></tr>
+<tr class="good"><td>Protease activity</td><td>Proteolysis is irreversible, which makes activation a
+single committed event rather than an equilibrium, and venom metalloproteinases are themselves part
+of the pathology being treated.</td><td>Selected</td></tr>
+<tr><td>Hypoxia</td><td>Would require an oxygen-sensitive molecular mechanism suitable for a small
+secreted protein.</td><td>Not selected</td></tr>
 </tbody></table></div>
 
-<div class="note"><b>The second choice was to make the regulatory part reusable.</b> A single mask
-sequence that works on every nanobody is unlikely, because paratopes differ. What can transfer is
-the architecture: a fixed attachment point, a mask family, an interchangeable cleavable linker and
-one scoring protocol. The nanobody stays unchanged and only the mask is redesigned, so the same
-pipeline can be pointed at a different toxin without rebuilding it.</p></div>
-
+<p>I propose to develop a computational approach for designing protease-responsive nanobodies
+while preserving their original antigen-binding properties. Responsiveness is introduced by
+attaching a masking domain through a protease-cleavable linker. The mask should prevent antigen
+binding while attached and dissociate once the linker is cleaved. To make the approach applicable
+to more than one nanobody, the antigen-binding domain is left unchanged and only the regulatory
+components are designed, so that the architecture and the computational methods transfer even
+though individual mask sequences will not.</p>
 <div class="chart wide">{R.states_schematic()}</div>
-<div class="note"><b>Why the mask has to be weak.</b> The tether holds the mask near the site at
-an effective concentration of {ceff_mM:.0f} mM, so a mask with a dissociation constant of
-{bN['km_max_for_masking_M']*1e6:.0f} µM still blocks almost all of the time. After cleavage that
-advantage is gone and the mask has to leave. A mask at 1 nM would block beautifully and then stay
-put, so only {pt_1nM:.0f}% of the nanobody would ever reach toxin. Every protein design tool
-maximises affinity, which means the obvious approach produces masks that score as successes and do
-not work.</div>
+<p>The two states impose opposing requirements on the mask. Because the mask is tethered it is held
+near the paratope at a high local concentration, estimated at {N['ceff']:.0f} mM for this
+construct, so a weak interaction is sufficient to block antigen binding. After cleavage that
+local concentration is lost and the mask must dissociate, which an interaction of high affinity
+would not do. The design target is therefore a bounded range of mask affinity rather than a
+maximum, which is the opposite of the objective most protein design methods optimise.</p>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">The design</div>
-<h2>Five modules</h2>
-<p>The pipeline generates constructs, scores them three separate ways, and combines the three
-scores into one ranked list. Each module is a slot. The methods listed under it are
-interchangeable, so a better generator or a better cleavage model can be dropped in without
-changing anything else.</p></div>
+<div class="stack"><div class="eyebrow">03</div><h2>Proposed computational pipeline</h2>
+<p>The pipeline consists of five modules. Candidate constructs are generated, three independent
+scoring functions assess structural feasibility, the interaction between mask and nanobody, and
+the susceptibility of the linker to proteolysis, and the three scores are combined by multiobjective
+ranking. The output is a list of candidate sequences with their associated scores. Each module can
+use several computational methods, so individual methods can be compared or replaced without
+altering the pipeline.</p></div>
 <div class="chart wide">{R.architecture_schematic()}</div>
-{R.module_tables()}
-<div class="note"><b>The three scores are kept apart on purpose.</b> A construct that cannot be
-expressed is of no use however well it masks, and one that cannot be cut is of no use however well
-it expresses. Averaging them would let a high score on one hide a failure on another, so the
-combining stage takes the Pareto front instead.</div>
+{R.module_summary_table()}
+<div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
+<p>The three scores are not combined into a single value, since a high score on one objective
+would otherwise compensate for failure on another. Pareto optimisation identifies the nondominated
+candidates, which is a set rather than an ordered list, so a further criterion would be required to
+order candidates within a front.</p>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">What I ran</div>
-<h2>The example, step by step</h2>
-<p>I ran the pipeline on an experimental nanobody-toxin complex from the same laboratory.
-Everything below is computational and nothing has been made, so no affinity, expression level or
-cleavage rate here has been measured.</p></div>
-{status_html}
-</section>
+<div class="stack"><div class="eyebrow">04</div><h2>Worked computational example</h2>
+<p>The pipeline was implemented in part and applied to {meta['title'][:66]}, a {N['resolution']} Å
+X-ray structure deposited in {meta['deposition_date'][:4]}. All results below are computational.
+No construct has been expressed and no affinity, expression level or cleavage rate has been
+measured.</p></div>
 
-{cautionary_html}
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">Step 01 · the reference structure</div>
-<h3>Measuring the complex</h3>
-<p>The paratope is defined as the residues that lose solvent-accessible surface when the complex
-forms, and the geometry that matters for a tether is how far each terminus sits from that
-surface.</p></div>
-<div class="cards">
-{card(f"{iface['interface_area_A2']:.0f} Å²", "interface area", f"{repro['bsa_mean_A2']} ± {repro['bsa_sd_A2']} Å² buried across {repro['n_copies']} copies")}
-{card(iface['n_paratope'], "paratope residues", "burying &gt;1 Å² on binding")}
-{card(f"{region['CDR3']}/{iface['n_paratope']}", "of it in CDR3", f"CDR1 {region['CDR1']} · CDR2 {region['CDR2']} · framework {region['framework']}", hl=True)}
-{card(ref['cdrs']['CDR3']['length'], "CDR3 length", "residues")}
-</div>
-{chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
-<div class="banner"><b>What this fixes before anything is designed.</b> The binding site spans
-{region_summary}. The N-terminus sits <b>{geom['n_term_to_nearest_paratope_A']} Å</b> from the
-nearest paratope residue and the C-terminus <b>{geom['c_term_to_nearest_paratope_A']} Å</b> — so a
-mask tethered at the N-terminus has a real gap to span, and the two termini are not
-interchangeable. {n_term_verdict}</div>
-<div class="scroll"><table class="wrap"><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
-<tbody>
-<tr class="hl"><td>N-terminus to paratope centroid</td><td>{geom['n_term_to_paratope_centroid_A']}</td><td>a short linker already reaches</td></tr>
-<tr><td>N-terminus to nearest paratope residue</td><td>{geom['n_term_to_nearest_paratope_A']}</td><td>the N-terminus is in the paratope</td></tr>
-<tr><td>C-terminus to paratope centroid</td><td>{geom['c_term_to_paratope_centroid_A']}</td><td>{geom['c_term_to_paratope_centroid_A']/geom['n_term_to_paratope_centroid_A']:.1f}× further to span</td></tr>
-<tr><td>paratope maximum extent</td><td>{geom['paratope_max_extent_A']}</td><td>surface a mask must cover</td></tr>
-</tbody></table></div>
+<h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
+{mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
+     "residues losing more than 1 Å<sup>2</sup> on binding were defined as the paratope. "
+     "Distances from each terminus to that surface were measured.",
+     f"The paratope comprises {N['paratope']} residues burying {N['iface_area']:.0f} Å<sup>2</sup>. "
+     f"The N-terminus lies {N['n_term']} Å from the nearest paratope residue and the C-terminus "
+     f"{N['c_term']} Å. Across the {N['copies']} VHH–antigen pairs in the entry the buried area is "
+     f"{N['bsa_mean']:.0f} ± {N['bsa_sd']:.0f} Å<sup>2</sup>.",
+     "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
+     "point used throughout. The agreement between the two pairs indicates the interface is "
+     "consistently resolved within this crystal.")}
 <div class="viewer">
-<div class="vbar"><span class="eyebrow">The deposited complex</span>
+<div class="vbar"><span class="eyebrow">Deposited structure</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
-<span><i style="background:#C06014"></i>α-cobratoxin</span>
-<span><i style="background:#C06014"></i>paratope sticks ({iface['n_paratope']} residues)</span>
-<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini · primes mark the toxin</span>
-<span class="dim">sticks coloured by element</span></div>
+<span><i style="background:#C06014"></i>short neurotoxin 1</span>
+<span><i style="background:#C06014"></i>paratope, sticks</span>
+<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
-</section>
+{chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
 
-<section class="sec">
-<div class="stack"><div class="eyebrow">Step 01 · the design window</div>
-<h3>Pricing the tether</h3>
-<p>A tethered mask behaves as though present at an effective concentration set by the linker.
-Treating the Gly/Ser linker as a worm-like chain with persistence length
-{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue gives
-C<sub>eff</sub> at the span measured above — a distance taken from the structure, not assumed.</p>
-</div>
+<details class="tech"><summary>Estimation of the usable mask affinity</summary>
+<div class="techbody">
+<p>Treating the Gly/Ser linker as a worm-like chain with persistence length
+{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue gives the
+effective concentration of the tethered mask at the distance measured above. Requiring that no
+more than {model['leak_max']*100:.0f}% of the construct is unmasked before cleavage places an
+upper bound on the mask dissociation constant, and requiring that at least
+{model['recovery_min']*100:.0f}% binds antigen afterwards places a lower bound.</p>
 <div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
-<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup> &nbsp;[M]
-<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
-<br>P<sub>NT</sub> = (T/K<sub>D,T</sub>) / (1 + T/K<sub>D,T</sub> + M/K<sub>D,M</sub>)</div>
-<div class="charts2">
-{chart("effective_concentration", "Effective concentration against linker length, for both attachment points.")}
+<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
+<p>For an N-terminal attachment this gives a usable range of {N['km_lo']:.0f} nM to
+{N['km_hi']:.0f} µM, widest at a {N['linker_best']}-residue linker. These values depend on the
+assumptions of the polymer model and on the assumed antigen concentration, and should be treated
+as approximate constraints rather than design requirements.</p>
+{chart("design_window", "Usable mask affinity against linker length.")}
 {chart("tradeoff", "The two requirements as functions of mask affinity.")}
+</div></details>
+
+<h3 class="mod"><span>Module 01</span>Generation of candidate constructs</h3>
+{mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
+     "poly-glycine controls, across five linker lengths. ProteinMPNN was then used to redesign the "
+     "mask positions on each folded construct with the nanobody and linker held fixed.",
+     f"{N['n_constructs']} constructs in the initial library and {N['n_redesign']} distinct "
+     f"redesigned masks. Every redesign scored better than its parent graft by ProteinMPNN's own "
+     f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
+     "ProteinMPNN generated sequence diversity, but sequence compatibility with a backbone is not "
+     "a substitute for functional scoring and should not be used as one.")}
+<div class="two">
+{chart("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion.")}
+<div class="scroll"><table class="wrap"><thead><tr><th>mask</th><th>sequence</th><th>kind</th>
+</tr></thead><tbody>{masks_rows_compact}</tbody></table></div>
 </div>
-{chart_wide("design_window", "Usable mask affinity against linker length. Shaded where both requirements hold at once.")}
-<div class="cards">
-{card(f"{bN['window_decades']:.1f}", "decades of usable K<sub>D</sub>", f"N-terminal, {bN['linker_residues']}-residue linker", hl=True)}
-{card(f"{bC['window_decades']:.1f}", "decades, C-terminal", f"best at {bC['linker_residues']} residues")}
-{card(f"≤{closed_C}", "residues where C-terminal fails", "no window at any affinity")}
-{card(f"{bN['km_max_for_masking_M']*1e6:.0f} µM", "loosest mask that still blocks", f"N-terminal, {bN['linker_residues']} residues")}
+
+<h3 class="mod"><span>Module 02</span>Structural feasibility</h3>
+{mri("Each construct was folded with ESMFold. Preservation of the nanobody was assessed by "
+     "superimposing its core on the folded free nanobody, and sequence-based descriptors were "
+     "calculated for exposed hydrophobic surface and unpaired cysteines.",
+     f"{N['n_folded']} constructs were folded. The mean core RMSD against the free nanobody is "
+     f"{N['rmsd_mean']:.2f} Å. The grafted mask taken from the antigen carries {N['feas_cys']} "
+     f"unpaired cysteines and scores {N['feas_graft']:.2f} on this module.",
+     "The nanobody fold is retained in the predictions, which is a necessary condition rather than "
+     "evidence of expression or thermodynamic stability. The cysteine content of the grafted mask "
+     "would be expected to interfere with disulfide formation, which no other module detects.")}
+<details class="tech"><summary>Conformational heterogeneity</summary><div class="techbody">
+<p>A single predicted structure does not describe the conformational distribution of a tethered
+peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the appropriate
+extension of this module and are not implemented here.</p></div></details>
+
+<h3 class="mod"><span>Module 03</span>Mask binding and release</h3>
+{mri("Two approaches were applied. Paratope occlusion was calculated from the folded constructs "
+     "by comparing the accessible surface of the paratope with that of the free nanobody. The "
+     "assembly of nanobody, tethered mask and antigen was then predicted with Boltz-2, with "
+     "alignments supplied for the nanobody and the antigen.",
+     f"Occlusion was {N['occ_graft']:+.1f}% for the grafted masks, {N['occ_scram']:+.1f}% for "
+     f"scrambled controls and {N['occ_inert']:+.1f}% for the poly-glycine control. In the complex "
+     f"predictions the antigen retained {N['boltz_lo']:.0f}–{N['boltz_hi']:.0f}% of its contacts "
+     f"on the paratope in the masked constructs, against {N['boltz_ctrl']:.0f}% for the free "
+     f"nanobody.",
+     "Occlusion does not distinguish designed masks from controls and cannot be used to rank them. "
+     "The complex prediction reproduces the known interface when given alignments, and under that "
+     "measure none of the present masks excludes the antigen.")}
+<div class="two">
+{chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
+<div class="scroll"><table class="wrap"><thead><tr><th>construct</th>
+<th>antigen contacts on paratope</th><th>mask contacts on paratope</th></tr></thead>
+<tbody>{N['boltz_rows']}</tbody></table></div>
 </div>
-<div class="banner"><b>What the constraint module returns.</b> Attach at the N-terminus, use a
-{bN['linker_residues']}-residue linker, and aim for a mask K<sub>D</sub> somewhere below
-{bN['km_max_for_masking_M']*1e6:.0f} µM but above {bN['km_min_for_release_M']*1e9:.0f} nM. The window
-is <b>{bN['window_decades']:.1f} decades</b> wide at the N-terminus and
-<b>{bC['window_decades']:.1f}</b> at the C-terminus, where it closes entirely below
-{closed_C+1} residues. A <b>micromolar</b> mask is sufficient — about
-{bN['km_max_for_masking_M']/bN['km_min_for_release_M']:.0f}× looser than the release floor — so
-affinity maturation would be the wrong move.</div>
-{chart("release_sensitivity", "The release floor moves with toxin affinity and concentration; the masking ceiling does not.")}
-</section>
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">Step 02 · generate constructs</div>
-<h3>Candidates, and the controls that make them legible</h3>
-<p>One peptide is already known to engage this paratope: the antigen's own contact segment. Grafting
-it needs no generative model and brings its own negative controls.</p></div>
-<div class="charts2">
-<div class="scroll"><table><thead><tr><th>antigen segment</th><th>sequence</th><th>length</th>
-<th>contacts</th></tr></thead><tbody>{seg_rows}</tbody></table></div>
-<div class="scroll"><table class="wrap"><colgroup><col style="width:15%"><col style="width:30%">
-<col style="width:8%"><col style="width:20%"><col style="width:27%"></colgroup>
-<thead><tr><th>mask</th><th>sequence</th><th>aa</th><th>kind</th>
-<th>origin</th></tr></thead><tbody>{masks_rows}</tbody></table></div>
-</div>
-<div class="banner"><b>On the candidates.</b> <span class="mono">epi1</span> is the tip of
-α-cobratoxin loop II, the region carrying the residues that drive receptor binding — this nanobody
-neutralizes by covering the toxin's functional site, so that same peptide is the obvious mask.
-<span class="mono">epi2</span> carries a free cysteine and is kept as a deliberate counter-example.
-<span class="mono">polyG</span> has no designed interaction and should fail.</div>
-</section>
-
-{redesign_html}
-
-{trigger_html}
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">Step 04 · does it mask</div>
-<h3>Measuring whether the site is covered</h3></div>
-<div class="chart wide">{R.occlusion_schematic()}</div>
-{folding_html}
 <div class="viewer">
 <div class="vbar"><select id="pick">{options}</select>
 <button data-spin="designed">spin</button></div>
@@ -681,89 +735,94 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <div class="vkey"><span><i style="background:#2D5BD1"></i>nanobody</span>
 <span><i style="background:#0E7C7B"></i>mask</span>
 <span><i style="background:#8A9BA8"></i>linker</span>
-<span><i style="background:#C06014"></i>paratope</span>
-<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span>
-<span class="dim">sticks coloured by element</span></div>
+<span><i style="background:#C06014"></i>paratope</span></div>
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
+<details class="tech"><summary>Complex prediction without alignments</summary><div class="techbody">
+<p>When every chain was predicted without an alignment the free nanobody control placed only
+{N['boltz_ctrl_noalign']:.0f}% of its antigen contacts on the known paratope. An alignment over the
+whole fusion would require submitting the designed sequence to a remote server, so the construct
+was modelled as three chains joined by an explicit covalent bond, allowing alignments for the
+nanobody and the antigen while the designed peptide takes none.</p>
+<p>Each case is a single prediction rather than a sampled ensemble, and the mask and antigen are
+supplied simultaneously, so the result describes an assembly at equilibrium rather than competition
+over time.</p></div></details>
+
+<h3 class="mod"><span>Module 04</span>Linker cleavability</h3>
+{mri("Solvent accessibility and extension of the linker were calculated for each folded construct, "
+     "since a protease binds its substrate in an extended conformation threaded through the active "
+     "site.",
+     f"Accessibility falls from {N['acc_short']:.2f} at {N['acc_short_n']} linker residues to "
+     f"{N['acc_long']:.2f} at {N['acc_long_n']}. Solvent exposure remains near 1.0 throughout, so "
+     f"the change is in extension rather than burial.",
+     "Longer linkers adopt compact conformations and present the cleavage site less well. This "
+     "describes presentation of the linker only. Prediction of recognition by a particular "
+     "protease, and of selectivity against host enzymes, remains to be incorporated.")}
+{chart("trigger_tradeoff", "Linker accessibility and the usable affinity window against linker length.")}
+<p>The two quantities favour different linker lengths: the affinity window is widest at
+{N['linker_best']} residues, while accessibility is highest at {N['acc_short_n']}.</p>
+
+<h3 class="mod"><span>Module 05</span>Multiobjective ranking</h3>
+{mri("The three per-construct scores were combined by identifying nondominated candidates. No "
+     "weights were applied.",
+     f"Of {N['rank_total']} scored constructs, {N['rank_front']} are nondominated.",
+     "This demonstrates the ranking procedure. It does not identify functional switches, because "
+     "the masking score does not separate designs from controls and the cleavability score covers "
+     "accessibility only.")}
+{chart("pareto_panels", "Demonstration of the ranking algorithm. The three scores plotted pairwise.")}
+
+<h3 class="mod"><span>Summary</span>Implementation status</h3>
+{R.implementation_table([
+  ("01 Generation", "Candidate library and ProteinMPNN redesign",
+   "De novo masking architectures"),
+  ("02 Structural feasibility", "Static predictions and structural descriptors",
+   "Conformational modelling; experimental expression data"),
+  ("03 Mask binding", "Occlusion and complex prediction",
+   "Reliable affinity and release prediction"),
+  ("04 Linker cleavability", "Structural accessibility",
+   "Protease-specific recognition and selectivity"),
+  ("05 Ranking", "Pareto analysis on preliminary scores",
+   "Ranking on validated functional scores"),
+])}
+{cautionary_html}
 </section>
-
-{complex_html}
-
-{ranking_html}
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">What the example does not settle</div>
-<h2>The gaps, named</h2></div>
-<div class="scroll"><table class="wrap"><thead><tr><th>module</th><th>what is missing</th>
-<th>what it would take</th></tr></thead><tbody>
-<tr><td><b>02a Trigger</b></td><td>no selectivity score at all</td><td><span class="tag gap">data</span>
-cleavage measurements for the relevant proteases against a host negative panel. Published substrate
-profiling puts a P1&prime; leucine preference on both the venom metalloproteinases and the host MMPs,
-so a linker designed to be cut by one would likely be cut by the other. Selectivity, not
-cleavability, is what has to be measured and what no current model predicts</td></tr>
-<tr><td><b>01 Generate</b></td><td>no de novo backbones</td><td><span class="tag">GPU</span>
-RFdiffusion or BindCraft would widen the search beyond grafted and redesigned peptides</td></tr>
-<tr><td><b>02b Binding</b></td><td>one structure per design, no ensemble</td>
-<td><span class="tag">GPU</span> BioEmu-2 would sample conformations instead of a single pose</td></tr>
-<tr><td><b>03 Rank</b></td><td>scores computed, selection not automated</td>
-<td>a Pareto front with uncertainty attached, once 02a exists to rank against</td></tr>
-<tr><td><b>04 Measure</b></td><td>nothing has been made</td><td>the loop is open until it is</td></tr>
-</tbody></table></div>
-<div class="banner"><b>The honest summary.</b> The constraint and binding modules are real and
-produce numbers. The trigger module is empty, and it is empty for want of data rather than for want
-of a model — which is the kind of gap that no amount of compute closes.</div>
+<div class="stack"><div class="eyebrow">05</div><h2>Experimental work</h2>
+<p>I would work with experimental PhD students to establish measurements corresponding to the
+three scoring functions: protein stability and developability, mask interaction and dissociation,
+and protease responsiveness. Purification behaviour and gel analysis address the first,
+biolayer interferometry in the presence and absence of the protease addresses the second and
+third.</p>
+<p>These data would allow the predictive ability of individual computational methods to be
+assessed and would identify which parts of the pipeline require development. As more measurements
+accumulate, I would investigate whether sequence and structural representations of the constructs
+can be used to train more accurate scoring functions and improve the selection of subsequent
+candidates.</p></div>
 </section>
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">Provenance</div>
-<h2>Where the numbers come from</h2>
-<p>Every value and chart here is produced by the analysis code, run in stages against one deposited
-structure. Each stage writes its results to a file and this page is generated from those files, so
-nothing is typed in by hand. All of it runs on CPU.</p></div>
-<div class="scroll"><table class="wrap"><thead><tr><th>stage</th><th>method</th><th>produces</th></tr></thead>
-<tbody>
-<tr><td>Measure the complex</td><td>Shrake-Rupley surface burial</td><td>paratope, CDRs, terminal geometry</td></tr>
-<tr><td>Price the tether</td><td>worm-like chain</td><td>effective concentration, masking ceiling, release floor</td></tr>
-<tr><td>Build the library</td><td>antigen epitope graft, with controls</td><td>mask × linker constructs</td></tr>
-<tr><td>Fold and measure</td><td>ESMFold</td><td>paratope occlusion per construct</td></tr>
-<tr><td>Redesign the mask</td><td>ProteinMPNN</td><td>new masks on the folded backbone</td></tr>
-<tr><td>Test the competition</td><td>Boltz-2</td><td>two-chain complex with the antigen</td></tr>
-</tbody></table></div>
-<p class="dim" style="font-size:.88rem">Code and stage outputs:
-<a href="{REPO_URL}">{REPO_URL.split("//")[1]}</a></p>
-</section>
-
-{R.scale_section()}
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">References</div><h2>Sources</h2></div>
 <ul class="ref">
-<li>Damsbo A. <i>et al.</i> Co-crystal of VHH TPL1158_01_C09 with α-cobratoxin.
-<a href="https://www.rcsb.org/structure/9GCN">PDB {PDB_ID}</a></li>
-<li>Ahmadi S. <i>et al.</i> Nanobody-based recombinant antivenom for cobra, mamba and rinkhals
-bites. <i>Nature</i> 647:716–725 (2025).
-<a href="https://doi.org/10.1038/s41586-025-09661-0">10.1038/s41586-025-09661-0</a></li>
-<li>Desnoyers L.R. <i>et al.</i> Tumor-specific activation of an EGFR-targeting probody.
-<i>Science Translational Medicine</i> 5:207ra144 (2013).
-<a href="https://doi.org/10.1126/scitranslmed.3006682">10.1126/scitranslmed.3006682</a></li>
-<li>Zhou H.-X. Loops in proteins can be modeled as worm-like chains.
-<i>Journal of Physical Chemistry B</i> 105:6763–6766 (2001).
-<a href="https://doi.org/10.1021/jp011355n">10.1021/jp011355n</a></li>
+<li>Ahmadi S., Burlet N.J., Benard-Valle M. <i>et al.</i> Nanobody-based recombinant antivenom for
+cobra, mamba and rinkhals bites. <i>Nature</i> 647:716–725 (2025). Source of
+<a href="https://www.rcsb.org/structure/9RIU">PDB 9RIU</a>, used here.</li>
+<li>Damsbo A., Burlet N.J., Fernández-Quintero M.L. <i>et al.</i> Structural mechanisms behind the
+neutralisation of long-chain α-neurotoxins. <i>Communications Chemistry</i> (2025). Source of
+<a href="https://www.rcsb.org/structure/9GCN">PDB 9GCN</a>.</li>
 <li>Lin Z. <i>et al.</i> Evolutionary-scale prediction of atomic-level protein structure with a
-language model. <i>Science</i> 379:1123–1130 (2023).
-<a href="https://doi.org/10.1126/science.ade2574">10.1126/science.ade2574</a></li>
+language model. <i>Science</i> 379:1123–1130 (2023).</li>
 <li>Dauparas J. <i>et al.</i> Robust deep learning-based protein sequence design using ProteinMPNN.
-<i>Science</i> 378:49–56 (2022).
-<a href="https://doi.org/10.1126/science.add2187">10.1126/science.add2187</a></li>
+<i>Science</i> 378:49–56 (2022).</li>
 <li>Wohlwend J. <i>et al.</i> Boltz-1 and Boltz-2, open biomolecular interaction models.
 <a href="https://github.com/jwohlwend/boltz">github.com/jwohlwend/boltz</a></li>
-<li>Shrake A., Rupley J.A. Environment and exposure to solvent of protein atoms.
-<i>Journal of Molecular Biology</i> 79:351–371 (1973).
-<a href="https://doi.org/10.1016/0022-2836(73)90011-9">10.1016/0022-2836(73)90011-9</a></li>
-<li>Martin-Alonso C. <i>et al.</i> Deep learning guided design of protease substrates.
-<i>Nature Communications</i> 17:54 (2026).
-<a href="https://doi.org/10.1038/s41467-025-67226-1">10.1038/s41467-025-67226-1</a></li>
+<li>Zhou H.-X. Loops in proteins can be modeled as worm-like chains. <i>Journal of Physical
+Chemistry B</i> 105:6763–6766 (2001).</li>
+<li>Shrake A., Rupley J.A. Environment and exposure to solvent of protein atoms. <i>Journal of
+Molecular Biology</i> 79:351–371 (1973).</li>
+<li>Stepurko N. Molecular insights into signalling mechanisms within the TGF-β superfamily.
+PhD thesis, University of Cambridge (2023).
+<a href="https://doi.org/10.17863/CAM.99087">10.17863/CAM.99087</a></li>
 </ul>
 </section>
 
@@ -775,7 +834,6 @@ Data Bank.</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
 <script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi))}</script>
 </body></html>"""
-
 
 import re
 
