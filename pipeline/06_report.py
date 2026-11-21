@@ -251,8 +251,10 @@ if complexes:
 different claims, and only a two-chain prediction separates them. The free nanobody with its toxin
 is the calibration case: the crystal structure already answers it, so how well the prediction
 recovers that answer sets how much the masked cases are worth.</p></div>
-<div class="scroll"><table><thead><tr><th>case</th><th>what it tests</th><th>atom contacts</th>
-<th>buried Å²</th><th>fraction on paratope</th><th>min</th></tr></thead>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:20%"><col style="width:36%">
+<col style="width:12%"><col style="width:11%"><col style="width:13%"><col style="width:8%">
+</colgroup><thead><tr><th>case</th><th>what it tests</th><th>contacts</th>
+<th>buried Å²</th><th>on paratope</th><th>min</th></tr></thead>
 <tbody>{crows}</tbody></table></div>
 <div class="banner"><b>How to read the control.</b> Predicted in single-sequence mode, with no
 alignment server, so designed sequences never leave the machine — accuracy was traded for that
@@ -303,8 +305,11 @@ often come from hitting the right target in the wrong place. A conditionally act
 to be inert while it circulates and active only where some local cue — a protease, an acidic
 pocket, a metal ion — tells it to switch on.</p>
 <p>The usual way to build one is to <b>tether a mask over the binding site</b> and give the tether a
-cleavable linker. Clinically this architecture has a long history and a mixed record; the biology is
-not the hard part. The hard part is a thermodynamic one, and it is easy to state.</p></div>
+cleavable linker. Clinically this architecture has a long history and a mixed record. Two problems
+sit underneath it. One is biological: making the cue specific enough — the venom proteases and the
+host enzymes that respond to tissue damage share a P1&prime; preference, so a linker cut by one is
+likely cut by the other. The second is thermodynamic, and it is the one this page is about.</p>
+</div>
 <div class="chart wide">{R.states_schematic()}</div>
 <div class="banner"><b>The tension.</b> The tether holds the mask at a high effective concentration
 near the site, so even a weak mask blocks well. Once the protease cuts, that advantage disappears —
@@ -334,7 +339,8 @@ afterwards.</p></div>
 <div class="chart wide">{R.architecture_schematic()}</div>
 
 <h3>Why each module is separate</h3>
-<div class="scroll"><table><thead><tr><th>module</th><th>what it answers</th>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:17%"><col style="width:33%">
+<col style="width:50%"></colgroup><thead><tr><th>module</th><th>what it answers</th>
 <th>why it is its own box</th></tr></thead><tbody>
 <tr><td><b>00 Constrain</b></td><td>Where could a mask attach, and what mask affinity could
 possibly work?</td><td>It runs once per target and bounds everything downstream. Skipping it means
@@ -400,7 +406,7 @@ surface.</p></div>
 nearest paratope residue and the C-terminus <b>{geom['c_term_to_nearest_paratope_A']} Å</b> — so a
 mask tethered at the N-terminus has a real gap to span, and the two termini are not
 interchangeable. {n_term_verdict}</div>
-<div class="scroll"><table><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
+<div class="scroll"><table class="wrap"><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
 <tbody>
 <tr class="hl"><td>N-terminus to paratope centroid</td><td>{geom['n_term_to_paratope_centroid_A']}</td><td>a short linker already reaches</td></tr>
 <tr><td>N-terminus to nearest paratope residue</td><td>{geom['n_term_to_nearest_paratope_A']}</td><td>the N-terminus is in the paratope</td></tr>
@@ -461,7 +467,9 @@ it needs no generative model and brings its own negative controls.</p></div>
 <div class="charts2">
 <div class="scroll"><table><thead><tr><th>antigen segment</th><th>sequence</th><th>length</th>
 <th>contacts</th></tr></thead><tbody>{seg_rows}</tbody></table></div>
-<div class="scroll"><table><thead><tr><th>mask</th><th>sequence</th><th>aa</th><th>kind</th>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:15%"><col style="width:30%">
+<col style="width:8%"><col style="width:20%"><col style="width:27%"></colgroup>
+<thead><tr><th>mask</th><th>sequence</th><th>aa</th><th>kind</th>
 <th>origin</th></tr></thead><tbody>{masks_rows}</tbody></table></div>
 </div>
 <div class="banner"><b>On the candidates.</b> <span class="mono">epi1</span> is the tip of
@@ -497,12 +505,13 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <section class="sec">
 <div class="stack"><div class="eyebrow">What the example does not settle</div>
 <h2>The gaps, named</h2></div>
-<div class="scroll"><table><thead><tr><th>module</th><th>what is missing</th>
+<div class="scroll"><table class="wrap"><thead><tr><th>module</th><th>what is missing</th>
 <th>what it would take</th></tr></thead><tbody>
 <tr><td><b>02a Trigger</b></td><td>no selectivity score at all</td><td><span class="tag gap">data</span>
-cleavage measurements for the relevant proteases against a negative panel. Published profiling shows
-the obvious candidates share a P1′ preference with host enzymes, so selectivity, not cleavability,
-is the obstacle</td></tr>
+cleavage measurements for the relevant proteases against a host negative panel. Published substrate
+profiling puts a P1&prime; leucine preference on both the venom metalloproteinases and the host MMPs,
+so a linker designed to be cut by one would likely be cut by the other. Selectivity, not
+cleavability, is what has to be measured and what no current model predicts</td></tr>
 <tr><td><b>01 Generate</b></td><td>no de novo backbones</td><td><span class="tag">GPU</span>
 RFdiffusion or BindCraft would widen the search beyond grafted and redesigned peptides</td></tr>
 <tr><td><b>02b Binding</b></td><td>one structure per design, no ensemble</td>
@@ -522,7 +531,7 @@ of a model — which is the kind of gap that no amount of compute closes.</div>
 <p>Every value and chart here is produced by the analysis code, run in stages against one deposited
 structure. Each stage writes its results to a file and this page is generated from those files, so
 nothing is typed in by hand. All of it runs on CPU.</p></div>
-<div class="scroll"><table><thead><tr><th>stage</th><th>method</th><th>produces</th></tr></thead>
+<div class="scroll"><table class="wrap"><thead><tr><th>stage</th><th>method</th><th>produces</th></tr></thead>
 <tbody>
 <tr><td>Measure the complex</td><td>Shrake-Rupley surface burial</td><td>paratope, CDRs, terminal geometry</td></tr>
 <tr><td>Price the tether</td><td>worm-like chain</td><td>effective concentration, masking ceiling, release floor</td></tr>
@@ -586,12 +595,50 @@ Data Bank.</footer>
 </body></html>"""
 
 
+import re
+
+# ---- slide framing -------------------------------------------------------
+_titles = re.findall(r'<div class="eyebrow">(.*?)</div>', HTML)
+_sections = HTML.count('<section class="sec"')
+_n = 0
+def _stamp(m):
+    global _n
+    _n += 1
+    return f'<section class="sec" id="s{_n}" data-slide="{_n:02d} / {_sections:02d}"'
+HTML = re.sub(r'<section class="sec"', _stamp, HTML)
+
+_dots = "".join(f'<a href="#s{i}" data-s="{i}">{i:02d}</a>' for i in range(1, _sections + 1))
+_nav = ('<nav class="navbar"><div class="inner"><div class="dots">' + _dots +
+        '</div><span class="hint">\u2190 \u2192 to move</span></div></nav>'
+        '<script>(function(){'
+        'var secs=[].slice.call(document.querySelectorAll("section.sec"));'
+        'var dots=[].slice.call(document.querySelectorAll(".navbar .dots a"));'
+        'function mark(){var y=window.scrollY+120,k=0;'
+        'secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});'
+        'dots.forEach(function(d,i){d.setAttribute("aria-current",i===k?"true":"false");});}'
+        'function go(d){var y=window.scrollY+120,k=0;'
+        'secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});'
+        'var t=Math.max(0,Math.min(secs.length-1,k+d));'
+        'window.scrollTo({top:secs[t].offsetTop-40,behavior:"smooth"});}'
+        'document.addEventListener("keydown",function(e){'
+        'if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;'
+        'if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1);}'
+        'if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1);}});'
+        'window.addEventListener("scroll",mark,{passive:true});mark();})();</script>')
+HTML = HTML.replace("</div>\n\n<script src=", _nav + "</div>\n\n<script src=", 1)
+
 import re as _re
-_LEAK = _re.compile(r"\{\s*(?:R\.|[A-Za-z_][A-Za-z0-9_]*\s*\[|[a-z_]+\s*\()")
-_hits = _LEAK.findall(HTML)
+
+# Build-time guard. Scripts and styles legitimately contain braces, so they are
+# removed before the scan; what is left is markup, where a surviving "{name[" or
+# "{R.fn()" means an f-string was escaped when it should have interpolated.
+_markup = _re.sub(r"<script\b.*?</script>", "", HTML, flags=_re.S | _re.I)
+_markup = _re.sub(r"<style\b.*?</style>", "", _markup, flags=_re.S | _re.I)
+_markup = _re.sub(r"<svg\b.*?</svg>", "", _markup, flags=_re.S | _re.I)
+_LEAK = _re.compile(r"\{\s*(?:R\.[a-z_]+\(|[A-Za-z_][A-Za-z0-9_]*\s*\[['\"])")
+_hits = list(_LEAK.finditer(_markup))
 if _hits:
-    _spots = [HTML[m.start():m.start() + 70].replace("\n", " ")
-              for m in list(_LEAK.finditer(HTML))[:6]]
+    _spots = [_markup[m.start():m.start() + 70].replace("\n", " ") for m in _hits[:6]]
     raise SystemExit("unresolved template expressions in the output:\n  "
                      + "\n  ".join(_spots))
 

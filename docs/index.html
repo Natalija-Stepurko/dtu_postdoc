@@ -27,7 +27,23 @@ a{color:var(--seq)}
 .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .mono{font-family:var(--mono)}
 .dim{color:var(--ink-3)}
-.sec{padding:52px 0;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:24px}
+.sec{padding:64px 0 72px;border-top:1px solid var(--rule);display:flex;
+  flex-direction:column;gap:24px;scroll-margin-top:52px;position:relative}
+.sec::after{content:attr(data-slide);position:absolute;top:22px;right:0;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;color:var(--ink-3)}
+.navbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);border-top:1px solid var(--rule)}
+.navbar .inner{max-width:1140px;margin:0 auto;padding:7px 36px;display:flex;gap:6px;
+  align-items:center}
+.navbar .dots{display:flex;gap:5px;flex:1;flex-wrap:wrap}
+.navbar .dots a{width:22px;height:22px;display:grid;place-items:center;border-radius:3px;
+  font-family:var(--mono);font-size:.6rem;color:var(--ink-3);text-decoration:none;
+  border:1px solid transparent}
+.navbar .dots a:hover{border-color:var(--rule);color:var(--ink)}
+.navbar .dots a[aria-current=true]{background:var(--ink);color:#fff}
+.navbar .hint{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--ink-3)}
+body{padding-bottom:44px}
+@media print{.navbar{display:none}.sec{break-inside:avoid;page-break-inside:avoid}}
 .stack{display:flex;flex-direction:column;gap:12px}
 .eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
          color:var(--chrome);font-weight:600}
@@ -64,6 +80,13 @@ th:first-child,td:first-child{text-align:left;font-family:var(--sans);font-size:
 thead th{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
          font-weight:600;border-bottom:1px solid var(--rule)}
 tbody tr:last-child td{border-bottom:0}
+table.wrap{table-layout:fixed;width:100%}
+table.wrap th,table.wrap td{white-space:normal;text-align:left;vertical-align:top;
+  overflow-wrap:anywhere;
+  font-family:var(--sans);font-size:.92rem;line-height:1.45;padding:12px 14px}
+table.wrap thead th{font-family:var(--mono);font-size:.6rem}
+table.wrap td:first-child{font-weight:600;color:var(--ink)}
+.scroll:has(table.wrap){overflow-x:visible}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
@@ -136,7 +159,7 @@ proposed for synthesis.</div>
 </header>
 
 <!-- ============================ PART 1 ============================ -->
-<section class="sec">
+<section class="sec" id="s1" data-slide="01 / 14">
 <div class="stack"><div class="eyebrow">Part 1 · the question</div>
 <h2>A binder that is inert until something local switches it on</h2>
 <p>Most therapeutic binders work everywhere in the body at once, which is why their side effects so
@@ -144,8 +167,11 @@ often come from hitting the right target in the wrong place. A conditionally act
 to be inert while it circulates and active only where some local cue — a protease, an acidic
 pocket, a metal ion — tells it to switch on.</p>
 <p>The usual way to build one is to <b>tether a mask over the binding site</b> and give the tether a
-cleavable linker. Clinically this architecture has a long history and a mixed record; the biology is
-not the hard part. The hard part is a thermodynamic one, and it is easy to state.</p></div>
+cleavable linker. Clinically this architecture has a long history and a mixed record. Two problems
+sit underneath it. One is biological: making the cue specific enough — the venom proteases and the
+host enzymes that respond to tissue damage share a P1&prime; preference, so a linker cut by one is
+likely cut by the other. The second is thermodynamic, and it is the one this page is about.</p>
+</div>
 <div class="chart wide"><svg viewBox="0 0 1120 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three states"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.s-t{font:600 13px Inter,system-ui,sans-serif}.s-i{font:12px Inter,system-ui,sans-serif}.s-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.s-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.s-lbl{font:600 11px ui-monospace,monospace}</style><text x="0" y="13" class="s-h" fill="#0E7C7B">THE THREE STATES</text><rect x="0" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="58" class="s-t" fill="#12191F">A · masked</text><text x="16" y="230" class="s-i" fill="#3A464F">tethered mask sits over the paratope</text><path d="M 124 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="170 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 144 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="170" cy="104" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="170" y="109" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 140 128 q -12 -18 12 -26" stroke="#6E7880" stroke-width="1.6" fill="none"/><text x="112" y="116" class="s-m" fill="#6E7880">L</text><rect x="390" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="406" y="58" class="s-t" fill="#12191F">B · cleaved</text><text x="406" y="230" class="s-i" fill="#3A464F">protease cuts; the mask drifts off</text><path d="M 514 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="560 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 534 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="648" cy="92" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="648" y="97" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 576 118 L 622 96" stroke="#6E7880" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah2)" fill="none"/><text x="531" y="100" class="s-m" fill="#C06014">protease</text><path d="M 524 112 l 14 10 M 538 112 l -14 10" stroke="#C06014" stroke-width="1.8"/><rect x="780" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="796" y="58" class="s-t" fill="#12191F">C · active</text><text x="796" y="230" class="s-i" fill="#3A464F">the original paratope takes the toxin</text><path d="M 904 130 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="950 " y="165" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 924 127 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="926" y="86" width="48" height="34" rx="6" fill="#C06014" stroke="#FFFFFF" stroke-width="2"/><text x="950" y="108" class="s-lbl" fill="#FFFFFF" text-anchor="middle">T</text><rect x="0" y="258" width="1120" height="36" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="281" class="s-i" fill="#12191F">A mask tight enough to hold state A may refuse to leave in state B. That single sentence is the whole design problem, and stage 02 turns it into a range of allowed mask affinities.</text></svg></div>
 <div class="banner"><b>The tension.</b> The tether holds the mask at a high effective concentration
 near the site, so even a weak mask blocks well. Once the protease cuts, that advantage disappears —
@@ -163,7 +189,7 @@ method below is built around.</p>
 </section>
 
 <!-- ============================ PART 2 ============================ -->
-<section class="sec">
+<section class="sec" id="s2" data-slide="02 / 14">
 <div class="stack"><div class="eyebrow">Part 2 · the method</div>
 <h2>A pipeline built around that window</h2>
 <p>The ordering is the design decision. Generative models are usually put first, and the structure
@@ -175,7 +201,8 @@ afterwards.</p></div>
 <div class="chart wide"><svg viewBox="0 0 1120 492" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline architecture"><defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.a-t{font:600 13.5px Inter,system-ui,sans-serif}.a-n{font:600 9.5px ui-monospace,monospace}.a-i{font:12px Inter,system-ui,sans-serif}.a-s{font:10.5px ui-monospace,monospace;letter-spacing:.03em}.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.d-edge{font:10px ui-monospace,monospace;letter-spacing:.04em}</style><text x="0" y="13" class="a-h" fill="#0E7C7B">THE PIPELINE AS A SET OF MODULES</text><rect x="0" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="26" width="340" height="3" fill="#0E7C7B"/><text x="14" y="50" class="a-n" fill="#0E7C7B">00</text><text x="38" y="51" class="a-t" fill="#12191F">Constrain</text><text x="14" y="72" class="a-i" fill="#3A464F">Measure the target complex. Where is the</text><text x="14" y="88" class="a-i" fill="#3A464F">binding site, and how far is each terminus</text><text x="14" y="104" class="a-i" fill="#3A464F">from it? Price the tether: what mask affinity</text><text x="14" y="120" class="a-i" fill="#3A464F">could work at all?</text><text x="14" y="140" class="a-s" fill="#0E7C7B">slot: any experimental or predicted complex</text><text x="328" y="177" class="a-g" fill="#0E7C7B" text-anchor="end">DECIDES THE SEARCH SPACE</text><rect x="390" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="390" y="26" width="340" height="3" fill="#2D5BD1"/><text x="404" y="50" class="a-n" fill="#2D5BD1">01</text><text x="428" y="51" class="a-t" fill="#12191F">Generate</text><text x="404" y="72" class="a-i" fill="#3A464F">Propose mask and linker candidates.</text><text x="404" y="88" class="a-i" fill="#3A464F">Unconditional, conditioned on the site, or</text><text x="404" y="104" class="a-i" fill="#3A464F">evolved from something that already works.</text><text x="404" y="124" class="a-s" fill="#2D5BD1">slot: graft · ProteinMPNN · RFdiffusion</text><text x="404" y="138" class="a-s" fill="#2D5BD1">slot: BindCraft · peptide models</text><text x="718" y="177" class="a-g" fill="#6E7880" text-anchor="end">SWAPPABLE</text><rect x="780" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="780" y="26" width="340" height="3" fill="#C06014"/><text x="794" y="50" class="a-n" fill="#C06014">02a</text><text x="818" y="51" class="a-t" fill="#12191F">Score the trigger</text><text x="794" y="72" class="a-i" fill="#3A464F">Does the environment open the switch here,</text><text x="794" y="88" class="a-i" fill="#3A464F">and leave it shut everywhere else?</text><text x="794" y="104" class="a-i" fill="#3A464F">Selectivity is the quantity, not cleavability.</text><text x="794" y="124" class="a-s" fill="#C06014">slot: protease · pH · metal ion</text><text x="794" y="138" class="a-s" fill="#C06014">needs: cleavage or titration data</text><text x="1108" y="177" class="a-g" fill="#C06014" text-anchor="end">NOT BUILT</text><rect x="390" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="390" y="222" width="340" height="3" fill="#2D5BD1"/><text x="404" y="246" class="a-n" fill="#2D5BD1">02b</text><text x="428" y="247" class="a-t" fill="#12191F">Score the binding</text><text x="404" y="268" class="a-i" fill="#3A464F">Two states, not one. Is the site covered</text><text x="404" y="284" class="a-i" fill="#3A464F">while tethered, and can the target still bind</text><text x="404" y="300" class="a-i" fill="#3A464F">once the tether is cut?</text><text x="404" y="320" class="a-s" fill="#2D5BD1">slot: ESMFold occlusion · tether model</text><text x="404" y="334" class="a-s" fill="#2D5BD1">slot: Boltz-2 · Chai-1 complex</text><text x="718" y="373" class="a-g" fill="#0E7C7B" text-anchor="end">BUILT</text><rect x="780" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="780" y="222" width="340" height="3" fill="#2D5BD1"/><text x="794" y="246" class="a-n" fill="#2D5BD1">03</text><text x="818" y="247" class="a-t" fill="#12191F">Rank</text><text x="794" y="268" class="a-i" fill="#3A464F">Combine the scores without averaging them.</text><text x="794" y="284" class="a-i" fill="#3A464F">Keep the trade-offs visible and the surviving</text><text x="794" y="300" class="a-i" fill="#3A464F">designs structurally different.</text><text x="794" y="320" class="a-s" fill="#2D5BD1">slot: Pareto front · uncertainty-aware</text><text x="1108" y="373" class="a-g" fill="#C06014" text-anchor="end">PARTIAL</text><rect x="0" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="222" width="340" height="3" fill="#0E7C7B"/><text x="14" y="246" class="a-n" fill="#0E7C7B">04</text><text x="38" y="247" class="a-t" fill="#12191F">Measure, then learn</text><text x="14" y="268" class="a-i" fill="#3A464F">Top candidates are expressed and measured.</text><text x="14" y="284" class="a-i" fill="#3A464F">What comes back is the only data that can</text><text x="14" y="300" class="a-i" fill="#3A464F">train the scorers, and it arrives slowly.</text><text x="14" y="320" class="a-s" fill="#0E7C7B">20-30 results: a validation set</text><text x="14" y="334" class="a-s" fill="#0E7C7B">~100: optimisation · 100-1000: training</text><text x="328" y="373" class="a-g" fill="#0E7C7B" text-anchor="end">THE RATE LIMIT</text><path d="M 340 107 L 384 107" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="362" y="98" class="a-e" fill="#6E7880" text-anchor="middle">candidates</text><path d="M 730 107 L 774 107" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 560 188 L 560 216" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 730 303 L 774 303" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="752" y="294" class="a-e" fill="#6E7880" text-anchor="middle">scores</text><path d="M 950 188 L 950 216" stroke="#C06014" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/><path d="M 950 384 L 950 404 L 170 404 L 170 390" stroke="#0E7C7B" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><text x="560" y="399" class="a-e" fill="#0E7C7B" text-anchor="middle">top candidates go to the lab</text><path d="M 170 222 L 170 204 L 560 204 L 560 192" stroke="#0E7C7B" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/><text x="365" y="199" class="a-e" fill="#0E7C7B" text-anchor="middle">measurements retrain the scorers</text><rect x="0" y="424" width="1120" height="62" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="447" class="a-i" fill="#12191F"><tspan font-weight="600">What makes it transferable:</tspan> every module takes the same inputs and returns the same kind of score.</text><text x="16" y="468" class="a-i" fill="#3A464F">The trigger can change from protease to pH, or the generator from a graft to a diffusion model, without touching anything else.</text></svg></div>
 
 <h3>Why each module is separate</h3>
-<div class="scroll"><table><thead><tr><th>module</th><th>what it answers</th>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:17%"><col style="width:33%">
+<col style="width:50%"></colgroup><thead><tr><th>module</th><th>what it answers</th>
 <th>why it is its own box</th></tr></thead><tbody>
 <tr><td><b>00 Constrain</b></td><td>Where could a mask attach, and what mask affinity could
 possibly work?</td><td>It runs once per target and bounds everything downstream. Skipping it means
@@ -209,7 +236,7 @@ those measurements well, not as a substitute for them.</div>
 </section>
 
 <!-- ============================ PART 3 ============================ -->
-<section class="sec">
+<section class="sec" id="s3" data-slide="03 / 14">
 <div class="stack"><div class="eyebrow">Part 3 · the method in action</div>
 <h2>Running it on a real complex</h2>
 <p>The example below applies every built module to one deposited structure: Co-crystal of broadly neutralizing VHH in complex with short neurotoxin 1 (P01426) Naja pallida,
@@ -251,7 +278,7 @@ tell you that a target is unsuitable before you spend anything on it.</p>
 </details>
 </section>
 
-<section class="sec">
+<section class="sec" id="s4" data-slide="04 / 14">
 <div class="stack"><div class="eyebrow">Module 00 · constrain</div>
 <h3>Measuring the complex</h3>
 <p>The paratope is defined as the residues that lose solvent-accessible surface when the complex
@@ -269,7 +296,7 @@ surface.</p></div>
 nearest paratope residue and the C-terminus <b>27.45 Å</b> — so a
 mask tethered at the N-terminus has a real gap to span, and the two termini are not
 interchangeable. Because that gap exists, a peptide only reaches the paratope if its linker is long enough and it folds back, which is what makes the controls able to fail.</div>
-<div class="scroll"><table><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
+<div class="scroll"><table class="wrap"><thead><tr><th>geometry</th><th>Å</th><th>consequence</th></tr></thead>
 <tbody>
 <tr class="hl"><td>N-terminus to paratope centroid</td><td>21.21</td><td>a short linker already reaches</td></tr>
 <tr><td>N-terminus to nearest paratope residue</td><td>12.42</td><td>the N-terminus is in the paratope</td></tr>
@@ -288,7 +315,7 @@ interchangeable. Because that gap exists, a peptide only reaches the paratope if
 </div>
 </section>
 
-<section class="sec">
+<section class="sec" id="s5" data-slide="05 / 14">
 <div class="stack"><div class="eyebrow">Module 00 · constrain</div>
 <h3>Pricing the tether</h3>
 <p>A tethered mask behaves as though present at an effective concentration set by the linker.
@@ -322,7 +349,7 @@ affinity maturation would be the wrong move.</div>
 <figure class="chart"><img src="figures/release_sensitivity.svg" alt="The release floor moves with toxin affinity and concentration; the masking ceiling does not."><figcaption>The release floor moves with toxin affinity and concentration; the masking ceiling does not.</figcaption></figure>
 </section>
 
-<section class="sec">
+<section class="sec" id="s6" data-slide="06 / 14">
 <div class="stack"><div class="eyebrow">Module 01 · generate</div>
 <h3>Candidates, and the controls that make them legible</h3>
 <p>One peptide is already known to engage this paratope: the antigen's own contact segment. Grafting
@@ -330,7 +357,9 @@ it needs no generative model and brings its own negative controls.</p></div>
 <div class="charts2">
 <div class="scroll"><table><thead><tr><th>antigen segment</th><th>sequence</th><th>length</th>
 <th>contacts</th></tr></thead><tbody><tr><td>C40–T55</td><td>CGCPTVKPGIKLNCCT</td><td>16</td><td>16</td></tr><tr><td>E20–N22</td><td>ETN</td><td>3</td><td>3</td></tr></tbody></table></div>
-<div class="scroll"><table><thead><tr><th>mask</th><th>sequence</th><th>aa</th><th>kind</th>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:15%"><col style="width:30%">
+<col style="width:8%"><col style="width:20%"><col style="width:27%"></colgroup>
+<thead><tr><th>mask</th><th>sequence</th><th>aa</th><th>kind</th>
 <th>origin</th></tr></thead><tbody><tr class=""><td>epi1</td><td>CGCPTVKPGIKLNCCT</td><td>16</td><td>epitope graft</td><td>antigen C40-T55, 16 contact residues</td></tr><tr class="ctrl"><td>epi1_half</td><td>CGCPTVKP</td><td>8</td><td>truncated control</td><td>leading half of the graft</td></tr><tr class=""><td>epi1_noCys</td><td>SGSPTVKPGIKLNSST</td><td>16</td><td>epitope graft</td><td>epi1 with cysteines substituted to serine</td></tr><tr class="ctrl"><td>epi1_scram</td><td>PIVKCKNGGCCTTLCP</td><td>16</td><td>scrambled control</td><td>same composition, shuffled (seed 42)</td></tr><tr class=""><td>epi2</td><td>ETN</td><td>3</td><td>epitope graft</td><td>antigen E20-N22, 3 contact residues</td></tr><tr class="ctrl"><td>polyG</td><td>GGGGGGGG</td><td>8</td><td>inert control</td><td>no designed interaction; masking should fail</td></tr></tbody></table></div>
 </div>
 <div class="banner"><b>On the candidates.</b> <span class="mono">epi1</span> is the tip of
@@ -340,12 +369,12 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <span class="mono">polyG</span> has no designed interaction and should fail.</div>
 </section>
 
-<section class="sec">
+<section class="sec" id="s7" data-slide="07 / 14">
 <div class="stack"><div class="eyebrow">Module 02b · score the binding</div>
 <h3>Is the site covered?</h3></div>
 <div class="chart wide"><svg viewBox="0 0 1120 238" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How occlusion is measured"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.o-t{font:600 12.5px Inter,system-ui,sans-serif}.o-i{font:11.5px Inter,system-ui,sans-serif}.o-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.o-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="o-h" fill="#0E7C7B">HOW THE MASKED STATE IS MEASURED</text><rect x="0" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="30" width="330" height="3" fill="#2D5BD1"/><text x="16" y="56" class="o-t" fill="#12191F">fold the free nanobody</text><text x="16" y="76" class="o-m" fill="#2D5BD1">ESMFold, sequence only</text><text x="16" y="100" class="o-i" fill="#3A464F">measure the paratope's exposed surface</text><path d="M 330 89 L 390 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="395" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="395" y="30" width="330" height="3" fill="#2D5BD1"/><text x="411" y="56" class="o-t" fill="#12191F">fold the whole fusion</text><text x="411" y="76" class="o-m" fill="#2D5BD1">mask + linker + nanobody</text><text x="411" y="100" class="o-i" fill="#3A464F">measure the same residues again</text><path d="M 725 89 L 785 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="790" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="790" y="30" width="330" height="3" fill="#2D5BD1"/><text x="806" y="56" class="o-t" fill="#12191F">take the difference</text><text x="806" y="76" class="o-m" fill="#2D5BD1">occlusion = 1 − fused / free</text><text x="806" y="100" class="o-i" fill="#3A464F">0% means the mask changed nothing</text><rect x="0" y="162" width="1120" height="64" rx="3" fill="#FFFFFF" stroke="#C06014" stroke-dasharray="5 4"/><text x="16" y="184" class="o-t" fill="#12191F">Why the controls carry the argument</text><text x="16" y="203" class="o-i" fill="#3A464F">A tethered peptide sits near its own anchor whatever its sequence, so a single occlusion number means very little on its own.</text><text x="16" y="219" class="o-i" fill="#3A464F">Only the gap between the designed mask and its scrambled, truncated and poly-glycine twins separates a design from a geometric accident.</text></svg></div>
 
-<section class="sec">
+<section class="sec" id="s8" data-slide="08 / 14">
 <div class="stack"><div class="eyebrow">Stage 4 · folded on CPU</div>
 <h2>Does the mask actually reach the paratope?</h2>
 <p>Every construct folded with ESMFold, then the paratope's solvent-accessible surface in the
@@ -390,15 +419,17 @@ competition below is the first candidate. Had the controls been left out, the gr
 
 
 
-<section class="sec">
+<section class="sec" id="s9" data-slide="09 / 14">
 <div class="stack"><div class="eyebrow">Module 02b · the other half</div>
 <h3>With the mask on, can the antigen still bind?</h3>
 <p>Occlusion says the mask covers the site. It does not say the antigen is excluded — those are
 different claims, and only a two-chain prediction separates them. The free nanobody with its toxin
 is the calibration case: the crystal structure already answers it, so how well the prediction
 recovers that answer sets how much the masked cases are worth.</p></div>
-<div class="scroll"><table><thead><tr><th>case</th><th>what it tests</th><th>atom contacts</th>
-<th>buried Å²</th><th>fraction on paratope</th><th>min</th></tr></thead>
+<div class="scroll"><table class="wrap"><colgroup><col style="width:20%"><col style="width:36%">
+<col style="width:12%"><col style="width:11%"><col style="width:13%"><col style="width:8%">
+</colgroup><thead><tr><th>case</th><th>what it tests</th><th>contacts</th>
+<th>buried Å²</th><th>on paratope</th><th>min</th></tr></thead>
 <tbody><tr class="hl"><td>control_free_vhh</td><td>free nanobody with toxin — the crystal structure already answers this, so it calibrates the rest</td><td>240</td><td>847</td><td>0.07</td><td>1</td></tr><tr class=""><td>masked_epi1_L5</td><td>grafted mask on the shortest linker</td><td>601</td><td>2092</td><td>0.11</td><td>2</td></tr><tr class=""><td>masked_epi1_L20</td><td>same mask, linker four times longer</td><td>1190</td><td>2863</td><td>0.12</td><td>2</td></tr><tr class=""><td>masked_polyG_L5</td><td>inert mask — should not block</td><td>422</td><td>1460</td><td>0.26</td><td>2</td></tr></tbody></table></div>
 <div class="banner"><b>How to read the control.</b> Predicted in single-sequence mode, with no
 alignment server, so designed sequences never leave the machine — accuracy was traded for that
@@ -406,15 +437,16 @@ deliberately. If the free nanobody does not reproduce a toxin pose on its known 
 masked numbers describe the model rather than the molecule.</div>
 </section>
 
-<section class="sec">
+<section class="sec" id="s10" data-slide="10 / 14">
 <div class="stack"><div class="eyebrow">What the example does not settle</div>
 <h2>The gaps, named</h2></div>
-<div class="scroll"><table><thead><tr><th>module</th><th>what is missing</th>
+<div class="scroll"><table class="wrap"><thead><tr><th>module</th><th>what is missing</th>
 <th>what it would take</th></tr></thead><tbody>
 <tr><td><b>02a Trigger</b></td><td>no selectivity score at all</td><td><span class="tag gap">data</span>
-cleavage measurements for the relevant proteases against a negative panel. Published profiling shows
-the obvious candidates share a P1′ preference with host enzymes, so selectivity, not cleavability,
-is the obstacle</td></tr>
+cleavage measurements for the relevant proteases against a host negative panel. Published substrate
+profiling puts a P1&prime; leucine preference on both the venom metalloproteinases and the host MMPs,
+so a linker designed to be cut by one would likely be cut by the other. Selectivity, not
+cleavability, is what has to be measured and what no current model predicts</td></tr>
 <tr><td><b>01 Generate</b></td><td>no de novo backbones</td><td><span class="tag">GPU</span>
 RFdiffusion or BindCraft would widen the search beyond grafted and redesigned peptides</td></tr>
 <tr><td><b>02b Binding</b></td><td>one structure per design, no ensemble</td>
@@ -428,13 +460,13 @@ produce numbers. The trigger module is empty, and it is empty for want of data r
 of a model — which is the kind of gap that no amount of compute closes.</div>
 </section>
 
-<section class="sec">
+<section class="sec" id="s11" data-slide="11 / 14">
 <div class="stack"><div class="eyebrow">Provenance</div>
 <h2>Where the numbers come from</h2>
 <p>Every value and chart here is produced by the analysis code, run in stages against one deposited
 structure. Each stage writes its results to a file and this page is generated from those files, so
 nothing is typed in by hand. All of it runs on CPU.</p></div>
-<div class="scroll"><table><thead><tr><th>stage</th><th>method</th><th>produces</th></tr></thead>
+<div class="scroll"><table class="wrap"><thead><tr><th>stage</th><th>method</th><th>produces</th></tr></thead>
 <tbody>
 <tr><td>Measure the complex</td><td>Shrake-Rupley surface burial</td><td>paratope, CDRs, terminal geometry</td></tr>
 <tr><td>Price the tether</td><td>worm-like chain</td><td>effective concentration, masking ceiling, release floor</td></tr>
@@ -448,7 +480,7 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 </section>
 
 
-<section class="sec">
+<section class="sec" id="s12" data-slide="12 / 14">
 <div class="stack"><div class="eyebrow">Scale</div>
 <h2>What the campaign costs, and how the lab shrinks it</h2>
 <p>The counts below are projections, not results. They come from published hit rates for binder
@@ -494,7 +526,7 @@ candidate. That is the point at which a learned scorer can replace a hand-built 
 reason the representations are stored for designs that were never made.</div>
 </section>
 
-<section class="sec">
+<section class="sec" id="s13" data-slide="13 / 14">
 <div class="stack"><div class="eyebrow">Prior work</div>
 <h2>Where this problem is familiar from</h2>
 <p>The two-state, tethered-affinity problem on this page is one I characterised experimentally
@@ -554,7 +586,7 @@ affinity measurement — rather than predicted.</div>
 </details>
 </section>
 
-<section class="sec">
+<section class="sec" id="s14" data-slide="14 / 14">
 <div class="stack"><div class="eyebrow">References</div><h2>Sources</h2></div>
 <ul class="ref">
 <li>Damsbo A. <i>et al.</i> Co-crystal of VHH TPL1158_01_C09 with α-cobratoxin.
@@ -587,7 +619,7 @@ language model. <i>Science</i> 379:1123–1130 (2023).
 
 <footer>Figures and values generated by the analysis code. Structural data from the RCSB Protein
 Data Bank.</footer>
-</div>
+<nav class="navbar"><div class="inner"><div class="dots"><a href="#s1" data-s="1">01</a><a href="#s2" data-s="2">02</a><a href="#s3" data-s="3">03</a><a href="#s4" data-s="4">04</a><a href="#s5" data-s="5">05</a><a href="#s6" data-s="6">06</a><a href="#s7" data-s="7">07</a><a href="#s8" data-s="8">08</a><a href="#s9" data-s="9">09</a><a href="#s10" data-s="10">10</a><a href="#s11" data-s="11">11</a><a href="#s12" data-s="12">12</a><a href="#s13" data-s="13">13</a><a href="#s14" data-s="14">14</a></div><span class="hint">← → to move</span></div></nav><script>(function(){var secs=[].slice.call(document.querySelectorAll("section.sec"));var dots=[].slice.call(document.querySelectorAll(".navbar .dots a"));function mark(){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});dots.forEach(function(d,i){d.setAttribute("aria-current",i===k?"true":"false");});}function go(d){var y=window.scrollY+120,k=0;secs.forEach(function(s,i){if(s.offsetTop<=y)k=i;});var t=Math.max(0,Math.min(secs.length-1,k+d));window.scrollTo({top:secs[t].offsetTop-40,behavior:"smooth"});}document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")return;if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(1);}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(-1);}});window.addEventListener("scroll",mark,{passive:true});mark();})();</script></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>

@@ -31,7 +31,23 @@ a{color:var(--seq)}
 .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .mono{font-family:var(--mono)}
 .dim{color:var(--ink-3)}
-.sec{padding:52px 0;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:24px}
+.sec{padding:64px 0 72px;border-top:1px solid var(--rule);display:flex;
+  flex-direction:column;gap:24px;scroll-margin-top:52px;position:relative}
+.sec::after{content:attr(data-slide);position:absolute;top:22px;right:0;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;color:var(--ink-3)}
+.navbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);border-top:1px solid var(--rule)}
+.navbar .inner{max-width:1140px;margin:0 auto;padding:7px 36px;display:flex;gap:6px;
+  align-items:center}
+.navbar .dots{display:flex;gap:5px;flex:1;flex-wrap:wrap}
+.navbar .dots a{width:22px;height:22px;display:grid;place-items:center;border-radius:3px;
+  font-family:var(--mono);font-size:.6rem;color:var(--ink-3);text-decoration:none;
+  border:1px solid transparent}
+.navbar .dots a:hover{border-color:var(--rule);color:var(--ink)}
+.navbar .dots a[aria-current=true]{background:var(--ink);color:#fff}
+.navbar .hint{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--ink-3)}
+body{padding-bottom:44px}
+@media print{.navbar{display:none}.sec{break-inside:avoid;page-break-inside:avoid}}
 .stack{display:flex;flex-direction:column;gap:12px}
 .eyebrow{font-family:var(--mono);font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
          color:var(--chrome);font-weight:600}
@@ -68,6 +84,13 @@ th:first-child,td:first-child{text-align:left;font-family:var(--sans);font-size:
 thead th{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);
          font-weight:600;border-bottom:1px solid var(--rule)}
 tbody tr:last-child td{border-bottom:0}
+table.wrap{table-layout:fixed;width:100%}
+table.wrap th,table.wrap td{white-space:normal;text-align:left;vertical-align:top;
+  overflow-wrap:anywhere;
+  font-family:var(--sans);font-size:.92rem;line-height:1.45;padding:12px 14px}
+table.wrap thead th{font-family:var(--mono);font-size:.6rem}
+table.wrap td:first-child{font-weight:600;color:var(--ink)}
+.scroll:has(table.wrap){overflow-x:visible}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
