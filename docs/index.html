@@ -105,6 +105,18 @@ details.fold>summary span{font-size:.9rem;color:var(--ink-2);flex:1 1 24ch}
 details.fold>summary:hover b{color:var(--str)}
 .foldbody{padding:0 20px 22px;display:flex;flex-direction:column;gap:18px;
     border-top:1px solid var(--rule-2);margin-top:-2px;padding-top:20px}
+.tfig{margin:0;background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+    padding:14px;display:flex;flex-direction:column;gap:9px}
+.tfig img{width:100%;height:auto;max-height:260px;object-fit:contain;display:block}
+.tfig.tall img{max-height:340px}
+.tfig.wide img{max-height:190px}
+.tfig figcaption{font-size:.82rem;color:var(--ink-3);line-height:1.45}
+.tgrid{display:grid;gap:14px;margin:4px 0}
+.tgrid.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.tgrid.c3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.tstep{display:flex;gap:12px;align-items:baseline;margin:26px 0 2px}
+.tstep b{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--chrome)}
+.tstep span{font-size:1rem;color:var(--ink);font-weight:600}
 ul.ref{list-style:none;padding:0;margin:0;font-size:.88rem}
 ul.ref li{padding:9px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-2)}
 ul.ref li:last-child{border-bottom:0}
@@ -134,7 +146,7 @@ pocket, a metal ion — tells it to switch on.</p>
 <p>The usual way to build one is to <b>tether a mask over the binding site</b> and give the tether a
 cleavable linker. Clinically this architecture has a long history and a mixed record; the biology is
 not the hard part. The hard part is a thermodynamic one, and it is easy to state.</p></div>
-<div class="chart wide">{R.states_schematic()}</div>
+<div class="chart wide"><svg viewBox="0 0 1120 300" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three states"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.s-t{font:600 13px Inter,system-ui,sans-serif}.s-i{font:12px Inter,system-ui,sans-serif}.s-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.s-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.s-lbl{font:600 11px ui-monospace,monospace}</style><text x="0" y="13" class="s-h" fill="#0E7C7B">THE THREE STATES</text><rect x="0" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="58" class="s-t" fill="#12191F">A · masked</text><text x="16" y="230" class="s-i" fill="#3A464F">tethered mask sits over the paratope</text><path d="M 124 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="170 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 144 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="170" cy="104" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="170" y="109" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 140 128 q -12 -18 12 -26" stroke="#6E7880" stroke-width="1.6" fill="none"/><text x="112" y="116" class="s-m" fill="#6E7880">L</text><rect x="390" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="406" y="58" class="s-t" fill="#12191F">B · cleaved</text><text x="406" y="230" class="s-i" fill="#3A464F">protease cuts; the mask drifts off</text><path d="M 514 120 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="560 " y="155" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 534 117 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="648" cy="92" r="19" fill="#0E7C7B" stroke="#FFFFFF" stroke-width="2"/><text x="648" y="97" class="s-lbl" fill="#FFFFFF" text-anchor="middle">M</text><path d="M 576 118 L 622 96" stroke="#6E7880" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ah2)" fill="none"/><text x="531" y="100" class="s-m" fill="#C06014">protease</text><path d="M 524 112 l 14 10 M 538 112 l -14 10" stroke="#C06014" stroke-width="1.8"/><rect x="780" y="34" width="340" height="212" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="796" y="58" class="s-t" fill="#12191F">C · active</text><text x="796" y="230" class="s-i" fill="#3A464F">the original paratope takes the toxin</text><path d="M 904 130 q -10 30 0 60 q 46 14 92 0 q 10 -30 0 -60 q -46 -14 -92 0 z" fill="#EEF2F7" stroke="#6E7880" stroke-width="1"/><text x="950 " y="165" class="s-lbl" fill="#3A464F" text-anchor="middle">VHH</text><path d="M 924 127 q 26 -9 52 0" stroke="#2D5BD1" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="926" y="86" width="48" height="34" rx="6" fill="#C06014" stroke="#FFFFFF" stroke-width="2"/><text x="950" y="108" class="s-lbl" fill="#FFFFFF" text-anchor="middle">T</text><rect x="0" y="258" width="1120" height="36" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="281" class="s-i" fill="#12191F">A mask tight enough to hold state A may refuse to leave in state B. That single sentence is the whole design problem, and stage 02 turns it into a range of allowed mask affinities.</text></svg></div>
 <div class="banner"><b>The tension.</b> The tether holds the mask at a high effective concentration
 near the site, so even a weak mask blocks well. Once the protease cuts, that advantage disappears —
 and a mask chosen for how firmly it blocks may simply stay put and keep blocking. <b>A mask can be
@@ -144,9 +156,9 @@ loose enough to lose state B. That window may be wide, narrow, or empty, and whi
 depends on geometry that can be measured before any candidate exists. That observation is what the
 method below is built around.</p>
 <div class="cards">
-{card("2", "states to satisfy", "masked and released, at once")}
-{card("opposed", "the two requirements", "one bounds K<sub>D</sub> above, one below")}
-{card("geometry", "what decides the window", "measurable before any design")}
+<div class="card"><div class="cl">states to satisfy</div><div class="big">2</div><div class="sub">masked and released, at once</div></div>
+<div class="card"><div class="cl">the two requirements</div><div class="big">opposed</div><div class="sub">one bounds K<sub>D</sub> above, one below</div></div>
+<div class="card"><div class="cl">what decides the window</div><div class="big">geometry</div><div class="sub">measurable before any design</div></div>
 </div>
 </section>
 
@@ -160,7 +172,7 @@ and the tether priced before anything is generated</b>, so the attachment point,
 and the usable range of mask affinities are already fixed when generation starts. Generation then
 searches a space the geometry has narrowed, rather than a space that has to be filtered down
 afterwards.</p></div>
-<div class="chart wide">{R.architecture_schematic()}</div>
+<div class="chart wide"><svg viewBox="0 0 1120 492" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline architecture"><defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.a-t{font:600 13.5px Inter,system-ui,sans-serif}.a-n{font:600 9.5px ui-monospace,monospace}.a-i{font:12px Inter,system-ui,sans-serif}.a-s{font:10.5px ui-monospace,monospace;letter-spacing:.03em}.a-g{font:600 9px ui-monospace,monospace;letter-spacing:.09em}.a-e{font:10px ui-monospace,monospace;letter-spacing:.04em}.a-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}.d-edge{font:10px ui-monospace,monospace;letter-spacing:.04em}</style><text x="0" y="13" class="a-h" fill="#0E7C7B">THE PIPELINE AS A SET OF MODULES</text><rect x="0" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="26" width="340" height="3" fill="#0E7C7B"/><text x="14" y="50" class="a-n" fill="#0E7C7B">00</text><text x="38" y="51" class="a-t" fill="#12191F">Constrain</text><text x="14" y="72" class="a-i" fill="#3A464F">Measure the target complex. Where is the</text><text x="14" y="88" class="a-i" fill="#3A464F">binding site, and how far is each terminus</text><text x="14" y="104" class="a-i" fill="#3A464F">from it? Price the tether: what mask affinity</text><text x="14" y="120" class="a-i" fill="#3A464F">could work at all?</text><text x="14" y="140" class="a-s" fill="#0E7C7B">slot: any experimental or predicted complex</text><text x="328" y="177" class="a-g" fill="#0E7C7B" text-anchor="end">DECIDES THE SEARCH SPACE</text><rect x="390" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="390" y="26" width="340" height="3" fill="#2D5BD1"/><text x="404" y="50" class="a-n" fill="#2D5BD1">01</text><text x="428" y="51" class="a-t" fill="#12191F">Generate</text><text x="404" y="72" class="a-i" fill="#3A464F">Propose mask and linker candidates.</text><text x="404" y="88" class="a-i" fill="#3A464F">Unconditional, conditioned on the site, or</text><text x="404" y="104" class="a-i" fill="#3A464F">evolved from something that already works.</text><text x="404" y="124" class="a-s" fill="#2D5BD1">slot: graft · ProteinMPNN · RFdiffusion</text><text x="404" y="138" class="a-s" fill="#2D5BD1">slot: BindCraft · peptide models</text><text x="718" y="177" class="a-g" fill="#6E7880" text-anchor="end">SWAPPABLE</text><rect x="780" y="26" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="780" y="26" width="340" height="3" fill="#C06014"/><text x="794" y="50" class="a-n" fill="#C06014">02a</text><text x="818" y="51" class="a-t" fill="#12191F">Score the trigger</text><text x="794" y="72" class="a-i" fill="#3A464F">Does the environment open the switch here,</text><text x="794" y="88" class="a-i" fill="#3A464F">and leave it shut everywhere else?</text><text x="794" y="104" class="a-i" fill="#3A464F">Selectivity is the quantity, not cleavability.</text><text x="794" y="124" class="a-s" fill="#C06014">slot: protease · pH · metal ion</text><text x="794" y="138" class="a-s" fill="#C06014">needs: cleavage or titration data</text><text x="1108" y="177" class="a-g" fill="#C06014" text-anchor="end">NOT BUILT</text><rect x="390" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="390" y="222" width="340" height="3" fill="#2D5BD1"/><text x="404" y="246" class="a-n" fill="#2D5BD1">02b</text><text x="428" y="247" class="a-t" fill="#12191F">Score the binding</text><text x="404" y="268" class="a-i" fill="#3A464F">Two states, not one. Is the site covered</text><text x="404" y="284" class="a-i" fill="#3A464F">while tethered, and can the target still bind</text><text x="404" y="300" class="a-i" fill="#3A464F">once the tether is cut?</text><text x="404" y="320" class="a-s" fill="#2D5BD1">slot: ESMFold occlusion · tether model</text><text x="404" y="334" class="a-s" fill="#2D5BD1">slot: Boltz-2 · Chai-1 complex</text><text x="718" y="373" class="a-g" fill="#0E7C7B" text-anchor="end">BUILT</text><rect x="780" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="780" y="222" width="340" height="3" fill="#2D5BD1"/><text x="794" y="246" class="a-n" fill="#2D5BD1">03</text><text x="818" y="247" class="a-t" fill="#12191F">Rank</text><text x="794" y="268" class="a-i" fill="#3A464F">Combine the scores without averaging them.</text><text x="794" y="284" class="a-i" fill="#3A464F">Keep the trade-offs visible and the surviving</text><text x="794" y="300" class="a-i" fill="#3A464F">designs structurally different.</text><text x="794" y="320" class="a-s" fill="#2D5BD1">slot: Pareto front · uncertainty-aware</text><text x="1108" y="373" class="a-g" fill="#C06014" text-anchor="end">PARTIAL</text><rect x="0" y="222" width="340" height="162" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="222" width="340" height="3" fill="#0E7C7B"/><text x="14" y="246" class="a-n" fill="#0E7C7B">04</text><text x="38" y="247" class="a-t" fill="#12191F">Measure, then learn</text><text x="14" y="268" class="a-i" fill="#3A464F">Top candidates are expressed and measured.</text><text x="14" y="284" class="a-i" fill="#3A464F">What comes back is the only data that can</text><text x="14" y="300" class="a-i" fill="#3A464F">train the scorers, and it arrives slowly.</text><text x="14" y="320" class="a-s" fill="#0E7C7B">20-30 results: a validation set</text><text x="14" y="334" class="a-s" fill="#0E7C7B">~100: optimisation · 100-1000: training</text><text x="328" y="373" class="a-g" fill="#0E7C7B" text-anchor="end">THE RATE LIMIT</text><path d="M 340 107 L 384 107" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="362" y="98" class="a-e" fill="#6E7880" text-anchor="middle">candidates</text><path d="M 730 107 L 774 107" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><path d="M 560 188 L 560 216" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><path d="M 730 303 L 774 303" stroke="#6E7880" stroke-width="1.4" fill="none" marker-end="url(#ah)"/><text x="752" y="294" class="a-e" fill="#6E7880" text-anchor="middle">scores</text><path d="M 950 188 L 950 216" stroke="#C06014" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/><path d="M 950 384 L 950 404 L 170 404 L 170 390" stroke="#0E7C7B" stroke-width="1.4" fill="none" marker-end="url(#ah4)"/><text x="560" y="399" class="a-e" fill="#0E7C7B" text-anchor="middle">top candidates go to the lab</text><path d="M 170 222 L 170 204 L 560 204 L 560 192" stroke="#0E7C7B" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ah4)"/><text x="365" y="199" class="a-e" fill="#0E7C7B" text-anchor="middle">measurements retrain the scorers</text><rect x="0" y="424" width="1120" height="62" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><text x="16" y="447" class="a-i" fill="#12191F"><tspan font-weight="600">What makes it transferable:</tspan> every module takes the same inputs and returns the same kind of score.</text><text x="16" y="468" class="a-i" fill="#3A464F">The trigger can change from protease to pH, or the generator from a graft to a diffusion model, without touching anything else.</text></svg></div>
 
 <h3>Why each module is separate</h3>
 <div class="scroll"><table><thead><tr><th>module</th><th>what it answers</th>
@@ -246,9 +258,9 @@ tell you that a target is unsuitable before you spend anything on it.</p>
 forms, and the geometry that matters for a tether is how far each terminus sits from that
 surface.</p></div>
 <div class="cards">
-<div class="card"><div class="cl">interface area</div><div class="big">{iface['interface_area_A2']:.0f} Å²</div><div class="sub">{repro['bsa_mean_A2']} ± {repro['bsa_sd_A2']} Å² buried across {repro['n_copies']} copies</div></div>
+<div class="card"><div class="cl">interface area</div><div class="big">631 Å²</div><div class="sub">1231.8 ± 42.4 Å² buried across 2 copies</div></div>
 <div class="card"><div class="cl">paratope residues</div><div class="big">19</div><div class="sub">burying &gt;1 Å² on binding</div></div>
-<div class="card hl"><div class="cl">of it in CDR3</div><div class="big">{region['CDR3']}/{iface['n_paratope']}</div><div class="sub">CDR1 {region['CDR1']} · CDR2 {region['CDR2']} · framework {region['framework']}</div></div>
+<div class="card hl"><div class="cl">of it in CDR3</div><div class="big">5/19</div><div class="sub">CDR1 1 · CDR2 6 · framework 7</div></div>
 <div class="card"><div class="cl">CDR3 length</div><div class="big">12</div><div class="sub">residues</div></div>
 </div>
 <figure class="chart wide"><img src="figures/paratope_footprint.svg" alt="Surface buried per nanobody residue on complex formation."><figcaption>Surface buried per nanobody residue on complex formation.</figcaption></figure>
@@ -294,10 +306,10 @@ C<sub>eff</sub> at the span measured above — a distance taken from the structu
 </div>
 <figure class="chart wide"><img src="figures/design_window.svg" alt="Usable mask affinity against linker length. Shaded where both requirements hold at once."><figcaption>Usable mask affinity against linker length. Shaded where both requirements hold at once.</figcaption></figure>
 <div class="cards">
-<div class="card hl"><div class="cl">decades of usable K<sub>D</sub></div><div class="big">{bN['window_decades']:.1f}</div><div class="sub">N-terminal, {bN['linker_residues']}-residue linker</div></div>
-<div class="card"><div class="cl">decades, C-terminal</div><div class="big">{bC['window_decades']:.1f}</div><div class="sub">best at {bC['linker_residues']} residues</div></div>
-<div class="card"><div class="cl">residues where C-terminal fails</div><div class="big">≤{closed_C}</div><div class="sub">no window at any affinity</div></div>
-<div class="card"><div class="cl">loosest mask that still blocks</div><div class="big">{bN['km_max_for_masking_M']*1e6:.0f} µM</div><div class="sub">N-terminal, {bN['linker_residues']} residues</div></div>
+<div class="card hl"><div class="cl">decades of usable K<sub>D</sub></div><div class="big">3.1</div><div class="sub">N-terminal, 14-residue linker</div></div>
+<div class="card"><div class="cl">decades, C-terminal</div><div class="big">2.5</div><div class="sub">best at 35 residues</div></div>
+<div class="card"><div class="cl">residues where C-terminal fails</div><div class="big">≤6</div><div class="sub">no window at any affinity</div></div>
+<div class="card"><div class="cl">loosest mask that still blocks</div><div class="big">129 µM</div><div class="sub">N-terminal, 14 residues</div></div>
 </div>
 <div class="banner"><b>What the constraint module returns.</b> Attach at the N-terminus, use a
 14-residue linker, and aim for a mask K<sub>D</sub> somewhere below
@@ -331,7 +343,7 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <section class="sec">
 <div class="stack"><div class="eyebrow">Module 02b · score the binding</div>
 <h3>Is the site covered?</h3></div>
-<div class="chart wide">{R.occlusion_schematic()}</div>
+<div class="chart wide"><svg viewBox="0 0 1120 238" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How occlusion is measured"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.o-t{font:600 12.5px Inter,system-ui,sans-serif}.o-i{font:11.5px Inter,system-ui,sans-serif}.o-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.o-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="o-h" fill="#0E7C7B">HOW THE MASKED STATE IS MEASURED</text><rect x="0" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="30" width="330" height="3" fill="#2D5BD1"/><text x="16" y="56" class="o-t" fill="#12191F">fold the free nanobody</text><text x="16" y="76" class="o-m" fill="#2D5BD1">ESMFold, sequence only</text><text x="16" y="100" class="o-i" fill="#3A464F">measure the paratope's exposed surface</text><path d="M 330 89 L 390 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="395" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="395" y="30" width="330" height="3" fill="#2D5BD1"/><text x="411" y="56" class="o-t" fill="#12191F">fold the whole fusion</text><text x="411" y="76" class="o-m" fill="#2D5BD1">mask + linker + nanobody</text><text x="411" y="100" class="o-i" fill="#3A464F">measure the same residues again</text><path d="M 725 89 L 785 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="790" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="790" y="30" width="330" height="3" fill="#2D5BD1"/><text x="806" y="56" class="o-t" fill="#12191F">take the difference</text><text x="806" y="76" class="o-m" fill="#2D5BD1">occlusion = 1 − fused / free</text><text x="806" y="100" class="o-i" fill="#3A464F">0% means the mask changed nothing</text><rect x="0" y="162" width="1120" height="64" rx="3" fill="#FFFFFF" stroke="#C06014" stroke-dasharray="5 4"/><text x="16" y="184" class="o-t" fill="#12191F">Why the controls carry the argument</text><text x="16" y="203" class="o-i" fill="#3A464F">A tethered peptide sits near its own anchor whatever its sequence, so a single occlusion number means very little on its own.</text><text x="16" y="219" class="o-i" fill="#3A464F">Only the gap between the designed mask and its scrambled, truncated and poly-glycine twins separates a design from a geometric accident.</text></svg></div>
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">Stage 4 · folded on CPU</div>
@@ -340,7 +352,7 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 fusion compared against the same residues in the folded free nanobody. The grafts are read against
 their scrambled, truncated and inert controls at matched linker length; the controls are the
 reason the comparison means anything.</p></div>
-<div class="chart wide">{R.occlusion_schematic()}</div>
+<div class="chart wide"><svg viewBox="0 0 1120 238" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How occlusion is measured"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6E7880"/></marker></defs><style>.o-t{font:600 12.5px Inter,system-ui,sans-serif}.o-i{font:11.5px Inter,system-ui,sans-serif}.o-m{font:10.5px ui-monospace,monospace;letter-spacing:.04em}.o-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}</style><text x="0" y="13" class="o-h" fill="#0E7C7B">HOW THE MASKED STATE IS MEASURED</text><rect x="0" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="0" y="30" width="330" height="3" fill="#2D5BD1"/><text x="16" y="56" class="o-t" fill="#12191F">fold the free nanobody</text><text x="16" y="76" class="o-m" fill="#2D5BD1">ESMFold, sequence only</text><text x="16" y="100" class="o-i" fill="#3A464F">measure the paratope's exposed surface</text><path d="M 330 89 L 390 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="395" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="395" y="30" width="330" height="3" fill="#2D5BD1"/><text x="411" y="56" class="o-t" fill="#12191F">fold the whole fusion</text><text x="411" y="76" class="o-m" fill="#2D5BD1">mask + linker + nanobody</text><text x="411" y="100" class="o-i" fill="#3A464F">measure the same residues again</text><path d="M 725 89 L 785 89" stroke="#6E7880" stroke-width="1.4" marker-end="url(#ah3)" fill="none"/><rect x="790" y="30" width="330" height="118" rx="3" fill="#FFFFFF" stroke="#DDE4E7"/><rect x="790" y="30" width="330" height="3" fill="#2D5BD1"/><text x="806" y="56" class="o-t" fill="#12191F">take the difference</text><text x="806" y="76" class="o-m" fill="#2D5BD1">occlusion = 1 − fused / free</text><text x="806" y="100" class="o-i" fill="#3A464F">0% means the mask changed nothing</text><rect x="0" y="162" width="1120" height="64" rx="3" fill="#FFFFFF" stroke="#C06014" stroke-dasharray="5 4"/><text x="16" y="184" class="o-t" fill="#12191F">Why the controls carry the argument</text><text x="16" y="203" class="o-i" fill="#3A464F">A tethered peptide sits near its own anchor whatever its sequence, so a single occlusion number means very little on its own.</text><text x="16" y="219" class="o-i" fill="#3A464F">Only the gap between the designed mask and its scrambled, truncated and poly-glycine twins separates a design from a geometric accident.</text></svg></div>
 <div class="cards"><div class="card"><div class="cl">epitope grafts</div><div class="big">+4%</div><div class="sub">mean occlusion</div></div><div class="card"><div class="cl">scrambled</div><div class="big">+5%</div><div class="sub">same residues, shuffled</div></div><div class="card hl"><div class="cl">poly-glycine</div><div class="big">+4%</div><div class="sub">no designed interaction</div></div><div class="card"><div class="cl">graft minus inert</div><div class="big">+0.0 pp</div><div class="sub">the quantity that matters</div></div><div class="card"><div class="cl">VHH core RMSD</div><div class="big">1.27 Å</div><div class="sub">fusion against free nanobody</div></div></div>
 <div class="charts2">
 <figure class="chart"><img src="figures/occlusion_by_linker.svg" alt="Paratope occlusion against linker length, by mask."><figcaption>Paratope occlusion against linker length, by mask.</figcaption></figure>
@@ -351,15 +363,15 @@ reason the comparison means anything.</p></div>
 <th>contacts &lt;8 Å</th><th>VHH pLDDT</th><th>core RMSD Å</th>
 </tr></thead><tbody><tr class="ctrl"><td>polyG_L20</td><td>inert control</td><td>20</td><td>+8.9</td><td>6.57</td><td>3</td><td>83</td><td>1.72</td></tr><tr class="ctrl"><td>epi1_scram_L30</td><td>scrambled control</td><td>30</td><td>+8.5</td><td>5.74</td><td>2</td><td>81</td><td>1.72</td></tr><tr class="hl"><td>epi1_L15</td><td>epitope graft</td><td>15</td><td>+7.8</td><td>6.97</td><td>3</td><td>83</td><td>0.13</td></tr><tr class="ctrl"><td>polyG_L15</td><td>inert control</td><td>15</td><td>+7.7</td><td>4.4</td><td>8</td><td>84</td><td>1.70</td></tr><tr class="ctrl"><td>epi1_scram_L20</td><td>scrambled control</td><td>20</td><td>+7.1</td><td>6.86</td><td>3</td><td>82</td><td>1.71</td></tr><tr class="hl"><td>epi1_noCys_L15</td><td>epitope graft</td><td>15</td><td>+6.5</td><td>6.46</td><td>2</td><td>83</td><td>1.71</td></tr><tr class="hl"><td>epi1_L30</td><td>epitope graft</td><td>30</td><td>+6.3</td><td>7.09</td><td>1</td><td>81</td><td>1.76</td></tr><tr class="hl"><td>epi1_L20</td><td>epitope graft</td><td>20</td><td>+6.1</td><td>7.48</td><td>2</td><td>82</td><td>0.16</td></tr><tr class="hl"><td>epi1_noCys_L10</td><td>epitope graft</td><td>10</td><td>+6.0</td><td>6.72</td><td>2</td><td>84</td><td>1.68</td></tr><tr class="hl"><td>epi1_L10</td><td>epitope graft</td><td>10</td><td>+5.9</td><td>7.49</td><td>1</td><td>84</td><td>0.14</td></tr><tr class="hl"><td>epi2_L30</td><td>epitope graft</td><td>30</td><td>+5.3</td><td>19.78</td><td>0</td><td>82</td><td>1.75</td></tr><tr class="hl"><td>epi1_noCys_L20</td><td>epitope graft</td><td>20</td><td>+5.2</td><td>6.9</td><td>1</td><td>82</td><td>1.76</td></tr><tr class="hl"><td>epi1_noCys_L30</td><td>epitope graft</td><td>30</td><td>+5.1</td><td>5.65</td><td>3</td><td>81</td><td>1.75</td></tr><tr class="ctrl"><td>epi1_half_L15</td><td>truncated control</td><td>15</td><td>+4.9</td><td>9.94</td><td>0</td><td>84</td><td>1.64</td></tr><tr class="ctrl"><td>epi1_scram_L15</td><td>scrambled control</td><td>15</td><td>+4.2</td><td>7.53</td><td>1</td><td>83</td><td>1.65</td></tr><tr class="ctrl"><td>epi1_half_L10</td><td>truncated control</td><td>10</td><td>+3.6</td><td>7.91</td><td>1</td><td>86</td><td>0.12</td></tr><tr class="ctrl"><td>polyG_L30</td><td>inert control</td><td>30</td><td>+3.5</td><td>16.98</td><td>0</td><td>82</td><td>1.73</td></tr><tr class="hl"><td>epi1_noCys_L5</td><td>epitope graft</td><td>5</td><td>+3.1</td><td>8.33</td><td>0</td><td>85</td><td>1.63</td></tr><tr class="ctrl"><td>epi1_scram_L5</td><td>scrambled control</td><td>5</td><td>+2.6</td><td>17.19</td><td>0</td><td>85</td><td>0.14</td></tr><tr class="ctrl"><td>epi1_half_L30</td><td>truncated control</td><td>30</td><td>+2.4</td><td>13.33</td><td>0</td><td>82</td><td>1.79</td></tr><tr class="ctrl"><td>epi1_half_L20</td><td>truncated control</td><td>20</td><td>+1.9</td><td>12.39</td><td>0</td><td>83</td><td>1.74</td></tr><tr class="ctrl"><td>epi1_scram_L10</td><td>scrambled control</td><td>10</td><td>+1.7</td><td>10.27</td><td>0</td><td>85</td><td>0.12</td></tr><tr class="hl"><td>epi1_L5</td><td>epitope graft</td><td>5</td><td>+0.9</td><td>12.07</td><td>0</td><td>84</td><td>0.16</td></tr><tr class="hl"><td>epi2_L20</td><td>epitope graft</td><td>20</td><td>+0.7</td><td>21.48</td><td>0</td><td>83</td><td>1.70</td></tr><tr class="hl"><td>epi2_L5</td><td>epitope graft</td><td>5</td><td>+0.7</td><td>23.83</td><td>0</td><td>87</td><td>1.21</td></tr><tr class="hl"><td>epi2_L10</td><td>epitope graft</td><td>10</td><td>+0.6</td><td>12.85</td><td>0</td><td>86</td><td>1.59</td></tr><tr class="hl"><td>epi2_L15</td><td>epitope graft</td><td>15</td><td>+0.4</td><td>18.89</td><td>0</td><td>85</td><td>1.68</td></tr><tr class="ctrl"><td>polyG_L10</td><td>inert control</td><td>10</td><td>+0.3</td><td>15.92</td><td>0</td><td>85</td><td>1.69</td></tr><tr class="ctrl"><td>epi1_half_L5</td><td>truncated control</td><td>5</td><td>-0.1</td><td>20.91</td><td>0</td><td>86</td><td>0.13</td></tr><tr class="ctrl"><td>polyG_L5</td><td>inert control</td><td>5</td><td>-0.3</td><td>19.71</td><td>0</td><td>86</td><td>1.57</td></tr></tbody></table></div>
 <div class="banner" style="border-left-color:#C06014"><b>The result is negative, and that is the
-point of running the controls.</b> {verdict}: the grafts occlude {np.mean(graft):+.1f}% of the
-paratope on average, the scrambled masks {np.mean(scram):+.1f}% and the inert poly-glycine mask
-{np.mean(inert):+.1f}% — a separation of {separation:+.1f} percentage points, with the inert
+point of running the controls.</b> the designed masks do <b>not</b> separate from the controls: the grafts occlude +4.0% of the
+paratope on average, the scrambled masks +4.8% and the inert poly-glycine mask
++4.0% — a separation of +0.0 percentage points, with the inert
 control <b>above</b> the designed one. Any peptide tethered at this N-terminus lands near the
 paratope, so this measurement is reading <b>tether geometry, not design</b>.</div>
 <div class="banner"><b>What follows from that.</b> Occlusion measured this way cannot rank masks,
 and the module needs a discriminating readout before it can feed a ranking step — the two-chain
 competition below is the first candidate. Had the controls been left out, the grafts'
-{np.mean(graft):+.1f}% would have looked like a working design.</div>
++4.0% would have looked like a working design.</div>
 </section>
 <div class="viewer">
 <div class="vbar"><select id="pick"><option value="9GCN_AX">9GCN_AX</option><option value="VHH_only">VHH_only</option><option value="epi1_L10">epi1_L10</option><option value="epi1_L15">epi1_L15</option><option value="epi1_L20">epi1_L20</option><option value="epi1_L30">epi1_L30</option><option value="epi1_L5" selected>epi1_L5</option><option value="epi1_half_L10">epi1_half_L10</option><option value="epi1_half_L15">epi1_half_L15</option><option value="epi1_half_L20">epi1_half_L20</option><option value="epi1_half_L30">epi1_half_L30</option><option value="epi1_half_L5">epi1_half_L5</option><option value="epi1_noCys_L10">epi1_noCys_L10</option><option value="epi1_noCys_L15">epi1_noCys_L15</option><option value="epi1_noCys_L20">epi1_noCys_L20</option><option value="epi1_noCys_L30">epi1_noCys_L30</option><option value="epi1_noCys_L5">epi1_noCys_L5</option><option value="epi1_scram_L10">epi1_scram_L10</option><option value="epi1_scram_L15">epi1_scram_L15</option><option value="epi1_scram_L20">epi1_scram_L20</option><option value="epi1_scram_L30">epi1_scram_L30</option><option value="epi1_scram_L5">epi1_scram_L5</option><option value="epi2_L10">epi2_L10</option><option value="epi2_L15">epi2_L15</option><option value="epi2_L20">epi2_L20</option><option value="epi2_L30">epi2_L30</option><option value="epi2_L5">epi2_L5</option><option value="polyG_L10">polyG_L10</option><option value="polyG_L15">polyG_L15</option><option value="polyG_L20">polyG_L20</option><option value="polyG_L30">polyG_L30</option><option value="polyG_L5">polyG_L5</option></select>
@@ -387,7 +399,7 @@ is the calibration case: the crystal structure already answers it, so how well t
 recovers that answer sets how much the masked cases are worth.</p></div>
 <div class="scroll"><table><thead><tr><th>case</th><th>what it tests</th><th>atom contacts</th>
 <th>buried Å²</th><th>fraction on paratope</th><th>min</th></tr></thead>
-<tbody>{crows}</tbody></table></div>
+<tbody><tr class="hl"><td>control_free_vhh</td><td>free nanobody with toxin — the crystal structure already answers this, so it calibrates the rest</td><td>240</td><td>847</td><td>0.07</td><td>1</td></tr><tr class=""><td>masked_epi1_L5</td><td>grafted mask on the shortest linker</td><td>601</td><td>2092</td><td>0.11</td><td>2</td></tr><tr class=""><td>masked_epi1_L20</td><td>same mask, linker four times longer</td><td>1190</td><td>2863</td><td>0.12</td><td>2</td></tr><tr class=""><td>masked_polyG_L5</td><td>inert mask — should not block</td><td>422</td><td>1460</td><td>0.26</td><td>2</td></tr></tbody></table></div>
 <div class="banner"><b>How to read the control.</b> Predicted in single-sequence mode, with no
 alignment server, so designed sequences never leave the machine — accuracy was traded for that
 deliberately. If the free nanobody does not reproduce a toxin pose on its known paratope, the
@@ -490,55 +502,54 @@ during the PhD, in a protein that solves it naturally.</p></div>
 
 <details class="fold">
 <summary><b>Background: a tethered competitive regulator, measured</b>
-<span>PhD work on follistatin — the same two-state, tethered-affinity problem,
-approached experimentally.</span></summary>
+<span>PhD work on follistatin, which solves this same two-state problem naturally.</span>
+</summary>
 <div class="foldbody">
 
-<p>Follistatin's isoforms differ at the C-terminus. FST315 carries an acidic tail that folds back
-onto the FS1 domain — the same surface that binds heparan sulphate. The tail is therefore an
-<b>endogenous mask</b>: covalently tethered, competing for a binding site, and tuned so that it
-can be displaced. That is the architecture this pipeline sets out to design.</p>
+<p>The construct on this page needs a tethered module that binds its own protein tightly enough to
+block, and weakly enough to let go. Follistatin already does this. Its isoforms differ at the
+C-terminus, and the longest, FST315, carries an acidic tail that folds back onto the FS1 domain —
+the same surface that binds heparan sulphate. The tail is an <b>endogenous mask</b>.</p>
 
-<figure class="fig"><img src="thesis/fig2_4_1_a.png" alt="Follistatin domain organisation, charge distribution and conservation. The C-terminal extension distinguishing FST288, FST303 and FST315 is at the right."><figcaption>Follistatin domain organisation, charge distribution and conservation. The C-terminal extension distinguishing FST288, FST303 and FST315 is at the right.</figcaption></figure>
-<div class="two">
-<figure class="fig"><img src="thesis/fig2_4_1_b.png" alt="FS0 and FS1 domains: TB fold, EGF and Kazal subdomains."><figcaption>FS0 and FS1 domains: TB fold, EGF and Kazal subdomains.</figcaption></figure>
-<figure class="fig"><img src="thesis/fig2_4_1_g.png" alt="Topology of the full-length molecule."><figcaption>Topology of the full-length molecule.</figcaption></figure>
+<div class="tstep"><b>01</b><span>The molecule, and where the isoforms differ</span></div>
+<figure class="tfig wide"><img src="thesis/fig2_4_1_a.png" alt="Domain organisation, charge and conservation across follistatin. The isoforms FST288, FST303 and FST315 differ only in how much C-terminal tail they carry (right)."><figcaption>Domain organisation, charge and conservation across follistatin. The isoforms FST288, FST303 and FST315 differ only in how much C-terminal tail they carry (right).</figcaption></figure>
+<div class="tgrid c2">
+<figure class="tfig "><img src="thesis/fig2_4_1_b.png" alt="The FS0 and FS1 domains: TB fold, EGF and Kazal subdomains."><figcaption>The FS0 and FS1 domains: TB fold, EGF and Kazal subdomains.</figcaption></figure>
+<figure class="tfig "><img src="thesis/fig2_4_1_g.png" alt="Topology of the full-length molecule."><figcaption>Topology of the full-length molecule.</figcaption></figure>
 </div>
 
-<p><b>The tail competes, and its affinity is measurable.</b> Biolayer interferometry and
-fluorescence polarisation were used to measure how tightly the tail binds back, and how that
-changes with ionic strength — the tail–domain interaction is largely electrostatic.</p>
-<div class="two">
-<figure class="fig"><img src="thesis/fig4_1_3_a_isoforms.png" alt="Biolayer interferometry: tail peptides binding FST288, FST303 and FST315."><figcaption>Biolayer interferometry: tail peptides binding FST288, FST303 and FST315.</figcaption></figure>
-<figure class="fig"><img src="thesis/fig4_1_8_d.png" alt="Fluorescence polarisation: the tail's affinity for FS12 at three salt concentrations. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM."><figcaption>Fluorescence polarisation: the tail's affinity for FS12 at three salt concentrations. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM.</figcaption></figure>
-</div>
-<figure class="fig"><img src="thesis/fig4_1_4_e.png" alt="Isoform binding to heparan sulphate — the ligand the tail competes with."><figcaption>Isoform binding to heparan sulphate — the ligand the tail competes with.</figcaption></figure>
-
-<div class="note good"><b>The numbers land inside the window this pipeline computes.</b> For the
-nanobody here, masking and release together allow a mask dissociation constant between roughly
-<b>99 nM and 129 µM</b>. The follistatin tail operates at 145 nM to
-34.6 µM depending on ionic strength — inside that range at every salt concentration measured. A
-natural tethered competitor sits where the model says a designed one should. The systems are
-unrelated and the geometry differs, so this is a sanity check on the regime rather than a
-validation of the model.</div>
-
-<p><b>Two states, resolved experimentally.</b> SEC-SAXS and BilboMD modelling showed FST315 is not
-one structure in solution but an equilibrium between an open and a closed conformation — the
-closed one being the state with the tail engaged.</p>
-<div class="two">
-<figure class="fig"><img src="thesis/fig4_1_14_a.png" alt="FST288 crystal structure fitted into the DENSS ab initio envelope."><figcaption>FST288 crystal structure fitted into the DENSS ab initio envelope.</figcaption></figure>
-<figure class="fig"><img src="thesis/fig4_1_14_b.png" alt="MODELLER structure for FST315 and its fit to the envelope."><figcaption>MODELLER structure for FST315 and its fit to the envelope.</figcaption></figure>
-</div>
-<figure class="fig"><img src="thesis/fig4_1_14_c.png" alt="The two-state solution model: 65% open, 35% closed, interconverting."><figcaption>The two-state solution model: 65% open, 35% closed, interconverting.</figcaption></figure>
-<div class="two">
-<figure class="fig"><img src="thesis/fig4_1_14_f.png" alt="SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058."><figcaption>SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058.</figcaption></figure>
-<figure class="fig"><img src="thesis/fig4_1_23_a_isoforms.png" alt="Conformational space explored during modelling for each isoform, as radius of gyration against maximum dimension."><figcaption>Conformational space explored during modelling for each isoform, as radius of gyration against maximum dimension.</figcaption></figure>
+<div class="tstep"><b>02</b><span>The tail binds back, and the strength can be measured</span></div>
+<div class="tgrid c2">
+<figure class="tfig "><img src="thesis/fig4_1_3_a_isoforms.png" alt="Biolayer interferometry: tail peptides binding the three isoforms."><figcaption>Biolayer interferometry: tail peptides binding the three isoforms.</figcaption></figure>
+<figure class="tfig "><img src="thesis/fig4_1_8_d.png" alt="Fluorescence polarisation, tail against FS12 at three ionic strengths. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM — the interaction is largely electrostatic."><figcaption>Fluorescence polarisation, tail against FS12 at three ionic strengths. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM, 34.6 µM at 300 mM — the interaction is largely electrostatic.</figcaption></figure>
 </div>
 
-<div class="note"><b>Why this is the relevant experience.</b> The design problem on this page is a
-two-state one: a construct that must hold one conformation while tethered and lose it when cut, at
-an affinity inside a narrow window. That is the system characterised here experimentally — by
-SEC-SAXS, ensemble modelling and direct affinity measurement — rather than predicted.</div>
+<div class="tstep"><b>03</b><span>What the tail is competing with</span></div>
+<figure class="tfig wide"><img src="thesis/fig4_1_4_e.png" alt="Isoform binding to heparan sulphate, the ligand the tail displaces from the same surface."><figcaption>Isoform binding to heparan sulphate, the ligand the tail displaces from the same surface.</figcaption></figure>
+
+<div class="note good"><b>Those affinities land inside the window this pipeline computes.</b>
+Masking and release together allow a mask dissociation constant between roughly
+<b>99 nM and 129 µM</b> for the nanobody here. The follistatin tail
+works at 145 nM to 34.6 µM depending on ionic strength — inside that range at every salt
+concentration measured. A natural tethered competitor sits where the model says a designed one
+should. Different protein and different geometry, so this says the regime is physically sensible,
+not that the model is right.</div>
+
+<div class="tstep"><b>04</b><span>Two states, resolved experimentally rather than predicted</span></div>
+<div class="tgrid c2">
+<figure class="tfig "><img src="thesis/fig4_1_14_a.png" alt="FST288 crystal structure fitted into the DENSS ab initio envelope."><figcaption>FST288 crystal structure fitted into the DENSS ab initio envelope.</figcaption></figure>
+<figure class="tfig "><img src="thesis/fig4_1_14_b.png" alt="A MODELLER structure for FST315 and its fit to the same envelope."><figcaption>A MODELLER structure for FST315 and its fit to the same envelope.</figcaption></figure>
+</div>
+<figure class="tfig wide"><img src="thesis/fig4_1_14_c.png" alt="The solution structure is not one conformation but two: 65% open and 35% closed, interconverting. The closed state is the one with the tail engaged."><figcaption>The solution structure is not one conformation but two: 65% open and 35% closed, interconverting. The closed state is the one with the tail engaged.</figcaption></figure>
+<div class="tgrid c2">
+<figure class="tfig tall"><img src="thesis/fig4_1_14_f.png" alt="SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating both single structures."><figcaption>SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating both single structures.</figcaption></figure>
+<figure class="tfig tall"><img src="thesis/fig4_1_23_a_isoforms.png" alt="Conformational space explored for each isoform, radius of gyration against maximum dimension. The longer the tail, the more closed states appear."><figcaption>Conformational space explored for each isoform, radius of gyration against maximum dimension. The longer the tail, the more closed states appear.</figcaption></figure>
+</div>
+
+<div class="note"><b>Why this is the relevant experience.</b> The problem on this page is a
+two-state one: hold a conformation while tethered, lose it when cut, at an affinity inside a narrow
+window. That is the system characterised above — by SEC-SAXS, ensemble modelling and direct
+affinity measurement — rather than predicted.</div>
 </div>
 </details>
 </section>

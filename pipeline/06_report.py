@@ -162,7 +162,7 @@ if fold:
 fusion compared against the same residues in the folded free nanobody. The grafts are read against
 their scrambled, truncated and inert controls at matched linker length; the controls are the
 reason the comparison means anything.</p></div>
-<div class="chart wide">{{R.occlusion_schematic()}}</div>
+<div class="chart wide">{R.occlusion_schematic()}</div>
 <div class="cards">{fold_cards}</div>
 <div class="charts2">
 {chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
@@ -173,15 +173,15 @@ reason the comparison means anything.</p></div>
 <th>contacts &lt;8 Å</th><th>VHH pLDDT</th><th>core RMSD Å</th>
 </tr></thead><tbody>{table_rows}</tbody></table></div>
 <div class="banner" style="border-left-color:#C06014"><b>The result is negative, and that is the
-point of running the controls.</b> {{verdict}}: the grafts occlude {{np.mean(graft):+.1f}}% of the
-paratope on average, the scrambled masks {{np.mean(scram):+.1f}}% and the inert poly-glycine mask
-{{np.mean(inert):+.1f}}% — a separation of {{separation:+.1f}} percentage points, with the inert
+point of running the controls.</b> {verdict}: the grafts occlude {np.mean(graft):+.1f}% of the
+paratope on average, the scrambled masks {np.mean(scram):+.1f}% and the inert poly-glycine mask
+{np.mean(inert):+.1f}% — a separation of {separation:+.1f} percentage points, with the inert
 control <b>above</b> the designed one. Any peptide tethered at this N-terminus lands near the
 paratope, so this measurement is reading <b>tether geometry, not design</b>.</div>
 <div class="banner"><b>What follows from that.</b> Occlusion measured this way cannot rank masks,
 and the module needs a discriminating readout before it can feed a ranking step — the two-chain
 competition below is the first candidate. Had the controls been left out, the grafts'
-{{np.mean(graft):+.1f}}% would have looked like a working design.</div>
+{np.mean(graft):+.1f}% would have looked like a working design.</div>
 </section>"""
 else:
     folding_html = ""
@@ -212,23 +212,23 @@ positions — nanobody and linker held fixed — turns the graft into a starting
 constructs are then folded and scored exactly as before, so the two sets are directly comparable.</p>
 </div>
 <div class="cards">
-{{card(redesign['n_unique'], "distinct masks designed", f"from {{redesign['n_designs']}} samples across {{len(redesign['temperatures'])}} temperatures")}}
-{{card(f"{{improved}}/{{redesign['n_unique']}}", "score better than parent", "by ProteinMPNN's own score")}}
-{{card(f"{{rbest['occlusion']*100:+.0f}}%", "best occlusion", f"mask {{rbest['mask_seq']}}", hl=True)}}
-{{card(f"{{np.mean(rocc):+.0f}}%", "redesign mean", f"grafts {{np.mean(grafts):+.0f}}%")}}
-{{card(f"{{corr:+.2f}}", "score vs occlusion", "Pearson r")}}
+{card(redesign['n_unique'], "distinct masks designed", f"from {redesign['n_designs']} samples across {len(redesign['temperatures'])} temperatures")}
+{card(f"{improved}/{redesign['n_unique']}", "score better than parent", "by ProteinMPNN's own score")}
+{card(f"{rbest['occlusion']*100:+.0f}%", "best occlusion", f"mask {rbest['mask_seq']}", hl=True)}
+{card(f"{np.mean(rocc):+.0f}%", "redesign mean", f"grafts {np.mean(grafts):+.0f}%")}
+{card(f"{corr:+.2f}", "score vs occlusion", "Pearson r")}
 </div>
 <div class="charts2">
-{{chart("redesign_landscape", "Redesigns against the grafts and controls, on the same axes.")}}
-{{chart("redesign_score_vs_occlusion", "The design model's own score against the quantity it was not optimising.")}}
+{chart("redesign_landscape", "Redesigns against the grafts and controls, on the same axes.")}
+{chart("redesign_score_vs_occlusion", "The design model's own score against the quantity it was not optimising.")}
 </div>
 <div class="scroll"><table><thead><tr><th>mask</th><th>parent</th><th>MPNN score</th>
 <th>occluded %</th><th>min CA–CA Å</th><th>VHH pLDDT</th><th>core RMSD Å</th>
-</tr></thead><tbody>{{rtable}}</tbody></table></div>
+</tr></thead><tbody>{rtable}</tbody></table></div>
 <div class="banner"><b>What the correlation is for.</b> ProteinMPNN scores sequence likelihood given
 a backbone. It is not optimising paratope occlusion and has no way to know about it, so the
 relationship between the two is worth measuring rather than assuming. On this set the Pearson
-correlation is <b>{{corr:+.2f}}</b> across {{len(rrows)}} designs.</div>
+correlation is <b>{corr:+.2f}</b> across {len(rrows)} designs.</div>
 </section>"""
 else:
     redesign_html = ""
@@ -253,7 +253,7 @@ is the calibration case: the crystal structure already answers it, so how well t
 recovers that answer sets how much the masked cases are worth.</p></div>
 <div class="scroll"><table><thead><tr><th>case</th><th>what it tests</th><th>atom contacts</th>
 <th>buried Å²</th><th>fraction on paratope</th><th>min</th></tr></thead>
-<tbody>{{crows}}</tbody></table></div>
+<tbody>{crows}</tbody></table></div>
 <div class="banner"><b>How to read the control.</b> Predicted in single-sequence mode, with no
 alignment server, so designed sequences never leave the machine — accuracy was traded for that
 deliberately. If the free nanobody does not reproduce a toxin pose on its known paratope, the
@@ -305,7 +305,7 @@ pocket, a metal ion — tells it to switch on.</p>
 <p>The usual way to build one is to <b>tether a mask over the binding site</b> and give the tether a
 cleavable linker. Clinically this architecture has a long history and a mixed record; the biology is
 not the hard part. The hard part is a thermodynamic one, and it is easy to state.</p></div>
-<div class="chart wide">{{R.states_schematic()}}</div>
+<div class="chart wide">{R.states_schematic()}</div>
 <div class="banner"><b>The tension.</b> The tether holds the mask at a high effective concentration
 near the site, so even a weak mask blocks well. Once the protease cuts, that advantage disappears —
 and a mask chosen for how firmly it blocks may simply stay put and keep blocking. <b>A mask can be
@@ -315,9 +315,9 @@ loose enough to lose state B. That window may be wide, narrow, or empty, and whi
 depends on geometry that can be measured before any candidate exists. That observation is what the
 method below is built around.</p>
 <div class="cards">
-{{card("2", "states to satisfy", "masked and released, at once")}}
-{{card("opposed", "the two requirements", "one bounds K<sub>D</sub> above, one below")}}
-{{card("geometry", "what decides the window", "measurable before any design")}}
+{card("2", "states to satisfy", "masked and released, at once")}
+{card("opposed", "the two requirements", "one bounds K<sub>D</sub> above, one below")}
+{card("geometry", "what decides the window", "measurable before any design")}
 </div>
 </section>
 
@@ -331,7 +331,7 @@ and the tether priced before anything is generated</b>, so the attachment point,
 and the usable range of mask affinities are already fixed when generation starts. Generation then
 searches a space the geometry has narrowed, rather than a space that has to be filtered down
 afterwards.</p></div>
-<div class="chart wide">{{R.architecture_schematic()}}</div>
+<div class="chart wide">{R.architecture_schematic()}</div>
 
 <h3>Why each module is separate</h3>
 <div class="scroll"><table><thead><tr><th>module</th><th>what it answers</th>
@@ -389,9 +389,9 @@ first candidate failed that test, and the record of it is kept below.</p>
 forms, and the geometry that matters for a tether is how far each terminus sits from that
 surface.</p></div>
 <div class="cards">
-{card(f"{{iface['interface_area_A2']:.0f}} Å²", "interface area", f"{{repro['bsa_mean_A2']}} ± {{repro['bsa_sd_A2']}} Å² buried across {{repro['n_copies']}} copies")}
+{card(f"{iface['interface_area_A2']:.0f} Å²", "interface area", f"{repro['bsa_mean_A2']} ± {repro['bsa_sd_A2']} Å² buried across {repro['n_copies']} copies")}
 {card(iface['n_paratope'], "paratope residues", "burying &gt;1 Å² on binding")}
-{card(f"{{region['CDR3']}}/{{iface['n_paratope']}}", "of it in CDR3", f"CDR1 {{region['CDR1']}} · CDR2 {{region['CDR2']}} · framework {{region['framework']}}", hl=True)}
+{card(f"{region['CDR3']}/{iface['n_paratope']}", "of it in CDR3", f"CDR1 {region['CDR1']} · CDR2 {region['CDR2']} · framework {region['framework']}", hl=True)}
 {card(ref['cdrs']['CDR3']['length'], "CDR3 length", "residues")}
 </div>
 {chart_wide("paratope_footprint", "Surface buried per nanobody residue on complex formation.")}
@@ -437,10 +437,10 @@ C<sub>eff</sub> at the span measured above — a distance taken from the structu
 </div>
 {chart_wide("design_window", "Usable mask affinity against linker length. Shaded where both requirements hold at once.")}
 <div class="cards">
-{card(f"{{bN['window_decades']:.1f}}", "decades of usable K<sub>D</sub>", f"N-terminal, {{bN['linker_residues']}}-residue linker", hl=True)}
-{card(f"{{bC['window_decades']:.1f}}", "decades, C-terminal", f"best at {{bC['linker_residues']}} residues")}
-{card(f"≤{{closed_C}}", "residues where C-terminal fails", "no window at any affinity")}
-{card(f"{{bN['km_max_for_masking_M']*1e6:.0f}} µM", "loosest mask that still blocks", f"N-terminal, {{bN['linker_residues']}} residues")}
+{card(f"{bN['window_decades']:.1f}", "decades of usable K<sub>D</sub>", f"N-terminal, {bN['linker_residues']}-residue linker", hl=True)}
+{card(f"{bC['window_decades']:.1f}", "decades, C-terminal", f"best at {bC['linker_residues']} residues")}
+{card(f"≤{closed_C}", "residues where C-terminal fails", "no window at any affinity")}
+{card(f"{bN['km_max_for_masking_M']*1e6:.0f} µM", "loosest mask that still blocks", f"N-terminal, {bN['linker_residues']} residues")}
 </div>
 <div class="banner"><b>What the constraint module returns.</b> Attach at the N-terminus, use a
 {bN['linker_residues']}-residue linker, and aim for a mask K<sub>D</sub> somewhere below
@@ -474,7 +474,7 @@ neutralizes by covering the toxin's functional site, so that same peptide is the
 <section class="sec">
 <div class="stack"><div class="eyebrow">Module 02b · score the binding</div>
 <h3>Is the site covered?</h3></div>
-<div class="chart wide">{{R.occlusion_schematic()}}</div>
+<div class="chart wide">{R.occlusion_schematic()}</div>
 {folding_html}
 <div class="viewer">
 <div class="vbar"><select id="pick">{options}</select>
@@ -584,6 +584,16 @@ Data Bank.</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
 <script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi))}</script>
 </body></html>"""
+
+
+import re as _re
+_LEAK = _re.compile(r"\{\s*(?:R\.|[A-Za-z_][A-Za-z0-9_]*\s*\[|[a-z_]+\s*\()")
+_hits = _LEAK.findall(HTML)
+if _hits:
+    _spots = [HTML[m.start():m.start() + 70].replace("\n", " ")
+              for m in list(_LEAK.finditer(HTML))[:6]]
+    raise SystemExit("unresolved template expressions in the output:\n  "
+                     + "\n  ".join(_spots))
 
 (DOCS / "index.html").write_text(HTML)
 print(f"docs/index.html  {len(HTML)//1024} KB")

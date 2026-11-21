@@ -130,27 +130,35 @@ def tradeoff(tether):
     plt = _style()
     model = tether["model"]
     km = np.logspace(-11, -2, 400)
-    fig, ax = plt.subplots(figsize=(5.0, 3.0))
+    fig, ax = plt.subplots(figsize=(5.6, 3.3))
+    handles = []
     for n_res, colour in ((5, SEQ), (20, CHROME)):
         row = next(r for r in tether["scan"]
                    if r["terminus"] == "N" and r["linker_residues"] == n_res)
         c_eff = row["c_eff_M"]
-        y = c_eff / (c_eff + km)
-        ax.plot(km * 1e9, y, lw=2, color=colour)
-        ax.annotate(f"masked · {n_res}-residue linker", (km[195] * 1e9, y[195]),
-                    textcoords="offset points", xytext=(4, 5), fontsize=7.5, color=colour)
+        line, = ax.plot(km * 1e9, c_eff / (c_eff + km), lw=2, color=colour,
+                        label=f"masked, {n_res}-residue linker")
+        handles.append(line)
     bound = ((model["toxin_conc_M"] / model["KT_M"])
              / (1 + model["toxin_conc_M"] / model["KT_M"] + model["mask_conc_M"] / km))
-    ax.plot(km * 1e9, bound, lw=2, color=STR)
-    ax.annotate("toxin-bound after cleavage", (km[255] * 1e9, bound[255]),
-                textcoords="offset points", xytext=(-8, -15), fontsize=7.5,
-                color=STR, ha="right")
-    for level, text in ((1 - model["leak_max"], "99% masked"),
-                        (model["recovery_min"], "90% recovered")):
-        ax.axhline(level, lw=1.1, color=NULL, ls=(0, (2, 3)))
-        ax.text(1.5e-2, level, f" {text}", fontsize=6.8, color=INK3, va="center")
-    ax.set_xscale("log"); ax.set_ylim(0, 1.06)
-    ax.set_xlabel("mask–VHH $K_D$  (nM)"); ax.set_ylabel("fraction of nanobody")
+    line, = ax.plot(km * 1e9, bound, lw=2, color=STR,
+                    label="toxin-bound after cleavage")
+    handles.append(line)
+    for level in (1 - model["leak_max"], model["recovery_min"]):
+        ax.axhline(level, lw=1, color=NULL, ls=(0, (2, 3)), zorder=0)
+    ax.set_xscale("log")
+    ax.set_xlim(1e-2, 1e7)
+    ax.set_ylim(0, 1.18)
+    ax.set_yticks([0, .25, .5, .75, 1.0])
+    # thresholds labelled in the margin, clear of every curve
+    ax.text(1.4e7, 1 - model["leak_max"], f"{(1-model['leak_max'])*100:.0f}% masked",
+            fontsize=7, color=INK3, va="center")
+    ax.text(1.4e7, model["recovery_min"], f"{model['recovery_min']*100:.0f}% recovered",
+            fontsize=7, color=INK3, va="center")
+    ax.set_xlabel("mask\u2013VHH $K_D$  (nM)")
+    ax.set_ylabel("fraction of nanobody")
+    ax.legend(handles=handles, fontsize=7.2, loc="lower center",
+              bbox_to_anchor=(0.46, -0.02), ncol=1, handlelength=1.6)
     return _save(fig, "tradeoff")
 
 
