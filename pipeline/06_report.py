@@ -535,6 +535,8 @@ nothing is typed in by hand. All of it runs on CPU.</p></div>
 <a href="{REPO_URL}">{REPO_URL.split("//")[1]}</a></p>
 </section>
 
+{R.scale_section()}
+
 <section class="sec">
 <div class="stack"><div class="eyebrow">Prior work</div>
 <h2>Where this problem is familiar from</h2>

@@ -228,6 +228,7 @@ def write_reference_pdb(chains=("A", "X")):
 # ---------------------------------------------------------------- schematic
 SEQ, STR, CHROME, NULL = "#2D5BD1", "#C06014", "#0E7C7B", "#6E7880"
 INK, INK2, INK3, RULE = "#12191F", "#3A464F", "#6E7880", "#DDE4E7"
+SEQ_WASH, STR_WASH = "#EAEFFB", "#FAEEE5"
 
 
 def _box(x, y, w, h, accent, number, title, lines, status, status_colour):
@@ -869,3 +870,181 @@ an affinity inside a narrow window. That is the system characterised here experi
 SEC-SAXS, ensemble modelling and direct affinity measurement — rather than predicted.</div>
 </div>
 </details>"""
+
+
+def scale_section() -> str:
+    """How large the campaign has to be, and how the lab makes it smaller.
+
+    Counts are projections from published hit rates; runtimes are measured on
+    this machine. Both are labelled as such on the page.
+    """
+    W, H = 1120, 352
+    rows = [
+        ("Candidate complexes", 6, 2, "geometry screen: is a terminus clear of the paratope?"),
+        ("Mask backbones", 10000, 10000, "RFdiffusion, per surviving complex"),
+        ("Sequences", 80000, 80000, "ProteinMPNN, 8 per backbone"),
+        ("Fold and developability", 80000, 4000, "ESMFold; filters cut cost, not failure rate"),
+        ("Two-state scoring", 4000, 400, "tethered complex: masked and released"),
+        ("Pareto selection", 400, 30, "diverse, not just top-ranked"),
+        ("Ordered", 30, 3, "first cycle"),
+    ]
+    import math
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
+         f'role="img" aria-label="Design funnel">',
+         '<style>'
+         '.n-t{font:600 12.5px Inter,system-ui,sans-serif}'
+         '.n-s{font:11px Inter,system-ui,sans-serif}'
+         '.n-v{font:600 12px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.n-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '</style>',
+         f'<text x="0" y="13" class="n-h" fill="{CHROME}">'
+         'HOW BIG THE CAMPAIGN HAS TO BE, PER COMPLEX</text>']
+    y, maxw = 32, 560
+    for name, a, b, note in rows:
+        wa = max(4, maxw * math.log10(a + 1) / math.log10(80001))
+        wb = max(4, maxw * math.log10(b + 1) / math.log10(80001))
+        s.append(f'<rect x="250" y="{y}" width="{wa:.0f}" height="20" rx="2" '
+                 f'fill="{SEQ_WASH}"/>')
+        s.append(f'<rect x="250" y="{y}" width="{wb:.0f}" height="20" rx="2" fill="{SEQ}"/>')
+        s.append(f'<text x="242" y="{y+14}" class="n-t" fill="{INK}" '
+                 f'text-anchor="end">{name}</text>')
+        s.append(f'<text x="{250+max(wa,wb)+10}" y="{y+14}" class="n-v" fill="{INK}">'
+                 f'{b:,}</text>')
+        s.append(f'<text x="{250+max(wa,wb)+90}" y="{y+14}" class="n-s" fill="{INK3}">'
+                 f'{note}</text>')
+        y += 30
+    s.append(f'<text x="250" y="{y+14}" class="n-s" fill="{INK3}">'
+             'Pale bar: entering the stage. Solid bar: leaving it. Log scale.</text>')
+    s.append(f'<rect x="0" y="{y+30}" width="{W}" height="56" rx="3" fill="#FFFFFF" '
+             f'stroke="{RULE}"/>')
+    s.append(f'<text x="16" y="{y+52}" class="n-t" fill="{INK}">'
+             'About 660 CPU-hours per complex on eight cores, or roughly 33 GPU-hours.</text>')
+    s.append(f'<text x="16" y="{y+72}" class="n-s" fill="{INK2}">'
+             'Scaled from measured runtimes here: 0.4 s a sequence for ProteinMPNN, 22 s a '
+             'construct for ESMFold, 148 s for a tethered three-chain complex.</text>')
+    s.append("</svg>")
+    funnel = "".join(s)
+
+    cm = _confusion_matrix()
+    return f"""
+<section class="sec">
+<div class="stack"><div class="eyebrow">Scale</div>
+<h2>What the campaign costs, and how the lab shrinks it</h2>
+<p>The counts below are projections, not results. They come from published hit rates for binder
+design — which for conditional binders are far lower than for ordinary ones — and the compute is
+scaled from runtimes measured on this machine.</p></div>
+<div class="chart wide">{funnel}</div>
+<div class="note"><b>Filtering buys time, not success.</b> The RFdiffusion antibody work reports
+that design success was no higher for filtered than for unfiltered designs. The in-silico stages
+here are therefore sized to make the campaign affordable, not to raise the hit rate. What raises
+the hit rate is the next part.</p></div>
+
+<div class="stack"><h3>Three first, and what they are for</h3>
+<p>The first order is three constructs, and its purpose is diagnosis rather than success. Each
+tells you which stage of the pipeline is wrong:</p></div>
+<div class="scroll"><table><thead><tr><th>measurement</th><th>reads out</th>
+<th>if it fails, the problem is</th></tr></thead><tbody>
+<tr><td>Purification — ÄKTA trace, single band on the gel</td><td>can it be made at all</td>
+<td>the feasibility score: fold, aggregation, developability</td></tr>
+<tr><td>Octet, toxin affinity with the protease absent</td><td>is it masked</td>
+<td>the masking half of the unmasking score</td></tr>
+<tr><td>Octet, toxin affinity with the protease present</td><td>does it activate</td>
+<td>the trigger score, or the release half</td></tr>
+</tbody></table></div>
+<div class="note good"><b>Each failure mode points at a different module.</b> That is why three is
+enough to start: a construct that will not express, one that expresses but never masks, and one
+that masks but never releases are three different diagnoses, and each sends the work back to a
+different part of the pipeline. Two or three cycles of this should give a pipeline that reliably
+proposes three producible, toxin-binding, switching variants.</div>
+
+<div class="stack"><h3>Then twenty to thirty, and the pipeline gets scored</h3>
+<p>Once the loop reliably produces working candidates, the point of a larger batch changes. It is
+no longer about finding a molecule; it is about measuring whether the scores predict anything. With
+twenty to thirty measured constructs, each score can be scored in turn.</p></div>
+<div class="chart wide">{cm}</div>
+<div class="note warn"><b>The batch has to include designs the pipeline rejected.</b> If only
+top-ranked candidates are made, every measurement lands in the left-hand column: TP and FP can be
+counted, so precision is computable, but FN cannot, so recall is not. Spending perhaps a quarter of
+the batch on designs the score rejected is what turns a hit list into a validation set.</div>
+<div class="note"><b>Beyond that, the labels become training data.</b> At around a hundred measured
+constructs the measurements stop being only a scorecard and start being a dataset: a binary label —
+does it switch — against the sequence and structure representations already computed for every
+candidate. That is the point at which a learned scorer can replace a hand-built one, and it is the
+reason the representations are stored for designs that were never made.</div>
+</section>"""
+
+
+def _metrics(tp, fn, fp, tn):
+    recall = tp / (tp + fn) if tp + fn else 0.0
+    precision = tp / (tp + fp) if tp + fp else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+    return recall, precision, f1
+
+
+#: Three outcomes from the same 24-construct batch. The numbers are illustrative;
+#: the metrics beneath them are computed, so the arithmetic cannot drift.
+VALIDATION_SCENARIOS = [
+    ("Perfect scorer", 8, 0, 0, 16, "every switch found, nothing wasted"),
+    ("Cautious scorer", 2, 6, 2, 14, "keeps few designs and misses most real switches"),
+    ("Permissive scorer", 6, 2, 15, 1, "finds most real switches, but nearly everything "
+                                       "it keeps is a dud"),
+]
+
+
+def _confusion_matrix() -> str:
+    W, H = 1120, 360
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
+         f'role="img" aria-label="Validation outcomes">',
+         '<style>'
+         '.c-t{font:600 13px Inter,system-ui,sans-serif}'
+         '.c-n{font:600 15px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.c-k{font:9.5px ui-monospace,monospace;letter-spacing:.06em}'
+         '.c-s{font:11px Inter,system-ui,sans-serif}'
+         '.c-m{font:600 11.5px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.c-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '</style>',
+         f'<text x="0" y="13" class="c-h" fill="{CHROME}">'
+         'WHAT 24 MEASURED CONSTRUCTS SAY ABOUT A SCORE</text>']
+    for n, (name, tp, fn, fp, tn, note) in enumerate(VALIDATION_SCENARIOS):
+        x = n * 380
+        recall, precision, f1 = _metrics(tp, fn, fp, tn)
+        s.append(f'<text x="{x}" y="44" class="c-t" fill="{INK}">{name}</text>')
+        s.append(f'<text x="{x}" y="62" class="c-s" fill="{INK3}">{note}</text>')
+        s.append(f'<text x="{x+121}" y="84" class="c-k" fill="{INK3}" '
+                 'text-anchor="middle">score keeps</text>')
+        s.append(f'<text x="{x+211}" y="84" class="c-k" fill="{INK3}" '
+                 'text-anchor="middle">score rejects</text>')
+        for val, key, colour, col, row in ((tp, "TP", SEQ, 0, 0), (fn, "FN", STR, 1, 0),
+                                           (fp, "FP", STR, 0, 1), (tn, "TN", SEQ, 1, 1)):
+            cx, cy = x + 78, 92 + row * 64
+            cx += col * 90
+            good = key in ("TP", "TN")
+            s.append(f'<rect x="{cx}" y="{cy}" width="86" height="60" rx="2" '
+                     f'fill="{"#F2F7F6" if good else "#FCF4EC"}" stroke="{RULE}"/>')
+            s.append(f'<text x="{cx+10}" y="{cy+19}" class="c-k" fill="{colour}">{key}</text>')
+            s.append(f'<text x="{cx+10}" y="{cy+47}" class="c-n" fill="{INK}">{val}</text>')
+        s.append(f'<text x="{x+72}" y="{126}" class="c-k" fill="{INK3}" '
+                 'text-anchor="end">switches</text>')
+        s.append(f'<text x="{x+72}" y="{190}" class="c-k" fill="{INK3}" '
+                 'text-anchor="end">does not</text>')
+        yy = 240
+        for label, value in (("recall", recall), ("precision", precision), ("F1", f1)):
+            bold = label == "F1"
+            if bold:
+                s.append(f'<line x1="{x+78}" y1="{yy-15}" x2="{x+254}" y2="{yy-15}" '
+                         f'stroke="{RULE}"/>')
+            s.append(f'<text x="{x+78}" y="{yy}" class="c-s" '
+                     f'fill="{INK if bold else INK2}">{label}</text>')
+            s.append(f'<text x="{x+254}" y="{yy}" class="c-m" '
+                     f'fill="{INK if bold else INK2}" text-anchor="end">{value:.2f}</text>')
+            yy += 20
+    s.append(f'<rect x="0" y="300" width="{W}" height="54" rx="3" fill="#FFFFFF" '
+             f'stroke="{RULE}"/>')
+    s.append(f'<text x="16" y="322" class="c-t" fill="{INK}">'
+             'F1 rises only when recall and precision are high together.</text>')
+    s.append(f'<text x="16" y="342" class="c-s" fill="{INK2}">'
+             'Both imperfect scorers look defensible on one metric and fail on F1. A score '
+             'that keeps almost nothing and one that keeps almost everything are both useless, '
+             'and a single headline number hides which failure you have.</text>')
+    s.append("</svg>")
+    return "".join(s)
