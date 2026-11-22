@@ -728,11 +728,19 @@ def _count_rows():
     try:
         cl = load_json("03_constructs.json")
         n_mask, n_link = len(cl["masks"]), cl["n_linkers"]
-        row("\u2014", "masks and linkers paired by the design matrix, which "
-                      "varies one at a time rather than crossing everything",
+        n_ref = sum(1 for c in cl["constructs"]
+                    if c.get("mask") and c["linker_residues"] == cl["reference_length"])
+        n_len = cl["n_pairs"] - n_ref
+        row("\u2014", f"masks and linkers paired so that one thing varies at a "
+                      f"time: every mask against every linker at the reference "
+                      f"length ({n_ref}), then {len(cl['length_linkers'])} linker "
+                      f"sequences across the other lengths on a graft, its "
+                      f"scramble and the inert control ({n_len}). Combinations "
+                      f"differing in two ways at once are not built, because no "
+                      f"difference they showed could be attributed to either",
             f"{n_mask} \u00d7 {n_link} = {n_mask * n_link} possible, "
             f"<b>{cl['n_constructs']} built</b>",
-            "structure prediction", selected=True)
+            "structure prediction", selected="by design")
         f = load_json("04_folding.json")
         row("\u2014", "each construct folded once with ESMFold, as a single chain",
             f"<b>{f.get('n_folded', 0)} structures</b>", "03, 04 and 05")

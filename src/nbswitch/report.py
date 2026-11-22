@@ -1442,7 +1442,11 @@ def generation_table(counts) -> str:
         dead = feeds == "nothing downstream"
         cell = f'<td class="dead">{feeds}</td>' if dead else f"<td>{feeds}</td>"
         tr = '<tr class="warnrow">' if dead else "<tr>"
-        mark = ' <span class="tag">selects</span>' if r.get("selected") else ""
+        # a merit-based cut and a decision not to build a combination are
+        # different things, and only the first discards a candidate
+        sel = r.get("selected")
+        label = sel if isinstance(sel, str) else ("selects" if sel else "")
+        mark = f' <span class="tag">{label}</span>' if label else ""
         body += (f'{tr}<td class="mono">{r["stage"]}</td>'
                  f'<td>{r["what"]}{mark}</td>'
                  f'<td class="mono">{r["result"]}</td>{cell}</tr>')
