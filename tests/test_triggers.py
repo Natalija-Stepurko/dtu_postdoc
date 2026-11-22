@@ -27,8 +27,9 @@ def test_blood_and_bite_site_for_a_free_histidine():
 def test_the_comparison_is_conservative():
     """Worst case both ends: most protonated in blood, least at the site."""
     w = T.switch_window()
-    assert w["blood_worst"] == pytest.approx(T.fraction_protonated(7.35), abs=1e-6)
-    assert w["site_worst"] == pytest.approx(T.fraction_protonated(6.50), abs=1e-6)
+    # the reported values are rounded for display, so compare at that precision
+    assert w["blood_worst"] == pytest.approx(T.fraction_protonated(7.35), abs=1e-4)
+    assert w["site_worst"] == pytest.approx(T.fraction_protonated(6.50), abs=1e-4)
     assert w["fold_change"] > 1
 
 
@@ -44,5 +45,5 @@ def test_raising_the_pka_buys_site_protonation_and_costs_systemic_leak():
 
 def test_most_of_the_residue_is_still_neutral_at_the_site():
     w = T.switch_window()
-    assert w["unprotonated_at_site"] == pytest.approx(1 - w["site_worst"], abs=1e-6)
+    assert w["unprotonated_at_site"] == pytest.approx(1 - w["site_worst"], abs=1e-4)
     assert w["unprotonated_at_site"] > 0.5

@@ -1037,28 +1037,12 @@ to more than one nanobody, the antigen-binding domain is left unchanged and only
 components are designed, so that the architecture and the computational methods transfer even
 though individual mask sequences will not.</p>
 <div class="chart wide">{R.states_schematic()}</div>
-<p>The two states impose opposing requirements on the mask. Because the mask is tethered it is held
-near the paratope at a high local concentration, estimated at {N['ceff']:.0f} mM for this
-construct, so a weak interaction is sufficient to block antigen binding. After cleavage that
-local concentration is lost and the mask must dissociate, which an interaction of high affinity
-would not do. The design target is therefore a bounded range of mask affinity rather than a
-maximum, which is the opposite of the objective most protein design methods optimise.</p>
-<p>That bounded range is the whole design problem in one sentence, and it is why this cannot be
-approached by maximising affinity. Everything downstream exists to find sequences inside it.</p>
 </section>
 
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">03</div><h2>Proposed computational pipeline</h2>
-<p>The pipeline has six modules. One estimates what mask affinity and linker length could work at
-all. Two generate independently: the mask comes from the antigen's contact face on this nanobody,
-the linker from substrate data, and neither constrains the other until they are assembled into one
-chain. Three scoring functions then assess structural feasibility, the interaction between mask and
-nanobody, and the susceptibility of the linker to proteolysis. The three scores are combined by
-multiobjective ranking, and the resulting front is verified by predicting the whole assembly with
-its antigen, which is the only step that asks directly whether the antigen can still bind. Each
-module can use several computational methods, so individual methods can be compared or replaced
-without altering the pipeline.</p></div>
+</div>
 <div class="chart wide">{R.architecture_schematic()}</div>
 <div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
 <p>The three scores are not combined into a single value, since a high score on one objective
