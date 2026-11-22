@@ -53,11 +53,21 @@ RISE_PER_RESIDUE_A = 3.8
 #: molecules per cubic angstrom -> mol/L
 CONC_CONVERSION = 1660.54
 
-#: Design requirements used to bound the mask affinity.
-MAX_SYSTEMIC_LEAK = 0.01     # at most 1% of construct unmasked in circulation
+#: Design requirements used to bound the mask affinity. These are choices, not
+#: measurements, and the window moves with them: see the sensitivity note in
+#: Module 01. The leak sets the ceiling and the recovery sets the floor, so
+#: each bound answers to exactly one of them.
+MAX_SYSTEMIC_LEAK = 0.05     # at most 5% of construct unmasked in circulation
 MIN_TOXIN_RECOVERY = 0.90    # at least 90% of cleaved nanobody toxin-bound
 MASK_CONC_M = 1e-6           # released mask concentration = construct concentration
 TOXIN_CONC_M = 1e-7
+
+#: Nanobody-toxin dissociation constant. VHH5 a-sNTx, the nanobody of the
+#: worked example, is reported as low nanomolar against its short-neurotoxin
+#: targets (Ahmadi et al. 2025, Fig. 2c and Supplementary Table 5), which is
+#: where this value comes from. The entry's own complex is with P01426; the
+#: paper does not label which of its sNTx targets that is, so this is the
+#: reported range for the nanobody rather than the measured value for this pair.
 VHH_TOXIN_KD_M = 1e-9
 
 #: Residue is counted in the interface if it buries more than this on binding.
