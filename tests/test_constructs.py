@@ -52,3 +52,16 @@ def test_scramble_is_a_permutation():
     masks = C.mask_candidates(segments)
     assert sorted(masks["epi1_scram"]["seq"]) == sorted("RGKRV")
     assert masks["polyG"]["kind"] == "inert control"
+
+
+def test_generate_clears_the_output_directory_first():
+    """CleaveNet appends to its output file.
+
+    A work directory that survives between runs would accumulate every draw
+    ever made in it, so the generated count would depend on how many times
+    the stage had been run rather than on what was asked for.
+    """
+    import inspect
+    from nbswitch import linkers as L
+    source = inspect.getsource(L.generate)
+    assert "rmtree" in source, "the output directory must be cleared before generating"

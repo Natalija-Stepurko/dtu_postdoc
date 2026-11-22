@@ -29,6 +29,7 @@ human MMPs and has to be read that way.
 """
 from __future__ import annotations
 
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -109,6 +110,11 @@ def generate(n: int, temperature: float = 0.9, seed_dir: Path | None = None,
     profile = work / "profile.csv"
     conditioning_profile().to_csv(profile, index=False)
     out = work / "generated"
+    # CleaveNet opens its output file in append mode, so a work directory that
+    # survives between runs accumulates every draw ever made there and the
+    # reported count becomes a function of how often the stage was run.
+    if out.exists():
+        shutil.rmtree(out)
     subprocess.run(
         [python, "src/generate.py", "--num-seqs", str(n),
          "--temperature", str(temperature), "--z-scores", str(profile),
