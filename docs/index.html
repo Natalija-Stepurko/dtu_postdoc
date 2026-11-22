@@ -321,9 +321,8 @@ that produced it.</p></div>
 
 <h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
 <div class="mri"><div><div class="k">Method</div><div class="v">Solvent-accessible surface was calculated for the nanobody alone and in complex, and residues losing more than 1 Å<sup>2</sup> on binding were defined as the paratope. Distances from each terminus to that surface were measured.</div></div><div><div class="k">Result</div><div class="v">The paratope comprises 19 residues burying 631 Å<sup>2</sup>. The N-terminus lies 12.42 Å from the nearest paratope residue and the C-terminus 27.45 Å. Across the 2 VHH–antigen pairs in the entry the buried area is 1232 ± 42 Å<sup>2</sup>.</div></div><div><div class="k">Interpretation</div><div class="v">The N-terminus is closer to the antigen-binding surface and is therefore the attachment point used throughout. The agreement between the two pairs indicates the interface is consistently resolved within this crystal.</div></div></div>
-<div class="viewer"><div class="vbar"><span class="eyebrow">The nanobody and its loops</span><button data-spin="cdr">spin</button></div><div class="vstage" id="stage-cdr" data-cdr=""></div><div class="vkey"><span><i style="background:#C3CBD1"></i>framework</span><span><i style="background:#2E7DBE"></i>CDR1</span><span><i style="background:#B8860B"></i>CDR2</span><span><i style="background:#A8324A"></i>CDR3</span></div></div>
 <div class="viewer">
-<div class="vbar"><span class="eyebrow">Deposited structure</span>
+<div class="vbar"><span class="eyebrow">Deposited structure · 9RIU</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>framework</span><span><i style="background:#2E7DBE"></i>CDR1</span><span><i style="background:#B8860B"></i>CDR2</span><span><i style="background:#A8324A"></i>CDR3</span>
@@ -661,30 +660,6 @@ function nanobodyColour(resi, offset, base) {
   return name ? CDR_COLOUR[name] : (base || '#337D79');
 }
 
-function mountCdr(hostId) {
-  const host = document.getElementById(hostId);
-  if (!host || typeof CDRS === 'undefined') return;
-  const v = $3Dmol.createViewer(hostId, {backgroundColor: '#FFFFFF'});
-  jQuery.get('structures/VHH_only.pdb', function (data) {
-    const m = v.addModel(data, 'pdb');
-    v.setStyle({}, {cartoon: {color: '#C3CBD1'}});
-    Object.keys(CDRS).forEach(function (name) {
-      v.setStyle({resi: CDRS[name]},
-                 {cartoon: {color: CDR_COLOUR[name] || '#8C72AD'}});
-      const sel = m.selectedAtoms({resi: CDRS[name][Math.floor(CDRS[name].length / 2)],
-                                   atom: 'CA'});
-      if (sel.length) {
-        const a = sel[0];
-        v.addLabel(name, {position: {x: a.x, y: a.y, z: a.z},
-          backgroundColor: CDR_COLOUR[name], backgroundOpacity: 0.92,
-          fontColor: 'white', fontSize: 11, borderThickness: 0, inFront: true});
-      }
-    });
-    v.zoomTo(); v.zoom(1.25); v.render();
-    host.__viewer = v;
-  });
-}
-
 function mountEnsemble(hostId, scoreKey) {
   const host = document.getElementById(hostId);
   if (!host || typeof ENSEMBLE === 'undefined') return;
@@ -715,7 +690,6 @@ function mountEnsemble(hostId, scoreKey) {
 
 window.addEventListener('load', function () {
   boot();
-  document.querySelectorAll('[data-cdr]').forEach(function (el) { mountCdr(el.id); });
   document.querySelectorAll('[data-ensemble]').forEach(function (el) {
     mountEnsemble(el.id, el.dataset.ensemble || null);
   });

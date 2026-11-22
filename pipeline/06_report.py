@@ -801,9 +801,8 @@ that produced it.</p></div>
      "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
      "point used throughout. The agreement between the two pairs indicates the interface is "
      "consistently resolved within this crystal.")}
-{R.cdr_viewer()}
 <div class="viewer">
-<div class="vbar"><span class="eyebrow">Deposited structure</span>
+<div class="vbar"><span class="eyebrow">Deposited structure · {PDB_ID}</span>
 <button data-spin="solved">spin</button></div>
 <div class="vstage" id="stage-solved"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
