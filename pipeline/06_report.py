@@ -1133,72 +1133,15 @@ belongs to</b> &mdash; the question it asks, the method that produced its number
 out</summary><div class="techbody">
 {R.pipeline_table(REGISTER)}</div></details></div>
 
-<h3 class="mod"><span>Module 01</span>Constraints on mask affinity and linker geometry</h3>
-{chart_wide("usable_affinity",
-   "Predicted mask-affinity range for a " + str(N["linker_best"]) + "-residue "
-   "N-terminal linker. Equilibrium-model result using the measured VHH–antigen "
-   "K<sub>D</sub> of " + f"{model['KT_M']*1e9:.2f}" + " nM.")}
+<h3 class="mod"><span>Module 01</span>Structural and affinity constraints</h3>
 <div class="stack">
-<p>The tether increases the effective concentration of the mask near the nanobody. This allows a
-relatively weak interaction to block the antigen-binding site before cleavage.</p>
-<p>For a {N['linker_best']}-residue N-terminal linker, the model predicts a usable mask affinity
-range of <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b>. Masks that bind more tightly may
-remain associated after cleavage, while weaker masks may not provide sufficient masking. That
-length gives the widest predicted range, so it is the starting point for mask generation.</p>
-<p>The range depends on the assumed binding conditions and is used to guide candidate
-generation.</p></div>
+<p><b>Reference structure.</b> I used the experimental VHH–toxin complex (PDB {PDB_ID}) to
+identify the antigen-binding residues and the possible linker attachment sites. The paratope
+contains {N['n_paratope']} residues. The N-terminus is {N['n_term']:.1f} Å from the nearest
+paratope residue, against {N['c_term']:.1f} Å for the C-terminus, so the N-terminus is the
+attachment point used for mask design.</p></div>
 
-<details class="tech"><summary>Model details</summary><div class="techbody">
-{mri("I used the experimental nanobody–antigen structure (" + PDB_ID + ") to measure the "
-     "distance between the nanobody termini and the paratope. A worm-like-chain model was then "
-     "used to estimate the effective mask concentration for different linker lengths. Combining "
-     "this estimate with a binding competition model gives the range of mask affinities that "
-     "satisfy both the masking and the release requirement.",
-     f"For an N-terminal attachment with a {N['linker_best']}-residue linker the estimated "
-     f"effective mask concentration is {N['ceff']:.0f} mM, and the usable range spans "
-     f"{N['window']:.2f} decades. A C-terminal attachment produces a narrower range.",
-     "These estimates depend on the nanobody–antigen affinity, the protein concentrations "
-     "and the assumptions of the linker model, so they constrain candidate generation rather "
-     "than define an exact target affinity.")}
 <div class="two">
-{chart("design_window", "Usable mask affinity against linker length.")}
-{chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the two bounds.")}
-</div>
-{chart_wide("affinity_window", "Usable mask affinity against the nanobody&rsquo;s own antigen "
-   "affinity. Both bounds are mask dissociation constants, so they share one axis and the range "
-   "is the height of the band.")}
-{R.assumptions_table(ASSUMPTIONS)}
-{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
-<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
-<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
-<br>P<sub>bound</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,M</sub>)</div>
-<p>The bounds correspond to at most {model['leak_max']*100:.0f}% of the construct unmasked before
-cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.</p>
-{chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
-</div></details>
-
-
-<h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
-{mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
-     "residues losing more than 1 Å<sup>2</sup> on binding were defined as the paratope. "
-     "Distances from each terminus to that surface were measured.",
-     f"The paratope comprises {N['paratope']} residues burying {N['iface_area']:.0f} Å<sup>2</sup>. "
-     f"The N-terminus lies {N['n_term']} Å from the nearest paratope residue and the C-terminus "
-     f"{N['c_term']} Å. Across the {N['copies']} VHH–antigen pairs in the entry the buried area is "
-     f"{N['bsa_mean']:.0f} ± {N['bsa_sd']:.0f} Å<sup>2</sup>.",
-     "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
-     "point used throughout. The agreement between the two pairs indicates the interface is "
-     "consistently resolved within this crystal.")}
-<p>The nanobody in this entry is V<sub>H</sub>H5 a-sNTx and the antigen is short neurotoxin 1
-(P01426). Its affinity is <b>low nanomolar</b>: the study reports all fifteen cross-reactive
-V<sub>H</sub>Hs in that range by biolayer interferometry, with dissociation rates
-<b>k<sub>off</sub> &lt; 5.5 &times; 10<sup>&minus;4</sup> s<sup>&minus;1</sup></b>. This sets the
-release floor in Module 01: the released mask competes with the antigen for the same site, so how
-tightly the nanobody holds its antigen decides how tight a mask it can tolerate. The value used
-throughout is {N['vhh_toxin_kd_nM']:.0f} nM, from that reported range. The paper does not say which
-of its short-neurotoxin targets P01426 is, so this is the range for the nanobody and not a measured
-constant for this pair.</p>
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure · {PDB_ID}</span>
 <button data-spin="solved">spin</button></div>
@@ -1210,6 +1153,43 @@ constant for this pair.</p>
 <span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
+{chart("usable_affinity",
+   "Predicted mask-affinity range for a " + str(N["linker_best"]) + "-residue N-terminal "
+   "linker.")}
+</div>
+
+<div class="stack">
+<p><b>Mask affinity and linker length.</b> The mask must block the paratope while tethered but
+dissociate following cleavage. I used a worm-like-chain model to estimate the effective
+concentration of the tethered mask, and a binding competition model to identify the affinities
+that satisfy both requirements.</p>
+<p>For a {N['linker_best']}-residue N-terminal linker the model predicts a usable mask
+K<sub>D</sub> range of <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b> under the assumed
+conditions. A relatively weak mask could therefore be sufficient, provided the linker holds it
+close to the paratope. That length gives the widest predicted range, so it is the starting point
+for mask generation.</p>
+<p><b>Which antigen affinity this rests on.</b> The release floor is set by how tightly the
+nanobody holds its own antigen, so the measured value matters. The paper reports a biolayer
+interferometry K<sub>D</sub> of <b>1.90 nM</b> for V<sub>H</sub>H5 a-sNTx against sNTx-1, and that
+is the value used here. It does not state which of its numbered short-neurotoxin targets sNTx-1
+is, and the structure is of the complex with short neurotoxin 1 (P01426), so the correspondence
+is not confirmed. On the earlier assumed 1 nM the floor would be 99 nM instead of
+{N['km_lo']:.0f} nM; the ceiling is unaffected. The distinction is kept explicit until the
+correspondence is established.</p></div>
+
+<details class="tech"><summary>Structural analysis and model assumptions</summary>
+<div class="techbody">
+{mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
+     "residues losing more than 1 Å<sup>2</sup> on binding were defined as the paratope. "
+     "Distances from each terminus to that surface were measured.",
+     f"The paratope comprises {N['paratope']} residues burying {N['iface_area']:.0f} Å<sup>2</sup>. "
+     f"The N-terminus lies {N['n_term']} Å from the nearest paratope residue and the C-terminus "
+     f"{N['c_term']} Å. Across the {N['copies']} VHH–antigen pairs in the entry the buried area is "
+     f"{N['bsa_mean']:.0f} ± {N['bsa_sd']:.0f} Å<sup>2</sup>.",
+     "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
+     "point used throughout. The agreement between the two pairs indicates the interface is "
+     "consistently resolved within this crystal.")}
+
 {chart_wide("paratope_footprint",
   f"Surface buried per nanobody residue on complex formation. Markers show the {N['n_near']} "
   f"residues with a heavy atom within {N['mask_cutoff']:g} Å of the antigen, which is the "
@@ -1264,6 +1244,39 @@ CDR loops and {N['n_fw_para']} in framework. Six of those framework residues
 the light chain. A VHH has no light chain, so that face is exposed and available to the antigen.
 The consequence for the design is that a mask has to cover framework 2 as well as the loops, which
 is more surface than a graft taken from the CDR contacts alone would address.</p>
+
+
+
+{mri("I used the experimental nanobody–antigen structure (" + PDB_ID + ") to measure the "
+     "distance between the nanobody termini and the paratope. A worm-like-chain model was then "
+     "used to estimate the effective mask concentration for different linker lengths. Combining "
+     "this estimate with a binding competition model gives the range of mask affinities that "
+     "satisfy both the masking and the release requirement.",
+     f"For an N-terminal attachment with a {N['linker_best']}-residue linker the estimated "
+     f"effective mask concentration is {N['ceff']:.0f} mM, and the usable range spans "
+     f"{N['window']:.2f} decades. A C-terminal attachment produces a narrower range.",
+     "These estimates depend on the nanobody–antigen affinity, the protein concentrations "
+     "and the assumptions of the linker model, so they constrain candidate generation rather "
+     "than define an exact target affinity.")}
+<div class="two">
+{chart("design_window", "Usable mask affinity against linker length.")}
+{chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the two bounds.")}
+</div>
+{chart_wide("affinity_window", "Usable mask affinity against the nanobody&rsquo;s own antigen "
+   "affinity. Both bounds are mask dissociation constants, so they share one axis and the range "
+   "is the height of the band.")}
+{R.assumptions_table(ASSUMPTIONS)}
+{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
+<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
+<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
+<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
+<br>P<sub>bound</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,M</sub>)</div>
+<p>The bounds correspond to at most {model['leak_max']*100:.0f}% of the construct unmasked before
+cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.</p>
+{chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
+
+</div></details>
+
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
 {mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
