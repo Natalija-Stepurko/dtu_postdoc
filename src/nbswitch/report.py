@@ -105,6 +105,7 @@ table.wrap td:first-child{font-weight:600;color:var(--ink)}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 tr.warnrow td{background:#FDF4EC}
+.rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
 .pending{color:var(--ink-3);font-style:italic}
 table.exp td{vertical-align:top}
 td.dead{color:var(--chrome);font-weight:600}
@@ -1547,3 +1548,25 @@ def experiment_register(rows) -> str:
             '<col style="width:27%"><col style="width:12%">'
             '<col style="width:34%"></colgroup>'
             f'<thead>{head}</thead><tbody>{body}</tbody></table></div>')
+
+
+def rebuild_banner(stale, n_total: int) -> str:
+    """Say, at the top of the page, that a rebuild is in flight.
+
+    Published mid-rebuild, the page mixes design stages that have been rerun
+    with scores computed on the previous library. Every number is real; some
+    of them answer a question about a construct set that no longer exists.
+    """
+    if not stale:
+        return ""
+    return (
+        f'<div class="rebuild"><b>This page was built while a rebuild was '
+        f'running.</b> The mask design, linker design and construct library have '
+        f'been regenerated: masks are now taken from the antigen’s contact '
+        f'face and linkers are 24 residues rather than 16. '
+        f'{len(stale)} of {n_total} constructs are still being folded, so the '
+        f'three scoring modules, the ranking and the Pareto front below were '
+        f'computed on the previous library and do not yet describe these '
+        f'constructs. The structural characterisation, the affinity window, the '
+        f'linker generation, the length sweep and the untethered mask-binding '
+        f'test are current.</div>')

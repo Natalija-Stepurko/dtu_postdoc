@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Stage 6. Render docs/index.html from the stage outputs."""
-import sys, json
+import sys, json, os
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -15,7 +15,9 @@ from nbswitch.config import (DOCS, PDB_ID, REPO_URL, NOTEBOOK_URL, load_json,
 ref = load_json("01_reference.json")
 
 def _check_library_matches_structures():
-    """Refuse to build a page whose numbers and structures disagree.
+    """Constructs whose folded model does not match the library.
+
+    Refuse to build a page whose numbers and structures disagree.
 
     The construct library and the folded coordinates are separate artefacts.
     Changing the library without refolding leaves residue ranges pointing at
@@ -23,6 +25,7 @@ def _check_library_matches_structures():
     """
     from nbswitch.config import STRUCTURES
     lib = load_json("03_constructs.json")
+    stale = []
     for item in lib["constructs"]:
         path = STRUCTURES / f"{item['id']}.pdb"
         if not path.exists():
@@ -32,14 +35,21 @@ def _check_library_matches_structures():
             if line.startswith("ATOM"):
                 last = max(last, int(line[22:26]))
         if last and last != item["vhh_range"][1]:
-            raise SystemExit(
-                f"library and structures disagree: {item['id']} ends at residue "
-                f"{item['vhh_range'][1]} in 03_constructs.json but the folded "
-                f"model has {last}. Refold (stages 04 and 08) before building "
-                f"the page.")
+            stale.append(item["id"])
+    return stale
 
 
-_check_library_matches_structures()
+#: Building while a refold is in flight mixes new design stages with scores
+#: computed on the previous library. That is publishable only if the page says
+#: so, so the guard is a hard stop unless NBSWITCH_ALLOW_STALE is set, and then
+#: it reports instead of refusing.
+STALE = _check_library_matches_structures()
+ALLOW_STALE = os.environ.get("NBSWITCH_ALLOW_STALE") == "1"
+if STALE and not ALLOW_STALE:
+    raise SystemExit(
+        f"library and structures disagree for {len(STALE)} constructs "
+        f"({', '.join(STALE[:3])}...). Refold stages 04 and 08, or set "
+        f"NBSWITCH_ALLOW_STALE=1 to publish with the mismatch declared on the page.")
 tether = load_json("02_tether.json")
 lib = load_json("03_constructs.json")
 try:
@@ -933,6 +943,7 @@ which I developed a bacterial signalling assay for transmembrane helix heterodim
 <p>The follistatin work is directly relevant here, since it concerns an intramolecular interaction
 that regulates access to a protein-binding surface, which is the arrangement the present design
 introduces deliberately.</p></div>
+{R.rebuild_banner(STALE, len(lib['constructs']))}
 {background_html}
 </section>
 
