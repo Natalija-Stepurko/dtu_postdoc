@@ -100,27 +100,6 @@ schematic_facts = dict(
     n_redesigns=(redesign["n_unique"] if redesign else 0),
     boltz_tag=("RUN" if complexes else "RUNNING"))
 
-# the complex the pipeline was run on first and then set aside
-CAUTIONARY = "9GCN"
-cautionary_html = ""
-if TARGET_ID != CAUTIONARY:
-    import json as _json
-    _d = results_dir(CAUTIONARY)
-    try:
-        _ref = _json.loads((_d / "01_reference.json").read_text())
-        _teth = _json.loads((_d / "02_tether.json").read_text())
-        _fold = _json.loads((_d / "04_folding.json").read_text())
-        try:
-            _cplx = _json.loads((_d / "09_complexes.json").read_text())
-        except FileNotFoundError:
-            _cplx = None
-        cautionary_html = R.cautionary_section(
-            _ref, _teth, _fold, _cplx,
-            TARGETS[CAUTIONARY]["label"], CAUTIONARY,
-            TARGETS[CAUTIONARY]["reference_vhh_chain"])
-    except FileNotFoundError:
-        cautionary_html = ""
-
 background_html = R.background_section()
 
 R.copy_assets(lib["constructs"])
@@ -1168,7 +1147,8 @@ constant for this pair.</p>
 <p><b>Three cutoffs, and each one is used for something different.</b> They are not alternative
 answers to one question, so it matters which is which.</p>
 <table class="tbl cuts">
-<tr><th>criterion</th><th>on the nanobody</th><th>on the antigen</th><th>what it is used for</th></tr>
+<colgroup><col style="width:17%"><col style="width:22%"><col style="width:15%"><col style="width:46%"></colgroup>
+<thead><tr><th>criterion</th><th>on the nanobody</th><th>on the antigen</th><th>what it is used for</th></tr></thead><tbody>
 <tr><td class="mono">heavy atoms within {N['contact_cutoff']:g} &#8491;</td>
 <td>{N['n_contacts']} residues &mdash; {N['contact_labels']}</td>
 <td>{N['n_epitope_contacts']}</td>
@@ -1184,7 +1164,7 @@ Module 02a. Wider than the polar core because a mask reproduces a face, not a se
 <td><b>the footprint.</b> The surface a mask has to cover, so this is what occlusion is measured
 against in Modules 03 and 04. Van der Waals packing reaches further than a hydrogen bond, so it is
 the largest of the three.</td></tr>
-</table>
+</tbody></table>
 <p>The {N['contact_cutoff']:g} &#8491; criterion is too strict to define a mask from: on one of the
 comparator complexes below it returns a single residue. The footprint is too permissive to build a
 peptide from, since it is a set of residues and not a contiguous sequence the antigen contains. The
@@ -1386,7 +1366,6 @@ have hidden.</p>
   ("06 Ranking", "Pareto analysis on preliminary scores",
    "Ranking on validated functional scores"),
 ])}
-{cautionary_html}
 </section>
 
 <section class="sec">

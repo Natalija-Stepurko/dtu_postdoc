@@ -106,8 +106,18 @@ tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 tr.warnrow td{background:#FDF4EC}
 .await{border:1px dashed var(--rule);border-radius:3px;padding:13px 16px;margin:10px 0 18px;font-size:.88rem;color:var(--ink-3);background:#FAFBFB}
-tr.modhead td{background:#F4F8F8;padding-top:13px;padding-bottom:9px;border-top:1px solid var(--rule)}
-.alts{float:right;font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;max-width:58%;text-align:right}
+table.cuts{table-layout:fixed;width:100%}
+table.cuts th,table.cuts td{white-space:normal;text-align:left;vertical-align:top;font-family:var(--sans);font-size:.88rem;line-height:1.45;padding:11px 13px}
+table.cuts td:first-child{font-family:var(--mono);font-size:.78rem;font-weight:600}
+table.cuts thead th{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase}
+table.exp td{overflow-wrap:normal;word-break:normal}
+.register{border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.modblock+.modblock{border-top:1px solid var(--rule)}
+.modbar{display:flex;gap:18px;align-items:baseline;justify-content:space-between;background:#F4F8F8;padding:11px 14px}
+.modname{font-weight:600;font-size:.95rem;color:var(--ink)}
+.register table.exp{border:0}
+.register table.exp tbody tr:last-child td{border-bottom:0}
+.alts{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;text-align:right;flex:1 1 auto}
 .rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
 .pending{color:var(--ink-3);font-style:italic}
 table.exp td{vertical-align:top}
@@ -897,71 +907,6 @@ def architecture_schematic() -> str:
     return "".join(s)
 
 
-def cautionary_section(ref: dict, tether: dict, fold: dict, complexes: dict | None,
-                       label: str, pdb_id: str, chain: str) -> str:
-    """A target the pipeline was run on and then set aside, folded away by default.
-
-    Keeping it is the point: the same code on a different complex returns
-    nothing usable, and the reason is geometry rather than code.
-    """
-    import numpy as np
-    iface = ref["chain_pairs"][chain]
-    geom = ref["terminal_geometry"]
-    region = {k: v["n"] for k, v in ref["paratope_by_region"].items()}
-    kinds: dict[str, list[float]] = {}
-    for row in fold["results"]:
-        kinds.setdefault(row["kind"], []).append(row["occlusion"] * 100)
-    graft = float(np.mean(kinds.get("epitope graft", [0])))
-    inert = float(np.mean(kinds.get("inert control", [0])))
-    scram = float(np.mean(kinds.get("scrambled control", [0])))
-    ctrl = None
-    if complexes:
-        ctrl = next((r for r in complexes["results"]
-                     if r["case"] == "control_free_vhh" and r["status"] == "ok"), None)
-
-    rows = "".join(
-        f"<tr><td>{k}</td><td>{np.mean(v):+.1f}</td><td>{len(v)}</td></tr>"
-        for k, v in sorted(kinds.items(), key=lambda kv: -float(np.mean(kv[1]))))
-    ctrl_html = ""
-    if ctrl:
-        ctrl_html = f"""<p><b>The second control failed too.</b> Predicting the free nanobody with
-its toxin should have reproduced a pose the crystal structure already shows. Only
-<b>{ctrl['fraction_of_contacts_on_paratope']:.0%}</b> of the predicted contacts landed on the known
-paratope, so the complex module could not adjudicate masking here either.</p>"""
-
-    return f"""
-<details class="fold">
-<summary><b>Set aside: {pdb_id}, where the geometry defeats the measurement</b>
-<span>The pipeline was run end to end on this complex first. Both controls failed, for a
-reason worth keeping.</span></summary>
-<div class="foldbody">
-<p>{label}, {ref['metadata']['resolution_A']} Å. The paratope sits almost entirely in CDR3
-({region['CDR3']} of {iface['n_paratope']} residues, with CDR2 contributing none) — and the
-N-terminal residue <span class="mono">{geom['n_term_residue']}</span> is <b>itself part of the
-paratope</b>, burying {iface['paratope_delta_sasa'][geom['n_term_residue']]:.0f} Å².</p>
-<p>That makes masking trivially easy and measuring it impossible. Any peptide tethered at that
-terminus starts on top of the binding site, whatever its sequence, so occlusion cannot tell a
-designed mask from a random one.</p>
-<figure class="tfig full"><img src="figures/paratope_footprint_9GCN.svg"
-alt="Surface buried per residue for the set-aside complex">
-<figcaption>Surface buried per nanobody residue for this complex. Almost all of it lies in CDR3,
-and the N-terminal residue itself contributes, which is the geometry that defeats the
-measurement.</figcaption></figure>
-<div class="scroll"><table><thead><tr><th>mask kind</th><th>mean occlusion %</th><th>n</th>
-</tr></thead><tbody>{rows}</tbody></table></div>
-<p>The inert poly-glycine control occluded <b>{inert:+.1f}%</b> of the paratope against
-<b>{graft:+.1f}%</b> for the designed grafts and {scram:+.1f}% for the scrambled ones. The control
-scored <em>highest</em>. There is no separation to rank on.</p>
-{ctrl_html}
-<p><b>Why it is still here.</b> The constraint module had already flagged it: the N-terminus was
-0.0 Å from the nearest paratope residue, against {geom['c_term_to_paratope_centroid_A']:.0f} Å for
-the C-terminus. That number was visible before a single construct was folded, and it is the
-criterion the replacement system was chosen on. A pipeline that measures the geometry first can
-tell you that a target is unsuitable before you spend anything on it.</p>
-</div>
-</details>"""
-
-
 def background_section() -> str:
     """Prior work, told as a sequence rather than a gallery.
 
@@ -1330,16 +1275,15 @@ MODULE_TITLES = {
 
 
 def pipeline_table(rows) -> str:
-    """One table: every experiment, under the module it belongs to.
+    """Every experiment, under the module it belongs to.
 
-    The module summary and the experiment register said the same thing at two
-    levels of detail, so they are one table. Each row is an experiment with the
-    method that produced its number; the module's objective and the
-    alternatives it could use instead are shown once per group.
+    One table per module with its heading above it. A single table with
+    spanning header rows is the obvious construction and does not survive
+    contact with a fixed column layout: the spanning cell collapses into the
+    first column and the heading wraps one character per line.
     """
-    label_of, colour_of = {}, {}
-    for k, (lab, col) in EXP_STATUS.items():
-        label_of[k], colour_of[k] = lab, col
+    label_of = {k: v[0] for k, v in EXP_STATUS.items()}
+    colour_of = {k: v[1] for k, v in EXP_STATUS.items()}
 
     groups = []
     for r in rows:
@@ -1348,36 +1292,35 @@ def pipeline_table(rows) -> str:
             groups.append((mod, []))
         groups[-1][1].append(r)
 
-    body = ""
+    out = []
     for mod, items in groups:
         title = MODULE_TITLES.get(mod, "")
         alts = MODULE_ALTERNATIVES.get(mod, "")
-        body += (f'<tr class="modhead"><td colspan="5">'
-                 f'<b>{mod}. {title}</b>'
-                 + (f'<span class="alts">also available: {alts}</span>' if alts else "")
-                 + "</td></tr>")
+        out.append(f'<div class="modblock"><div class="modbar">'
+                   f'<span class="modname">{mod}. {title}</span>'
+                   + (f'<span class="alts">also available: {alts}</span>' if alts else "")
+                   + "</div>")
+        body = ""
         for r in items:
             label = label_of.get(r["status"], "proposed")
             colour = colour_of.get(r["status"], "#6E7880")
-            pending = r["status"] in ("not run", "proposed", "running")
+            pending_row = r["status"] in ("not run", "proposed", "running")
             result = r.get("result") or ""
-            if pending and not result:
+            if pending_row and not result:
                 result = '<span class="pending">no data yet</span>'
             tag = (f'<span class="stat-tag" style="color:{colour};'
                    f'border-color:{colour}">{label}</span>')
-            cls = ' class="ctrl"' if pending else ""
+            cls = ' class="ctrl"' if pending_row else ""
             body += (f'<tr{cls}><td class="mono">{r["stage"]}</td>'
                      f'<td><b>{r["name"]}</b></td><td>{r["question"]}</td>'
                      f'<td class="mono">{r.get("method", "")}</td>'
                      f'<td>{tag} {result}</td></tr>')
-    return ('<div class="scroll"><table class="tbl exp wrap">'
-            '<colgroup><col style="width:6%"><col style="width:16%">'
-            '<col style="width:22%"><col style="width:26%">'
-            '<col style="width:30%"></colgroup>'
-            '<thead><tr><th>stage</th><th>experiment</th><th>question</th>'
-            '<th>method</th><th>result</th></tr></thead>'
-            f'<tbody>{body}</tbody></table></div>')
-
+        out.append('<table class="tbl exp wrap">'
+                   '<colgroup><col style="width:6%"><col style="width:16%">'
+                   '<col style="width:23%"><col style="width:25%">'
+                   '<col style="width:30%"></colgroup>'
+                   f'<tbody>{body}</tbody></table></div>')
+    return '<div class="register">' + "".join(out) + "</div>"
 
 def implementation_table(rows) -> str:
     """Implemented against remaining, one row per module."""
