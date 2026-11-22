@@ -165,8 +165,14 @@ _masked = [i for i in viewer_ids if models[i].get("mask")]
 default_id = (_masked[0] if _masked else (viewer_ids[0] if viewer_ids else ""))
 
 def card(v, l, s="", hl=False): return R._card(v, l, s, hl)
-def chart(n, c): return R._chart(n, c)
-def chart_wide(n, c): return R._chart(n, c).replace('class="chart"', 'class="chart wide"')
+def chart(n, c):
+    if not (DOCS / "figures" / f"{n}.svg").exists():
+        return R.pending(f"the figure <span class='mono'>{n}</span>")
+    return R._chart(n, c)
+def chart_wide(n, c):
+    if not (DOCS / "figures" / f"{n}.svg").exists():
+        return R.pending(f"the figure <span class='mono'>{n}</span>")
+    return R._chart(n, c).replace('class="chart"', 'class="chart wide"')
 
 # ---- folding section ----
 if fold:
@@ -663,8 +669,13 @@ for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability
     for _i, _v in _n.items():
         SCORES.setdefault(_i, {})[_key] = _v
 
-controls = load_json("15_interface_controls.json")
-_by = {r["pdb_id"]: r for r in controls["comparators"]}
+# the page must build from whatever has finished, so that its structure can
+# be reviewed while the expensive stages are still running
+try:
+    controls = load_json("15_interface_controls.json")
+except FileNotFoundError:
+    controls = None
+_by = {r["pdb_id"]: r for r in (controls["comparators"] if controls else [])}
 N["cdr3_share"] = _by.get(PDB_ID, {}).get("cdr3_percent_bsa", 0)
 N["iface_area"] = iface["interface_area_A2"]
 _lat = _by.get(PDB_ID, {}).get("lattice_contact", {})

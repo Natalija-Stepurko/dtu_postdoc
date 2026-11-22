@@ -105,6 +105,7 @@ table.wrap td:first-child{font-weight:600;color:var(--ink)}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 tr.warnrow td{background:#FDF4EC}
+.await{border:1px dashed var(--rule);border-radius:3px;padding:13px 16px;margin:10px 0 18px;font-size:.88rem;color:var(--ink-3);background:#FAFBFB}
 tr.modhead td{background:#F4F8F8;padding-top:13px;padding-bottom:9px;border-top:1px solid var(--rule)}
 .alts{float:right;font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;max-width:58%;text-align:right}
 .rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
@@ -1416,8 +1417,22 @@ def ramp_legend(low: str, high: str) -> str:
             f'&nbsp;{high}</span>')
 
 
+def pending(what: str) -> str:
+    """A slot whose stage has not produced its output yet.
+
+    The page is generated from stage outputs, and the expensive stages take
+    hours. Rendering a labelled gap keeps the structure reviewable while they
+    run, and makes a missing result visible as missing.
+    """
+    return (f'<div class="await"><b>Awaiting results.</b> {what} has not '
+            f'produced an output yet. This slot fills from the stage output '
+            f'when it does.</div>')
+
+
 def interface_controls_table(controls, target: str) -> str:
     """The worked example read against independent VHH complexes."""
+    if not controls:
+        return pending("the independent-complex comparison, stage 15")
     rows = controls["comparators"]
     head = ("<tr><th>complex</th><th>chains</th><th>interface</th>"
             "<th>paratope</th><th>within 3 &#8491;</th><th>CDR3 share</th>"
@@ -1461,6 +1476,8 @@ def generation_table(counts) -> str:
 
 def linker_table(linkers) -> str:
     """The generated substrates and their controls, with the contrast they scored."""
+    if not linkers:
+        return pending("linker generation, stage 02b")
     head = ("<tr><th>linker</th><th>sequence</th><th>kind</th>"
             "<th>target</th><th>off&#8209;target</th><th>selectivity</th></tr>")
     body = ""
