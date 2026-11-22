@@ -1301,38 +1301,62 @@ def mri(method: str, result: str, interpretation: str) -> str:
             f'</div>')
 
 
-#: One compact table in place of five, as a module summary.
+#: One compact table in place of five. "Run" names the exact model or method
+#: used to produce the numbers on this page; "available" names alternatives the
+#: module accepts without changing the pipeline.
 MODULE_SUMMARY = [
     ("01", "Estimation of the usable mask affinity",
      "Define the attachment point, linker length and the range of mask affinity "
      "that can satisfy both states",
-     "Interface analysis, polymer models of the tether, competitive binding equilibria"),
-    ("02", "Generation of candidate constructs",
-     "Generate candidate masking architectures",
-     "RFdiffusion, ProteinMPNN, BindCraft, peptide language models, evolutionary approaches"),
+     "Shrake&ndash;Rupley SASA (biotite 1.6); worm-like-chain tether model; "
+     "three-state competitive binding equilibria",
+     "CALVADOS 2; Martini 3; Rosetta ddG; FoldX 5"),
+    ("02a", "Mask design",
+     "Derive and vary the sequence that occupies the paratope",
+     "Antigen contact face at 3.5&nbsp;&#8491; from PDB {pdb}; window variants at "
+     "0, 2, 4 residues; ProteinMPNN v_48_020",
+     "RFdiffusion; RFantibody; BindCraft; ESM-2 650M; ProGen2; AfDesign"),
+    ("02b", "Cleavable linker design",
+     "Generate linkers cut at the site and resistant elsewhere",
+     "CleaveNet conditional generator; CleaveNet predictor; Kukreja substrate "
+     "library (18,583 10-mers &times; 18 MMPs)",
+     "MEROPS; PROSPERous; DeepCleave; Procleave; iProt-Sub"),
     ("03", "Structural feasibility",
      "Assess preservation of the VHH fold and structural plausibility",
-     "ESMFold, AlphaFold, Boltz, BioEmu, Rosetta, FoldX"),
+     "ESMFold facebook/esmfold_v1; C&alpha; core RMSD; SASA hydrophobic fraction; "
+     "SG&ndash;SG disulfide distance",
+     "AlphaFold3; Boltz-2; Chai-1; BioEmu-1; Rosetta; FoldX 5; ThermoMPNN"),
     ("04", "Mask binding and release",
-     "Assess binding in the tethered and cleaved states",
-     "Complex prediction, interface analysis, thermodynamic modelling"),
+     "Assess binding untethered, tethered and after cleavage",
+     "Boltz-2.2.1 three-chain with bond constraint; Boltz-2.2.1 two-chain "
+     "untethered; heavy-atom interface contacts",
+     "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA; BioEmu-1"),
     ("05", "Linker cleavability",
-     "Assess protease responsiveness and selectivity",
-     "CleaveNet, MEROPS, substrate specificity models, accessibility analysis"),
+     "Assess protease responsiveness and structural access",
+     "CleaveNet selectivity across 18 MMPs; position weight matrix and "
+     "nearest-neighbour over the Kukreja library; extension, exposure and "
+     "17&nbsp;&#8491; catalytic-domain clearance",
+     "MEROPS; PROSPERous; DeepCleave; SitePrediction; MD of the cleavage site"),
     ("06", "Multiobjective ranking",
      "Select candidates satisfying the three objectives",
-     "Hard filtering, Pareto optimisation, uncertainty and diversity-based selection"),
+     "Pareto non-domination over feasibility, cleavability and masking",
+     "NSGA-II; hypervolume; hard thresholds; uncertainty- and "
+     "diversity-based selection"),
 ]
 
 
 def module_summary_table() -> str:
+    # the target is a config value, not a constant: a literal id here would go
+    # stale the moment NBSWITCH_TARGET changes
     rows = "".join(
-        f"<tr><td><b>{num}. {title}</b></td><td>{objective}</td><td>{methods}</td></tr>"
-        for num, title, objective, methods in MODULE_SUMMARY)
+        f"<tr><td><b>{num}. {title}</b></td><td>{objective}</td>"
+        f"<td>{run.format(pdb=PDB_ID)}</td><td class=\"dim\">{avail}</td></tr>"
+        for num, title, objective, run, avail in MODULE_SUMMARY)
     return ('<div class="scroll"><table class="wrap">'
-            '<colgroup><col style="width:26%"><col style="width:30%">'
-            '<col style="width:44%"></colgroup>'
-            '<thead><tr><th>module</th><th>objective</th><th>methods</th></tr></thead>'
+            '<colgroup><col style="width:20%"><col style="width:22%">'
+            '<col style="width:31%"><col style="width:27%"></colgroup>'
+            '<thead><tr><th>module</th><th>objective</th><th>run here</th>'
+            '<th>also available</th></tr></thead>'
             f'<tbody>{rows}</tbody></table></div>')
 
 
