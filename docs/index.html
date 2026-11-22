@@ -117,6 +117,7 @@ table.exp td{overflow-wrap:normal;word-break:normal}
 .alts{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;text-align:right;flex:1 1 auto}
 .rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
 .pending{color:var(--ink-3);font-style:italic}
+.tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--chrome);border:1px solid var(--chrome);border-radius:2px;padding:0 5px;margin-left:6px;white-space:nowrap}
 table.exp td{vertical-align:top}
 td.dead{color:var(--chrome);font-weight:600}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
@@ -516,7 +517,21 @@ something cleavable, same accessibility, no site. That is the case a single aver
 have hidden.</p>
 
 <h3 class="mod"><span>Module 06</span>Multiobjective ranking</h3>
-<div class="mri"><div><div class="k">Method</div><div class="v">The three per-construct scores were combined by identifying nondominated candidates. No weights were applied.</div></div><div><div class="k">Result</div><div class="v">Of 0 scored constructs, 0 are nondominated.</div></div><div><div class="k">Interpretation</div><div class="v">This demonstrates the ranking procedure. It does not identify functional switches, because the masking score does not separate designs from controls and the cleavability score covers accessibility only.</div></div></div>
+<div class="mri"><div><div class="k">Method</div><div class="v">Three steps, kept apart because they answer different questions. Hard constraints remove constructs that cannot work regardless of their other scores. The nondominated set is then taken over the three objectives, with no weights. That set is unordered, so turning it into a list needs a rule, and the rule is maximin on the normalised objectives: a construct is worth no more than its weakest requirement.</div></div><div><div class="k">Result</div><div class="v">Not yet run on this library; the stage has produced no output.</div></div><div><div class="k">Interpretation</div><div class="v">The ordering is preliminary. Maximin assumes the three scores are comparable, and the normalisation that makes them comparable is within this run rather than against measured quantities. The masking objective also does not separate designed masks from controls, so a front built on it is not a list of constructs predicted to mask.</div></div></div>
+
+<p><b>What is removed before anything is compared.</b> A construct failing one of these is not a
+worse candidate but not a candidate: no score on another axis can compensate, which is exactly
+what a Pareto front would otherwise let it do.</p>
+<div class="await"><b>Awaiting results.</b> the ranking, stage 13 has not produced an output yet. This slot fills from the stage output when it does.</div>
+
+<p><b>The ordering rule, stated.</b> The three scores are on unrelated scales, so they are min-max
+normalised within the feasible set and each construct is ranked by its lowest normalised
+objective. That prefers a design that is adequate three times over one that is excellent twice and
+poor once, which is the right preference when all three requirements have to hold at once. An
+uncertainty discount is implemented and set to zero: no calibrated uncertainty exists for any of
+these scores, and inventing one would make the ordering look better founded than it is.</p>
+<div class="await"><b>Awaiting results.</b> the ranking, stage 13 has not produced an output yet. This slot fills from the stage output when it does.</div>
+
 <div class="await"><b>Awaiting results.</b> the figure <span class='mono'>pareto_panels</span> has not produced an output yet. This slot fills from the stage output when it does.</div>
 
 <h3 class="mod"><span>Summary</span>Implementation status</h3>

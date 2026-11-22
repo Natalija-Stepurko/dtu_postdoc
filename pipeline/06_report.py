@@ -947,6 +947,14 @@ def _build_register():
 REGISTER = _build_register()
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
+N["rank_excluded"] = ranking_data.get("n_excluded", 0) if ranking_data else 0
+N["rank_feasible"] = ranking_data.get("n_feasible", 0) if ranking_data else 0
+N["rank_excluded_by"] = ranking_data.get("excluded_by", {}) if ranking_data else {}
+RANK_CONSTRAINTS = ranking_data.get("constraints", []) if ranking_data else []
+RANK_FRONT = ranking_data.get("front", []) if ranking_data else []
+RANK_OBJECTIVES = ranking_data.get("objectives", []) if ranking_data else []
+RANK_SHORTLIST = set(ranking_data.get("shortlist", [])) if ranking_data else set()
+N["rank_shortlist"] = len(RANK_SHORTLIST)
 
 _feas = {r["id"]: r for r in (feas_data["results"] if feas_data else [])}
 # the primary graft, whatever it is called: masks are renamed when the
@@ -1353,13 +1361,35 @@ something cleavable, same accessibility, no site. That is the case a single aver
 have hidden.</p>
 
 <h3 class="mod"><span>Module 06</span>Multiobjective ranking</h3>
-{mri("The three per-construct scores were combined by identifying nondominated candidates. No "
-     "weights were applied.",
-     f"Of {N['rank_total']} scored constructs, {N['rank_front']} are nondominated.",
-     "This demonstrates the ranking procedure. It does not identify functional switches, because "
-     "the masking score does not separate designs from controls and the cleavability score covers "
-     "accessibility only.")}
-{chart("pareto_panels", "Demonstration of the ranking algorithm. The three scores plotted pairwise.")}
+{mri("Three steps, kept apart because they answer different questions. Hard constraints remove "
+     "constructs that cannot work regardless of their other scores. The nondominated set is then "
+     "taken over the three objectives, with no weights. That set is unordered, so turning it into "
+     "a list needs a rule, and the rule is maximin on the normalised objectives: a construct is "
+     "worth no more than its weakest requirement.",
+     (f"{N['rank_excluded']} of {N['rank_total']} scored constructs fail a hard constraint. "
+      f"Of the {N['rank_feasible']} that remain, {N['rank_front']} are nondominated, and "
+      f"{N['rank_shortlist']} go forward for verification after deduplicating by mask."
+      if N['rank_total'] else
+      "Not yet run on this library; the stage has produced no output."),
+     "The ordering is preliminary. Maximin assumes the three scores are comparable, and the "
+     "normalisation that makes them comparable is within this run rather than against measured "
+     "quantities. The masking objective also does not separate designed masks from controls, so "
+     "a front built on it is not a list of constructs predicted to mask.")}
+
+<p><b>What is removed before anything is compared.</b> A construct failing one of these is not a
+worse candidate but not a candidate: no score on another axis can compensate, which is exactly
+what a Pareto front would otherwise let it do.</p>
+{R.constraint_table(RANK_CONSTRAINTS, N['rank_excluded_by'])}
+
+<p><b>The ordering rule, stated.</b> The three scores are on unrelated scales, so they are min-max
+normalised within the feasible set and each construct is ranked by its lowest normalised
+objective. That prefers a design that is adequate three times over one that is excellent twice and
+poor once, which is the right preference when all three requirements have to hold at once. An
+uncertainty discount is implemented and set to zero: no calibrated uncertainty exists for any of
+these scores, and inventing one would make the ordering look better founded than it is.</p>
+{R.front_table(RANK_FRONT, RANK_OBJECTIVES, RANK_SHORTLIST)}
+
+{chart("pareto_panels", "The three scores plotted pairwise, with the nondominated set marked.")}
 
 <h3 class="mod"><span>Summary</span>Implementation status</h3>
 {R.implementation_table([

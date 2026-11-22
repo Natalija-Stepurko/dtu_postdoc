@@ -121,6 +121,7 @@ table.exp td{overflow-wrap:normal;word-break:normal}
 .alts{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;text-align:right;flex:1 1 auto}
 .rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
 .pending{color:var(--ink-3);font-style:italic}
+.tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--chrome);border:1px solid var(--chrome);border-radius:2px;padding:0 5px;margin-left:6px;white-space:nowrap}
 table.exp td{vertical-align:top}
 td.dead{color:var(--chrome);font-weight:600}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
@@ -1565,3 +1566,49 @@ def protonation_table(scan) -> str:
                  f'<td class="mono">{r["site_worst"]:.1%}</td>'
                  f'<td class="mono">{r["fold_change"]:.1f}&times;</td></tr>')
     return f'<table class="tbl proton">{head}{body}</table>'
+
+
+def constraint_table(constraints, excluded_by) -> str:
+    """The requirements applied before any comparison, and what each removed."""
+    if not constraints:
+        return pending("the ranking, stage 13")
+    ops = {"ge": "&ge;", "le": "&le;", "gt": "&gt;", "lt": "&lt;"}
+    head = ('<colgroup><col style="width:22%"><col style="width:12%">'
+            '<col style="width:52%"><col style="width:14%"></colgroup>'
+            "<tr><th>quantity</th><th>limit</th><th>why it is a requirement</th>"
+            "<th>removed</th></tr>")
+    body = ""
+    for c in constraints:
+        n = excluded_by.get(c["field"], 0)
+        body += (f'<tr><td class="mono">{c["field"]}</td>'
+                 f'<td class="mono">{ops.get(c["op"], c["op"])} {c["limit"]:g}</td>'
+                 f'<td>{c["why"]}</td>'
+                 f'<td class="mono">{n if n else "&mdash;"}</td></tr>')
+    return f'<table class="tbl cons">{head}{body}</table>'
+
+
+def front_table(front, objectives, shortlist=(), limit: int = 12) -> str:
+    """The nondominated set in the stated order, with the shortlist marked."""
+    if not front:
+        return pending("the ranking, stage 13")
+    label = {"feasibility": "feasibility", "cleavability": "cleavability",
+             "surface_occlusion": "surface occlusion"}
+    cols = "".join(f"<th>{label.get(o, o)}</th>" for o in objectives)
+    head = ('<colgroup><col style="width:30%"><col style="width:14%">'
+            + '<col style="width:18%">' * len(objectives) + "</colgroup>"
+            f"<tr><th>construct</th><th>weakest, normalised</th>{cols}</tr>")
+    body = ""
+    for r in front[:limit]:
+        picked = r["id"] in shortlist
+        cls = ' class="hl"' if picked else ""
+        mark = ' <span class="tag">verified</span>' if picked else ""
+        cells = "".join(f'<td class="mono">{r.get(o, float("nan")):.3f}</td>'
+                        for o in objectives)
+        body += (f'<tr{cls}><td class="mono">{r["id"]}{mark}</td>'
+                 f'<td class="mono"><b>{r.get("robust_score", float("nan")):.3f}</b></td>'
+                 f"{cells}</tr>")
+    more = ""
+    if len(front) > limit:
+        more = (f'<p class="dim" style="font-size:.85rem">'
+                f'{len(front) - limit} further nondominated designs not shown.</p>')
+    return f'<table class="tbl front">{head}{body}</table>{more}'
