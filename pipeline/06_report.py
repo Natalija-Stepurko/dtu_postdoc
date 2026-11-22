@@ -1020,7 +1020,48 @@ approached by maximising affinity. Everything downstream exists to find sequence
 
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">03</div><h2>Constraints on mask affinity and linker geometry</h2>
+<div class="stack"><div class="eyebrow">03</div><h2>Proposed computational pipeline</h2>
+<p>The pipeline has six modules. One estimates what mask affinity and linker length could work at
+all. Two generate independently: the mask comes from the antigen's contact face on this nanobody,
+the linker from substrate data, and neither constrains the other until they are assembled into one
+chain. Three scoring functions then assess structural feasibility, the interaction between mask and
+nanobody, and the susceptibility of the linker to proteolysis. The three scores are combined by
+multiobjective ranking, and the resulting front is verified by predicting the whole assembly with
+its antigen, which is the only step that asks directly whether the antigen can still bind. Each
+module can use several computational methods, so individual methods can be compared or replaced
+without altering the pipeline.</p></div>
+<div class="chart wide">{R.architecture_schematic()}</div>
+<div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
+<p>The three scores are not combined into a single value, since a high score on one objective
+would otherwise compensate for failure on another. Pareto optimisation identifies the nondominated
+candidates, which is a set rather than an ordered list, so a further criterion would be required to
+order candidates within a front.</p>
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">04</div><h2>Worked computational example</h2>
+<p>The pipeline was implemented in part and applied to {meta['title'][:66]}, a {N['resolution']} Å
+X-ray structure deposited in {meta['deposition_date'][:4]}.</p>
+<p><b>This is a model system, not the clinical target.</b> The entry is a nanobody bound to short
+neurotoxin 1 from <i>Naja pallida</i>, a spitting cobra: an elapid, where the case concerns vipers.
+It was chosen because it is a crystallographically characterised nanobody&ndash;toxin complex with
+a single binding site, which is what the geometry and the masking measurements need. The
+architecture and the methods are what transfer; a viper application would start from a viper
+toxin complex and redesign the mask for it.</p>
+<p>All results below are computational. No construct has been expressed, and no affinity,
+expression level or cleavage rate has been measured.</p>
+<p>What was produced at each stage, and how much of it survived:</p>
+{R.generation_table(COUNTS)}
+<p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
+that produced it.</p>
+<p><b>Every experiment the pipeline defines, under the module it belongs to:</b> the question it
+asks, the method that produced its number, and what came out. Experiments with no result yet are
+listed with the slot empty, so what has been answered and what has not are both visible. Each
+module heading carries the other methods that module could use.</p>
+{R.pipeline_table(REGISTER)}</div>
+
+<h3 class="mod"><span>Module 01</span>Constraints on mask affinity and linker geometry</h3>
+<div class="stack">
 <p>Before any sequence is generated, the structure and a polymer model say what a workable mask
 would have to look like. The mask has to occupy the paratope while it is tethered and leave once
 the linker is cut, and those two requirements pull on its affinity from opposite sides.</p>
@@ -1065,49 +1106,6 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
 {chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
 </div></details>
 
-
-</section>
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">04</div><h2>Proposed computational pipeline</h2>
-<p>The pipeline has six modules. One estimates what mask affinity and linker length could work at
-all. Two generate independently: the mask comes from the antigen's contact face on this nanobody,
-the linker from substrate data, and neither constrains the other until they are assembled into one
-chain. Three scoring functions then assess structural feasibility, the interaction between mask and
-nanobody, and the susceptibility of the linker to proteolysis. The three scores are combined by
-multiobjective ranking, and the resulting front is verified by predicting the whole assembly with
-its antigen, which is the only step that asks directly whether the antigen can still bind. Each
-module can use several computational methods, so individual methods can be compared or replaced
-without altering the pipeline.</p></div>
-<div class="chart wide">{R.architecture_schematic()}</div>
-<div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
-<p>The three scores are not combined into a single value, since a high score on one objective
-would otherwise compensate for failure on another. Pareto optimisation identifies the nondominated
-candidates, which is a set rather than an ordered list, so a further criterion would be required to
-order candidates within a front.</p>
-</section>
-
-<section class="sec">
-<div class="stack"><div class="eyebrow">05</div><h2>Worked computational example</h2>
-<p>The pipeline was implemented in part and applied to {meta['title'][:66]}, a {N['resolution']} Å
-X-ray structure deposited in {meta['deposition_date'][:4]}.</p>
-<p><b>This is a model system, not the clinical target.</b> The entry is a nanobody bound to short
-neurotoxin 1 from <i>Naja pallida</i>, a spitting cobra: an elapid, where the case concerns vipers.
-It was chosen because it is a crystallographically characterised nanobody&ndash;toxin complex with
-a single binding site, which is what the geometry and the masking measurements need. The
-architecture and the methods are what transfer; a viper application would start from a viper
-toxin complex and redesign the mask for it.</p>
-<p>All results below are computational. No construct has been expressed, and no affinity,
-expression level or cleavage rate has been measured.</p>
-<p>What was produced at each stage, and how much of it survived:</p>
-{R.generation_table(COUNTS)}
-<p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
-that produced it.</p>
-<p><b>Every experiment the pipeline defines, under the module it belongs to:</b> the question it
-asks, the method that produced its number, and what came out. Experiments with no result yet are
-listed with the slot empty, so what has been answered and what has not are both visible. Each
-module heading carries the other methods that module could use.</p>
-{R.pipeline_table(REGISTER)}</div>
 
 <h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
 {mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
@@ -1217,7 +1215,7 @@ is more surface than a graft taken from the CDR contacts alone would address.</p
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">06</div><h2>Scoring and computational results</h2>
+<div class="stack"><div class="eyebrow">05</div><h2>Scoring and computational results</h2>
 <p>Each construct is scored on three independent requirements. Two of the three work, in the sense
 that they separate designs from matched controls. The third does not, and that is the result this
 section is mainly about.</p></div>
@@ -1369,7 +1367,7 @@ have hidden.</p>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">07</div><h2>Experimental collaboration and further development</h2>
+<div class="stack"><div class="eyebrow">06</div><h2>Experimental collaboration and further development</h2>
 <p>I would work with experimental PhD students to establish measurements corresponding to the
 three scoring functions: protein stability and developability, mask interaction and dissociation,
 and protease responsiveness. Purification behaviour and gel analysis address the first,
