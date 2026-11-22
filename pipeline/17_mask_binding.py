@@ -54,6 +54,9 @@ for name, peptide, note in cases:
            "structure": str(pdb.relative_to(RESULTS))}
     row |= CP.interface_contacts(pdb, "A", "B")
     row |= CP.toxin_paratope_overlap(pdb, "A", "B", paratope)
+    # a graft cut from a disulfide-rich antigen can re-form its native bond,
+    # pair up cysteines whose partners were left behind, or leave them free
+    row["disulfides"] = CP.peptide_disulfides(pdb)
     results.append(row)
     print(f"  {name:22s} {row['seconds']/60:4.1f} min  "
           f"on paratope {row['fraction_of_contacts_on_paratope']:.2f}  "

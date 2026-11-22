@@ -1,0 +1,228 @@
+{
+  "method": "Boltz-2, two chains, alignment for the public nanobody only",
+  "n_cases": 8,
+  "question": "does the mask find the paratope with no linker holding it there",
+  "results": [
+    {
+      "atom_contacts": 629,
+      "buried_surface_area_A2": 1299.0,
+      "case": "antigen_positive_control",
+      "fraction_of_contacts_on_paratope": 0.773,
+      "length": 61,
+      "min_distance_A": 1.8,
+      "note": "the antigen itself; the crystal structure already answers this",
+      "paratope_contacts": 17,
+      "peptide": "LECHNQQSSQPPTTKTCPGETNCYKKVWRDHRGTIIERGCGCPTVKPGIKLNCCTTDKCNN",
+      "seconds": 259.4,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_antigen_positive_control/predictions/bind_antigen_positive_control/bind_antigen_positive_control_model_0.pdb",
+      "total_contacting_residues": 22,
+      "disulfides": {
+        "n_cysteines": 8,
+        "bonded_pairs": [
+          [
+            3,
+            23,
+            1.98
+          ],
+          [
+            17,
+            40,
+            1.71
+          ],
+          [
+            42,
+            53,
+            1.95
+          ],
+          [
+            54,
+            59,
+            2.0
+          ]
+        ],
+        "n_unpaired": 0
+      }
+    },
+    {
+      "atom_contacts": 194,
+      "buried_surface_area_A2": 624.9,
+      "case": "epi_core",
+      "fraction_of_contacts_on_paratope": 0.9,
+      "length": 12,
+      "min_distance_A": 2.04,
+      "note": "epitope graft: antigen C42-C53, contact face, 2 cysteines",
+      "paratope_contacts": 9,
+      "peptide": "CPTVKPGIKLNC",
+      "seconds": 149.2,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_epi_core/predictions/bind_epi_core/bind_epi_core_model_0.pdb",
+      "total_contacting_residues": 10,
+      "disulfides": {
+        "n_cysteines": 2,
+        "bonded_pairs": [
+          [
+            1,
+            12,
+            1.92
+          ]
+        ],
+        "n_unpaired": 0
+      }
+    },
+    {
+      "atom_contacts": 404,
+      "buried_surface_area_A2": 1108.6,
+      "case": "epi_core_ext2",
+      "fraction_of_contacts_on_paratope": 0.833,
+      "length": 16,
+      "min_distance_A": 2.25,
+      "note": "epitope graft: antigen C40-T55, contact face plus 2 residues each side, 4 cysteines",
+      "paratope_contacts": 15,
+      "peptide": "CGCPTVKPGIKLNCCT",
+      "seconds": 154.3,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_epi_core_ext2/predictions/bind_epi_core_ext2/bind_epi_core_ext2_model_0.pdb",
+      "total_contacting_residues": 18,
+      "disulfides": {
+        "n_cysteines": 4,
+        "bonded_pairs": [
+          [
+            1,
+            15,
+            2.02
+          ],
+          [
+            3,
+            14,
+            1.65
+          ]
+        ],
+        "n_unpaired": 0
+      }
+    },
+    {
+      "atom_contacts": 375,
+      "buried_surface_area_A2": 1161.1,
+      "case": "epi_core_ext4",
+      "fraction_of_contacts_on_paratope": 0.833,
+      "length": 20,
+      "min_distance_A": 2.16,
+      "note": "epitope graft: antigen R38-D57, contact face plus 4 residues each side, 4 cysteines",
+      "paratope_contacts": 15,
+      "peptide": "RGCGCPTVKPGIKLNCCTTD",
+      "seconds": 152.3,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_epi_core_ext4/predictions/bind_epi_core_ext4/bind_epi_core_ext4_model_0.pdb",
+      "total_contacting_residues": 18,
+      "disulfides": {
+        "n_cysteines": 4,
+        "bonded_pairs": [
+          [
+            3,
+            17,
+            2.08
+          ],
+          [
+            5,
+            16,
+            2.08
+          ]
+        ],
+        "n_unpaired": 0
+      }
+    },
+    {
+      "atom_contacts": 287,
+      "buried_surface_area_A2": 778.4,
+      "case": "epi_core_half",
+      "fraction_of_contacts_on_paratope": 0.765,
+      "length": 6,
+      "min_distance_A": 2.07,
+      "note": "truncated control: leading half of the contact face",
+      "paratope_contacts": 13,
+      "peptide": "CPTVKP",
+      "seconds": 146.4,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_epi_core_half/predictions/bind_epi_core_half/bind_epi_core_half_model_0.pdb",
+      "total_contacting_residues": 17,
+      "disulfides": {
+        "n_cysteines": 1,
+        "bonded_pairs": [],
+        "n_unpaired": 1
+      }
+    },
+    {
+      "atom_contacts": 514,
+      "buried_surface_area_A2": 1148.6,
+      "case": "epi_core_noCys",
+      "fraction_of_contacts_on_paratope": 0.773,
+      "length": 12,
+      "min_distance_A": 2.36,
+      "note": "epitope graft: contact face with cysteines substituted to serine, which removes the disulfide that holds it in shape",
+      "paratope_contacts": 17,
+      "peptide": "SPTVKPGIKLNS",
+      "seconds": 153.2,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_epi_core_noCys/predictions/bind_epi_core_noCys/bind_epi_core_noCys_model_0.pdb",
+      "total_contacting_residues": 22,
+      "disulfides": {
+        "n_cysteines": 0,
+        "bonded_pairs": [],
+        "n_unpaired": 0
+      }
+    },
+    {
+      "atom_contacts": 349,
+      "buried_surface_area_A2": 993.5,
+      "case": "epi_core_scram",
+      "fraction_of_contacts_on_paratope": 0.6,
+      "length": 12,
+      "min_distance_A": 2.21,
+      "note": "scrambled control: the contact face shuffled (seed 42): same composition, same length, no order",
+      "paratope_contacts": 12,
+      "peptide": "IPTKLGCVKCPN",
+      "seconds": 149.9,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_epi_core_scram/predictions/bind_epi_core_scram/bind_epi_core_scram_model_0.pdb",
+      "total_contacting_residues": 20,
+      "disulfides": {
+        "n_cysteines": 2,
+        "bonded_pairs": [
+          [
+            7,
+            10,
+            2.28
+          ]
+        ],
+        "n_unpaired": 0
+      }
+    },
+    {
+      "atom_contacts": 411,
+      "buried_surface_area_A2": 1019.9,
+      "case": "polyG",
+      "fraction_of_contacts_on_paratope": 0.636,
+      "length": 12,
+      "min_distance_A": 2.42,
+      "note": "inert control: no designed interaction, matched to the face at 12 residues",
+      "paratope_contacts": 14,
+      "peptide": "GGGGGGGGGGGG",
+      "seconds": 142.8,
+      "status": "ok",
+      "structure": "binding/boltz_results_bind_polyG/predictions/bind_polyG/bind_polyG_model_0.pdb",
+      "total_contacting_residues": 22,
+      "disulfides": {
+        "n_cysteines": 0,
+        "bonded_pairs": [],
+        "n_unpaired": 0
+      }
+    }
+  ],
+  "native_disulfides_in_antigen": [
+    [
+      42,
+      53
+    ]
+  ]
+}

@@ -151,3 +151,34 @@ def write_binding_job(path: Path, vhh: str, peptide: str,
               f"      msa: {peptide_msa}"]
     path.write_text("\n".join(lines) + "\n")
     return path
+
+
+def peptide_disulfides(pdb_path, chain: str = "B", max_distance: float = 2.5) -> dict:
+    """Which cysteine pairs are bonded in a predicted peptide.
+
+    A graft cut out of a disulfide-rich antigen can re-form the bonds it still
+    has both partners for, pair up cysteines that were bonded to residues left
+    behind, or leave them free. Those are three different molecules, and only
+    the first is the thing the graft was meant to be.
+    """
+    import numpy as np
+    from .occlusion import read_pdb
+
+    atoms = read_pdb(pdb_path)
+    sel = atoms[atoms.chain_id == chain]
+    sg = sel[(sel.atom_name == "SG") & (sel.res_name == "CYS")]
+    n = sg.array_length()
+    if n < 2:
+        return {"n_cysteines": int(n), "bonded_pairs": [], "n_unpaired": int(n)}
+    d = np.linalg.norm(sg.coord[:, None, :] - sg.coord[None, :, :], axis=-1)
+    np.fill_diagonal(d, np.inf)
+    pairs, seen = [], set()
+    for i in range(n):
+        j = int(np.argmin(d[i]))
+        if d[i, j] <= max_distance and (j, i) not in seen:
+            seen.add((i, j))
+            pairs.append([int(sg.res_id[i]), int(sg.res_id[j]),
+                          round(float(d[i, j]), 2)])
+    bonded = {r for p in pairs for r in p[:2]}
+    return {"n_cysteines": int(n), "bonded_pairs": pairs,
+            "n_unpaired": int(n - len(bonded))}
