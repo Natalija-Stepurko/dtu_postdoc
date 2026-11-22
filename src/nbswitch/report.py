@@ -866,8 +866,9 @@ def architecture_schematic() -> str:
     s.append(arrow(735, 210, 735, 234))
     s.append(box(0, 238, 478, 196, SEQ, "02a", "Mask design",
                  ["What does the antigen present at the", "paratope, and how much of it to carry?"],
-                 ["contact face at 3.5 Å · window and substitution variants",
-                  "ProteinMPNN v_48_020"],
+                 ["no model: contact face at 3.5 Å, window variants,",
+                  "substitutions off the hotspots, matched controls",
+                  "then ProteinMPNN v_48_020 on the folded backbone"],
                  available=["RFdiffusion · RFantibody · BindCraft",
                             "ESM-2 · ProGen2 · AfDesign"]))
     s.append(box(502, 238, 478, 196, SEQ, "02b", "Cleavable linker design",
