@@ -10,7 +10,7 @@ from nbswitch import report as R
 from nbswitch.report import mri
 from nbswitch.config import (DOCS, PDB_ID, REPO_URL, NOTEBOOK_URL, load_json,
                              REFERENCE_VHH_CHAIN, TARGET_ID, TARGET, TARGETS,
-                             results_dir)
+                             RESULTS, results_dir)
 
 ref = load_json("01_reference.json")
 
@@ -46,7 +46,8 @@ try:
     fold = load_json("04_folding.json")
 except FileNotFoundError:
     fold = None
-for _name, _key in (("13_ranking.json", "ranking_data"),
+for _name, _key in (("02b_linkers.json", "linkers"),
+                    ("13_ranking.json", "ranking_data"),
                     ("12_feasibility.json", "feas_data"),
                     ("11_complexes_msa.json", "complexes_msa"),
                     ("10_trigger.json", "trigger"),
@@ -84,7 +85,7 @@ schematic_facts = dict(
     win_n=f"{bN['window_decades']:.1f}", closed_c=closed_C,
     best_linker=bN["linker_residues"],
     km_ceiling_uM=bN["km_max_for_masking_M"] * 1e6,
-    n_masks=len(lib["masks"]), n_linkers=len(lib["linker_lengths"]),
+    n_masks=len(lib["masks"]), n_linkers=lib["n_linkers"],
     n_folded=(fold["n_folded"] if fold else lib["n_constructs"]),
     n_redesigns=(redesign["n_unique"] if redesign else 0),
     boltz_tag=("RUN" if complexes else "RUNNING"))
@@ -147,7 +148,12 @@ for cid in folded_ids:
         entry["caption"] = "free nanobody, folded as the reference state"
     models[cid] = entry
 
-default_id = "epi1_L5" if "epi1_L5" in models else (folded_ids[0] if folded_ids else "")
+# the picker offers what the library actually contains. Building it from the
+# directory listing offered leftovers from earlier runs, whose ids are absent
+# from MODELS, so selecting one threw and the viewer stayed empty.
+viewer_ids = sorted(models)
+_masked = [i for i in viewer_ids if models[i].get("mask")]
+default_id = (_masked[0] if _masked else (viewer_ids[0] if viewer_ids else ""))
 
 def card(v, l, s="", hl=False): return R._card(v, l, s, hl)
 def chart(n, c): return R._chart(n, c)
@@ -318,6 +324,13 @@ if trigger:
         vals = [r[key] for r in rows if r.get(key) is not None]
         return float(_np.mean(vals)) if vals else float("nan")
 
+    # if reach tracked recognition, one of the two measures would be redundant
+    _wl = [r for r in _rows_all if r.get("linker_id")]
+    _r_sel_ctx = (float(_np.corrcoef([r["selectivity"] for r in _wl],
+                                     [r["context_score"] for r in _wl])[0, 1])
+                  if len(_wl) > 2 else float("nan"))
+    _worst = min(_wl, key=lambda r: r["cleavability_score"]) if _wl else None
+
     _parts = "".join(
         f"<tr><td>{label}</td><td>{len(rows)}</td>"
         f"<td>{_mean(rows, 'extension'):.2f}</td>"
@@ -334,8 +347,12 @@ if trigger:
 <p>Recognition and reach are different questions. A protease threads its substrate through an
 active-site cleft, so the linker has to lie extended, stay exposed, and leave room beside the
 scissile bond for a catalytic domain roughly forty &#8491; across. Each is a
-<b>necessary condition</b>, independent of sequence: a linker packed against the nanobody cannot
-be cut however good its motif. All three are computable from the folded constructs alone.</p></div>
+<b>necessary condition</b>: a linker packed against the nanobody cannot be cut however good its
+motif. All three are computable from the folded constructs alone.</p>
+<p>The two axes turn out to be close to independent across the library
+(<b>r&nbsp;=&nbsp;{_r_sel_ctx:+.2f}</b> between sequence selectivity and structural reach,
+n&nbsp;=&nbsp;{len(_wl)}). Neither one substitutes for the other, which is the reason they are
+multiplied rather than averaged into a single number.</p></div>
 <div class="scroll"><table class="wrap">
 <thead><tr><th>linkers</th><th>n</th><th>extension</th><th>exposure</th><th>clearance</th>
 <th>product</th></tr></thead><tbody>{_parts}</tbody></table></div>
@@ -343,6 +360,11 @@ be cut however good its motif. All three are computable from the folded construc
 {_mean(_rows_all, 'exposure'):.2f} across the library, so nothing is buried. What separates
 constructs is extension and clearance &mdash; whether the segment lies in a groove rather than
 balled up, and whether an enzyme-sized object can get to it.</div>
+<div class="note"><b>Both axes have to hold at once.</b> The worst construct in the library,
+{_worst['id']}, is physically reachable &mdash; its context score of {_worst['context_score']:.2f}
+is mid-pack &mdash; but its linker is a scramble of a good substrate, so recognition collapses to
+{_worst['selectivity']:+.2f} and the product with it, to {_worst['cleavability_score']:.3f}. Same
+composition as something cleavable, same accessibility, no site.</div>
 <div class="note"><b>The generated linkers are one length, and it is close to the right one.</b>
 Every substrate is ten residues on three-residue flanks, so {_len} in all. The tether model wants
 <b>{_bestwin}</b> residues, where the usable affinity window is widest at {_win.get(_bestwin, float('nan')):.2f}
@@ -434,7 +456,7 @@ seg_rows = "".join(
     for s in lib["epitope_segments"])
 
 options = "".join(f'<option value="{i}"{" selected" if i == default_id else ""}>{i}</option>'
-                  for i in folded_ids)
+                  for i in viewer_ids)
 
 
 _graft = _np.mean([r["occlusion"] * 100 for r in fold["results"]
@@ -458,52 +480,6 @@ ceff_mM = bN["c_eff_M"] * 1e3
 from nbswitch.tether import fraction_toxin_bound as _ftb
 pt_1nM = _ftb(1e-9) * 100
 
-status_html = R.status_table([
-    ("Measure the complex", "run",
-     f"{meta['resolution_A']} Å structure, {iface['n_paratope']} paratope residues, "
-     f"N-terminus {geom['n_term_to_nearest_paratope_A']} Å from the nearest of them."),
-    ("Price the tether", "run",
-     f"Gives a usable mask affinity between {bN['km_min_for_release_M']*1e9:.0f} nM and "
-     f"{bN['km_max_for_masking_M']*1e6:.0f} µM, and says to attach at the N-terminus."),
-    ("Build a construct library", "run",
-     f"{lib['n_constructs']} constructs: grafted masks from the antigen, plus scrambled, "
-     f"truncated and inert controls."),
-    ("Fold them (ESMFold)", "run",
-     f"{fold['n_folded'] if fold else 0} structures predicted on CPU."),
-    ("Score masking by occlusion", "failed",
-     f"Grafts occlude {_graft:+.1f}% of the paratope and the inert control {_inert:+.1f}%. "
-     f"The control scores as well as the design, so the measure does not separate them."),
-    ("Redesign masks (ProteinMPNN)", "failed",
-     f"{redesign['n_unique'] if redesign else 0} masks, all scoring better than their parent by "
-     f"ProteinMPNN's own measure, but that score does not predict occlusion (r = {corr:+.2f})."
-     if redesign else "not run"),
-    ("Score the trigger: can a protease reach the linker", "run",
-     f"Works and separates the library. Accessibility falls from "
-     f"{_np.mean(_acc_by[min(_acc_by)]):.2f} at {min(_acc_by)} linker residues to "
-     f"{_np.mean(_acc_by[max(_acc_by)]):.2f} at {max(_acc_by)}."
-     if _acc_by else "not run"),
-    ("Score the trigger: will this protease cut this sequence", "proposed",
-     "Needs substrate specificity data for the proteases in question. No such dataset exists "
-     "for snake venom metalloproteinases."),
-    ("Predict the masked complex (Boltz-2)", "run" if _msa_ctrl else "failed",
-     (f"Without alignments the control put only "
-      f"{_ctrl['fraction_of_contacts_on_paratope']:.0%} of its toxin contacts on the known "
-      f"paratope, so the prediction was worthless. Giving the nanobody and antigen alignments "
-      f"raises that to {_msa_ctrl['fraction_of_contacts_on_paratope']:.0%}."
-      if _msa_ctrl and _ctrl else
-      f"The control put only {_ctrl['fraction_of_contacts_on_paratope']:.0%} of its toxin "
-      f"contacts on the known paratope, so it cannot be trusted." if _ctrl else "not run")),
-    ("Ask whether the masks block the toxin", "run",
-     f"They do not. With the nanobody and antigen aligned the toxin still reaches its own "
-     f"epitope in every masked construct ({_msa_lo:.0%} to {_msa_hi:.0%} of contacts on the "
-     f"paratope, against {_msa_ctrl['fraction_of_contacts_on_paratope']:.0%} for the free "
-     f"nanobody), and the designed mask sits off the paratope entirely."
-     if _msa_ctrl else "not run"),
-    ("Rank designs across the scores", "proposed",
-     "Two of the three scores work, so a Pareto front over all three cannot be built yet."),
-    ("Make anything", "proposed",
-     "Nothing has been synthesised. No measured affinity, expression or cleavage exists."),
-])
 
 
 # ---------------------------------------------------------------- figures
@@ -537,6 +513,19 @@ N["mpnn_corr"] = corr if redesign else float("nan")
 _ctx = [_r["context_score"] for _r in (trigger["results"] if trigger else [])]
 N["ctx_mean"] = float(_np.mean(_ctx)) if _ctx else 0.0
 N["ctx_max"] = float(max(_ctx)) if _ctx else 0.0
+
+# recognition against reach. If these tracked each other one measure would be
+# redundant; the product would then be doing no more work than either alone.
+_lin_rows = [_r for _r in (trigger["results"] if trigger else []) if _r.get("linker_id")]
+N["n_cleav"] = len(_lin_rows)
+N["sel_ctx_r"] = (float(_np.corrcoef([_r["selectivity"] for _r in _lin_rows],
+                                     [_r["context_score"] for _r in _lin_rows])[0, 1])
+                  if len(_lin_rows) > 2 else float("nan"))
+_least = min(_lin_rows, key=lambda r: r["cleavability_score"]) if _lin_rows else None
+N["least_id"] = _least["id"] if _least else ""
+N["least_ctx"] = _least["context_score"] if _least else 0.0
+N["least_sel"] = _least["selectivity"] if _least else 0.0
+N["least_cleav"] = _least["cleavability_score"] if _least else 0.0
 
 _mm = {r["case"]: r for r in (complexes_msa["results"] if complexes_msa else [])
        if r["status"] == "ok"}
@@ -640,24 +629,34 @@ def _count_rows():
     except FileNotFoundError:
         pass
     for name, stage, what in (
-            ("04_folded.json", "03", "constructs folded with ESMFold"),
+            ("04_folding.json", "03", "constructs folded with ESMFold"),
             ("07_redesign.json", "02", "mask sequences redesigned with ProteinMPNN"),
-            ("08_folded_redesigns.json", "03", "redesigns folded"),
+            ("08_redesign_folding.json", "03", "redesigns folded with ESMFold"),
             ("11_complexes_msa.json", "04", "complexes predicted with alignments"),
     ):
         try:
             d = load_json(name)
-            n = len(d.get("results", d.get("constructs", [])))
-            rows.append({"stage": stage, "what": what, "made": n, "kept": None})
         except FileNotFoundError:
-            pass
+            # a stage that has not run has no output at all; a stage that has
+            # run but is named wrong here looks identical, and silently drops
+            # a row from the table. Tell them apart.
+            if list(RESULTS.glob(f"{name.split('_')[0]}_*.json")):
+                raise SystemExit(
+                    f"{name} is missing but stage {name.split('_')[0]} has output "
+                    f"({[f.name for f in RESULTS.glob(name.split('_')[0] + '_*.json')]}). "
+                    f"Fix the filename in _count_rows.")
+            continue
+        # n_folded counts the free-nanobody reference too; results does not
+        n = d.get("n_folded") or len(d.get("results", d.get("constructs", [])))
+        rows.append({"stage": stage, "what": what, "made": n, "kept": None})
     try:
         rk = load_json("13_ranking.json")
         rows.append({"stage": "06", "what": "carried all three scores and were "
                      "ranked", "made": rk["n_total"],
-                     "kept": len(rk.get("pareto", []))})
+                     "kept": rk["n_front"]})
     except (FileNotFoundError, KeyError):
         pass
+    rows.sort(key=lambda r: r["stage"])
     return rows
 
 
@@ -972,8 +971,9 @@ over time.</p></div></details>
      "requirement that can be compensated for is not a requirement.",
      f"{N['n_linkers']} linkers were carried forward from {N['n_generated']} generated. "
      f"Selectivity spans {N['sel_min']:+.2f} to {N['sel_max']:+.2f}; the Gly/Ser control scores "
-     f"{N['sel_ctrl']:+.2f}. The two halves disagree: the most selective sequence is not the most "
-     f"reachable, and the longest linkers are the most solvent-exposed and the least extended.",
+     f"{N['sel_ctrl']:+.2f}. The two halves are close to independent across the "
+     f"{N['n_cleav']} linkered constructs (r = {N['sel_ctx_r']:+.2f}), so neither substitutes "
+     f"for the other and the most selective sequence is not the most reachable.",
      "Generation and verification share a model family, so their agreement is weaker evidence "
      "than two independent models would be. CleaveNet is trained on human MMPs; the protease that "
      "arrives first at a bite site is a snake venom metalloproteinase, which is not in its "
@@ -994,6 +994,12 @@ constitutive enzymes.</p>
 the construct averages {N['ctx_mean']:.2f} and reaches {N['ctx_max']:.2f} at best; the affinity
 window of Module 01 is widest at {N['linker_best']} residues, which the generated linkers sit
 close to.</p>
+<p><b>Both axes have to hold at once.</b> The lowest-scoring construct in the library,
+{N['least_id']}, is physically reachable &mdash; its reach score of {N['least_ctx']:.2f} is
+mid-pack &mdash; but its linker is a scramble of a good substrate, so recognition falls to
+{N['least_sel']:+.2f} and the product with it, to {N['least_cleav']:.3f}. Same composition as
+something cleavable, same accessibility, no site. That is the case a single averaged score would
+have hidden.</p>
 
 <h3 class="mod"><span>Module 06</span>Multiobjective ranking</h3>
 {mri("The three per-construct scores were combined by identifying nondominated candidates. No "

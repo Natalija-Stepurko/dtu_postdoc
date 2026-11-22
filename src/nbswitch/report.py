@@ -400,10 +400,19 @@ def copy_assets(library):
     (DOCS / "structures").mkdir(exist_ok=True)
     for svg in FIGURES.glob("*.svg"):
         shutil.copy(svg, DOCS / "figures" / svg.name)
+    wanted = set()
     for item in library:
         src = STRUCTURES / f"{item['id']}.pdb"
         if src.exists():
             shutil.copy(src, DOCS / "structures" / src.name)
+            wanted.add(src.name)
+    # docs/ mirrors the current library rather than accumulating. Renaming the
+    # constructs left thirty models from an earlier run in place, and the
+    # viewer offered them in its picker, where selecting one did nothing.
+    for old in (DOCS / "structures").glob("*.pdb"):
+        if old.name in wanted or old.stem == "ensemble" or old.stem[0].isdigit():
+            continue
+        old.unlink()
     return DOCS
 
 
@@ -1214,6 +1223,7 @@ def _confusion_matrix() -> str:
 STATUS = {
     "run": ("I ran this", "#0E7C7B"),
     "failed": ("I ran this and it did not work", "#C06014"),
+    "partial": ("I ran this, within a stated limit", "#8A6A1F"),
     "proposed": ("Proposed, not done", "#6E7880"),
 }
 
@@ -1430,7 +1440,7 @@ def interface_controls_table(controls, target: str) -> str:
 
 def generation_table(counts) -> str:
     """How many of what, at each stage. Every figure read from a stage output."""
-    head = ("<tr><th>stage</th><th>what is produced</th><th>how many</th>"
+    head = ("<tr><th>module</th><th>what is produced</th><th>how many</th>"
             "<th>kept</th></tr>")
     body = ""
     for row in counts:

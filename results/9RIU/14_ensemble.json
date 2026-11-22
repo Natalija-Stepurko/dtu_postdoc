@@ -1,244 +1,244 @@
 {
   "constructs": [
     {
-      "id": "epi1_L5",
-      "linker_end": 21
+      "id": "epi1_cn01",
+      "linker_end": 32
     },
     {
-      "id": "epi1_L10",
-      "linker_end": 26
+      "id": "epi1_cn02",
+      "linker_end": 32
     },
     {
-      "id": "epi1_L15",
-      "linker_end": 31
+      "id": "epi1_cn03",
+      "linker_end": 32
     },
     {
-      "id": "epi1_L20",
-      "linker_end": 36
+      "id": "epi1_cn04",
+      "linker_end": 32
     },
     {
-      "id": "epi1_L30",
-      "linker_end": 46
+      "id": "epi1_cn05",
+      "linker_end": 32
     },
     {
-      "id": "epi1_scram_L5",
-      "linker_end": 21
+      "id": "epi1_cn06",
+      "linker_end": 32
     },
     {
-      "id": "epi1_scram_L10",
-      "linker_end": 26
+      "id": "epi1_cn07",
+      "linker_end": 32
     },
     {
-      "id": "epi1_scram_L15",
-      "linker_end": 31
+      "id": "epi1_cn08",
+      "linker_end": 32
     },
     {
-      "id": "epi1_scram_L20",
-      "linker_end": 36
+      "id": "epi1_ctrl_gs",
+      "linker_end": 32
     },
     {
-      "id": "epi1_scram_L30",
-      "linker_end": 46
+      "id": "epi1_ctrl_scram",
+      "linker_end": 32
     },
     {
-      "id": "epi1_half_L5",
-      "linker_end": 13
+      "id": "epi1_scram_cn01",
+      "linker_end": 32
     },
     {
-      "id": "epi1_half_L10",
-      "linker_end": 18
+      "id": "epi1_scram_cn02",
+      "linker_end": 32
     },
     {
-      "id": "epi1_half_L15",
-      "linker_end": 23
+      "id": "epi1_scram_cn03",
+      "linker_end": 32
     },
     {
-      "id": "epi1_half_L20",
-      "linker_end": 28
+      "id": "epi1_scram_cn04",
+      "linker_end": 32
     },
     {
-      "id": "epi1_half_L30",
-      "linker_end": 38
+      "id": "epi1_scram_cn05",
+      "linker_end": 32
     },
     {
-      "id": "epi2_L5",
-      "linker_end": 8
+      "id": "epi1_scram_cn06",
+      "linker_end": 32
     },
     {
-      "id": "epi2_L10",
-      "linker_end": 13
+      "id": "epi1_scram_cn07",
+      "linker_end": 32
     },
     {
-      "id": "epi2_L15",
-      "linker_end": 18
+      "id": "epi1_scram_cn08",
+      "linker_end": 32
     },
     {
-      "id": "epi2_L20",
-      "linker_end": 23
+      "id": "epi1_scram_ctrl_gs",
+      "linker_end": 32
     },
     {
-      "id": "epi2_L30",
-      "linker_end": 33
+      "id": "epi1_scram_ctrl_scram",
+      "linker_end": 32
     },
     {
-      "id": "epi1_noCys_L5",
-      "linker_end": 21
+      "id": "epi1_half_cn01",
+      "linker_end": 24
     },
     {
-      "id": "epi1_noCys_L10",
-      "linker_end": 26
+      "id": "epi1_half_cn02",
+      "linker_end": 24
     },
     {
-      "id": "epi1_noCys_L15",
-      "linker_end": 31
+      "id": "epi1_half_cn03",
+      "linker_end": 24
     },
     {
-      "id": "epi1_noCys_L20",
-      "linker_end": 36
+      "id": "epi1_half_cn04",
+      "linker_end": 24
     },
     {
-      "id": "epi1_noCys_L30",
-      "linker_end": 46
+      "id": "epi1_half_cn05",
+      "linker_end": 24
     },
     {
-      "id": "polyG_L5",
-      "linker_end": 13
+      "id": "epi1_half_cn06",
+      "linker_end": 24
     },
     {
-      "id": "polyG_L10",
-      "linker_end": 18
+      "id": "epi1_half_cn07",
+      "linker_end": 24
     },
     {
-      "id": "polyG_L15",
-      "linker_end": 23
+      "id": "epi1_half_cn08",
+      "linker_end": 24
     },
     {
-      "id": "polyG_L20",
-      "linker_end": 28
+      "id": "epi1_half_ctrl_gs",
+      "linker_end": 24
     },
     {
-      "id": "polyG_L30",
-      "linker_end": 38
+      "id": "epi1_half_ctrl_scram",
+      "linker_end": 24
     },
     {
-      "id": "mpnn000_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn01",
+      "linker_end": 19
     },
     {
-      "id": "mpnn001_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn02",
+      "linker_end": 19
     },
     {
-      "id": "mpnn002_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn03",
+      "linker_end": 19
     },
     {
-      "id": "mpnn003_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn04",
+      "linker_end": 19
     },
     {
-      "id": "mpnn004_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn05",
+      "linker_end": 19
     },
     {
-      "id": "mpnn005_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn06",
+      "linker_end": 19
     },
     {
-      "id": "mpnn006_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn07",
+      "linker_end": 19
     },
     {
-      "id": "mpnn007_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_cn08",
+      "linker_end": 19
     },
     {
-      "id": "mpnn008_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_ctrl_gs",
+      "linker_end": 19
     },
     {
-      "id": "mpnn009_epi1_L5",
-      "linker_end": 21
+      "id": "epi2_ctrl_scram",
+      "linker_end": 19
     },
     {
-      "id": "mpnn010_epi1_L5",
-      "linker_end": 21
+      "id": "epi1_noCys_cn01",
+      "linker_end": 32
     },
     {
-      "id": "mpnn011_epi1_L5",
-      "linker_end": 21
+      "id": "epi1_noCys_cn02",
+      "linker_end": 32
     },
     {
-      "id": "mpnn012_epi1_L5",
-      "linker_end": 21
+      "id": "epi1_noCys_cn03",
+      "linker_end": 32
     },
     {
-      "id": "mpnn013_epi1_L20",
-      "linker_end": 36
+      "id": "epi1_noCys_cn04",
+      "linker_end": 32
     },
     {
-      "id": "mpnn014_epi1_L20",
-      "linker_end": 36
+      "id": "epi1_noCys_cn05",
+      "linker_end": 32
     },
     {
-      "id": "mpnn015_epi1_L20",
-      "linker_end": 36
+      "id": "epi1_noCys_cn06",
+      "linker_end": 32
     },
     {
-      "id": "mpnn016_epi1_L20",
-      "linker_end": 36
+      "id": "epi1_noCys_cn07",
+      "linker_end": 32
     },
     {
-      "id": "mpnn017_epi1_L20",
-      "linker_end": 36
+      "id": "epi1_noCys_cn08",
+      "linker_end": 32
     },
     {
-      "id": "mpnn018_epi1_L20",
-      "linker_end": 36
+      "id": "epi1_noCys_ctrl_gs",
+      "linker_end": 32
     },
     {
-      "id": "mpnn019_epi1_L5",
-      "linker_end": 21
+      "id": "epi1_noCys_ctrl_scram",
+      "linker_end": 32
     },
     {
-      "id": "mpnn020_epi1_L10",
-      "linker_end": 26
+      "id": "polyG_cn01",
+      "linker_end": 24
     },
     {
-      "id": "mpnn021_epi1_L10",
-      "linker_end": 26
+      "id": "polyG_cn02",
+      "linker_end": 24
     },
     {
-      "id": "mpnn022_epi1_L20",
-      "linker_end": 36
+      "id": "polyG_cn03",
+      "linker_end": 24
     },
     {
-      "id": "mpnn023_epi1_L5",
-      "linker_end": 21
+      "id": "polyG_cn04",
+      "linker_end": 24
     },
     {
-      "id": "mpnn024_epi1_L10",
-      "linker_end": 26
+      "id": "polyG_cn05",
+      "linker_end": 24
     },
     {
-      "id": "mpnn025_epi1_L5",
-      "linker_end": 21
+      "id": "polyG_cn06",
+      "linker_end": 24
     },
     {
-      "id": "mpnn026_epi1_L10",
-      "linker_end": 26
+      "id": "polyG_cn07",
+      "linker_end": 24
     },
     {
-      "id": "mpnn027_epi1_L10",
-      "linker_end": 26
+      "id": "polyG_cn08",
+      "linker_end": 24
     },
     {
-      "id": "mpnn028_epi1_L10",
-      "linker_end": 26
+      "id": "polyG_ctrl_gs",
+      "linker_end": 24
     },
     {
-      "id": "mpnn029_epi1_L20",
-      "linker_end": 36
+      "id": "polyG_ctrl_scram",
+      "linker_end": 24
     }
   ],
   "file": "structures/ensemble.pdb",

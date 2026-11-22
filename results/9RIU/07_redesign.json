@@ -1,16 +1,2884 @@
 {
-  "constructs": [],
+  "constructs": [
+    {
+      "id": "mpnn000_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPLLGPGVPVPLGG",
+      "mpnn_score": 1.2541,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPLLGPGVPVPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn001_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPVVGPGVPVPVGG",
+      "mpnn_score": 1.2726,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPVVGPGVPVPVGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn002_epi2_cn01",
+      "length": 142,
+      "linker_range": [
+        4,
+        19
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        3
+      ],
+      "mask_seq": "GGF",
+      "mpnn_score": 1.2849,
+      "native_score": 3.2877,
+      "parent": "epi2_cn01",
+      "sequence": "GGFGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        20,
+        142
+      ]
+    },
+    {
+      "id": "mpnn003_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPVLGPGVPLPLGG",
+      "mpnn_score": 1.3118,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPVLGPGVPLPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn004_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPVPLVGPGLPVPLGG",
+      "mpnn_score": 1.312,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "PPVPLVGPGLPVPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn005_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPPIGPGVPVPLGG",
+      "mpnn_score": 1.3201,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPPIGPGVPVPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn006_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APAPIVGPGVPVPVGG",
+      "mpnn_score": 1.3241,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APAPIVGPGVPVPVGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn007_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GPVPLVGPGVPVPLGG",
+      "mpnn_score": 1.3343,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "GPVPLVGPGVPVPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn008_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPVLGPGVPLPLGS",
+      "mpnn_score": 1.3401,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPVLGPGVPLPLGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn009_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GPVPVVGPGVPVPLGG",
+      "mpnn_score": 1.358,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "GPVPVVGPGVPVPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn010_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GPVPVLGPGLPVPGGG",
+      "mpnn_score": 1.3735,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "GPVPVLGPGLPVPGGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn011_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPVPLVGPGIPVPLGP",
+      "mpnn_score": 1.3861,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "PPVPLVGPGIPVPLGPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn012_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPTPVLGPGLPVPGGG",
+      "mpnn_score": 1.3926,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "PPTPVLGPGLPVPGGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn013_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SPLPPLGPGLPLPLGA",
+      "mpnn_score": 1.4123,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "SPLPPLGPGLPLPLGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn014_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPPPPGPGLPPLPVP",
+      "mpnn_score": 1.4175,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPPPPGPGLPPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn015_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APAPLLGPGVPPALGA",
+      "mpnn_score": 1.4291,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APAPLLGPGVPPALGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn016_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPLIGPGVPPPLGG",
+      "mpnn_score": 1.4339,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPLIGPGVPPPLGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn017_epi2_cn01",
+      "length": 142,
+      "linker_range": [
+        4,
+        19
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        3
+      ],
+      "mask_seq": "SGF",
+      "mpnn_score": 1.4346,
+      "native_score": 3.2877,
+      "parent": "epi2_cn01",
+      "sequence": "SGFGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        20,
+        142
+      ]
+    },
+    {
+      "id": "mpnn018_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GPIPVLGPGVPLPLGS",
+      "mpnn_score": 1.4421,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "GPIPVLGPGVPLPLGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn019_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPAPIRGPGVPIPVGG",
+      "mpnn_score": 1.4471,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "PPAPIRGPGVPIPVGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn020_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPLPLPGPGLLPLPVP",
+      "mpnn_score": 1.4629,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPLPLPGPGLLPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn021_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPPLAGPGLPPLPVP",
+      "mpnn_score": 1.4679,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPPLAGPGLPPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn022_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPVPAGPGLPPLPVP",
+      "mpnn_score": 1.469,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPVPAGPGLPPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn023_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPPLPGPGLLPLPVP",
+      "mpnn_score": 1.475,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPPLPGPGLLPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn024_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APAPLPGPGVPPALGA",
+      "mpnn_score": 1.4814,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APAPLPGPGVPPALGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn025_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPVLPGPGLLPLPVP",
+      "mpnn_score": 1.494,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPVLPGPGLLPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn026_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APPVPAGPGLLPLPVP",
+      "mpnn_score": 1.4961,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "APPVPAGPGLLPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn027_epi2_cn01",
+      "length": 142,
+      "linker_range": [
+        4,
+        19
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        3
+      ],
+      "mask_seq": "GGS",
+      "mpnn_score": 1.5067,
+      "native_score": 3.2877,
+      "parent": "epi2_cn01",
+      "sequence": "GGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        20,
+        142
+      ]
+    },
+    {
+      "id": "mpnn028_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APVPLIGPGVLPALGG",
+      "mpnn_score": 1.514,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "APVPLIGPGVLPALGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn029_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GPMPVPLP",
+      "mpnn_score": 1.5174,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GPMPVPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn030_epi1_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SPLPPMGPGLPVPLGA",
+      "mpnn_score": 1.5208,
+      "native_score": 2.1647,
+      "parent": "epi1_cn01",
+      "sequence": "SPLPPMGPGLPVPLGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn031_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPVPAGPGLPVVPVP",
+      "mpnn_score": 1.5224,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPVPAGPGLPVVPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn032_epi2_cn01",
+      "length": 142,
+      "linker_range": [
+        4,
+        19
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        3
+      ],
+      "mask_seq": "GGG",
+      "mpnn_score": 1.5363,
+      "native_score": 3.2877,
+      "parent": "epi2_cn01",
+      "sequence": "GGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        20,
+        142
+      ]
+    },
+    {
+      "id": "mpnn033_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APLPLPGPGPLPLPLP",
+      "mpnn_score": 1.5424,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "APLPLPGPGPLPLPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn034_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPPVPGPGLPLLPTP",
+      "mpnn_score": 1.5474,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPPVPGPGLPLLPTPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn035_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPVLPGPGPLPLPLP",
+      "mpnn_score": 1.5634,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPVLPGPGPLPLPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn036_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SPPIPAGPGLPPIPVP",
+      "mpnn_score": 1.5648,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "SPPIPAGPGLPPIPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn037_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPLVAGPGLPLIPVP",
+      "mpnn_score": 1.5682,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPLVAGPGLPLIPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn038_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPMPVPLP",
+      "mpnn_score": 1.5804,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "PPMPVPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn039_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPVLPGPLPLPLPLP",
+      "mpnn_score": 1.6212,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPVLPGPLPLPLPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn040_epi2_cn01",
+      "length": 142,
+      "linker_range": [
+        4,
+        19
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        3
+      ],
+      "mask_seq": "GGL",
+      "mpnn_score": 1.6356,
+      "native_score": 3.2877,
+      "parent": "epi2_cn01",
+      "sequence": "GGLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        20,
+        142
+      ]
+    },
+    {
+      "id": "mpnn041_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPPLRGPGVLPLPVP",
+      "mpnn_score": 1.6383,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPPLRGPGVLPLPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn042_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "LPMPPPPP",
+      "mpnn_score": 1.657,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "LPMPPPPPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn043_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GPMPPPLP",
+      "mpnn_score": 1.6633,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GPMPPPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn044_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GPLPPPLP",
+      "mpnn_score": 1.6664,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GPLPPPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn045_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PPPKVPGPGLPLLPTP",
+      "mpnn_score": 1.6683,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "PPPKVPGPGLPLLPTPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn046_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APVPPVPP",
+      "mpnn_score": 1.6726,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "APVPPVPPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn047_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SPPIPSGPGLPPIPIP",
+      "mpnn_score": 1.6759,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "SPPIPSGPGLPPIPIPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn048_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APVPPVSP",
+      "mpnn_score": 1.6867,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "APVPPVSPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn049_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPLPGPPGPLPAPGA",
+      "mpnn_score": 1.6894,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPLPGPPGPLPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn050_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SLPLPLPPGAAPAPGA",
+      "mpnn_score": 1.6925,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "SLPLPLPPGAAPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn051_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PVPVPGPPGAAPAPGA",
+      "mpnn_score": 1.6944,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PVPVPGPPGAAPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn052_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPMPPPLP",
+      "mpnn_score": 1.6982,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "PPMPPPLPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn053_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPVPAPPGPAPAPGA",
+      "mpnn_score": 1.7041,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPVPAPPGPAPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn054_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPLPLPPGAEPAPGA",
+      "mpnn_score": 1.7069,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPLPLPPGAEPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn055_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APAPVAGPGLAPEPIP",
+      "mpnn_score": 1.7081,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "APAPVAGPGLAPEPIPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn056_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GPPLVAGPGLPLIPRP",
+      "mpnn_score": 1.7138,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "GPPLVAGPGLPLIPRPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn057_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPLPLPPGPLPLPGP",
+      "mpnn_score": 1.7202,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPLPLPPGPLPLPGPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn058_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GPMPPVPP",
+      "mpnn_score": 1.7309,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GPMPPVPPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn059_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GPMPIPVP",
+      "mpnn_score": 1.7346,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GPMPIPVPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn060_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GPMPPVTP",
+      "mpnn_score": 1.7459,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GPMPPVTPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn061_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPLPLPPGAVPAPGP",
+      "mpnn_score": 1.7498,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPLPLPPGAVPAPGPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn062_epi2_cn01",
+      "length": 142,
+      "linker_range": [
+        4,
+        19
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        3
+      ],
+      "mask_seq": "SGA",
+      "mpnn_score": 1.7567,
+      "native_score": 3.2877,
+      "parent": "epi2_cn01",
+      "sequence": "SGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        20,
+        142
+      ]
+    },
+    {
+      "id": "mpnn063_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "LPMPPPPA",
+      "mpnn_score": 1.7827,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "LPMPPPPAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn064_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "LPMPVPSA",
+      "mpnn_score": 1.7943,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "LPMPVPSAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn065_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APMPPVSP",
+      "mpnn_score": 1.7957,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "APMPPVSPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn066_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GVPLVGPPGAAPAPGS",
+      "mpnn_score": 1.8108,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "GVPLVGPPGAAPAPGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn067_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GSMPPVTP",
+      "mpnn_score": 1.8135,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GSMPPVTPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn068_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "GVVPPVSP",
+      "mpnn_score": 1.8365,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "GVVPPVSPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn069_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "SPMPPVPP",
+      "mpnn_score": 1.8385,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "SPMPPVPPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn070_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SLPIPGPPGPAPSPGS",
+      "mpnn_score": 1.8432,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "SLPIPGPPGPAPSPGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn071_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PVPLVLPPGAEPQPGG",
+      "mpnn_score": 1.8452,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PVPLVLPPGAEPQPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn072_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPLVAPPGPLPEPGG",
+      "mpnn_score": 1.8504,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPLVAPPGPLPEPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn073_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "ALPVGAPPGPVPAPGA",
+      "mpnn_score": 1.8531,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "ALPVGAPPGPVPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn074_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPSPGGPL",
+      "mpnn_score": 1.8652,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "PPSPGGPLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn075_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "SLPIPSPPGPAPSPGS",
+      "mpnn_score": 1.8718,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "SLPIPSPPGPAPSPGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn076_epi1_scram_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "APPNVAGPGLAPEPIP",
+      "mpnn_score": 1.8772,
+      "native_score": 2.698,
+      "parent": "epi1_scram_cn01",
+      "sequence": "APPNVAGPGLAPEPIPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn077_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GVPLKLPPGALPAPGS",
+      "mpnn_score": 1.879,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "GVPLKLPPGALPAPGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn078_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "AELAPGPPGPLPAPGG",
+      "mpnn_score": 1.8982,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "AELAPGPPGPLPAPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn079_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APPPPVSP",
+      "mpnn_score": 1.9,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "APPPPVSPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn080_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "SLMPPVPP",
+      "mpnn_score": 1.9144,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "SLMPPVPPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn081_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPEPGGPL",
+      "mpnn_score": 1.9187,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "PPEPGGPLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn082_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APAPGGPL",
+      "mpnn_score": 1.9219,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APAPGGPLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn083_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "LPLPGGPL",
+      "mpnn_score": 1.9313,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "LPLPGGPLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn084_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "LPLPGGPA",
+      "mpnn_score": 1.9599,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "LPLPGGPAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn085_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PLPNVAPPGPAPEPGG",
+      "mpnn_score": 1.9611,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PLPNVAPPGPAPEPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn086_epi1_half_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "ALLPAPSP",
+      "mpnn_score": 1.9625,
+      "native_score": 3.0089,
+      "parent": "epi1_half_cn01",
+      "sequence": "ALLPAPSPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn087_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "AELAPIPPGPLPAPGG",
+      "mpnn_score": 1.9659,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "AELAPIPPGPLPAPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn088_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "PAPVSRPPGPLPKPGA",
+      "mpnn_score": 1.9743,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "PAPVSRPPGPLPKPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn089_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APAPAGPL",
+      "mpnn_score": 1.9798,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APAPAGPLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn090_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPSPGGPV",
+      "mpnn_score": 1.9819,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "PPSPGGPVGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn091_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APGGGGGS",
+      "mpnn_score": 1.9893,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APGGGGGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn092_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "GVPLKLPPGALQAPGS",
+      "mpnn_score": 1.994,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "GVPLKLPPGALQAPGSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn093_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "KKPVPRPPGAVPTPGP",
+      "mpnn_score": 2.0165,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "KKPVPRPPGAVPTPGPGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn094_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "SPSGGGPL",
+      "mpnn_score": 2.025,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "SPSGGGPLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn095_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APSPGGPS",
+      "mpnn_score": 2.0254,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APSPGGPSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn096_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "AIPNVAPPGPSPEPGG",
+      "mpnn_score": 2.0374,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "AIPNVAPPGPSPEPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn097_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPEPGGLL",
+      "mpnn_score": 2.0376,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "PPEPGGLLGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn098_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APVGGGPV",
+      "mpnn_score": 2.0647,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APVGGGPVGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn099_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPVGGGPV",
+      "mpnn_score": 2.0857,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "PPVGGGPVGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn100_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "METKRLPPGAEPQPGG",
+      "mpnn_score": 2.1001,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "METKRLPPGAEPQPGGGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn101_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "PPSPSGPV",
+      "mpnn_score": 2.105,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "PPSPSGPVGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn102_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "KKKVGLPPAPVPAPGA",
+      "mpnn_score": 2.1379,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "KKKVGLPPAPVPAPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn103_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "SPNPGGPF",
+      "mpnn_score": 2.1498,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "SPNPGGPFGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn104_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APGGGSVS",
+      "mpnn_score": 2.1604,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APGGGSVSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn105_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "APSPGVPS",
+      "mpnn_score": 2.1792,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "APSPGVPSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn106_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "SLNPGGPF",
+      "mpnn_score": 2.213,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "SLNPGGPFGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn107_epi1_noCys_cn01",
+      "length": 155,
+      "linker_range": [
+        17,
+        32
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_epi1_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "LAERERPPGELPKPGA",
+      "mpnn_score": 2.2149,
+      "native_score": 2.6532,
+      "parent": "epi1_noCys_cn01",
+      "sequence": "LAERERPPGELPKPGAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "mpnn108_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "LPLEGGAA",
+      "mpnn_score": 2.217,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "LPLEGGAAGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "mpnn109_polyG_cn01",
+      "length": 147,
+      "linker_range": [
+        9,
+        24
+      ],
+      "linker_residues": 16,
+      "linker_seq": "GGSPMPTAFHGMAGGS",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        8
+      ],
+      "mask_seq": "AIGGGSVS",
+      "mpnn_score": 2.3246,
+      "native_score": 1.7612,
+      "parent": "polyG_cn01",
+      "sequence": "AIGGGSVSGGSPMPTAFHGMAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        25,
+        147
+      ]
+    }
+  ],
   "method": "ProteinMPNN, nanobody and linker fixed",
-  "n_designs": 0,
-  "n_unique": 0,
-  "native_scores": {},
+  "n_designs": 144,
+  "n_unique": 110,
+  "native_scores": {
+    "epi1_cn01": 2.1647,
+    "epi1_half_cn01": 3.0089,
+    "epi1_noCys_cn01": 2.6532,
+    "epi1_scram_cn01": 2.698,
+    "epi2_cn01": 3.2877,
+    "polyG_cn01": 1.7612
+  },
   "parents": [
-    "epi1_L5",
-    "epi1_L10",
-    "epi1_L20",
-    "epi2_L5",
-    "epi2_L10",
-    "epi1_half_L5"
+    "polyG_cn01",
+    "epi2_cn01",
+    "epi1_scram_cn01",
+    "epi1_noCys_cn01",
+    "epi1_half_cn01",
+    "epi1_cn01"
   ],
   "per_temperature": 8,
   "temperatures": [
