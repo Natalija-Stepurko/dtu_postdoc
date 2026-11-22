@@ -831,7 +831,7 @@ COUNTS = _count_rows()
 #: Stage numbers are execution order of the code and collide with the module
 #: numbers while meaning something different, so they are not shown as a
 #: column. The script name is given instead, which is unambiguously a file.
-STAGE_MODULE = {'01': ('01', 'Shrake–Rupley SASA, biotite 1.6'), '02': ('01', 'worm-like chain; competitive equilibria'), '02b': ('02b', 'CleaveNet conditional generator + predictor'), '18': ('02b', 'position weight matrix and nearest neighbour over the Kukreja library'), '16': ('02b', 'flank-length sweep, substrate held constant; ESMFold'), '03a': ('02a', 'antigen contact face at 3.5 Å; window variants'), '03': ('02a', 'the design matrix: one variable at a time'), '04': ('03', 'ESMFold facebook/esmfold_v1'), '07': ('02a', 'ProteinMPNN v_48_020, nanobody and linker fixed'), '12': ('03', 'pLDDT; Cα core RMSD; SASA; SG–SG distance'), '10': ('05', 'extension × exposure × 17 Å clearance'), '17': ('04', 'Boltz-2.2.1, mask + nanobody, no tether'), '09': ('04', 'Boltz-2.2.1 with every chain unaligned, as a negative control'), '19': ('04', 'Boltz-2.2.1, whole construct with antigen, alignments on public chains'), '13': ('06', 'Pareto non-domination'), '15': ('03', 'the same measures on independent complexes')}
+STAGE_MODULE = {'01': ('01', 'Shrake–Rupley SASA, biotite 1.6'), '02': ('01', 'worm-like chain; competitive equilibria'), '02b': ('02b', 'CleaveNet conditional generator + predictor'), '18': ('02b', 'position weight matrix and nearest neighbour over the Kukreja library'), '16': ('02b', 'flank-length sweep, substrate held constant; ESMFold'), '03a': ('02a', 'antigen contact face at 3.5 Å; window variants'), '03': ('02a', 'the design matrix: one variable at a time'), '04': ('03', 'ESMFold facebook/esmfold_v1'), '07': ('02a', 'ProteinMPNN v_48_020, nanobody and linker fixed'), '12': ('03', 'pLDDT; Cα core RMSD; SASA; SG–SG distance'), '10': ('05', 'extension × exposure × 17 Å clearance'), '17': ('04', 'Boltz-2.2.1, mask + nanobody, no tether'), '09': ('04', 'Boltz-2.2.1 with every chain unaligned: a positive control, on a complex the crystal structure already answers'), '19': ('04', 'Boltz-2.2.1, whole construct with antigen, alignments on public chains'), '13': ('06', 'Pareto non-domination'), '15': ('03', 'the same measures on independent complexes')}
 
 
 SCRIPTS = {path.name.split("_")[0]: path.name
@@ -943,12 +943,13 @@ def _build_register():
                    (_f('17_mask_binding.json'))))
 
     a(_exp("09", "The alignment control",
-           "Is a wrong answer here the design failing, or the prediction?",
+           "Can the method reproduce an interface that is already known?",
            lambda: f"predicted with no alignments at all, the free nanobody and "
                    f"its own antigen put only "
                    f"{next(r['fraction_of_contacts_on_paratope'] for r in _f('09_complexes.json')['results'] if r['case']=='control_free_vhh'):.0%} "
-                   f"of contacts on the paratope the crystal structure shows, so "
-                   f"the method was failing before any mask was involved"))
+                   f"of contacts on the paratope the crystal structure shows: a "
+                   f"positive control the method failed, before any mask was "
+                   f"involved"))
 
     a(_exp("19", "Verify the front", "With the mask on, can the antigen still bind?",
            lambda: (lambda d: f"{d['n_worth_testing']} of {d['n_verified']} verified constructs "
@@ -1326,6 +1327,7 @@ peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the ap
 extension of this module and are not implemented here.</p></div></details>
 
 <h3 class="mod"><span>Module 04</span>Mask binding and release</h3>
+{R.alignment_control(N['boltz_ctrl_noalign'], N['boltz_ctrl'])}
 {mri("Two approaches were applied. Paratope occlusion was calculated from the folded constructs "
      "by comparing the accessible surface of the paratope with that of the free nanobody. The "
      "assembly of nanobody, tethered mask and antigen was then predicted with Boltz-2, with "

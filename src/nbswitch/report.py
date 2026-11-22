@@ -1616,3 +1616,32 @@ def front_table(front, objectives, shortlist=(), limit: int = 12) -> str:
         more = (f'<p class="dim" style="font-size:.85rem">'
                 f'{len(front) - limit} further nondominated designs not shown.</p>')
     return f'<table class="tbl front">{head}{body}</table>{more}'
+
+
+def alignment_control(without: float, with_msa: float) -> str:
+    """The positive control that decided how the complexes are predicted.
+
+    Before asking whether a mask blocks the antigen, the method has to
+    reproduce the interface the crystal structure already shows. It is a
+    positive control, and the first attempt failed it.
+    """
+    if not (without or with_msa):
+        return pending("the alignment control, stages 09 and 19")
+    return (
+        f'<p><b>The method was checked against a known answer first.</b> Before '
+        f'assessing the effect of the mask, I tested whether Boltz-2 could '
+        f'reproduce the experimentally determined V<sub>H</sub>H&ndash;antigen '
+        f'interface. Without evolutionary alignments, only {without:.0f}% of '
+        f'predicted antigen contacts involved the known paratope. Supplying '
+        f'alignments for the V<sub>H</sub>H and the antigen, which are public '
+        f'sequences, raised this to {with_msa:.0f}%, while the designed mask took '
+        f'no alignment and never left this machine.</p>'
+        f'<p>I therefore used the revised setup for the rest of the analysis. Two '
+        f'qualifications. That figure is recovery of the reference interface, not '
+        f'a probability that the proteins bind, and reproducing a known interface '
+        f'does not establish that predicted mask binding or release is accurate. '
+        f'For the control the comparison is clean, since both runs modelled the '
+        f'same two chains and differed only in the alignment; for the masked '
+        f'constructs it is not, because the revised setup also splits the fusion '
+        f'into separate chains joined by a bond, so the improvement there cannot '
+        f'be attributed to the alignment alone.</p>')
