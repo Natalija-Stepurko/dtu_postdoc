@@ -16,6 +16,19 @@ N_GENERATE = 120
 N_KEEP = 8
 PYTHON = "/scratch/.venv-dtu/bin/python"
 
+#: Linker length is a design variable, not a constant. The reference length
+#: comes from the flank setting and is the one every substrate is built at, so
+#: that sequences can be compared with length held constant. A ladder is then
+#: added for one generated substrate and one control, so that length varies
+#: with sequence held constant and the ranking can trade the two against each
+#: other.
+#:
+#: It matters because the masks are not all the same size. A six-residue mask
+#: and a twenty-residue one attach at the same point and have to cover the same
+#: surface, so they do not need the same amount of linker, and a single length
+#: for the whole library is a guess for at least one of them.
+LENGTH_LADDER = (16, 32)
+
 work = RESULTS / "linkers"
 out = L.cleavable_linkers(n_generate=N_GENERATE, n_keep=N_KEEP,
                           work_dir=work, python=PYTHON)
@@ -51,9 +64,26 @@ for c, row in zip(controls, frame.itertuples()):
     c["off_target_z"] = round(float(row.off_target_z), 3)
     c["selectivity"] = round(float(row.selectivity), 3)
 
+# length variants, so the library carries sequence and length as separate axes
+ladder = []
+_ladder_bases = [out["linkers"][0]] + controls          # best generated + both controls
+for base in _ladder_bases:
+    for v in L.length_variants(base["substrate"], base["id"], lengths=LENGTH_LADDER):
+        if len(v["sequence"]) == len(base["sequence"]):
+            continue                      # the reference length is already in
+        ladder.append({**v, "kind": base.get("kind", "generated"),
+                       "selectivity": base.get("selectivity"),
+                       "target_z": base.get("target_z"),
+                       "off_target_z": base.get("off_target_z")})
+out["linkers"] = out["linkers"] + ladder
+out["n_length_variants"] = len(ladder)
+out["reference_length"] = len(out["linkers"][0]["sequence"])
+out["length_ladder"] = list(LENGTH_LADDER)
+
 save_json("02b_linkers.json", out)
 print(f"  generated {out['n_generated']}, kept {out['n_kept']}, "
-      f"plus {out['n_controls']} controls = {len(out['linkers'])} linkers")
+      f"plus {out['n_controls']} controls and {out['n_length_variants']} length "
+      f"variants = {len(out['linkers'])} linkers")
 for item in out["linkers"]:
-    print(f"    {item['id']:<12s} {item['sequence']:<20s} "
-          f"selectivity {item['selectivity']}")
+    print(f"    {item['id']:<12s} {len(item['sequence']):3d} aa  "
+          f"{item['sequence']:<34s} selectivity {item['selectivity']}")

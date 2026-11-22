@@ -1528,6 +1528,72 @@
       "sequence": "GGSGGSGMPAAHFMPTGGGSGGSG",
       "substrate": "MPAAHFMPTG",
       "target_z": -1.09
+    },
+    {
+      "id": "cn01_n16",
+      "substrate": "PMPTAFHGMA",
+      "sequence": "GGSPMPTAFHGMAGGS",
+      "flank": "GGS",
+      "total_length": 16,
+      "kind": "generated",
+      "selectivity": 1.481,
+      "target_z": 1.228,
+      "off_target_z": -0.252
+    },
+    {
+      "id": "cn01_n32",
+      "substrate": "PMPTAFHGMA",
+      "sequence": "GGSGGSGGSGGPMPTAFHGMAGGSGGSGGSGG",
+      "flank": "GGSGGSGGSGG",
+      "total_length": 32,
+      "kind": "generated",
+      "selectivity": 1.481,
+      "target_z": 1.228,
+      "off_target_z": -0.252
+    },
+    {
+      "id": "ctrl_gs_n16",
+      "substrate": "GGGGSGGGGS",
+      "sequence": "GGSGGGGSGGGGSGGS",
+      "flank": "GGS",
+      "total_length": 16,
+      "kind": "protease-resistant control",
+      "selectivity": 0.161,
+      "target_z": -0.239,
+      "off_target_z": -0.4
+    },
+    {
+      "id": "ctrl_gs_n32",
+      "substrate": "GGGGSGGGGS",
+      "sequence": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
+      "flank": "GGSGGSGGSGG",
+      "total_length": 32,
+      "kind": "protease-resistant control",
+      "selectivity": 0.161,
+      "target_z": -0.239,
+      "off_target_z": -0.4
+    },
+    {
+      "id": "ctrl_scram_n16",
+      "substrate": "MPAAHFMPTG",
+      "sequence": "GGSMPAAHFMPTGGGS",
+      "flank": "GGS",
+      "total_length": 16,
+      "kind": "scrambled control",
+      "selectivity": 0.05,
+      "target_z": -1.09,
+      "off_target_z": -1.14
+    },
+    {
+      "id": "ctrl_scram_n32",
+      "substrate": "MPAAHFMPTG",
+      "sequence": "GGSGGSGGSGGMPAAHFMPTGGGSGGSGGSGG",
+      "flank": "GGSGGSGGSGG",
+      "total_length": 32,
+      "kind": "scrambled control",
+      "selectivity": 0.05,
+      "target_z": -1.09,
+      "off_target_z": -1.14
     }
   ],
   "n_controls": 2,
@@ -1548,5 +1614,11 @@
     "MMP2",
     "MMP9",
     "MMP8"
+  ],
+  "n_length_variants": 6,
+  "reference_length": 24,
+  "length_ladder": [
+    16,
+    32
   ]
 }

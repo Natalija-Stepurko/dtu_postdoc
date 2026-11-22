@@ -27,21 +27,34 @@ by_id = {c["id"]: c for c in lib["constructs"]}
 vhh = lib["vhh_sequence"]
 
 
-def _parents(constructs):
-    """The best-scoring linker for each mask, by selectivity."""
+def _parents(constructs, reference_length=None):
+    """One construct per mask: the most selective linker, at the reference length.
+
+    Length variants of a linker carry the same selectivity as the linker they
+    came from, so selectivity alone leaves ties and the parent set would depend
+    on dictionary order. Redesign holds the linker fixed and rewrites the mask,
+    so the parent should be the reference length and the tie is broken on that.
+    """
     best = {}
     for c in constructs:
         if not c.get("mask") or not c.get("linker_id"):
             continue
         score = c.get("linker_selectivity")
         score = -1e9 if score is None else score
+        at_reference = (reference_length is None
+                        or c.get("linker_residues") == reference_length)
+        key = (score, at_reference)
         current = best.get(c["mask"])
-        if current is None or score > current[0]:
-            best[c["mask"]] = (score, c["id"])
-    return [cid for _, cid in sorted(best.values(), reverse=True)]
+        if current is None or key > current[0]:
+            best[c["mask"]] = (key, c["id"])
+    return [cid for _, cid in sorted(best.values(), key=lambda kv: kv[0], reverse=True)]
 
 
-PARENTS = _parents(lib["constructs"])
+try:
+    _ref_len = load_json("02b_linkers.json").get("reference_length")
+except FileNotFoundError:
+    _ref_len = None
+PARENTS = _parents(lib["constructs"], _ref_len)
 if not PARENTS:
     raise SystemExit("no constructs to redesign: the library is empty")
 print(f"  redesigning {len(PARENTS)} parents: {', '.join(PARENTS)}")
