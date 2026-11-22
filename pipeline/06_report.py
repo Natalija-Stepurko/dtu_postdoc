@@ -579,6 +579,8 @@ top_paratope = [
     for lbl in iface["paratope_contact_labels"]]
 N["n_contacts"] = iface["n_paratope_contacts"]
 N["contact_cutoff"] = iface["contact_cutoff_A"]
+from nbswitch.config import VHH_TOXIN_KD_M as _VHH_KD
+N["vhh_toxin_kd_nM"] = _VHH_KD * 1e9
 N["contact_labels"] = ", ".join(iface["paratope_contact_labels"])
 
 SCORES = {}
@@ -801,6 +803,15 @@ that produced it.</p></div>
      "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
      "point used throughout. The agreement between the two pairs indicates the interface is "
      "consistently resolved within this crystal.")}
+<p>The nanobody in this entry is V<sub>H</sub>H5 a-sNTx and the antigen is short neurotoxin 1
+(P01426). Its affinity is <b>low nanomolar</b>: the study reports all fifteen cross-reactive
+V<sub>H</sub>Hs in that range by biolayer interferometry, with dissociation rates
+<b>k<sub>off</sub> &lt; 5.5 &times; 10<sup>&minus;4</sup> s<sup>&minus;1</sup></b>. This sets the
+release floor in Module 01: the released mask competes with the antigen for the same site, so how
+tightly the nanobody holds its antigen decides how tight a mask it can tolerate. The value used
+throughout is {N['vhh_toxin_kd_nM']:.0f} nM, from that reported range. The paper does not say which
+of its short-neurotoxin targets P01426 is, so this is the range for the nanobody and not a measured
+constant for this pair.</p>
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure · {PDB_ID}</span>
 <button data-spin="solved">spin</button></div>

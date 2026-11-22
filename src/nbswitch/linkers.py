@@ -201,3 +201,38 @@ def cleavable_linkers(n_generate: int = 120, n_keep: int = 10,
              "selectivity": round(float(row.selectivity), 3)}
             for row in scored.itertuples()],
     }
+
+
+#: Total linker lengths to model. The substrate is fixed at ten residues by
+#: CleaveNet, so length is varied in the flanks, which are inert Gly/Ser and
+#: contribute no cleavage site of their own. This separates two things that
+#: were previously one number: whether a protease recognises the linker, and
+#: whether the mask can reach the paratope.
+LENGTH_SERIES = (16, 20, 24, 28, 32)
+
+
+def flank_of_length(n: int) -> str:
+    """An inert Gly/Ser flank of exactly ``n`` residues."""
+    return ("GGS" * (n // 3 + 1))[:n]
+
+
+def length_variants(substrate: str, linker_id: str,
+                    lengths=LENGTH_SERIES, **extra) -> list[dict]:
+    """One linker per total length, all carrying the same substrate.
+
+    Only the flanks change, so any difference in masking between these is
+    attributable to how far the mask can reach, not to its cleavability.
+    """
+    out = []
+    for total in lengths:
+        pad = total - len(substrate)
+        if pad < 0 or pad % 2:
+            raise ValueError(
+                f"total length {total} cannot flank a {len(substrate)}-residue "
+                f"substrate symmetrically")
+        flank = flank_of_length(pad // 2)
+        out.append({"id": f"{linker_id}_n{total}",
+                    "substrate": substrate,
+                    "sequence": f"{flank}{substrate}{flank}",
+                    "flank": flank, "total_length": total, **extra})
+    return out
