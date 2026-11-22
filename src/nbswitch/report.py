@@ -1425,11 +1425,16 @@ def interface_controls_table(controls, target: str) -> str:
 
 
 def generation_table(counts) -> str:
-    """The funnel: what entered each stage, what left, and which stage takes it."""
+    """What each module produced, in the order the modules ran.
+
+    One result column rather than an in/out pair. Most steps transform rather
+    than select, and the units differ on each side of such a step, so an arrow
+    between two counts would claim a funnel where there is none. Rows that do
+    discard candidates say so in words and are marked.
+    """
     head = ('<colgroup><col style="width:8%"><col style="width:46%">'
-            '<col style="width:7%"><col style="width:7%">'
-            '<col style="width:32%"></colgroup>'
-            "<tr><th>module</th><th>what happens</th><th>in</th><th>out</th>"
+            '<col style="width:24%"><col style="width:22%"></colgroup>'
+            "<tr><th>module</th><th>what happens</th><th>result</th>"
             "<th>feeds</th></tr>")
     body = ""
     for r in counts:
@@ -1437,11 +1442,10 @@ def generation_table(counts) -> str:
         dead = feeds == "nothing downstream"
         cell = f'<td class="dead">{feeds}</td>' if dead else f"<td>{feeds}</td>"
         tr = '<tr class="warnrow">' if dead else "<tr>"
-        narrows = (r.get("in") or 0) > (r.get("out") or 0)
-        out = (f'<td class="mono"><b>{r["out"]}</b></td>' if narrows
-               else f'<td class="mono">{r["out"]}</td>')
-        body += (f'{tr}<td class="mono">{r["stage"]}</td><td>{r["what"]}</td>'
-                 f'<td class="mono">{r["in"]}</td>{out}{cell}</tr>')
+        mark = ' <span class="tag">selects</span>' if r.get("selected") else ""
+        body += (f'{tr}<td class="mono">{r["stage"]}</td>'
+                 f'<td>{r["what"]}{mark}</td>'
+                 f'<td class="mono">{r["result"]}</td>{cell}</tr>')
     return f'<table class="tbl gen">{head}{body}</table>'
 
 

@@ -679,106 +679,114 @@ N["lattice_area"] = _lat.get("interface_area_A2", 0)
 N["lattice_n"] = _lat.get("n_paratope", 0)
 N["cdr3_other"] = _by.get("9GCN", {}).get("cdr3_percent_bsa", 0)
 def _count_rows():
-    """The funnel, labelled by the module each step belongs to.
+    """What each module produced, labelled by the module in the diagram.
 
-    Rows are in execution order, which is how the work actually ran, and each
-    carries the module from the diagram rather than the number of the script
-    that produced it. The two numbering systems are different things and
-    showing both was the confusing part.
+    One result column, not an in/out pair. Most steps are not selections:
+    masks are built from contact residues, redesigns from parents, and the
+    units differ on each side, so an arrow between two counts said something
+    untrue about every row except the two that really do discard candidates.
+    Those two say so in words.
     """
     rows = []
 
-    def row(module, what, came_in, went_out, feeds):
-        rows.append({"stage": module, "what": what, "in": came_in,
-                     "out": went_out, "feeds": feeds})
+    def row(module, what, result, feeds, selected=False):
+        rows.append({"stage": module, "what": what, "result": result,
+                     "feeds": feeds, "selected": selected})
 
     try:
-        ref = load_json("01_reference.json")["chain_pairs"][REFERENCE_VHH_CHAIN]
         teth = load_json("02_tether.json")
-        row("01", "the deposited complex measured: paratope, termini and contact "
-                  "faces, then the tether model turned into bounds on mask affinity",
-            "1 complex",
-            f"a {teth['best_per_terminus']['N']['window_decades']:.2f}-decade window",
+        row("01", "the deposited complex measured: paratope, termini and "
+                  "contact faces, then a tether model applied to the geometry",
+            f"a {teth['best_per_terminus']['N']['window_decades']:.2f}-decade "
+            f"window on mask affinity",
             "02a and 02b")
     except (FileNotFoundError, KeyError):
         pass
 
     try:
         lk = load_json("02b_linkers.json")
-        row("02b", "protease substrates generated against the target profile",
-            lk["n_generated"], lk["n_kept"], "02b")
-        row("02b", "+ controls, and the same substrates at other lengths",
-            lk["n_kept"], len(lk["linkers"]), "assembly")
+        row("02b", "protease substrates generated against the target profile "
+                   "and scored for selectivity",
+            f"{lk['n_generated']} generated, <b>{lk['n_kept']} kept</b>",
+            "the linker set", selected=True)
+        row("02b", "controls added, and the kept substrates rebuilt at each "
+                   "modelled linker length",
+            f"<b>{len(lk['linkers'])} linkers</b>", "assembly")
     except FileNotFoundError:
         pass
 
     try:
         mk = load_json("03a_masks.json")
         n_contact = sum(seg["n_contact"] for seg in mk["segments"])
-        row("02a", f"masks designed from the antigen residues within "
-                   f"{mk['cutoff_A']} \u00c5 of the nanobody, with window and "
-                   f"substitution variants and matched controls",
-            n_contact, len(mk["masks"]), "assembly")
+        row("02a", f"masks built from the {n_contact} antigen residues within "
+                   f"{mk['cutoff_A']} \u00c5 of the nanobody: window and "
+                   f"substitution variants, and matched controls",
+            f"<b>{len(mk['masks'])} masks</b>", "assembly")
     except FileNotFoundError:
         pass
 
-    folded_total = 0
     try:
         cl = load_json("03_constructs.json")
         n_mask, n_link = len(cl["masks"]), cl["n_linkers"]
-        row("\u2014", f"assembled: {n_mask} masks and {n_link} linkers, paired by "
-                      f"the design matrix rather than fully crossed",
-            n_mask * n_link, cl["n_constructs"], "structure prediction")
+        row("\u2014", "masks and linkers paired by the design matrix, which "
+                      "varies one at a time rather than crossing everything",
+            f"{n_mask} \u00d7 {n_link} = {n_mask * n_link} possible, "
+            f"<b>{cl['n_constructs']} built</b>",
+            "structure prediction", selected=True)
         f = load_json("04_folding.json")
-        folded_total = f.get("n_folded", 0)
-        row("\u2014", "folded once with ESMFold, as a single chain",
-            cl["n_constructs"], folded_total, "03, 04 and 05")
+        row("\u2014", "each construct folded once with ESMFold, as a single chain",
+            f"<b>{f.get('n_folded', 0)} structures</b>", "03, 04 and 05")
     except FileNotFoundError:
         pass
 
     try:
         rd = load_json("07_redesign.json")
-        n_rd = len(rd["constructs"])
-        row("02a", "mask sequences redesigned with ProteinMPNN on those backbones",
-            len(rd.get("parents", [])) or 1, n_rd, "structure prediction")
+        n_par = len(rd.get("parents", [])) or 1
+        row("02a", f"the mask rewritten by ProteinMPNN on {n_par} of those "
+                   f"folded backbones, nanobody and linker held fixed",
+            f"<b>{len(rd['constructs'])} designs</b>", "structure prediction")
         rf = load_json("08_redesign_folding.json")
-        n_rf = rf.get("n_folded") or len(rf["results"])
-        row("\u2014", "redesigns folded with ESMFold", n_rd, n_rf,
+        row("\u2014", "redesigns folded with ESMFold",
+            f"<b>{rf.get('n_folded') or len(rf['results'])} structures</b>",
             "03, 04 and 05")
-        folded_total += n_rf
     except FileNotFoundError:
         pass
 
     try:
         n = len(load_json("12_feasibility.json")["results"])
-        row("03", "scored for fold retention, surface and disulfides", n, n, "06")
+        row("03", "scored for fold retention, exposed surface and disulfides",
+            f"<b>{n} scored</b>", "06")
     except FileNotFoundError:
         pass
     try:
         n = len(load_json("10_trigger.json")["results"])
-        row("05", "scored for protease recognition and reach", n, n, "06")
+        row("05", "scored for protease recognition and for reach in the fold",
+            f"<b>{n} scored</b>", "06")
     except FileNotFoundError:
         pass
     try:
         n = len(load_json("04_folding.json")["results"])
-        row("04", "paratope surface occlusion measured on the folded construct",
-            n, n, "06")
+        row("04", "paratope surface occlusion measured against the free nanobody",
+            f"<b>{n} scored</b>", "06")
     except FileNotFoundError:
         pass
     try:
         mb = load_json("17_mask_binding.json")
         ok = [r for r in mb["results"] if r.get("status") == "ok"]
-        row("04", "each mask predicted against the bare nanobody, untethered",
-            len(mb["results"]), len(ok), "read alongside 06")
+        row("04", "each mask predicted against the bare nanobody, untethered, "
+                  "with the antigen as a positive control",
+            f"<b>{len(ok)} predictions</b>", "read alongside 06")
     except FileNotFoundError:
         pass
 
     try:
         rk = load_json("13_ranking.json")
-        row("06", "hard constraints applied, then the nondominated set, then "
-                  "ordered by weakest objective and deduplicated by mask",
-            rk.get("n_total", 0), len(rk.get("shortlist", [])) or rk.get("n_front", 0),
-            "04 verification")
+        row("06", "hard constraints, then the nondominated set, then ordered "
+                  "by weakest objective and deduplicated by mask",
+            f"{rk.get('n_total', 0)} scored, {rk.get('n_excluded', 0)} ruled out, "
+            f"{rk.get('n_front', 0)} nondominated, "
+            f"<b>{len(rk.get('shortlist', []))} shortlisted</b>",
+            "04 verification", selected=True)
     except (FileNotFoundError, KeyError):
         pass
     try:
@@ -786,8 +794,8 @@ def _count_rows():
         ok = [r for r in cx["results"] if r.get("status") == "ok" and r.get("construct")]
         worth = cx.get("n_worth_testing")
         row("04", "the shortlist predicted as a whole assembly with its antigen",
-            len(ok), worth if worth is not None else len(ok),
-            "the reported candidates")
+            f"{len(ok)} predicted, <b>{worth if worth is not None else len(ok)} "
+            f"worth making</b>", "the reported candidates", selected=True)
     except FileNotFoundError:
         pass
     return rows
@@ -1106,7 +1114,7 @@ founded than it is.</p>
 complex with a single binding site, which is what the geometry and the masking measurements
 need. The architecture and the methods are what transfer; a viper application would start
 from a viper toxin complex and redesign the mask for it.</p>
-<p>What each module produced, in the order it ran, and how much of it survived. The module numbers are those in the diagram above; rows marked &mdash; are the assembly and structure-prediction steps that every module depends on.</p>
+<p>What each module produced, in the order the modules ran. The numbers are those in the diagram above, and rows marked &mdash; are the assembly and structure-prediction steps that every module depends on. Three steps discard candidates and are marked; the rest transform what they are given.</p>
 {R.generation_table(COUNTS)}
 <p><b>Every experiment the pipeline defines, under the module it belongs to:</b> the question it
 asks, the method that produced its number, and what came out.</p>
