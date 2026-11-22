@@ -169,6 +169,7 @@ details.fold>summary:hover b{color:var(--str)}
 .tfig.full img{max-height:none;max-width:none}
 .tfig.portrait img{max-height:720px;max-width:620px;margin:0 auto}
 .tfig.wide img{max-height:190px}
+.tfig.small img{max-height:230px;max-width:560px;margin:0 auto}
 .tfig figcaption{font-size:.82rem;color:var(--ink-3);line-height:1.45}
 .tgrid{display:grid;gap:14px;margin:4px 0}
 .tgrid.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
@@ -951,7 +952,7 @@ inhibitor</b>
    "(c) The solution structure is not one conformation but two — 65% open and 35% closed, "
    "interconverting, with the tail engaged in the closed state.", "portrait")}
 {f("fig4_1_14_f", "SEC-SAXS scattering with fits from each model. The two-state model gives the "
-   "lowest chi-squared, 1.058, beating either single structure.", "full")}
+   "lowest chi-squared, 1.058, beating either single structure.", "small")}
 {f("fig4_1_23_a_isoforms", "Conformational space explored for each isoform, radius of gyration "
    "against maximum dimension. The longer the tail, the more closed states appear.", "full")}
 
