@@ -107,9 +107,53 @@ for name, cid, note in cases:
           + (f"   mask on paratope {row['mask_fraction_on_paratope']:.2f}"
              if cid else ""))
 
+#: A construct is worth making only if the antigen loses contacts it holds on
+#: the free nanobody. Smaller than this and the difference is prediction noise
+#: rather than masking.
+BLOCKING_MARGIN = 0.10
+
+#: And the mask has to be on the paratope for any of it to be attributable to
+#: the mask rather than to the linker or to crowding.
+MASK_ON_PARATOPE_MIN = 0.20
+
+control = next((r for r in results
+                if r["case"] == "control_free_vhh_msa" and r["status"] == "ok"), None)
+free_fraction = control["fraction_of_contacts_on_paratope"] if control else None
+
+for r in results:
+    if r["status"] != "ok" or not r.get("construct") or free_fraction is None:
+        continue
+    displaced = free_fraction - r["fraction_of_contacts_on_paratope"]
+    on_site = r.get("mask_fraction_on_paratope", 0.0)
+    r["antigen_contacts_displaced"] = round(float(displaced), 3)
+    r["blocks"] = bool(displaced >= BLOCKING_MARGIN
+                       and on_site >= MASK_ON_PARATOPE_MIN)
+    r["verdict"] = ("worth testing" if r["blocks"] else
+                    "mask is off the paratope" if on_site < MASK_ON_PARATOPE_MIN
+                    else "mask is on site but the antigen still binds")
+
+verified = [r for r in results if r.get("construct") and r["status"] == "ok"]
+worth = [r for r in verified if r.get("blocks")]
+
 save_json("11_complexes_msa.json", {
-    "method": "Boltz-2, three chains joined by a bond; alignments for the public "
-              "nanobody and antigen chains only",
+    "method": "Boltz-2; the construct as one molecule, nanobody and mask-linker "
+              "joined by a bond, with its antigen; alignments for the public "
+              "nanobody and antigen sequences only",
     "verified": source, "from_front": bool(chosen),
+    "free_vhh_fraction_on_paratope": free_fraction,
+    "blocking_margin": BLOCKING_MARGIN,
+    "mask_on_paratope_min": MASK_ON_PARATOPE_MIN,
+    "n_verified": len(verified), "n_worth_testing": len(worth),
     "n_cases": len(results), "results": results})
+
 print(f"\n{sum(1 for r in results if r['status']=='ok')}/{len(results)} predicted")
+if free_fraction is not None:
+    print(f"\nfree nanobody keeps {free_fraction:.0%} of antigen contacts on the "
+          f"paratope. A construct is worth making if it takes at least "
+          f"{BLOCKING_MARGIN:.0%} of those away while its own mask holds the site.\n")
+    for r in verified:
+        print(f"  {r['construct']:<26s} antigen {r['fraction_of_contacts_on_paratope']:.2f} "
+              f"(-{r['antigen_contacts_displaced']:+.2f})  mask "
+              f"{r.get('mask_fraction_on_paratope', float('nan')):.2f}   {r['verdict']}")
+    print(f"\n{len(worth)} of {len(verified)} worth taking to the bench"
+          + (f": {', '.join(r['construct'] for r in worth)}" if worth else ""))
