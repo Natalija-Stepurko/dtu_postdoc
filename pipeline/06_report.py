@@ -579,6 +579,9 @@ top_paratope = [
     for lbl in iface["paratope_contact_labels"]]
 N["n_contacts"] = iface["n_paratope_contacts"]
 N["contact_cutoff"] = iface["contact_cutoff_A"]
+_ref_feas = next((r for r in (feas_data["results"] if feas_data else [])
+                  if r["mask"] is None), None)
+N["ref_surface"] = _ref_feas["f_surface"] if _ref_feas else float("nan")
 from nbswitch.config import VHH_TOXIN_KD_M as _VHH_KD
 N["vhh_toxin_kd_nM"] = _VHH_KD * 1e9
 N["contact_labels"] = ", ".join(iface["paratope_contact_labels"])
@@ -917,7 +920,9 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
      "expression or thermodynamic stability. Cysteine content is the dominant liability and is "
      "detected by no other module.")}
 {chart("feasibility_components", "Feasibility components by construct family. A low score on any "
-       "one component is enough to make a construct unusable.")}
+       "one component is enough to make a construct unusable. The dashed line is the unmasked "
+       f"nanobody, which scores {N['ref_surface']:.2f} on surface liability itself, so that "
+       "component is read as a change against it rather than on its own.")}
 {R.ensemble_viewer("ens-feas", "feasibility",
    "Each construct is a single chain and was predicted on its own, so each was superimposed on "
    "the nanobody backbone to bring them into a common frame. The mask and linker carry the "

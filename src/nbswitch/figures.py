@@ -374,21 +374,47 @@ def feasibility_components(feas):
     """Where each construct family loses feasibility."""
     plt = _style()
     rows = feas["results"]
+    #: the unmasked nanobody carries no mask, so it has no family name. It is
+    #: the baseline the masked constructs are read against, not a design, and
+    #: is drawn as a reference rather than as one more bar.
+    REFERENCE = "free nanobody (reference)"
     fams = {}
     for r in rows:
-        key = "ProteinMPNN" if str(r["mask"]).startswith("mpnn") else str(r["mask"])
+        if r["mask"] is None:
+            key = REFERENCE
+        elif str(r["mask"]).startswith("mpnn"):
+            key = "ProteinMPNN"
+        else:
+            key = str(r["mask"])
         fams.setdefault(key, []).append(r)
     keys = ("f_fold", "f_preserved", "f_surface", "f_cysteine")
     labels = ("fold\nconfidence", "nanobody\npreserved", "surface\nliability", "cysteine\npairing")
-    order = sorted(fams, key=lambda k: -np.mean([x["feasibility_score"] for x in fams[k]]))
+    designs = [k for k in fams if k != REFERENCE]
+    order = sorted(designs, key=lambda k: -np.mean([x["feasibility_score"] for x in fams[k]]))
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
     x = np.arange(len(keys))
     width = 0.8 / max(len(order), 1)
     colours = [SEQ, CHROME, STR, "#8A9BA8", "#7B5EA7", "#2E7D32", NULL]
     for i, fam in enumerate(order):
         vals = [np.mean([r[k] for r in fams[fam]]) for k in keys]
-        ax.bar(x + i * width - 0.4 + width / 2, vals, width * 0.92,
-               color=colours[i % len(colours)], linewidth=0, label=fam)
+        pos = x + i * width - 0.4 + width / 2
+        colour = colours[i % len(colours)]
+        ax.bar(pos, vals, width * 0.92, color=colour, linewidth=0, label=fam)
+        # a bar of height zero draws nothing, and zero is the value that
+        # disqualifies a construct, so it has to be visible as a value rather
+        # than read as missing data
+        for px, v in zip(pos, vals):
+            if v < 0.01:
+                ax.plot([px], [0.012], marker="_", markersize=3.2,
+                        markeredgewidth=1.6, color=colour, zorder=4)
+                ax.annotate("0", (px, 0.035), ha="center", va="bottom",
+                            fontsize=5.6, color=colour)
+    if REFERENCE in fams:
+        ref = [np.mean([r[k] for r in fams[REFERENCE]]) for k in keys]
+        for j, v in enumerate(ref):
+            ax.hlines(v, j - 0.44, j + 0.44, color="#12191F", linewidth=1.4,
+                      linestyle=(0, (3, 2)), zorder=5,
+                      label=REFERENCE if j == 0 else None)
     ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
     ax.set_ylabel("component score"); ax.set_ylim(0, 1.05)
     ax.legend(fontsize=7, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.22))
