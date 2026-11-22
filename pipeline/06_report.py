@@ -643,70 +643,86 @@ N["lattice_area"] = _lat.get("interface_area_A2", 0)
 N["lattice_n"] = _lat.get("n_paratope", 0)
 N["cdr3_other"] = _by.get("9GCN", {}).get("cdr3_percent_bsa", 0)
 def _count_rows():
-    """Read the per-stage counts back out of the stage outputs."""
+    """The funnel, in the order the pipeline runs, read back from stage outputs.
+
+    Each row says what entered, what left, and which stage consumes it. A row
+    whose output nothing consumes is a stage doing no work, and should be
+    visible as such rather than buried.
+    """
     rows = []
+
+    def row(stage, what, came_in, went_out, feeds):
+        rows.append({"stage": stage, "what": what, "in": came_in,
+                     "out": went_out, "feeds": feeds})
+
     try:
         lk = load_json("02b_linkers.json")
-        rows.append({"stage": "02", "what": "protease substrates generated, "
-                     "conditioned on the target profile", "made": lk["n_generated"],
-                     "kept": lk["n_kept"], "feeds": "the linker set"})
-        rows.append({"stage": "02", "what": "controls: a protease-resistant "
-                     "Gly/Ser repeat and a scramble of the best substrate",
-                     "made": lk.get("n_controls", 0),
-                     "kept": lk.get("n_controls", 0),
-                     "feeds": "the linker set, as the thing to beat"})
-        rows.append({"stage": "02", "what": "linkers entering the library",
-                     "made": len(lk["linkers"]), "kept": len(lk["linkers"]),
-                     "feeds": "the construct library"})
+        row("02b", "protease substrates generated, conditioned on the target profile",
+            lk["n_generated"], lk["n_kept"], "02b controls")
+        row("02b", "+ a protease-resistant Gly/Ser linker and a scramble, as controls",
+            lk["n_kept"], len(lk["linkers"]), "03 assembly")
+    except FileNotFoundError:
+        pass
+    try:
+        mk = load_json("03a_masks.json")
+        n_contact = sum(seg["n_contact"] for seg in mk["segments"])
+        row("03a", f"masks seeded from the {n_contact} antigen residues within "
+                   f"{mk['cutoff_A']} \u00c5 of the nanobody, with window variants "
+                   f"and controls",
+            n_contact, len(mk["masks"]), "03 assembly")
     except FileNotFoundError:
         pass
     try:
         cl = load_json("03_constructs.json")
-        rows.append({"stage": "02", "what": "masks: epitope grafts, a truncation, "
-                     "a scramble and an inert poly-glycine",
-                     "made": len(cl["masks"]), "kept": len(cl["masks"]),
-                     "feeds": "the construct library"})
-        rows.append({"stage": "02", "what": "constructs: every mask on every "
-                     "linker, plus the free nanobody",
-                     "made": cl["n_constructs"], "kept": cl["n_constructs"],
-                     "feeds": "structure prediction"})
+        n_mask, n_link = len(cl["masks"]), cl["n_linkers"]
+        row("03", f"constructs assembled: {n_mask} masks \u00d7 {n_link} linkers, "
+                  f"plus the free nanobody",
+            n_mask * n_link, cl["n_constructs"], "04 folding")
     except FileNotFoundError:
         pass
-    for name, stage, what, feeds in (
-            ("04_folding.json", "03", "constructs folded with ESMFold",
-             "all three scores"),
-            ("07_redesign.json", "02", "mask sequences redesigned with ProteinMPNN",
-             "structure prediction"),
-            ("08_redesign_folding.json", "03", "redesigns folded with ESMFold",
-             "all three scores"),
-            ("11_complexes_msa.json", "04", "complexes predicted with alignments",
-             "nothing downstream"),
-    ):
-        try:
-            d = load_json(name)
-        except FileNotFoundError:
-            # a stage that has not run has no output at all; a stage that has
-            # run but is named wrong here looks identical, and silently drops
-            # a row from the table. Tell them apart.
-            if list(RESULTS.glob(f"{name.split('_')[0]}_*.json")):
-                raise SystemExit(
-                    f"{name} is missing but stage {name.split('_')[0]} has output "
-                    f"({[f.name for f in RESULTS.glob(name.split('_')[0] + '_*.json')]}). "
-                    f"Fix the filename in _count_rows.")
-            continue
-        # n_folded counts the free-nanobody reference too; results does not
-        n = d.get("n_folded") or len(d.get("results", d.get("constructs", [])))
-        # these stages transform rather than select: everything made goes on
-        rows.append({"stage": stage, "what": what, "made": n, "kept": n,
-                     "feeds": feeds})
+
+    folded = 0
+    try:
+        f = load_json("04_folding.json")
+        folded = f.get("n_folded", 0)
+        row("04", "constructs folded with ESMFold", folded, folded,
+            "10 cleavability, 12 feasibility")
+    except FileNotFoundError:
+        pass
+    try:
+        rd = load_json("07_redesign.json")
+        n_rd = len(rd["constructs"])
+        row("07", "mask sequences redesigned with ProteinMPNN on the folded backbones",
+            len(rd.get("parents", [])) or 1, n_rd, "08 folding")
+        rf = load_json("08_redesign_folding.json")
+        n_rf = rf.get("n_folded") or len(rf["results"])
+        row("08", "redesigns folded with ESMFold", n_rd, n_rf,
+            "10 cleavability, 12 feasibility")
+        folded += n_rf
+    except FileNotFoundError:
+        pass
+
+    try:
+        tr = load_json("10_trigger.json")
+        n = len(tr["results"])
+        row("10 + 12", "scored for cleavability and for feasibility", n, n, "13 ranking")
+    except FileNotFoundError:
+        pass
     try:
         rk = load_json("13_ranking.json")
-        rows.append({"stage": "06", "what": "carried all three scores and were "
-                     "ranked", "made": rk["n_total"],
-                     "kept": rk["n_front"], "feeds": "the reported front"})
+        row("13", "ranked: the set no other construct beats on all three scores",
+            rk["n_total"], rk["n_front"], "11 verification")
     except (FileNotFoundError, KeyError):
         pass
-    rows.sort(key=lambda r: r["stage"])
+    try:
+        cx = load_json("11_complexes_msa.json")
+        ok = [r for r in cx["results"] if r.get("status") == "ok" and r.get("construct")]
+        feeds = ("the reported shortlist" if cx.get("from_front")
+                 else "nothing downstream")
+        row("11", "front verified by predicting the whole assembly with the antigen",
+            len(cx["results"]), len(ok), feeds)
+    except FileNotFoundError:
+        pass
     return rows
 
 

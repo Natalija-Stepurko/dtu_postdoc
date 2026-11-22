@@ -1,5 +1,15 @@
 #!/usr/bin/env python
-"""Stage 11. The same complexes, with alignments for the public chains.
+"""Stage 11. Verify the ranked front by predicting the whole assembly.
+
+This is the last narrowing in the funnel and the only stage that asks the
+question the design exists to answer: with the mask in place, can the antigen
+still bind? The three cheap scores are computed for every construct and cannot
+answer it. A complex prediction can, and costs about two minutes each, so it is
+affordable for the front and not for the library.
+
+It therefore runs on the nondominated set from stage 13 rather than on a list
+chosen by hand. Taking its cases from the ranking is what makes the ranking
+mean something: the front is not the output, it is what gets checked.
 
 Stage 9 ran every chain without an alignment, because an alignment over the
 whole fusion would send the designed mask to a remote server. That turned out
@@ -16,6 +26,9 @@ from nbswitch import complex_prediction as CP
 from nbswitch.constructs import complex_cases
 from nbswitch.config import load_json, save_json, RESULTS, RANDOM_SEED
 
+#: How many of the front to verify. Each prediction is about two minutes.
+N_VERIFY = 6
+
 BOLTZ = "/scratch/.venv-dtu/bin/boltz"
 WORK = Path("/scratch/boltz_msa_stage")
 OUT = RESULTS / "complexes_msa"
@@ -29,8 +42,27 @@ paratope = [i + 1 for i, l in enumerate(lib["vhh_residue_labels"])
 
 cases = [("control_free_vhh_msa", None,
           "free nanobody with its toxin; the crystal structure already answers this")]
-for cid, note in complex_cases(lib["constructs"]):
-    cases.append((f"{cid}_msa", cid, note))
+
+# the front, if the ranking has run; otherwise a derived pair so the stage can
+# still be exercised before there is anything to verify
+try:
+    front = load_json("13_ranking.json")["front"]
+    chosen = [r["id"] for r in front[:N_VERIFY] if r["id"] in by_id]
+    source = f"top {len(chosen)} of the {len(front)} nondominated designs"
+except FileNotFoundError:
+    chosen, source = [], "ranking has not run"
+
+if chosen:
+    for cid in chosen:
+        c = by_id[cid]
+        cases.append((f"{cid}_msa", cid,
+                      f"{c['mask_kind']}, mask {c['mask']}, linker {c['linker_id']}"))
+else:
+    for cid, note in complex_cases(lib["constructs"]):
+        cases.append((f"{cid}_msa", cid, note))
+    source = "ranking unavailable; fell back to a derived pair"
+
+print(f"verifying: {source}")
 if len(cases) == 1:
     raise SystemExit("no masked construct to predict: the library has no mask+linker pair")
 
@@ -78,5 +110,6 @@ for name, cid, note in cases:
 save_json("11_complexes_msa.json", {
     "method": "Boltz-2, three chains joined by a bond; alignments for the public "
               "nanobody and antigen chains only",
+    "verified": source, "from_front": bool(chosen),
     "n_cases": len(results), "results": results})
 print(f"\n{sum(1 for r in results if r['status']=='ok')}/{len(results)} predicted")

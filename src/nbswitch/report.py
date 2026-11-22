@@ -1424,20 +1424,20 @@ def interface_controls_table(controls, target: str) -> str:
 
 
 def generation_table(counts) -> str:
-    """How many of what, at each stage. Every figure read from a stage output."""
-    head = ("<tr><th>module</th><th>what is produced</th><th>how many</th>"
-            "<th>kept</th><th>what it feeds</th></tr>")
+    """The funnel: what entered each stage, what left, and which stage takes it."""
+    head = ("<tr><th>stage</th><th>what happens</th><th>in</th><th>out</th>"
+            "<th>consumed by</th></tr>")
     body = ""
-    for row in counts:
-        kept = row.get("kept")
-        kept = "&mdash;" if kept is None else f"<b>{kept}</b>"
-        feeds = row.get("feeds", "")
-        # a stage whose output no later stage reads is a finding, not a detail
+    for r in counts:
+        feeds = r.get("feeds", "")
         dead = feeds == "nothing downstream"
         cell = f'<td class="dead">{feeds}</td>' if dead else f"<td>{feeds}</td>"
         tr = '<tr class="warnrow">' if dead else "<tr>"
-        body += (f'{tr}<td class="mono">{row["stage"]}</td><td>{row["what"]}</td>'
-                 f'<td>{row["made"]}</td><td>{kept}</td>{cell}</tr>')
+        narrows = (r.get("in") or 0) > (r.get("out") or 0)
+        out = (f'<td class="mono"><b>{r["out"]}</b></td>' if narrows
+               else f'<td class="mono">{r["out"]}</td>')
+        body += (f'{tr}<td class="mono">{r["stage"]}</td><td>{r["what"]}</td>'
+                 f'<td class="mono">{r["in"]}</td>{out}{cell}</tr>')
     return f'<table class="tbl gen">{head}{body}</table>'
 
 
