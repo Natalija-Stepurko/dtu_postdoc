@@ -105,6 +105,8 @@ table.wrap td:first-child{font-weight:600;color:var(--ink)}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 tr.warnrow td{background:#FDF4EC}
+.pending{color:var(--ink-3);font-style:italic}
+table.exp td{vertical-align:top}
 td.dead{color:var(--chrome);font-weight:600}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
      color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:1px 7px}
@@ -1504,3 +1506,45 @@ def affinity_scan_table(scan, used_M, closes_M) -> str:
             f'outcompete the released mask, and no mask affinity satisfies both '
             f'requirements. That is a property of the design, not of any particular mask.'
             f'</div>')
+
+
+#: Status vocabulary for the experiment register. "run" means the output on
+#: this page came from it; "not run" means the code exists and has not been
+#: executed; "proposed" means it has not been written.
+EXP_STATUS = {
+    "run": ("run", "#0E7C7B"),
+    "running": ("running", "#8A6A1F"),
+    "not run": ("not run", "#6E7880"),
+    "proposed": ("proposed", "#6E7880"),
+    "failed": ("ran, did not work", "#C06014"),
+}
+
+
+def experiment_register(rows) -> str:
+    """Every experiment the pipeline defines, whether or not it has a result.
+
+    A page that shows only the experiments that produced numbers is a
+    selective report. Listing the rest, with the slot left empty, keeps the
+    shape of the work visible: what was asked, what was answered, and what is
+    still a placeholder.
+    """
+    head = ("<tr><th>stage</th><th>experiment</th><th>question</th>"
+            "<th>status</th><th>result</th></tr>")
+    body = ""
+    for r in rows:
+        label, colour = EXP_STATUS.get(r["status"], EXP_STATUS["proposed"])
+        pending = r["status"] in ("not run", "proposed", "running")
+        result = r.get("result") or ""
+        if pending and not result:
+            result = '<span class="pending">no data yet</span>'
+        tag = (f'<span class="stat-tag" style="color:{colour};border-color:{colour}">'
+               f'{label}</span>')
+        cls = ' class="ctrl"' if pending else ""
+        body += (f'<tr{cls}><td class="mono">{r["stage"]}</td>'
+                 f'<td><b>{r["name"]}</b></td><td>{r["question"]}</td>'
+                 f'<td>{tag}</td><td>{result}</td></tr>')
+    return ('<div class="scroll"><table class="tbl exp wrap">'
+            '<colgroup><col style="width:7%"><col style="width:20%">'
+            '<col style="width:27%"><col style="width:12%">'
+            '<col style="width:34%"></colgroup>'
+            f'<thead>{head}</thead><tbody>{body}</tbody></table></div>')

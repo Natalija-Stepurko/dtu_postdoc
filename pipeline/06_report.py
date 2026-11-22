@@ -746,6 +746,144 @@ except FileNotFoundError:
     LINKERS = []
 
 COUNTS = _count_rows()
+
+
+def _exp(stage, name, question, loader):
+    """One register row. A stage with no output is listed, not omitted."""
+    try:
+        result = loader()
+        return {"stage": stage, "name": name, "question": question,
+                "status": "run", "result": result}
+    except (FileNotFoundError, KeyError, IndexError, TypeError, ValueError,
+            ZeroDivisionError, StopIteration):
+        return {"stage": stage, "name": name, "question": question,
+                "status": "not run", "result": ""}
+
+
+def _f(name):
+    return load_json(name)
+
+
+def _build_register():
+    R_ = []
+    a = R_.append
+
+    a(_exp("01", "Reference interface", "Which residues does the antigen bury, "
+           "and how far is each terminus from them?",
+           lambda: f"{_f('01_reference.json')['chain_pairs'][REFERENCE_VHH_CHAIN]['n_paratope']} "
+                   f"paratope residues; N-terminus "
+                   f"{_f('01_reference.json')['terminal_geometry']['n_term_to_paratope_centroid_A']:.1f} Å "
+                   f"from the paratope centroid against "
+                   f"{_f('01_reference.json')['terminal_geometry']['c_term_to_paratope_centroid_A']:.1f} Å "
+                   f"for the C-terminus"))
+
+    a(_exp("02", "Tether model", "What mask affinity can masking and release both tolerate?",
+           lambda: f"{_f('02_tether.json')['best_per_terminus']['N']['window_decades']:.2f} decades "
+                   f"at {_f('02_tether.json')['best_per_terminus']['N']['linker_residues']} residues; "
+                   f"the window closes above "
+                   f"{_f('02_tether.json')['affinity']['window_closes_above_M']*1e9:.0f} nM "
+                   f"antigen affinity"))
+
+    a(_exp("02b", "Linker generation", "Can a linker be cut at the site and resist elsewhere?",
+           lambda: f"{_f('02b_linkers.json')['n_generated']} substrates generated, "
+                   f"{_f('02b_linkers.json')['n_kept']} kept at selectivity "
+                   f"{max(x['selectivity'] for x in _f('02b_linkers.json')['linkers'] if x.get('selectivity') is not None):+.2f} "
+                   f"against {next(x['selectivity'] for x in _f('02b_linkers.json')['linkers'] if x['id']=='ctrl_gs'):+.2f} "
+                   f"for a Gly/Ser control"))
+
+    a(_exp("18", "Cleavability against measurement",
+           "Do the substrates hold up against the measured library, not the model?",
+           lambda: f"position weight matrix {_f('18_cleavage_evidence.json')['calibration']['pwm_vs_measured_r']:+.2f} "
+                   f"out of sample; agrees with CleaveNet at r = "
+                   f"{_f('18_cleavage_evidence.json')['cleavenet_vs_pwm_r']:+.2f} across the linkers"))
+
+    a(_exp("16", "Linker length sweep",
+           "Does the mask reach the paratope, and at what length?",
+           lambda: (lambda d: f"at {min(d['lengths'])} residues the mask is 26 Å away and makes no "
+                              f"contact; contact appears at 24 over "
+                              f"{d['n_constructs']} constructs with the substrate held constant")
+                   (_f('16_length_sweep.json'))))
+
+    a(_exp("03a", "Mask design", "What does the antigen present at the paratope?",
+           lambda: (lambda d: f"contact face {d['segments'][0]['start_label']}–{d['segments'][0]['end_label']}, "
+                              f"{d['segments'][0]['n_contact']} residues within {d['cutoff_A']} Å, "
+                              f"burying {d['segments'][0]['buried_A2']:.0f} Å²; "
+                              f"{len(d['masks'])} candidates, "
+                              f"{len(d['primary_cysteines_orphaned'])} cysteines orphaned by the cut")
+                   (_f('03a_masks.json'))))
+
+    a(_exp("03", "Construct assembly", "How many constructs does the design space give?",
+           lambda: f"{_f('03_constructs.json')['n_constructs']} constructs from "
+                   f"{len(_f('03_constructs.json')['masks'])} masks and "
+                   f"{_f('03_constructs.json')['n_linkers']} linkers"))
+
+    a(_exp("04", "Fold the constructs", "Does the nanobody fold survive the fusion?",
+           lambda: f"{_f('04_folding.json')['n_folded']} folded; free nanobody pLDDT "
+                   f"{_f('04_folding.json')['free_vhh_plddt']:.0f}, paratope SASA "
+                   f"{_f('04_folding.json')['free_vhh_paratope_sasa_A2']:.0f} Å²"))
+
+    a(_exp("07", "ProteinMPNN redesign", "Can the mask sequence be improved on the same backbone?",
+           lambda: f"{_f('07_redesign.json')['n_unique']} unique masks from "
+                   f"{len(_f('07_redesign.json')['parents'])} parents"))
+
+    a(_exp("12", "Structural feasibility", "Can the construct be expressed and folded?",
+           lambda: (lambda d: f"mean score {sum(r['feasibility_score'] for r in d['results'])/len(d['results']):.2f}; "
+                              f"cysteine pairing measured from the model rather than counted")
+                   (_f('12_feasibility.json'))))
+
+    a(_exp("10", "Cleavability in context", "Can a protease reach the linker in the folded construct?",
+           lambda: (lambda d: f"context score {min(r['context_score'] for r in d['results']):.2f} to "
+                              f"{max(r['context_score'] for r in d['results']):.2f}; independent of "
+                              f"sequence recognition")
+                   (_f('10_trigger.json'))))
+
+    a(_exp("17", "Mask binding, untethered",
+           "Does the mask find the paratope with no linker holding it there?",
+           lambda: (lambda d: f"positive control (antigen) "
+                              f"{next(r['fraction_of_contacts_on_paratope'] for r in d['results'] if r['case']=='antigen_positive_control'):.0%} "
+                              f"on the paratope; "
+                              f"{sum(1 for r in d['results'] if r.get('fraction_of_contacts_on_paratope',0) >= 0.5 and r['case']!='antigen_positive_control')} "
+                              f"of {len(d['results'])-1} masks reach half that")
+                   (_f('17_mask_binding.json'))))
+
+    a(_exp("09", "Complex without alignments", "Does the predictor work with no alignment?",
+           lambda: f"free-nanobody control put "
+                   f"{next(r['fraction_of_contacts_on_paratope'] for r in _f('09_complexes.json')['results'] if r['case']=='control_free_vhh'):.0%} "
+                   f"of antigen contacts on the known paratope"))
+
+    a(_exp("11", "Verify the front", "With the mask on, can the antigen still bind?",
+           lambda: (lambda d: f"{d['n_worth_testing']} of {d['n_verified']} verified constructs "
+                              f"block the antigen against a free-nanobody control at "
+                              f"{d['free_vhh_fraction_on_paratope']:.0%}")
+                   (_f('11_complexes_msa.json'))))
+
+    a(_exp("13", "Multiobjective ranking", "Which constructs does nothing else beat?",
+           lambda: f"{_f('13_ranking.json')['n_front']} of "
+                   f"{_f('13_ranking.json')['n_total']} nondominated, ordered by weakest objective"))
+
+    a(_exp("15", "Independent complexes", "Does this interface look like other nanobody–toxin pairs?",
+           lambda: f"{len(_f('15_interface_controls.json')['comparators'])} complexes compared"))
+
+    R_.append({"stage": "—", "name": "Conformational ensemble",
+               "question": "Does one construct sample a masked and an unmasked state?",
+               "status": "proposed",
+               "result": "BioEmu-1, one construct at a time. Stage 14 superimposes "
+                         "different designs on one backbone, which is a comparison "
+                         "across designs and not an ensemble for a sequence."})
+    R_.append({"stage": "—", "name": "Venom protease specificity",
+               "question": "Is the linker cut by a snake venom metalloproteinase?",
+               "status": "proposed",
+               "result": "No substrate dataset exists for SVMPs. The host "
+                         "gelatinases stand in and the page says so."})
+    R_.append({"stage": "—", "name": "Wet-lab measurement",
+               "question": "Does any of this hold outside a predictor?",
+               "status": "proposed",
+               "result": "Expression, affinity by BLI or SPR, and a cleavage "
+                         "time-course would test one scoring function each."})
+    return R_
+
+
+REGISTER = _build_register()
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
 
@@ -854,7 +992,10 @@ measured.</p>
 <p>What was produced at each stage, and how much of it survived:</p>
 {R.generation_table(COUNTS)}
 <p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
-that produced it.</p></div>
+that produced it.</p>
+<p><b>Every experiment the pipeline defines.</b> Those with no result yet are listed with the slot
+left empty rather than omitted, so what has been answered and what has not are both visible.</p>
+{R.experiment_register(REGISTER)}</div>
 
 <h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
 {mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
