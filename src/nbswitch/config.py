@@ -62,17 +62,16 @@ MIN_TOXIN_RECOVERY = 0.90    # at least 90% of cleaved nanobody toxin-bound
 MASK_CONC_M = 1e-6           # released mask concentration = construct concentration
 TOXIN_CONC_M = 1e-7
 
-#: Nanobody-toxin dissociation constant. VHH5 a-sNTx, the nanobody of the
-#: worked example, is reported as low nanomolar against its short-neurotoxin
-#: targets by BLI, with dissociation rates below 5.5e-4 per second (Ahmadi et
-#: al. 2025, main text and Fig. 2c). Four of the measured pairs sit below the
-#: instrument's dissociation limit and are therefore tighter still.
+#: Nanobody-antigen dissociation constant, measured. VHH5 a-sNTx against
+#: sNTx-1 by biolayer interferometry, 1.90 nM (Ahmadi et al. 2025,
+#: Supplementary Table 5). This replaces the 1 nM that stood here, which was
+#: the midpoint of the "low nanomolar" range the main text quotes.
 #:
-#: The entry's own complex is with P01426, and the paper does not say which of
-#: its numbered short-neurotoxin targets that is, so there is no single
-#: measured constant to use here. The range is what was reported, and the
-#: window is reported across it rather than at one invented point.
-VHH_TOXIN_KD_M = 1e-9
+#: One caveat survives the substitution. The complex in this entry is with
+#: P01426, and the paper does not state which of its numbered short-neurotoxin
+#: targets sNTx-1 is, so this is a measured value for the nanobody against a
+#: short neurotoxin rather than demonstrably against the one crystallised here.
+VHH_TOXIN_KD_M = 1.90e-9
 VHH_TOXIN_KD_RANGE_M = (1e-10, 3e-8)
 VHH_TOXIN_KOFF_MAX_S = 5.5e-4
 

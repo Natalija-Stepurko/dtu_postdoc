@@ -265,7 +265,7 @@ def occlusion_vs_confidence(folding):
 def build_all():
     ref = load_json("01_reference.json")
     tether = load_json("02_tether.json")
-    made = [paratope_footprint(ref, ref["cdrs"]),
+    made = [usable_affinity(tether), paratope_footprint(ref, ref["cdrs"]),
             effective_concentration(tether), design_window(tether),
             tradeoff(tether), release_sensitivity(tether)]
     window = affinity_window(tether)
@@ -548,3 +548,80 @@ def affinity_window(tether):
     ax.set_xlim(kd.min(), kd.max())
     ax.set_ylim(floor.min() * 0.45, ceiling.max() * 3)
     return _save(fig, "affinity_window")
+
+
+#: Washes for the three regions of the affinity axis. Each region also carries
+#: its own text label, so the reading never rests on colour alone.
+BAD_WASH, BAD_INK = "#F6E4E4", "#9C3B3B"
+OK_WASH, OK_INK = "#E2F0E8", "#1F6B4A"
+
+
+def _si_molar(value):
+    """A molar quantity as a number and a unit, e.g. 2.06e-7 -> '206 nM'."""
+    for scale, unit in ((1e-3, "mM"), (1e-6, "µM"), (1e-9, "nM"),
+                        (1e-12, "pM")):
+        if value >= scale:
+            n = value / scale
+            return (f"{n:.0f} {unit}" if n >= 10 or abs(n - round(n)) < 0.05
+                    else f"{n:.1f} {unit}")
+    return f"{value:.1e} M"
+
+
+def usable_affinity(tether):
+    """The design constraint as one horizontal axis, split into three regions.
+
+    Everything the reader needs is the position of two boundaries on a
+    dissociation-constant axis: below the lower one the mask would not come
+    off after cleavage, above the upper one it would not mask in the first
+    place, and between them it does both.
+    """
+    plt = _style()
+    best = tether["best_per_terminus"]["N"]
+    lo = best["km_min_for_release_M"]
+    hi = best["km_max_for_masking_M"]
+    left, right = 1e-9, 1e-2
+
+    fig, ax = plt.subplots(figsize=(8.6, 2.5))
+    ax.grid(False)
+    ax.set_xscale("log")
+    ax.set_xlim(left, right)
+    ax.set_ylim(0, 1)
+
+    bot, top = 0.42, 0.92
+    for x0, x1, wash, edge in ((left, lo, BAD_WASH, BAD_INK),
+                               (lo, hi, OK_WASH, OK_INK),
+                               (hi, right, BAD_WASH, BAD_INK)):
+        ax.fill_between([x0, x1], bot, top, color=wash, lw=0, zorder=1)
+        ax.plot([x0, x0], [bot, top], color="white", lw=2.0, zorder=3)
+
+    def region(x0, x1, head, sub, ink, head_size=11):
+        mid = 10 ** ((np.log10(x0) + np.log10(x1)) / 2)
+        ax.text(mid, 0.70, head, ha="center", va="center", color=ink,
+                fontsize=head_size, fontweight="bold", zorder=4)
+        ax.text(mid, 0.54, sub, ha="center", va="center", color=ink,
+                fontsize=7.4, zorder=4)
+
+    region(left, lo, "Too tight", "mask stays bound", BAD_INK, 10)
+    region(lo, hi, "Usable range",
+           "masks while tethered, releases after cleavage", OK_INK, 11.5)
+    region(hi, right, "Too weak", "does not mask", BAD_INK, 10)
+
+    for x in (lo, hi):
+        ax.plot([x, x], [bot - 0.09, top], color=INK2, lw=1.1, ls=(0, (4, 3)),
+                zorder=5)
+        ax.text(x, bot - 0.14, _si_molar(x), ha="center", va="top", color=INK,
+                fontsize=9.5, fontweight="bold", zorder=5)
+
+    ax.set_yticks([])
+    for side in ("left", "top", "right"):
+        ax.spines[side].set_visible(False)
+    ax.spines["bottom"].set_position(("data", 0.06))
+    ax.spines["bottom"].set_color(INK3)
+    ticks = [1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2]
+    ax.set_xticks(ticks)
+    ax.set_xticklabels([_si_molar(t) if t in (1e-9, 1e-5, 1e-2) else ""
+                        for t in ticks])
+    ax.tick_params(axis="x", length=3, pad=3, labelsize=8, colors=INK3)
+    ax.set_xlabel("mask dissociation constant K$_D$ (log scale) "
+                  "→ weaker binding", color=INK3, fontsize=8.5, labelpad=6)
+    return _save(fig, "usable_affinity")

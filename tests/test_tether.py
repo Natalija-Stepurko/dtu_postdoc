@@ -69,3 +69,24 @@ def test_release_floor_rises_with_weaker_toxin_binding():
     tight = T.release_floor(toxin_kd=1e-10)
     loose = T.release_floor(toxin_kd=1e-8)
     assert loose > tight
+
+
+def test_the_measured_antigen_affinity_is_used():
+    """1.90 nM by BLI, not the 1 nM midpoint of a quoted range."""
+    from nbswitch import config
+    assert config.VHH_TOXIN_KD_M == pytest.approx(1.90e-9)
+
+
+def test_the_usable_range_figure_marks_the_model_boundaries():
+    """The figure is the headline result, so its two edges must be the
+    numbers the model produced, not a drawing."""
+    import json
+    from pathlib import Path
+    from nbswitch import config
+    out = Path(config.RESULTS) / "02_tether.json"
+    if not out.exists():
+        pytest.skip("stage 02 has not run")
+    best = json.loads(out.read_text())["best_per_terminus"]["N"]
+    assert best["km_min_for_release_M"] < best["km_max_for_masking_M"]
+    assert best["window_decades"] > 0
+    assert best["linker_residues"] > 0

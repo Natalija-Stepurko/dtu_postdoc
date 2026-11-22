@@ -1134,39 +1134,40 @@ out</summary><div class="techbody">
 {R.pipeline_table(REGISTER)}</div></details></div>
 
 <h3 class="mod"><span>Module 01</span>Constraints on mask affinity and linker geometry</h3>
+{chart_wide("usable_affinity",
+   "Predicted mask-affinity range for a " + str(N["linker_best"]) + "-residue "
+   "N-terminal linker. Equilibrium-model result using the measured VHH–antigen "
+   "K<sub>D</sub> of " + f"{model['KT_M']*1e9:.2f}" + " nM.")}
 <div class="stack">
-<p>The mask must block the nanobody&rsquo;s antigen-binding site while tethered, but dissociate
-following linker cleavage. These requirements define a range of suitable mask affinities.</p>
-<p>Tethering increases the effective local concentration of the mask, allowing even a relatively
-weak interaction to block antigen binding. Following cleavage, this advantage is lost, and the
-mask must bind weakly enough for the antigen to occupy the paratope.</p></div>
+<p>The tether increases the effective concentration of the mask near the nanobody. This allows a
+relatively weak interaction to block the antigen-binding site before cleavage.</p>
+<p>For a {N['linker_best']}-residue N-terminal linker, the model predicts a usable mask affinity
+range of <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b>. Masks that bind more tightly may
+remain associated after cleavage, while weaker masks may not provide sufficient masking. That
+length gives the widest predicted range, so it is the starting point for mask generation.</p>
+<p>The range depends on the assumed binding conditions and is used to guide candidate
+generation.</p></div>
 
+<details class="tech"><summary>Model details</summary><div class="techbody">
 {mri("I used the experimental nanobody–antigen structure (" + PDB_ID + ") to measure the "
      "distance between the nanobody termini and the paratope. A worm-like-chain model was then "
      "used to estimate the effective mask concentration for different linker lengths. Combining "
-     "this estimate with a simple binding competition model allowed me to calculate the range of "
-     "mask affinities that would satisfy both masking and release requirements.",
-     f"For an N-terminal attachment with a {N['linker_best']}-residue linker, the estimated "
-     f"effective mask concentration is {N['ceff']:.0f} mM. Under the assumed conditions the mask "
-     f"dissociation constant can range from {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM while "
-     f"satisfying both requirements. A C-terminal attachment produces a narrower range.",
-     "A mask with micromolar affinity could be sufficient for effective masking while allowing "
-     "release after cleavage, and the breadth of the range provides flexibility when designing "
-     "candidate sequences. These estimates depend on the nanobody–antigen affinity, the "
-     "protein concentrations and the assumptions of the linker model, so they are used to "
-     "constrain candidate generation rather than to define an exact target affinity.")}
+     "this estimate with a binding competition model gives the range of mask affinities that "
+     "satisfy both the masking and the release requirement.",
+     f"For an N-terminal attachment with a {N['linker_best']}-residue linker the estimated "
+     f"effective mask concentration is {N['ceff']:.0f} mM, and the usable range spans "
+     f"{N['window']:.2f} decades. A C-terminal attachment produces a narrower range.",
+     "These estimates depend on the nanobody–antigen affinity, the protein concentrations "
+     "and the assumptions of the linker model, so they constrain candidate generation rather "
+     "than define an exact target affinity.")}
 <div class="two">
 {chart("design_window", "Usable mask affinity against linker length.")}
-{chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the upper and "
-       "lower bounds of the range.")}
+{chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the two bounds.")}
 </div>
-<details class="tech"><summary>Sensitivity to model assumptions</summary><div class="techbody">
-<p>The affinity and concentration values are illustrative assumptions rather than measurements
-for this system.</p>
-{R.assumptions_table(ASSUMPTIONS)}
 {chart_wide("affinity_window", "Usable mask affinity against the nanobody&rsquo;s own antigen "
    "affinity. Both bounds are mask dissociation constants, so they share one axis and the range "
    "is the height of the band.")}
+{R.assumptions_table(ASSUMPTIONS)}
 {R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
 <div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
 <br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
