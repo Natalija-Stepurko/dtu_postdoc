@@ -220,6 +220,12 @@ else:
     folding_html = ""
 
 # ---- redesign section ----
+# names this block defines that the live page reads, defined first so that a
+# stage which has not run leaves a missing value rather than a NameError
+corr = float("nan")
+rrows, rocc, grafts, improved = [], [], [], 0
+rbest = None
+
 if redesign_fold and fold:
     rrows = redesign_fold["results"]
     grafts = [r["occlusion"] * 100 for r in fold["results"] if r["kind"] == "epitope graft"]

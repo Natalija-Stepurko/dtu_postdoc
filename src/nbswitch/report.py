@@ -170,6 +170,7 @@ details.fold>summary:hover b{color:var(--str)}
 .tfig.portrait img{max-height:720px;max-width:620px;margin:0 auto}
 .tfig.wide img{max-height:190px}
 .tfig.small img{max-height:230px;max-width:560px;margin:0 auto}
+.tfig.medium img{max-height:470px;max-width:820px;margin:0 auto}
 .tfig figcaption{font-size:.82rem;color:var(--ink-3);line-height:1.45}
 .tgrid{display:grid;gap:14px;margin:4px 0}
 .tgrid.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
@@ -789,7 +790,7 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 def architecture_schematic() -> str:
     """One estimation, two independent design stages, an assembly, three scores, a ranking."""
-    W, H = 980, 1012
+    W, H = 980, 1150
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
          f'role="img" aria-label="Computational pipeline">',
          '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
@@ -804,7 +805,11 @@ def architecture_schematic() -> str:
          '.p-s{font:600 12px ui-monospace,monospace;letter-spacing:.09em}'
          '</style>']
 
-    def box(x, y, w, h, accent, num, title, lines, methods, tag=None, tagcol=None):
+    def box(x, y, w, h, accent, num, title, lines, methods, tag=None, tagcol=None,
+            available=()):
+        """One module. Methods that produced a number on this page are in the
+        module's colour; methods the module accepts but that were not run are
+        grey, so the difference is visible without a legend."""
         o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#FFFFFF" '
              f'stroke="{RULE}" stroke-width="1.2"/>',
              f'<rect x="{x}" y="{y}" width="{w}" height="4" fill="{accent}"/>',
@@ -817,6 +822,9 @@ def architecture_schematic() -> str:
         ty += 4
         for line in methods:
             o.append(f'<text x="{x+20}" y="{ty}" class="p-m" fill="{accent}">{line}</text>')
+            ty += 19
+        for line in available:
+            o.append(f'<text x="{x+20}" y="{ty}" class="p-m" fill="{NULL}">{line}</text>')
             ty += 19
         if tag:
             o.append(f'<text x="{x+w-16}" y="{y+h-14}" class="p-s" fill="{tagcol}" '
@@ -847,64 +855,76 @@ def architecture_schematic() -> str:
     s.append(arrow(W/2, 40, W/2, 56))
 
     # one estimation, which constrains both design stages below it
-    s.append(box(0, 60, W, 112, CHROME, "01", "Usable mask affinity and linker length",
+    s.append(box(0, 60, W, 150, CHROME, "01", "Usable mask affinity and linker length",
                  ["Interface geometry sets where to attach, how long the linker must be, and the",
                   "range of mask affinity that masking and release can both tolerate."],
-                 ["interface analysis · worm-like chain · competition equilibria"]))
+                 ["interface analysis · worm-like chain · competition equilibria"],
+                 available=["CALVADOS 2 · Martini 3 · Rosetta ddG · FoldX 5"]))
 
     # the two design stages are independent: neither constrains the other
-    s.append(arrow(245, 172, 245, 196))
-    s.append(arrow(735, 172, 735, 196))
-    s.append(box(0, 200, 478, 168, SEQ, "02a", "Mask design",
+    s.append(arrow(245, 210, 245, 234))
+    s.append(arrow(735, 210, 735, 234))
+    s.append(box(0, 238, 478, 196, SEQ, "02a", "Mask design",
                  ["What does the antigen present at the", "paratope, and how much of it to carry?"],
-                 ["contact face at 3.5 Å · window variants",
-                  "ProteinMPNN · RFdiffusion · BindCraft"]))
-    s.append(box(502, 200, 478, 168, SEQ, "02b", "Cleavable linker design",
-                 ["Which sequences does the protease cut,", "and does it reach past the enzyme?"],
+                 ["contact face at 3.5 Å · window and substitution variants",
+                  "ProteinMPNN v_48_020"],
+                 available=["RFdiffusion · RFantibody · BindCraft",
+                            "ESM-2 · ProGen2 · AfDesign"]))
+    s.append(box(502, 238, 478, 196, SEQ, "02b", "Cleavable linker design",
+                 ["Which sequences does the protease cut,",
+                  "and how long must the linker be to reach?"],
                  ["CleaveNet, conditioned on a target profile",
-                  "measured substrate library · flank length"]))
+                  "measured substrate library · flank length"],
+                 available=["MEROPS · PROSPERous · DeepCleave",
+                            "Procleave · iProt-Sub"]))
 
     # they only meet here
-    s.append(f'<path d="M 239 368 L 239 392 L 490 392" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 741 368 L 741 392 L 490 392" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(arrow(490, 392, 490, 410))
-    s.append(band(414, "ASSEMBLE · MASK + CLEAVABLE LINKER + NANOBODY, AS ONE CHAIN", 44))
-    s.append(arrow(W/2, 458, W/2, 476))
+    s.append(f'<path d="M 239 434 L 239 458 L 490 458" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 741 434 L 741 458 L 490 458" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(arrow(490, 458, 490, 476))
+    s.append(band(480, "ASSEMBLE · MASK + CLEAVABLE LINKER + NANOBODY, AS ONE CHAIN", 44))
+    s.append(arrow(W/2, 524, W/2, 542))
 
-    s.append(shared(480, "Structure prediction",
+    s.append(shared(546, "Structure prediction",
                     "Every construct folded once, as a single chain: mask, linker "
                     "and nanobody together.",
                     "ESMFold"))
 
-    s.append(f'<path d="M 490 556 L 490 574" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 160 574 L 820 574" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 490 622 L 490 640" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 160 640 L 820 640" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     for x in (160, 490, 820):
-        s.append(arrow(x, 574, x, 600))
+        s.append(arrow(x, 640, x, 666))
 
-    for n, (num, title, lines, methods, tag, col) in enumerate([
+    for n, (num, title, lines, methods, tag, col, avail) in enumerate([
         ("03", "Structural feasibility",
          ["Is the fold kept, and can", "it be produced?"],
-         ["pLDDT · core RMSD", "surface · measured disulfides"], None, None),
+         ["pLDDT · core RMSD", "surface · measured disulfides"], None, None,
+         ["AlphaFold3 · Boltz-2 · Chai-1", "BioEmu-1 · Rosetta · FoldX 5"]),
         ("04", "Mask binding and release",
          ["Is the site occupied before", "cleavage, and free after?"],
-         ["Boltz-2, mask alone and tethered", "interface analysis"], None, None),
+         ["Boltz-2, mask alone and tethered", "interface analysis"], None, None,
+         ["AlphaFold3 · Chai-1 · PRODIGY", "Rosetta · MM-GBSA · BioEmu-1"]),
         ("05", "Linker cleavability",
          ["Is the linker recognised,", "and can a protease reach it?"],
-         ["CleaveNet · measured library", "extension · clearance"], None, None),
+         ["CleaveNet · measured library", "extension · clearance"], None, None,
+         ["MEROPS · PROSPERous · DeepCleave", "SitePrediction · MD of the site"]),
     ]):
-        s.append(box(n * 330, 606, 320, 176, SEQ, num, title, lines, methods, tag, col))
-        s.append(f'<text x="{n*330+300}" y="{800}" class="p-m" fill="{INK3}" '
+        s.append(box(n * 330, 670, 320, 196, SEQ, num, title, lines, methods,
+                     tag, col, available=avail))
+        s.append(f'<text x="{n*330+300}" y="{884}" class="p-m" fill="{INK3}" '
                  f'text-anchor="end">S<tspan dy="4" font-size="11">{n+1}</tspan></text>')
-        s.append(f'<path d="M {n*330+160} 782 L {n*330+160} 816 L 490 816 L 490 846" '
+        s.append(f'<path d="M {n*330+160} 866 L {n*330+160} 900 L 490 900 L 490 930" '
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    s.append(box(166, 852, 648, 110, CHROME, "06", "Multiobjective ranking",
+    s.append(box(166, 936, 648, 150, CHROME, "06", "Multiobjective ranking",
                  ["The nondominated set, with no weights applied, so no",
                   "score can compensate for another."],
-                 ["Pareto front · uncertainty · diversity"]))
-    s.append(arrow(490, 962, 490, 982))
-    s.append(band(986, "OUTPUT · CANDIDATES THAT NO OTHER CANDIDATE BEATS ON ALL THREE"))
+                 ["Pareto non-domination"],
+                 available=["NSGA-II · hypervolume · hard thresholds",
+                            "uncertainty- and diversity-based selection"]))
+    s.append(arrow(490, 1086, 490, 1104))
+    s.append(band(1108, "OUTPUT · CANDIDATES THAT NO OTHER CANDIDATE BEATS ON ALL THREE"))
     s.append("</svg>")
     return "".join(s)
 
@@ -952,7 +972,7 @@ inhibitor</b>
    "(c) The solution structure is not one conformation but two — 65% open and 35% closed, "
    "interconverting, with the tail engaged in the closed state.", "portrait")}
 {f("fig4_1_14_f", "SEC-SAXS scattering with fits from each model. The two-state model gives the "
-   "lowest chi-squared, 1.058, beating either single structure.", "small")}
+   "lowest chi-squared, 1.058, beating either single structure.", "medium")}
 {f("fig4_1_23_a_isoforms", "Conformational space explored for each isoform, radius of gyration "
    "against maximum dimension. The longer the tail, the more closed states appear.", "full")}
 
