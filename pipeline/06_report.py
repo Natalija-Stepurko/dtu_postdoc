@@ -1101,24 +1101,15 @@ founded than it is.</p>
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">04</div><h2>Worked computational example</h2>
-<p>The pipeline was implemented in part and applied to {meta['title'][:66]}, a {N['resolution']} Å
-X-ray structure deposited in {meta['deposition_date'][:4]}.</p>
-<p><b>This is a model system, not the clinical target.</b> The entry is a nanobody bound to short
-neurotoxin 1 from <i>Naja pallida</i>, a spitting cobra: an elapid, where the case concerns vipers.
-It was chosen because it is a crystallographically characterised nanobody&ndash;toxin complex with
-a single binding site, which is what the geometry and the masking measurements need. The
-architecture and the methods are what transfer; a viper application would start from a viper
-toxin complex and redesign the mask for it.</p>
-<p>All results below are computational. No construct has been expressed, and no affinity,
-expression level or cleavage rate has been measured.</p>
+<p>The pipeline was implemented and applied to {meta['title']} ({PDB_ID}), a {N['resolution']} Å X-ray structure deposited in {meta['deposition_date'][:4]}.</p>
+<p>It was chosen because it is a crystallographically characterised nanobody&ndash;toxin
+complex with a single binding site, which is what the geometry and the masking measurements
+need. The architecture and the methods are what transfer; a viper application would start
+from a viper toxin complex and redesign the mask for it.</p>
 <p>What each module produced, in the order it ran, and how much of it survived. The module numbers are those in the diagram above; rows marked &mdash; are the assembly and structure-prediction steps that every module depends on.</p>
 {R.generation_table(COUNTS)}
-<p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
-that produced it.</p>
 <p><b>Every experiment the pipeline defines, under the module it belongs to:</b> the question it
-asks, the method that produced its number, and what came out. Experiments with no result yet are
-listed with the slot empty, so what has been answered and what has not are both visible. Each
-module heading carries the other methods that module could use.</p>
+asks, the method that produced its number, and what came out.</p>
 {R.pipeline_table(REGISTER)}</div>
 
 <h3 class="mod"><span>Module 01</span>Constraints on mask affinity and linker geometry</h3>
