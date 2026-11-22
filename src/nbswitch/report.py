@@ -771,8 +771,8 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 
 def architecture_schematic() -> str:
-    """Six modules: one estimation, one generation, three scores and a ranking."""
-    W, H = 980, 838
+    """One estimation, two independent design stages, an assembly, three scores, a ranking."""
+    W, H = 980, 1012
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
          f'role="img" aria-label="Computational pipeline">',
          '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
@@ -792,7 +792,7 @@ def architecture_schematic() -> str:
              f'stroke="{RULE}" stroke-width="1.2"/>',
              f'<rect x="{x}" y="{y}" width="{w}" height="4" fill="{accent}"/>',
              f'<text x="{x+20}" y="{y+34}" class="p-n" fill="{accent}">{num}</text>',
-             f'<text x="{x+56}" y="{y+35}" class="p-t" fill="{INK}">{title}</text>']
+             f'<text x="{x+62}" y="{y+35}" class="p-t" fill="{INK}">{title}</text>']
         ty = y + 60
         for line in lines:
             o.append(f'<text x="{x+20}" y="{ty}" class="p-b" fill="{INK2}">{line}</text>')
@@ -806,15 +806,15 @@ def architecture_schematic() -> str:
                      f'text-anchor="end">{tag}</text>')
         return "".join(o)
 
-    def band(y, text):
-        return (f'<rect x="0" y="{y}" width="{W}" height="40" rx="4" fill="#F4F8F8" '
+    def band(y, text, h=40):
+        return (f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="4" fill="#F4F8F8" '
                 f'stroke="{CHROME}" stroke-width="1"/>'
-                f'<text x="{W/2}" y="{y+26}" class="p-io" fill="{CHROME}" '
+                f'<text x="{W/2}" y="{y+h/2+6}" class="p-io" fill="{CHROME}" '
                 f'text-anchor="middle">{text}</text>')
 
-    def shared(y, title, note, methods):
+    def shared(y, title, note, methods, h=76):
         """A step every downstream module depends on, drawn across the width."""
-        return (f'<rect x="0" y="{y}" width="{W}" height="76" rx="4" fill="#FBF8F3" '
+        return (f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="4" fill="#FBF8F3" '
                 f'stroke="{STR}" stroke-width="1.2" stroke-dasharray="5 3"/>'
                 f'<text x="24" y="{y+30}" class="p-t" fill="{INK}">{title}</text>'
                 f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>'
@@ -823,59 +823,73 @@ def architecture_schematic() -> str:
                 f'<text x="{W-24}" y="{y+54}" class="p-s" fill="{STR}" '
                 f'text-anchor="end">RUN</text>')
 
-    s.append(band(0, "INPUT · EXPERIMENTAL OR PREDICTED NANOBODY–ANTIGEN STRUCTURE"))
-    s.append(f'<path d="M {W/2} 40 L {W/2} 58" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none" marker-end="url(#ar)"/>')
+    def arrow(x1, y1, x2, y2):
+        return (f'<path d="M {x1} {y1} L {x2} {y2}" stroke="{NULL}" stroke-width="1.6" '
+                f'fill="none" marker-end="url(#ar)"/>')
 
-    s.append(box(0, 64, 478, 148, CHROME, "01", "Usable mask affinity",
-                 ["Interface geometry sets the attachment", "point, linker length and the range of",
-                  "mask affinity that both states allow."],
-                 ["interface analysis · tether model"], "RUN", CHROME))
-    s.append(box(502, 64, 478, 148, SEQ, "02", "Generate constructs",
-                 ["Propose mask sequences and cleavable", "linkers inside that range."],
-                 ["RFdiffusion · ProteinMPNN · BindCraft",
-                  "CleaveNet for linkers"], "PART RUN", STR))
-    s.append(f'<path d="M 478 138 L 496 138" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none" marker-end="url(#ar)"/>')
-    # every construct is folded once, and all three scores read those coordinates
-    s.append(f'<path d="M 741 212 L 741 228" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none" marker-end="url(#ar)"/>')
-    s.append(shared(232, "Structure prediction",
+    s.append(band(0, "INPUT · EXPERIMENTAL OR PREDICTED NANOBODY–ANTIGEN STRUCTURE"))
+    s.append(arrow(W/2, 40, W/2, 56))
+
+    # one estimation, which constrains both design stages below it
+    s.append(box(0, 60, W, 112, CHROME, "01", "Usable mask affinity and linker length",
+                 ["Interface geometry sets where to attach, how long the linker must be, and the",
+                  "range of mask affinity that masking and release can both tolerate."],
+                 ["interface analysis · worm-like-chain tether model · competition equilibria"],
+                 "RUN", CHROME))
+
+    # the two design stages are independent: neither constrains the other
+    s.append(arrow(245, 172, 245, 196))
+    s.append(arrow(735, 172, 735, 196))
+    s.append(box(0, 200, 478, 168, SEQ, "02a", "Mask design",
+                 ["What does the antigen present at the", "paratope, and how much of it to carry?"],
+                 ["contact face at 3.5 Å · window variants",
+                  "ProteinMPNN · RFdiffusion · BindCraft"], "PART RUN", STR))
+    s.append(box(502, 200, 478, 168, SEQ, "02b", "Cleavable linker design",
+                 ["Which sequences does the protease cut,", "and does it reach past the enzyme?"],
+                 ["CleaveNet, conditioned on a target profile",
+                  "measured substrate library · flank length"], "RUN", CHROME))
+
+    # they only meet here
+    s.append(f'<path d="M 239 368 L 239 392 L 490 392" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 741 368 L 741 392 L 490 392" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(arrow(490, 392, 490, 410))
+    s.append(band(414, "ASSEMBLE · MASK + CLEAVABLE LINKER + NANOBODY, AS ONE CHAIN", 44))
+    s.append(arrow(W/2, 458, W/2, 476))
+
+    s.append(shared(480, "Structure prediction",
                     "Every construct folded once, as a single chain: mask, linker "
                     "and nanobody together.",
-                    "ESMFold \u00b7 CPU"))
-    s.append(f'<path d="M 490 308 L 490 324" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none"/>')
-    s.append(f'<path d="M 160 324 L 820 324" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+                    "ESMFold · CPU"))
+
+    s.append(f'<path d="M 490 556 L 490 574" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 160 574 L 820 574" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     for x in (160, 490, 820):
-        s.append(f'<path d="M {x} 324 L {x} 350" stroke="{NULL}" stroke-width="1.6" '
-                 f'fill="none" marker-end="url(#ar)"/>')
+        s.append(arrow(x, 574, x, 600))
 
     for n, (num, title, lines, methods, tag, col) in enumerate([
         ("03", "Structural feasibility",
          ["Is the fold kept, and can", "it be produced?"],
-         ["pLDDT \u00b7 core RMSD", "surface \u00b7 cysteines"], "RUN", CHROME),
+         ["pLDDT · core RMSD", "surface · measured disulfides"], "RUN", CHROME),
         ("04", "Mask binding and release",
-         ["Is the site blocked, and", "freed after cleavage?"],
-         ["Boltz-2 with alignments", "interface analysis"], "RUN", CHROME),
+         ["Does the mask bind untethered,", "and release once cut?"],
+         ["Boltz-2, mask alone and tethered", "interface analysis"], "PART RUN", STR),
         ("05", "Linker cleavability",
          ["Is the linker recognised,", "and can a protease reach it?"],
-         ["CleaveNet selectivity", "extension \u00b7 clearance"], "RUN", CHROME),
+         ["CleaveNet · measured library", "extension · clearance"], "RUN", CHROME),
     ]):
-        s.append(box(n * 330, 356, 320, 176, SEQ, num, title, lines, methods, tag, col))
-        s.append(f'<text x="{n*330+300}" y="{550}" class="p-m" fill="{INK3}" '
+        s.append(box(n * 330, 606, 320, 176, SEQ, num, title, lines, methods, tag, col))
+        s.append(f'<text x="{n*330+300}" y="{800}" class="p-m" fill="{INK3}" '
                  f'text-anchor="end">S<tspan dy="4" font-size="11">{n+1}</tspan></text>')
-        s.append(f'<path d="M {n*330+160} 532 L {n*330+160} 566 L 490 566 L 490 596" '
+        s.append(f'<path d="M {n*330+160} 782 L {n*330+160} 816 L 490 816 L 490 846" '
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    s.append(box(166, 602, 648, 140, CHROME, "06", "Multiobjective ranking",
-                 ["Hard constraints, then the nondominated set.",
-                  "No weights, so no score compensates for another."],
+    s.append(box(166, 852, 648, 110, CHROME, "06", "Multiobjective ranking",
+                 ["The nondominated set, with no weights applied, so no",
+                  "score can compensate for another."],
                  ["Pareto front · uncertainty · diversity"], "RUN", CHROME))
-    s.append(f'<path d="M 490 742 L 490 778" stroke="{NULL}" stroke-width="1.6" '
-             f'fill="none" marker-end="url(#ar)"/>')
-    s.append(band(784, "OUTPUT · RANKED CANDIDATE SEQUENCES WITH THEIR THREE SCORES"))
+    s.append(arrow(490, 962, 490, 982))
+    s.append(band(986, "OUTPUT · CANDIDATES THAT NO OTHER CANDIDATE BEATS ON ALL THREE"))
     s.append("</svg>")
     return "".join(s)
 
