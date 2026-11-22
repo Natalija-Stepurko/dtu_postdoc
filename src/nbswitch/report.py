@@ -1317,9 +1317,11 @@ MODULE_SUMMARY = [
      "0, 2, 4 residues; ProteinMPNN v_48_020",
      "RFdiffusion; RFantibody; BindCraft; ESM-2 650M; ProGen2; AfDesign"),
     ("02b", "Cleavable linker design",
-     "Generate linkers cut at the site and resistant elsewhere",
+     "Generate linkers cut at the site and resistant elsewhere, and long enough "
+     "for the mask to reach the paratope",
      "CleaveNet conditional generator; CleaveNet predictor; Kukreja substrate "
-     "library (18,583 10-mers &times; 18 MMPs)",
+     "library (18,583 10-mers &times; 18 MMPs); flank-length sweep at 16, 20, 24, "
+     "28, 32 residues with the substrate held constant",
      "MEROPS; PROSPERous; DeepCleave; Procleave; iProt-Sub"),
     ("03", "Structural feasibility",
      "Assess preservation of the VHH fold and structural plausibility",
@@ -1328,8 +1330,9 @@ MODULE_SUMMARY = [
      "AlphaFold3; Boltz-2; Chai-1; BioEmu-1; Rosetta; FoldX 5; ThermoMPNN"),
     ("04", "Mask binding and release",
      "Assess binding untethered, tethered and after cleavage",
-     "Boltz-2.2.1 three-chain with bond constraint; Boltz-2.2.1 two-chain "
-     "untethered; heavy-atom interface contacts",
+     "Boltz-2.2.1, mask + nanobody with no tether; Boltz-2.2.1, mask + linker + "
+     "nanobody + antigen, the construct as one molecule via a bond constraint; "
+     "heavy-atom interface contacts",
      "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA; BioEmu-1"),
     ("05", "Linker cleavability",
      "Assess protease responsiveness and structural access",
