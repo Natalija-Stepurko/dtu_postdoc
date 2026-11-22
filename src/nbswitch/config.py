@@ -154,8 +154,15 @@ MASK_CONTACT_CUTOFF_A = 3.5
 #: would mean grafting a peptide the antigen does not contain.
 MASK_MAX_GAP = 3
 
-#: Shortest contact run worth grafting on its own.
-MASK_MIN_RUN = 2
+#: Shortest contact run worth grafting on its own. One residue is allowed,
+#: because a single residue can bury a lot of surface: on this antigen N22
+#: contacts the nanobody alone, twenty residues from the main face, and a rule
+#: of two silently dropped it and left the pipeline testing one epitope.
+MASK_MIN_RUN = 1
+
+#: A run has to bury at least this much to count as a face of its own, which
+#: keeps the relaxed run length from admitting grazing contacts.
+MASK_MIN_BURIED_A2 = 20.0
 
 #: Antibody numbering scheme for CDR assignment: "kabat", "chothia" or "imgt".
 #: The schemes disagree: on 9RIU, Kabat CDR2 is 17 residues and IMGT CDR2 is 7,

@@ -73,7 +73,7 @@ SUBSTRATE_LENGTH = 10
 #: the mask at the end of the linker as a point, and the mask is a peptide with
 #: its own dimensions that has to reach across the paratope rather than touch
 #: its centre.
-FLANK = "GGSGGSG"
+FLANK = "GGSGGSG"        # seven a side, giving REFERENCE_LENGTH
 
 CLEAVENET = Path("/scratch/cleavenet")
 
@@ -221,7 +221,19 @@ def cleavable_linkers(n_generate: int = 120, n_keep: int = 10,
 #: contribute no cleavage site of their own. This separates two things that
 #: were previously one number: whether a protease recognises the linker, and
 #: whether the mask can reach the paratope.
-LENGTH_SERIES = (16, 20, 24, 28, 32)
+#:
+#: The range is bounded at both ends by the two models that disagree about it.
+#: Below 16 the worm-like chain says the mask is held too tightly to reach past
+#: its own attachment point, and at 16 the folded constructs show it 26 A from
+#: the paratope. Above 32 the affinity window has lost a fifth of its width and
+#: the chain is long enough to wrap the nanobody, which masks by crowding
+#: rather than by binding.
+LENGTH_SERIES = (12, 16, 20, 24, 28, 32)
+
+#: The length every substrate is built at, so sequences can be compared with
+#: length held constant. Measured: stage 16 finds no mask-paratope contact
+#: below this.
+REFERENCE_LENGTH = 24
 
 
 def flank_of_length(n: int) -> str:

@@ -29,6 +29,7 @@ import sys; sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve(
 import numpy as np
 
 from nbswitch import constructs as C
+from nbswitch import mask_design as M
 from nbswitch import structure as S
 from nbswitch.config import (load_json, save_json, REFERENCE_VHH_CHAIN, PDB_ID,
                              MASK_CONTACT_CUTOFF_A, MASK_MAX_GAP, MASK_MIN_RUN)
@@ -43,7 +44,20 @@ if not segments:
     raise SystemExit(f"no antigen residue lies within {MASK_CONTACT_CUTOFF_A} A "
                      f"of the nanobody: nothing to graft")
 
-masks = C.mask_family(atoms, toxin_chain, segments)
+res = S.residues(atoms[atoms.chain_id == toxin_chain])
+by_id = {int(res.res_id[i]): res.code[i] for i in range(len(res))}
+label = {int(res.res_id[i]): res.labels[i] for i in range(len(res))}
+
+
+def window(start, end):
+    """Antigen sequence over an inclusive residue range, clipped to the chain."""
+    ids = [r for r in range(max(start, min(by_id)), min(end, max(by_id)) + 1)
+           if r in by_id]
+    return "".join(by_id[r] for r in ids), ids
+
+
+hotspots = C.hotspot_indices(segments[0])
+masks = M.design_masks(window, segments, hotspot_positions=hotspots)
 
 
 def _disulfide_report(atoms, chain, lo, hi):
@@ -75,6 +89,12 @@ save_json("03a_masks.json", {
     "min_run": MASK_MIN_RUN,
     "toxin_chain": toxin_chain,
     "segments": segments, "masks": masks,
+    "hotspot_positions": hotspots,
+    "hotspot_labels": [label[segments[0]["start"] + i] for i in hotspots
+                       if segments[0]["start"] + i in label],
+    "methods_run": sorted({m.get("method", "graft") for m in masks.values()}),
+    "methods_available": ["RFdiffusion", "RFantibody", "BindCraft",
+                          "ESM-2 masked resampling", "ProGen2"],
     "primary_disulfides_internal": [list(p) for p in internal],
     "primary_cysteines_orphaned": orphaned})
 
@@ -85,11 +105,13 @@ for s in segments:
 print(f"\nprimary segment {primary['start_label']}-{primary['end_label']}:")
 print(f"  disulfides kept whole: {internal if internal else 'none'}")
 print(f"  cysteines orphaned by the cut: {orphaned if orphaned else 'none'}")
+print(f"\nhotspots held fixed: "
+      f"{[label[segments[0]['start'] + i] for i in hotspots if segments[0]['start'] + i in label]}")
 print(f"\nmask design space: {len(masks)} candidates seeded by the contact face")
 for name, m in masks.items():
     span = ""
     if m.get("start"):
         kept, orph = _disulfide_report(atoms, toxin_chain, m["start"], m["end"])
         span = f"  disulfides {len(kept)}, orphaned {len(orph)}"
-    print(f"  {name:18s} {m['seq']:<22s} {len(m['seq']):2d} aa  "
-          f"{m['kind']:<18s}{span}")
+    print(f"  {name:18s} {m['seq']:<26s} {len(m['seq']):2d} aa  "
+          f"{m.get('method', 'graft'):<14s}{m['kind']:<18s}{span}")

@@ -13,7 +13,12 @@ from nbswitch import linkers as L
 from nbswitch.config import save_json, RESULTS
 
 N_GENERATE = 120
-N_KEEP = 8
+
+#: How many generated substrates to carry into the library. The substrates
+#: are near-equivalent on selectivity, so each extra one multiplies the
+#: construct count by a factor the scores cannot use. The mask axis is where
+#: the design space is; this one only has to be represented.
+N_KEEP = 4
 PYTHON = "/scratch/.venv-dtu/bin/python"
 
 #: Linker length is a design variable, not a constant. The reference length
@@ -27,7 +32,7 @@ PYTHON = "/scratch/.venv-dtu/bin/python"
 #: and a twenty-residue one attach at the same point and have to cover the same
 #: surface, so they do not need the same amount of linker, and a single length
 #: for the whole library is a guess for at least one of them.
-LENGTH_LADDER = (16, 32)
+LENGTH_LADDER = tuple(n for n in L.LENGTH_SERIES if n != L.REFERENCE_LENGTH)
 
 work = RESULTS / "linkers"
 out = L.cleavable_linkers(n_generate=N_GENERATE, n_keep=N_KEEP,
@@ -77,7 +82,7 @@ for base in _ladder_bases:
                        "off_target_z": base.get("off_target_z")})
 out["linkers"] = out["linkers"] + ladder
 out["n_length_variants"] = len(ladder)
-out["reference_length"] = len(out["linkers"][0]["sequence"])
+out["reference_length"] = L.REFERENCE_LENGTH
 out["length_ladder"] = list(LENGTH_LADDER)
 
 save_json("02b_linkers.json", out)

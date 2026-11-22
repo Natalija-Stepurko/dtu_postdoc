@@ -17,6 +17,18 @@ from nbswitch.config import load_json, save_json, STRUCTURES, RANDOM_SEED
 #: One construct per mask, on the most selective linker available.
 TEMPERATURES = (0.1, 0.2, 0.3)
 PER_TEMPERATURE = 8
+
+#: Only grafts and the scramble are redesigned. Redesigning the inert control
+#: asks ProteinMPNN to improve a sequence with nothing to improve, and
+#: redesigning every window variant of one face produces near-duplicates of
+#: the same answer. Parents are one construct per eligible mask.
+REDESIGN_KINDS = ("epitope graft", "scrambled control")
+
+#: Folding the redesigns costs the same per construct as folding the library,
+#: so the same kind of budget applies. Designs past this are dropped by
+#: ProteinMPNN score, keeping the best of each parent.
+MAX_REDESIGNS = 90
+
 PYTHON = sys.executable
 
 if not design.available():
@@ -54,7 +66,10 @@ try:
     _ref_len = load_json("02b_linkers.json").get("reference_length")
 except FileNotFoundError:
     _ref_len = None
-PARENTS = _parents(lib["constructs"], _ref_len)
+_eligible = {name for name, m in lib["masks"].items()
+             if m["kind"] in REDESIGN_KINDS}
+PARENTS = [cid for cid in _parents(lib["constructs"], _ref_len)
+           if any(cid.startswith(f"{name}_") for name in _eligible)]
 if not PARENTS:
     raise SystemExit("no constructs to redesign: the library is empty")
 print(f"  redesigning {len(PARENTS)} parents: {', '.join(PARENTS)}")
@@ -99,6 +114,10 @@ for d in designs:
     if key not in best or d["score"] < best[key]["score"]:
         best[key] = d
 unique = sorted(best.values(), key=lambda d: d["score"])
+if len(unique) > MAX_REDESIGNS:
+    print(f"  {len(unique)} unique designs, keeping the {MAX_REDESIGNS} best "
+          f"by ProteinMPNN score")
+    unique = unique[:MAX_REDESIGNS]
 
 constructs = []
 for i, d in enumerate(unique):

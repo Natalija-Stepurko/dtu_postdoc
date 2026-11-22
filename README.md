@@ -23,57 +23,87 @@ the first target and is kept only as a set-aside case: its own N-terminus sits i
 so masking it is trivially easy and the measure says nothing. The target is selected by
 `NBSWITCH_TARGET`, and results are written per target under `results/<id>/`.
 
-## What it shows
+## What the pipeline does
 
-**The two termini are not interchangeable.** The nanobody's N-terminus sits 11.8 Å from
-the paratope centroid and the C-terminus 42.0 Å. Feeding those measured distances through
-a worm-like-chain tether model bounds the mask affinity from both sides — tight enough to
-block while tethered, loose enough to leave after cleavage. An N-terminal fusion with a
-5-residue linker leaves about **3.9 decades** of usable mask affinity; a C-terminal fusion
-leaves 2.2, and below 10 residues it has **no window at all**.
+Six modules. One estimates what is achievable, two design independently, three score,
+and a ranking selects; a final step verifies what survived.
 
-**Tethering is worth more than affinity.** At 5 residues the masking ceiling is ~750 µM,
-roughly 7600× above the release floor. A micromolar mask still blocks, so masks do not
-need affinity maturation — and tight masks are actively harmful, because they fail to
-leave once the tether is cut.
+**01 — Usable mask affinity.** The interface is measured on the deposited complex, and
+the distance from each terminus to the paratope goes into a worm-like-chain tether model.
+Because the mask is tethered it acts at a high local concentration, so a weak mask blocks;
+after cleavage that advantage is gone and the mask has to leave. The two requirements
+bound mask affinity from opposite sides, which gives a usable window rather than a target
+to maximise. The N-terminus is the attachment point: it is 21.2 Å from the paratope
+centroid against 34.2 Å for the C-terminus.
 
-**The paratope is almost entirely CDR3** (11 of 16 residues; CDR2 contributes none), and
-the N-terminal residue is itself part of it.
+**02a — Mask design.** The mask starts from what the antigen presents at the paratope:
+every antigen residue with a heavy atom within 3.5 Å of the nanobody, grouped into contact
+faces. That face seeds a space rather than being the candidate — window variants carrying
+more or less flanking antigen, a variant with the disulfide removed, substitution variants
+holding the highest-burying positions fixed, a mask covering both contact faces, and
+matched scrambled, truncated and inert controls.
+
+**02b — Cleavable linker design.** Cleavability is a constraint on generation, not a
+filter afterwards: a Gly/Ser repeat is chosen in protein engineering precisely because
+proteases do not cut it, so no score applied later could have found a cleavable one.
+CleaveNet generates substrates against a target profile and they are scored as a contrast
+between bite-site and circulating proteases, because a linker cut by everything would
+unmask in transit. Length is a separate axis, since the substrate is fixed at ten residues
+and the flanks are free.
+
+**03, 04, 05 — Three scores.** Can the construct be made; does the mask block the antigen
+and release when cut; is the linker both recognised and reachable. Each is computed for
+every construct from one shared structure prediction.
+
+**06 — Ranking.** The nondominated set over the three scores, with no weights, so no score
+compensates for another. The front is then verified by predicting the whole assembly with
+its antigen, which is the only step that asks directly whether the antigen can still bind.
 
 ## Running it
 
 ```bash
 uv venv && uv pip install -e ".[folding]"
-for s in pipeline/0*.py; do python "$s"; done
+NBSWITCH_TARGET=9RIU PYTHON=python bash pipeline/run_all.sh
 pytest
 ```
 
-Stages 1–3, 5 and 6 take under a minute on a laptop. Stage 4 folds 26 constructs with
-ESMFold; on 8 CPU cores that is about 20 s each, and it is resumable, so it can be
-interrupted and restarted. A GPU only makes it faster.
+`run_all.sh` runs all twenty stages in order. Stage numbers are execution order, which is
+why verification is 19 and not 11 — it consumes the ranking from 13.
 
-| stage | what it does | needs |
+Most stages take seconds. The cost is folding and structure prediction: about fifty
+seconds a construct for ESMFold on eight CPU cores, and two to three minutes for each
+Boltz-2 prediction. The whole pipeline is a few hours on CPU; a GPU only makes it faster.
+Folding is resumable and keyed on the sequence in each file, so an interrupted run
+restarts without losing work and cannot serve a model of a construct that has changed.
+
+The library is a design matrix rather than a full cross product: every mask meets every
+linker at a reference length, and a chosen few masks meet a chosen few linkers at the
+other lengths. Stage 03 prints the size and the estimated fold time before building
+anything and refuses to exceed `MAX_CONSTRUCTS`, so growing the search space is a priced
+decision.
+
+| stage | what it does | cost |
 |---|---|---|
-| `01_reference_structure.py` | interface, paratope, CDRs, terminal geometry | CPU |
-| `02_tether_model.py` | effective concentration, masking ceiling, release floor, design window | CPU |
-| `03_construct_library.py` | mask candidates from the structure, with controls | CPU |
-| `04_fold_constructs.py` | ESMFold on every construct, paratope occlusion | CPU or GPU |
-| `05_figures.py` | every chart on the page | CPU |
-| `06_report.py` | the page itself | CPU |
-
-`notebooks/esmfold_masked_vhh.ipynb` runs stage 4 on a free Colab T4 instead
-([open in Colab](https://colab.research.google.com/github/Natalija-Stepurko/dtu_postdoc/blob/main/notebooks/esmfold_masked_vhh.ipynb)).
-
-## Layout
-
-```
-src/nbswitch/      config · structure · tether · constructs · folding · occlusion · figures · report
-pipeline/          one script per stage, each writing JSON to results/
-tests/             17 tests, including the residue-keying trap below
-notebooks/         the Colab version of the folding stage
-results/           stage outputs, figures and predicted structures
-docs/              the generated page
-```
+| `01_reference_structure.py` | interface, paratope, CDRs, terminal geometry | seconds |
+| `02_tether_model.py` | effective concentration, masking ceiling, release floor, window | seconds |
+| `02b_linkers.py` | generate cleavable substrates, score them, build the length series | minutes |
+| `03a_mask_design.py` | contact faces, and the mask space seeded from them | seconds |
+| `03_construct_library.py` | assemble the design matrix | seconds |
+| `04_fold_constructs.py` | ESMFold on every construct | ~50 s each |
+| `16_linker_length_sweep.py` | reach against linker length, substrate held constant | ~50 s each |
+| `07_redesign_masks.py` | ProteinMPNN on the folded backbones, mask positions only | minutes |
+| `08_fold_redesigns.py` | ESMFold on the redesigns | ~50 s each |
+| `09_complex_prediction.py` | Boltz-2 without alignments — the control that shows why they are needed | ~3 min each |
+| `10_trigger_accessibility.py` | extension, exposure and catalytic-domain clearance | seconds |
+| `12_feasibility.py` | pLDDT, fold preservation, exposed hydrophobic surface, measured disulfides | seconds |
+| `13_rank.py` | the nondominated set | seconds |
+| `14_ensemble.py` | every design superimposed on one backbone, for the viewers | seconds |
+| `15_interface_controls.py` | the same measures on independent nanobody–toxin complexes | seconds |
+| `17_mask_binding.py` | does the mask bind untethered, with the antigen as positive control | ~3 min each |
+| `18_cleavage_evidence.py` | the linkers against the measured substrate library, without a neural net | seconds |
+| `19_verify_front.py` | the whole assembly with its antigen, for the ranked front | ~3 min each |
+| `05_figures.py` | every figure, from stage outputs | seconds |
+| `06_report.py` | `docs/index.html`, from stage outputs | seconds |
 
 ## A trap worth knowing about
 

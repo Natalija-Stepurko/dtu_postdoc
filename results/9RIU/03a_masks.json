@@ -1,0 +1,192 @@
+{
+  "cutoff_A": 3.5,
+  "hotspot_labels": [
+    "C42",
+    "T44",
+    "P47",
+    "L51",
+    "N52"
+  ],
+  "hotspot_positions": [
+    0,
+    2,
+    5,
+    9,
+    10
+  ],
+  "masks": {
+    "epi_both": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "both contact faces, joined by a spacer in place of the antigen residues between them, which make no contact",
+      "seq": "PGETNCYKKGSGCPTVKPGIKLNC"
+    },
+    "epi_core": {
+      "end": 53,
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "contact face, 2 cysteines",
+      "seq": "CPTVKPGIKLNC",
+      "start": 42
+    },
+    "epi_core_ext2": {
+      "end": 55,
+      "extension": 2,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "contact face plus 2 residues of antigen each side, 4 cysteines",
+      "seq": "CGCPTVKPGIKLNCCT",
+      "start": 40
+    },
+    "epi_core_ext4": {
+      "end": 57,
+      "extension": 4,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "contact face plus 4 residues of antigen each side, 4 cysteines",
+      "seq": "RGCGCPTVKPGIKLNCCTTD",
+      "start": 38
+    },
+    "epi_core_half": {
+      "extension": 0,
+      "kind": "truncated control",
+      "method": "control",
+      "note": "leading half of the face: right residues, not enough of them",
+      "seq": "CPTVKP"
+    },
+    "epi_core_noCys": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "staple variant",
+      "note": "cysteines substituted to serine, which removes the disulfide holding the face in shape and changes nothing else",
+      "seq": "SPTVKPGIKLNS"
+    },
+    "epi_core_scram": {
+      "extension": 0,
+      "kind": "scrambled control",
+      "method": "control",
+      "note": "the face shuffled, seed 42: same composition, same length, no order",
+      "seq": "IPTKLGCVKCPN"
+    },
+    "epi_face2": {
+      "end": 26,
+      "extension": 4,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "second contact face, around a hotspot burying 43 A2",
+      "seq": "PGETNCYKK",
+      "start": 18
+    },
+    "epi_sub01": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "substitution",
+      "note": "contact face with its hotspots and cysteines held, and the other 6 positions conservatively substituted",
+      "seq": "CATIQPALRLNC"
+    },
+    "epi_sub02": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "substitution",
+      "note": "contact face with its hotspots and cysteines held, and the other 6 positions conservatively substituted",
+      "seq": "CATIRPAVRLNC"
+    },
+    "epi_sub03": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "substitution",
+      "note": "contact face with its hotspots and cysteines held, and the other 6 positions conservatively substituted",
+      "seq": "CGTLRPAVQLNC"
+    },
+    "polyG": {
+      "extension": 0,
+      "kind": "inert control",
+      "method": "control",
+      "note": "no designed interaction, matched to the face at 12 residues",
+      "seq": "GGGGGGGGGGGG"
+    }
+  },
+  "max_gap": 3,
+  "method": "antigen residues within 3.5 A of the nanobody, runs merged across gaps of up to 3 residues",
+  "methods_available": [
+    "RFdiffusion",
+    "RFantibody",
+    "BindCraft",
+    "ESM-2 masked resampling",
+    "ProGen2"
+  ],
+  "methods_run": [
+    "control",
+    "graft",
+    "staple variant",
+    "substitution"
+  ],
+  "min_run": 1,
+  "primary_cysteines_orphaned": [],
+  "primary_disulfides_internal": [
+    [
+      42,
+      53
+    ]
+  ],
+  "segments": [
+    {
+      "buried_A2": 580.7,
+      "contact_labels": [
+        "C42",
+        "P43",
+        "T44",
+        "V45",
+        "K46",
+        "P47",
+        "L51",
+        "N52",
+        "C53"
+      ],
+      "cutoff_A": 3.5,
+      "end": 53,
+      "end_label": "C53",
+      "length": 12,
+      "n_contact": 9,
+      "n_epitope": 9,
+      "per_residue_buried_A2": [
+        71.2,
+        24.7,
+        133.9,
+        47.0,
+        43.3,
+        51.3,
+        13.2,
+        13.0,
+        13.8,
+        62.9,
+        63.4,
+        43.1
+      ],
+      "seq": "CPTVKPGIKLNC",
+      "start": 42,
+      "start_label": "C42"
+    },
+    {
+      "buried_A2": 42.7,
+      "contact_labels": [
+        "N22"
+      ],
+      "cutoff_A": 3.5,
+      "end": 22,
+      "end_label": "N22",
+      "length": 1,
+      "n_contact": 1,
+      "n_epitope": 1,
+      "per_residue_buried_A2": [
+        42.7
+      ],
+      "seq": "N",
+      "start": 22,
+      "start_label": "N22"
+    }
+  ],
+  "toxin_chain": "B"
+}

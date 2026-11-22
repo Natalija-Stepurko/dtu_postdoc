@@ -8,6 +8,17 @@ to how masks are designed cannot quietly alter the linkers, or the reverse.
 """
 import sys; sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "src"))
 from nbswitch import constructs as C
+from nbswitch import linkers as L
+
+#: Linker sequences carried through the whole length range. One
+#: generated substrate and both controls, so each length is represented
+#: in every sequence class.
+LENGTH_LINKERS = ("cn01", "ctrl_gs", "ctrl_scram")
+
+#: Masks carried through the whole length range. One graft, its scramble and
+#: the inert control: enough to say whether a gain with length belongs to the
+#: mask or to anything of that size being nearby.
+LENGTH_MASKS = ("epi_core", "epi_core_scram", "polyG")
 from nbswitch.structure import trim_expression_tags
 from nbswitch.config import load_json, save_json, REFERENCE_VHH_CHAIN
 
@@ -26,7 +37,29 @@ mask_data = load_json("03a_masks.json")
 segments, masks = mask_data["segments"], mask_data["masks"]
 linker_data = load_json("02b_linkers.json")
 linkers = linker_data["linkers"]
-library = C.build_library(vhh_seq, masks, linkers)
+reference_length = linker_data.get("reference_length") or L.REFERENCE_LENGTH
+pairs = C.design_matrix(
+    masks, linkers, reference_length,
+    # length is varied on one graft and the two controls, which is enough to
+    # say whether a gain with length belongs to the mask or to crowding
+    length_masks=[n for n in LENGTH_MASKS if n in masks],
+    length_linkers=LENGTH_LINKERS)
+plan = C.matrix_summary(masks, linkers, reference_length,
+                        length_masks=LENGTH_MASKS, length_linkers=LENGTH_LINKERS)
+print(f"  design matrix: {plan['n_masks']} masks x {plan['n_linkers']} linkers "
+      f"-> {plan['n_pairs']} pairs "
+      f"({plan['n_at_reference_length']} at the reference length, "
+      f"{plan['n_length_variants']} length variants)")
+print(f"  {plan['n_constructs']} constructs, about "
+      f"{plan['estimated_fold_minutes']} minutes to fold on CPU")
+if plan["n_constructs"] > C.MAX_CONSTRUCTS:
+    raise SystemExit(
+        f"{plan['n_constructs']} constructs exceeds the budget of "
+        f"{C.MAX_CONSTRUCTS}. Reduce N_KEEP in stage 02b, shorten LENGTH_SERIES, "
+        f"or narrow LENGTH_MASKS/LENGTH_LINKERS here, then rerun. Raising "
+        f"MAX_CONSTRUCTS is also a choice, with the fold time above as its price.")
+
+library = C.build_library(vhh_seq, masks, linkers, pairs)
 
 save_json("03_constructs.json", {
     "vhh_sequence": vhh_seq, "vhh_sequence_deposited": ref_data["sequence"],
@@ -38,10 +71,13 @@ save_json("03_constructs.json", {
     "n_substrates_generated": linker_data["n_generated"],
     "target_proteases": linker_data["target_proteases"],
     "off_target_proteases": linker_data["off_target_proteases"],
+    "reference_length": reference_length,
+    "length_linkers": list(LENGTH_LINKERS),
+    "n_pairs": len(pairs),
     "n_constructs": len(library), "constructs": library})
 
-print(f"{len(masks)} masks x {len(linkers)} linkers + the free nanobody "
-      f"= {len(library)} constructs, "
+print(f"{len(masks)} masks, {len(linkers)} linkers, {len(pairs)} designed pairs "
+      f"+ the free nanobody = {len(library)} constructs, "
       f"{min(c['length'] for c in library)}-{max(c['length'] for c in library)} residues")
 print(f"  masks from stage 03a ({mask_data['cutoff_A']} A contact seed), "
       f"linkers from stage 02b ({linker_data['n_generated']} substrates generated)")

@@ -79,34 +79,40 @@ def mask_candidates(segments, seed: int = RANDOM_SEED) -> dict:
     return masks
 
 
-def build_library(vhh_sequence, masks, linkers) -> list[dict]:
-    """Every mask x linker combination, plus the free nanobody as reference.
+def build_library(vhh_sequence, masks, linkers, pairs=None) -> list[dict]:
+    """Assemble constructs from designed masks and designed linkers.
 
-    ``linkers`` are explicit sequences, not lengths: they carry a generated
-    protease substrate, so a length alone no longer describes one.
+    ``pairs`` is a list of (mask name, linker) from ``design_matrix``. Without
+    it every mask meets every linker, which is the right default for a small
+    set and wasteful for a large one.
 
     Ranges are 1-based inclusive positions in the construct sequence.
     """
+    if pairs is None:
+        pairs = [(name, link) for name in masks for link in linkers]
+
     library = []
-    for name, mask in masks.items():
-        for link in linkers:
-            seq = link["sequence"]
-            n = len(seq)
-            mask_end = len(mask["seq"])
-            library.append({
-                "id": f"{name}_{link['id']}", "mask": name,
-                "mask_seq": mask["seq"], "mask_kind": mask["kind"],
-                "linker_id": link["id"], "linker_residues": n, "linker_seq": seq,
-                "linker_substrate": link.get("substrate", ""),
-                "linker_kind": link.get("kind", "generated"),
-                "linker_selectivity": link.get("selectivity"),
-                "sequence": mask["seq"] + seq + vhh_sequence,
-                "length": mask_end + n + len(vhh_sequence),
-                "mask_range": [1, mask_end],
-                "linker_range": [mask_end + 1, mask_end + n],
-                "vhh_range": [mask_end + n + 1, mask_end + n + len(vhh_sequence)]})
+    for name, link in pairs:
+        mask = masks[name]
+        seq = link["sequence"]
+        n = len(seq)
+        mask_end = len(mask["seq"])
+        library.append({
+            "id": f"{name}_{link['id']}", "mask": name,
+            "mask_seq": mask["seq"], "mask_kind": mask["kind"],
+            "mask_method": mask.get("method", "graft"),
+            "linker_id": link["id"], "linker_residues": n, "linker_seq": seq,
+            "linker_substrate": link.get("substrate", ""),
+            "linker_kind": link.get("kind", "generated"),
+            "linker_selectivity": link.get("selectivity"),
+            "sequence": mask["seq"] + seq + vhh_sequence,
+            "length": mask_end + n + len(vhh_sequence),
+            "mask_range": [1, mask_end],
+            "linker_range": [mask_end + 1, mask_end + n],
+            "vhh_range": [mask_end + n + 1, mask_end + n + len(vhh_sequence)]})
     library.append({"id": "VHH_only", "mask": None, "mask_seq": "",
-                    "mask_kind": "reference", "linker_id": None,
+                    "mask_kind": "reference", "mask_method": "reference",
+                    "linker_id": None,
                     "linker_residues": 0, "linker_seq": "",
                     "linker_substrate": "", "linker_kind": "reference",
                     "linker_selectivity": None,
@@ -174,7 +180,8 @@ def contact_segments(atoms, vhh_chain: str, toxin_chain: str,
     would be a sequence the antigen does not contain and could not adopt.
     """
     from .structure import residues, contact_residues, buried_on_binding
-    from .config import (MASK_CONTACT_CUTOFF_A, MASK_MAX_GAP, MASK_MIN_RUN)
+    from .config import (MASK_CONTACT_CUTOFF_A, MASK_MAX_GAP, MASK_MIN_RUN,
+                         MASK_MIN_BURIED_A2)
     import numpy as np
 
     cutoff = MASK_CONTACT_CUTOFF_A if cutoff is None else cutoff
@@ -206,7 +213,8 @@ def contact_segments(atoms, vhh_chain: str, toxin_chain: str,
     for g in groups:
         span = list(range(g[0], g[-1] + 1))
         rows = [index[r] for r in span if r in index]
-        if len(g) < min_run:
+        buried = float(sum(delta[i] for i in rows))
+        if len(g) < min_run or buried < MASK_MIN_BURIED_A2:
             continue
         segments.append({
             "start": g[0], "end": g[-1], "length": len(span),
@@ -218,7 +226,118 @@ def contact_segments(atoms, vhh_chain: str, toxin_chain: str,
             # mask_candidates reads that name
             "n_epitope": len(g),
             "contact_labels": [res_b.labels[index[r]] for r in g if r in index],
-            "buried_A2": round(float(sum(delta[i] for i in rows)), 1),
+            "buried_A2": round(buried, 1),
+            "per_residue_buried_A2": [round(float(delta[i]), 1) for i in rows],
+            "cutoff_A": cutoff})
+    return sorted(segments, key=lambda s: -s["buried_A2"])
+
+
+def complex_cases(constructs, n_linkers: int = 2):
+    """Which constructs to spend a complex prediction on.
+
+    Derived from the library rather than named, because construct ids change
+    whenever the linkers are regenerated: a hardcoded list silently selects
+    nothing, or worse, reports results for molecules no longer in the library.
+
+    The comparison needs a grafted mask and an inert one on the same linker, so
+    that a difference between them is attributable to the mask, plus the same
+    graft on a second linker to show whether the linker matters.
+    """
+    masked = [c for c in constructs if c.get("mask") and c.get("linker_id")]
+    if not masked:
+        return []
+
+    def selectivity(c):
+        s = c.get("linker_selectivity")
+        return -1e9 if s is None else s
+
+    linkers, seen = [], set()
+    for c in sorted(masked, key=selectivity, reverse=True):
+        if c["linker_id"] not in seen:
+            seen.add(c["linker_id"])
+            linkers.append(c["linker_id"])
+    linkers = linkers[:max(1, n_linkers)]
+
+    graft = next((c["mask"] for c in masked if c.get("mask_kind") == "epitope graft"), None)
+    inert = next((c["mask"] for c in masked if c.get("mask_kind") == "inert control"), None)
+
+    cases = []
+    for mask, label in ((graft, "grafted mask"), (inert, "inert mask, should not block")):
+        if mask is None:
+            continue
+        for i, lid in enumerate(linkers):
+            if mask is inert and i > 0:
+                continue        # the inert control only needs the one linker
+            hit = next((c for c in masked
+                        if c["mask"] == mask and c["linker_id"] == lid), None)
+            if hit:
+                cases.append((hit["id"], f"{label}, linker {lid}"))
+    return cases
+
+
+def contact_segments(atoms, vhh_chain: str, toxin_chain: str,
+                     cutoff: float = None, max_gap: int = None,
+                     min_run: int = None) -> list[dict]:
+    """Stretches of antigen that actually touch the nanobody.
+
+    A mask is meant to stand in for the antigen at the paratope, so the
+    sequence to start from is the one the antigen presents there. That is read
+    off the structure directly: every antigen residue with a heavy atom within
+    ``cutoff`` of the nanobody, grouped into runs along the chain.
+
+    Runs separated by a short gap are merged. The gap residues are not in
+    contact, but they are part of the same loop, and a graft that skipped them
+    would be a sequence the antigen does not contain and could not adopt.
+    """
+    from .structure import residues, contact_residues, buried_on_binding
+    from .config import (MASK_CONTACT_CUTOFF_A, MASK_MAX_GAP, MASK_MIN_RUN,
+                         MASK_MIN_BURIED_A2)
+    import numpy as np
+
+    cutoff = MASK_CONTACT_CUTOFF_A if cutoff is None else cutoff
+    max_gap = MASK_MAX_GAP if max_gap is None else max_gap
+    min_run = MASK_MIN_RUN if min_run is None else min_run
+
+    a = atoms[atoms.chain_id == vhh_chain]
+    b = atoms[atoms.chain_id == toxin_chain]
+    res_b = residues(b)
+    _, dist = contact_residues(a, b, cutoff)
+    _, delta = buried_on_binding(a, b)
+
+    touching = sorted(int(res_b.res_id[i]) for i in range(len(res_b))
+                      if dist[i] <= cutoff)
+    if not touching:
+        return []
+
+    groups, current = [], [touching[0]]
+    for rid in touching[1:]:
+        if rid - current[-1] - 1 <= max_gap:
+            current.append(rid)
+        else:
+            groups.append(current)
+            current = [rid]
+    groups.append(current)
+
+    index = {int(res_b.res_id[i]): i for i in range(len(res_b))}
+    segments = []
+    for g in groups:
+        span = list(range(g[0], g[-1] + 1))
+        rows = [index[r] for r in span if r in index]
+        buried = float(sum(delta[i] for i in rows))
+        if len(g) < min_run or buried < MASK_MIN_BURIED_A2:
+            continue
+        segments.append({
+            "start": g[0], "end": g[-1], "length": len(span),
+            "seq": "".join(res_b.code[i] for i in rows),
+            "start_label": res_b.labels[rows[0]],
+            "end_label": res_b.labels[rows[-1]],
+            "n_contact": len(g),
+            # the older footprint-derived segments call this n_epitope, and
+            # mask_candidates reads that name
+            "n_epitope": len(g),
+            "contact_labels": [res_b.labels[index[r]] for r in g if r in index],
+            "buried_A2": round(buried, 1),
+            "per_residue_buried_A2": [round(float(delta[i]), 1) for i in rows],
             "cutoff_A": cutoff})
     return sorted(segments, key=lambda s: -s["buried_A2"])
 
@@ -272,14 +391,33 @@ def mask_family(atoms, toxin_chain: str, segments, seed: int = RANDOM_SEED,
                      + f", {cys} cysteines"),
             "extension": ext, "start": ids[0], "end": ids[-1]}
 
-    # a second contact face, where there is one, for whether both are needed.
-    # The first segment is already the core, so it is not repeated.
+    # A second contact face, where there is one. A hotspot can be a single
+    # residue, which is not a peptide, so it is padded with the antigen either
+    # side until it is long enough to fold into anything.
+    MIN_FACE = 8
     for i, seg in enumerate(segments[1:3], 2):
+        pad = max(0, (MIN_FACE - seg["length"] + 1) // 2)
+        seq, ids = window(seg["start"] - pad, seg["end"] + pad)
+        if len(seq) < 3:
+            continue
         masks[f"epi_face{i}"] = {
-            "seq": seg["seq"], "kind": "epitope graft",
-            "note": f"second contact face, {seg['start_label']}-{seg['end_label']}, "
-                    f"burying {seg['buried_A2']:.0f} A2",
-            "extension": 0, "start": seg["start"], "end": seg["end"]}
+            "seq": seq, "kind": "epitope graft",
+            "note": f"second contact face, {label[ids[0]]}-{label[ids[-1]]}, "
+                    f"around a hotspot burying {seg['buried_A2']:.0f} A2",
+            "extension": pad, "start": ids[0], "end": ids[-1]}
+
+    # The antigen presents both faces at once, so a mask of one of them leaves
+    # the other uncovered. The residues between them are not in contact and
+    # would add twenty residues of bulk, so the two are joined by a short
+    # flexible spacer in the order the antigen has them.
+    if len(segments) > 1 and "epi_face2" in masks:
+        first, second = sorted((masks["epi_core"], masks["epi_face2"]),
+                               key=lambda m: m["start"])
+        masks["epi_both"] = {
+            "seq": f"{first['seq']}GSG{second['seq']}", "kind": "epitope graft",
+            "note": "both contact faces, joined by a spacer in place of the "
+                    "antigen residues between them, which make no contact",
+            "extension": 0}
 
     core = masks["epi_core"]["seq"]
     if "C" in core:
@@ -304,3 +442,82 @@ def mask_family(atoms, toxin_chain: str, segments, seed: int = RANDOM_SEED,
         "note": f"no designed interaction, matched to the face at "
                 f"{len(core)} residues", "extension": 0}
     return masks
+
+
+def hotspot_indices(segment, fraction: float = 0.6) -> list[int]:
+    """Positions inside a face that bury most of its surface.
+
+    Ranked by buried area and taken until ``fraction`` of the face's total is
+    accounted for. These are held fixed when the rest of the face is varied,
+    because they are what makes it fit.
+    """
+    per = segment.get("per_residue_buried_A2") or []
+    if not per:
+        return []
+    total = sum(per) or 1.0
+    order = sorted(range(len(per)), key=lambda i: -per[i])
+    kept, running = [], 0.0
+    for i in order:
+        kept.append(i)
+        running += per[i]
+        if running >= fraction * total:
+            break
+    return sorted(kept)
+
+
+#: Folding is the cost of this pipeline: about fifty seconds a construct on
+#: CPU, so a library is an hour per seventy constructs. The budget is here so
+#: that growing the design space is a decision with a visible price rather
+#: than something discovered when a run does not finish.
+MAX_CONSTRUCTS = 140
+
+
+def matrix_summary(masks, linkers, reference_length,
+                   length_masks=None, length_linkers=None) -> dict:
+    """What the design matrix will cost, before anything is built."""
+    pairs = design_matrix(masks, linkers, reference_length,
+                          length_masks, length_linkers)
+    at_reference = sum(1 for _, l in pairs
+                       if len(l["sequence"]) == reference_length)
+    return {"n_masks": len(masks), "n_linkers": len(linkers),
+            "n_pairs": len(pairs),
+            "n_at_reference_length": at_reference,
+            "n_length_variants": len(pairs) - at_reference,
+            "n_constructs": len(pairs) + 1,
+            "estimated_fold_minutes": round((len(pairs) + 1) * 50 / 60)}
+
+
+def design_matrix(masks, linkers, reference_length,
+                  length_masks=None, length_linkers=None):
+    """Which mask and linker pairs to build, as an explicit design.
+
+    A full cross product of every mask with every linker at every length is
+    mostly waste: the mask axis and the length axis are close to independent,
+    so the interesting cells are the ones where only one thing varies.
+
+    Two blocks are built. Every mask meets every linker at the reference
+    length, which compares masks and linker sequences with length held
+    constant. A chosen few masks then meet a chosen few linkers at the
+    remaining lengths, which varies length with sequence held constant.
+    """
+    by_length = {}
+    for link in linkers:
+        by_length.setdefault(len(link["sequence"]), []).append(link)
+
+    reference = by_length.get(reference_length, [])
+    pairs = [(name, link) for name in masks for link in reference]
+
+    length_masks = set(length_masks or [])
+    length_linkers = set(length_linkers or [])
+    if length_masks and length_linkers:
+        for length, group in sorted(by_length.items()):
+            if length == reference_length:
+                continue
+            for link in group:
+                base = link["id"].split("_n")[0]
+                if base not in length_linkers:
+                    continue
+                for name in masks:
+                    if name in length_masks:
+                        pairs.append((name, link))
+    return pairs
