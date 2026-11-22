@@ -268,6 +268,9 @@ def build_all():
     made = [paratope_footprint(ref, ref["cdrs"]),
             effective_concentration(tether), design_window(tether),
             tradeoff(tether), release_sensitivity(tether)]
+    window = affinity_window(tether)
+    if window is not None:
+        made.append(window)
     fold = None
     try:
         fold = load_json("04_folding.json")
@@ -478,3 +481,70 @@ def cleavability_components(trigger):
     ax.set_ylabel("score"); ax.set_ylim(0, 1.05)
     ax.legend(fontsize=7, ncol=4, loc="upper right", frameon=False)
     return _save(fig, "cleavability_components")
+
+
+def affinity_window(tether):
+    """How the usable mask affinity depends on the nanobody's own affinity.
+
+    One y-axis, not two. The floor and the ceiling are both mask dissociation
+    constants, so they belong on the same scale, and the window is the gap
+    between them rather than a separate series needing its own axis. Drawn
+    this way the quantity that matters is the height of the band, and the
+    point where it closes is where the two lines meet.
+    """
+    scan = tether.get("affinity", {}).get("scan")
+    if not scan:
+        return None
+    plt = _style()
+
+    kd = np.array([r["vhh_toxin_kd_M"] for r in scan]) * 1e9
+    floor = np.array([r["km_min_for_release_M"] for r in scan]) * 1e9
+    ceiling = np.array([r["km_max_for_masking_M"] for r in scan]) * 1e9
+    used = tether["affinity"]["used_M"] * 1e9
+    closes = tether["affinity"]["window_closes_above_M"] * 1e9
+
+    fig, ax = plt.subplots(figsize=(6.2, 3.8))
+
+    open_ = floor < ceiling
+    ax.fill_between(kd, floor, ceiling, where=open_, color=SEQ_WASH,
+                    linewidth=0, zorder=1)
+    ax.plot(kd, floor, color=STR, linewidth=2, zorder=3,
+            label="release floor: the mask must be looser than this")
+    ax.plot(kd, ceiling, color=CHROME, linewidth=2, zorder=3,
+            label="masking ceiling: the mask must be tighter than this")
+
+    # the value the rest of the page uses
+    ax.axvline(used, color=INK, linewidth=1, linestyle=(0, (3, 2)), zorder=2)
+    ax.annotate(f"used here, {used:g} nM", (used, ceiling[0] * 0.55),
+                ha="center", va="top", fontsize=7, color=INK,
+                bbox=dict(boxstyle="round,pad=0.2", facecolor="white",
+                          edgecolor="none", alpha=0.9))
+
+    # where the band pinches shut
+    if closes < kd.max():
+        ax.axvline(closes, color=STR, linewidth=1, linestyle=(0, (1, 2)), zorder=2)
+        ax.annotate(f"window closes\nat {closes:.0f} nM", (closes, ceiling[0] * 0.35),
+                    ha="left", va="top", fontsize=7, color=STR,
+                    xytext=(5, 0), textcoords="offset points")
+
+    # the width of the band, which is the number the table reported
+    finite = [i for i, (lo, hi) in enumerate(zip(floor, ceiling)) if lo < hi]
+    last_open = finite[-1] if finite else 0
+    for i, (r, x, lo, hi) in enumerate(zip(scan, kd, floor, ceiling)):
+        if r["window_decades"] != r["window_decades"] or lo >= hi:
+            continue
+        label_here = (abs(x - used) / used < 0.01 or i == 0 or i == last_open)
+        if label_here:
+            ax.annotate(f"{r['window_decades']:.1f} decades", (x, (lo * hi) ** 0.5),
+                        ha="center", va="center", fontsize=7, color=INK2,
+                        bbox=dict(boxstyle="round,pad=0.2", facecolor="white",
+                                  edgecolor="none", alpha=0.88))
+
+    ax.set_xscale("log"); ax.set_yscale("log")
+    ax.set_xlabel("V$_H$H–antigen K$_D$  (nM)")
+    ax.set_ylabel("usable mask K$_D$  (nM)")
+    ax.legend(fontsize=7, ncol=2, loc="upper center", bbox_to_anchor=(0.5, 1.17),
+              frameon=False, handlelength=1.6, columnspacing=1.6)
+    ax.set_xlim(kd.min(), kd.max())
+    ax.set_ylim(floor.min() * 0.45, ceiling.max() * 3)
+    return _save(fig, "affinity_window")

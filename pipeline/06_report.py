@@ -1104,7 +1104,11 @@ further down.</p>
 <p>Of the four chosen values, the nanobody&rsquo;s own antigen affinity is the one with a
 published measurement behind it, and it is reported as a range rather than per pair. The window
 is therefore given across that range.</p>
-{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
+{chart_wide("affinity_window", "The usable mask affinity against the nanobody\u2019s own antigen "
+   "affinity. Both bounds are mask dissociation constants, so they share one axis and the window "
+   "is the height of the band; the numbers in it are its width in decades.")}
+<details class="tech"><summary>The same values as a table</summary><div class="techbody">
+{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}</div></details>
 <details class="tech"><summary>Model and equations</summary><div class="techbody">
 <div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
 <br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>

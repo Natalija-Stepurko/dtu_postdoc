@@ -73,7 +73,7 @@ TOXIN_CONC_M = 1e-7
 #: measured constant to use here. The range is what was reported, and the
 #: window is reported across it rather than at one invented point.
 VHH_TOXIN_KD_M = 1e-9
-VHH_TOXIN_KD_RANGE_M = (1e-10, 1e-8)
+VHH_TOXIN_KD_RANGE_M = (1e-10, 3e-8)
 VHH_TOXIN_KOFF_MAX_S = 5.5e-4
 
 #: Residue is counted in the interface if it buries more than this on binding.

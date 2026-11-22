@@ -26,10 +26,13 @@ sensitivity = [{"KT_M": kt, "T_M": t, "km_min_for_release_M": T.release_floor(to
 # The nanobody's own affinity is reported as a range, not measured for this
 # pair, so the window is reported across that range rather than at one point.
 lo, hi = VHH_TOXIN_KD_RANGE_M
-kd_grid = list(np.logspace(np.log10(lo), np.log10(hi), 9))
+# the grid carries the value the rest of the page uses and the point where
+# the window shuts, so the figure and the text cannot disagree about either
 best_n = best["N"]["linker_residues"]
-affinity_scan = T.window_across_affinity(spans["N"], best_n, kd_grid)
 kd_closes = T.affinity_at_which_window_closes(spans["N"], best_n)
+kd_grid = sorted(set(list(np.logspace(np.log10(lo), np.log10(hi), 9))
+                     + [VHH_TOXIN_KD_M, kd_closes * 0.995]))
+affinity_scan = T.window_across_affinity(spans["N"], best_n, kd_grid)
 
 save_json("02_tether.json", {
     "model": {"persistence_length_A": PERSISTENCE_LENGTH_A,

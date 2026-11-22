@@ -4,7 +4,7 @@
     "linker_residues": 14,
     "reported_range_M": [
       1e-10,
-      1e-08
+      3e-08
     ],
     "scan": [
       {
@@ -16,59 +16,73 @@
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 1.6264825326219765e-08,
-        "vhh_toxin_kd_M": 1.778279410038923e-10,
-        "window_decades": 4.617371871681153,
+        "km_min_for_release_M": 1.8703832576918716e-08,
+        "vhh_toxin_kd_M": 2.0400469235504896e-10,
+        "window_decades": 4.556690668932802,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 2.9294227265600532e-08,
-        "vhh_toxin_kd_M": 3.162277660168379e-10,
-        "window_decades": 4.361839228772534,
+        "km_min_for_release_M": 3.891367858614182e-08,
+        "vhh_toxin_kd_M": 4.1617914502878177e-10,
+        "window_decades": 4.2385189878291,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 5.3308711499315766e-08,
-        "vhh_toxin_kd_M": 5.623413251903491e-10,
-        "window_decades": 4.101823089763297,
+        "km_min_for_release_M": 8.273415112518244e-08,
+        "vhh_toxin_kd_M": 8.490249844618393e-10,
+        "window_decades": 3.9109364599999363,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 9.890109890109883e-08,
-        "vhh_toxin_kd_M": 9.999999999999999e-10,
-        "window_decades": 3.8334201581619674,
+        "km_min_for_release_M": 9.890109890109887e-08,
+        "vhh_toxin_kd_M": 1e-09,
+        "window_decades": 3.833420158161967,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 1.9054017762204227e-07,
-        "vhh_toxin_kd_M": 1.7782794100389228e-09,
-        "window_decades": 3.548634709548007,
+        "km_min_for_release_M": 1.8467210482853225e-07,
+        "vhh_toxin_kd_M": 1.7320508075688776e-09,
+        "window_decades": 3.5622199761256796,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 3.9782915061496614e-07,
-        "vhh_toxin_kd_M": 3.162277660168379e-09,
-        "window_decades": 3.2289246727426897,
+        "km_min_for_release_M": 4.663011221371474e-07,
+        "vhh_toxin_kd_M": 3.53346492141403e-09,
+        "window_decades": 3.159954814710148,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 1.0247308427281862e-06,
-        "vhh_toxin_kd_M": 5.623413251903491e-09,
-        "window_decades": 2.8180114673208916,
+        "km_min_for_release_M": 1.8470487014193351e-06,
+        "vhh_toxin_kd_M": 7.208434242404265e-09,
+        "window_decades": 2.5621429285790835,
         "window_open": true
       },
       {
         "km_max_for_masking_M": 0.0006739400647034873,
-        "km_min_for_release_M": 8.99999999999996e-06,
-        "vhh_toxin_kd_M": 1e-08,
-        "window_decades": 1.8743787658408753,
+        "km_min_for_release_M": 0.00015345911955815206,
+        "vhh_toxin_kd_M": 1.1039175500297745e-08,
+        "window_decades": 0.6426285730884483,
         "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": Infinity,
+        "vhh_toxin_kd_M": 1.4705544099832827e-08,
+        "window_decades": -Infinity,
+        "window_open": false
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": Infinity,
+        "vhh_toxin_kd_M": 3.000000000000001e-08,
+        "window_decades": -Infinity,
+        "window_open": false
       }
     ],
     "used_M": 1e-09,
