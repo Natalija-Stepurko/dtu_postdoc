@@ -38,26 +38,13 @@ segments, masks = mask_data["segments"], mask_data["masks"]
 linker_data = load_json("02b_linkers.json")
 linkers = linker_data["linkers"]
 reference_length = linker_data.get("reference_length") or L.REFERENCE_LENGTH
-pairs = C.design_matrix(
-    masks, linkers, reference_length,
-    # length is varied on one graft and the two controls, which is enough to
-    # say whether a gain with length belongs to the mask or to crowding
-    length_masks=[n for n in LENGTH_MASKS if n in masks],
-    length_linkers=LENGTH_LINKERS)
-plan = C.matrix_summary(masks, linkers, reference_length,
-                        length_masks=LENGTH_MASKS, length_linkers=LENGTH_LINKERS)
-print(f"  design matrix: {plan['n_masks']} masks x {plan['n_linkers']} linkers "
-      f"-> {plan['n_pairs']} pairs "
-      f"({plan['n_at_reference_length']} at the reference length, "
-      f"{plan['n_length_variants']} length variants)")
-print(f"  {plan['n_constructs']} constructs, about "
-      f"{plan['estimated_fold_minutes']} minutes to fold on CPU")
-if plan["n_constructs"] > C.MAX_CONSTRUCTS:
-    raise SystemExit(
-        f"{plan['n_constructs']} constructs exceeds the budget of "
-        f"{C.MAX_CONSTRUCTS}. Reduce N_KEEP in stage 02b, shorten LENGTH_SERIES, "
-        f"or narrow LENGTH_MASKS/LENGTH_LINKERS here, then rerun. Raising "
-        f"MAX_CONSTRUCTS is also a choice, with the fold time above as its price.")
+# every mask against every linker at every length. The subsetted matrix that
+# stood here traded coverage for folding time, which is the wrong trade when
+# the question is what the library actually contains.
+pairs = [(name, link) for name in masks for link in linkers]
+print(f"  full factorial: {len(masks)} masks x {len(linkers)} linkers "
+      f"= {len(pairs)} pairs, about {(len(pairs) + 1) * 50 / 60:.0f} minutes "
+      f"to fold on CPU")
 
 library = C.build_library(vhh_seq, masks, linkers, pairs)
 

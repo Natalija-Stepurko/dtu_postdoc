@@ -1135,49 +1135,39 @@ out</summary><div class="techbody">
 
 <h3 class="mod"><span>Module 01</span>Constraints on mask affinity and linker geometry</h3>
 <div class="stack">
-<p>Before any sequence is generated, the structure and a polymer model say what a workable mask
-would have to look like. The mask has to occupy the paratope while it is tethered and leave once
-the linker is cut, and those two requirements pull on its affinity from opposite sides.</p>
-<p>The tether raises the mask&rsquo;s effective local concentration near the paratope, so a weak
-interaction is enough to block the antigen in the intact construct. After cleavage that advantage
-is gone and the antigen has to compete the mask off, which a tight mask would not allow. The
-usable range therefore depends on the nanobody&rsquo;s own antigen affinity, on the concentrations
-of antigen and released mask, and on where the linker attaches and how long it is.</p></div>
+<p>The mask must block the nanobody&rsquo;s antigen-binding site while tethered, but dissociate
+following linker cleavage. These requirements define a range of suitable mask affinities.</p>
+<p>Tethering increases the effective local concentration of the mask, allowing even a relatively
+weak interaction to block antigen binding. Following cleavage, this advantage is lost, and the
+mask must bind weakly enough for the antigen to occupy the paratope.</p></div>
 
-{mri("The Gly/Ser linker was treated as a worm-like chain with persistence length "
-     f"{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue, giving "
-     "the effective concentration of the tethered mask at the distance measured above. An upper "
-     "bound on the mask dissociation constant follows from requiring that little of the construct "
-     "is unmasked before cleavage, and a lower bound from requiring that most of it binds antigen "
-     "afterwards.",
-     f"For an N-terminal attachment the effective concentration is {N['ceff']:.0f} mM and the "
-     f"usable range of mask dissociation constants is {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM, "
-     f"widest at a {N['linker_best']}-residue linker. That is a factor of "
-     f"{N['window_fold']:,.0f}, or {N['window']:.2f} decades, where a decade means a factor of "
-     f"ten. A C-terminal attachment gives a narrower range.",
-     "Candidate masks should be designed towards micromolar rather than nanomolar affinity. The "
-     "width of the window is the engineering tolerance: a design can miss its affinity target by "
-     "a factor of thousands and still switch, which is why this is a search problem rather than "
-     "an optimisation. The values depend on the assumptions of the polymer model and on the "
-     "assumed antigen concentration, so they constrain the search rather than specify a "
-     "target.")}
+{mri("I used the experimental nanobody–antigen structure (" + PDB_ID + ") to measure the "
+     "distance between the nanobody termini and the paratope. A worm-like-chain model was then "
+     "used to estimate the effective mask concentration for different linker lengths. Combining "
+     "this estimate with a simple binding competition model allowed me to calculate the range of "
+     "mask affinities that would satisfy both masking and release requirements.",
+     f"For an N-terminal attachment with a {N['linker_best']}-residue linker, the estimated "
+     f"effective mask concentration is {N['ceff']:.0f} mM. Under the assumed conditions the mask "
+     f"dissociation constant can range from {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM while "
+     f"satisfying both requirements. A C-terminal attachment produces a narrower range.",
+     "A mask with micromolar affinity could be sufficient for effective masking while allowing "
+     "release after cleavage, and the breadth of the range provides flexibility when designing "
+     "candidate sequences. These estimates depend on the nanobody–antigen affinity, the "
+     "protein concentrations and the assumptions of the linker model, so they are used to "
+     "constrain candidate generation rather than to define an exact target affinity.")}
 <div class="two">
 {chart("design_window", "Usable mask affinity against linker length.")}
-{chart("tradeoff", "The two requirements as functions of mask affinity.")}
+{chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the upper and "
+       "lower bounds of the range.")}
 </div>
-<p><b>What the window rests on.</b> Two of these quantities are measured on the structure and
-four are chosen. The window moves with all six, so they are given here rather than in a note
-further down.</p>
+<details class="tech"><summary>Sensitivity to model assumptions</summary><div class="techbody">
+<p>The affinity and concentration values are illustrative assumptions rather than measurements
+for this system.</p>
 {R.assumptions_table(ASSUMPTIONS)}
-<p>Of the four chosen values, the nanobody&rsquo;s own antigen affinity is the one with a
-published measurement behind it, and it is reported as a range rather than per pair. The window
-is therefore given across that range.</p>
-{chart_wide("affinity_window", "The usable mask affinity against the nanobody&rsquo;s own "
-   "antigen affinity. Both bounds are mask dissociation constants, so they share one axis and "
-   "the window is the height of the band; the numbers in it are its width in decades.")}
-<details class="tech"><summary>The same values as a table</summary><div class="techbody">
-{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}</div></details>
-<details class="tech"><summary>Model and equations</summary><div class="techbody">
+{chart_wide("affinity_window", "Usable mask affinity against the nanobody&rsquo;s own antigen "
+   "affinity. Both bounds are mask dissociation constants, so they share one axis and the range "
+   "is the height of the band.")}
+{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
 <div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
 <br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
 <br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
