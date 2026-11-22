@@ -105,6 +105,8 @@ table.wrap td:first-child{font-weight:600;color:var(--ink)}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 tr.warnrow td{background:#FDF4EC}
+tr.modhead td{background:#F4F8F8;padding-top:13px;padding-bottom:9px;border-top:1px solid var(--rule)}
+.alts{float:right;font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;max-width:58%;text-align:right}
 .rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
 .pending{color:var(--ink-3);font-style:italic}
 table.exp td{vertical-align:top}
@@ -1303,66 +1305,79 @@ def mri(method: str, result: str, interpretation: str) -> str:
             f'</div>')
 
 
-#: One compact table in place of five. "Run" names the exact model or method
-#: used to produce the numbers on this page; "available" names alternatives the
-#: module accepts without changing the pipeline.
-MODULE_SUMMARY = [
-    ("01", "Estimation of the usable mask affinity",
-     "Define the attachment point, linker length and the range of mask affinity "
-     "that can satisfy both states",
-     "Shrake&ndash;Rupley SASA (biotite 1.6); worm-like-chain tether model; "
-     "three-state competitive binding equilibria",
-     "CALVADOS 2; Martini 3; Rosetta ddG; FoldX 5"),
-    ("02a", "Mask design",
-     "Derive and vary the sequence that occupies the paratope",
-     "Antigen contact face at 3.5&nbsp;&#8491; from PDB {pdb}; window variants at "
-     "0, 2, 4 residues; ProteinMPNN v_48_020",
-     "RFdiffusion; RFantibody; BindCraft; ESM-2 650M; ProGen2; AfDesign"),
-    ("02b", "Cleavable linker design",
-     "Generate linkers cut at the site and resistant elsewhere, and long enough "
-     "for the mask to reach the paratope",
-     "CleaveNet conditional generator; CleaveNet predictor; Kukreja substrate "
-     "library (18,583 10-mers &times; 18 MMPs); flank-length sweep at 16, 20, 24, "
-     "28, 32 residues with the substrate held constant",
-     "MEROPS; PROSPERous; DeepCleave; Procleave; iProt-Sub"),
-    ("03", "Structural feasibility",
-     "Assess preservation of the VHH fold and structural plausibility",
-     "ESMFold facebook/esmfold_v1; C&alpha; core RMSD; SASA hydrophobic fraction; "
-     "SG&ndash;SG disulfide distance",
-     "AlphaFold3; Boltz-2; Chai-1; BioEmu-1; Rosetta; FoldX 5; ThermoMPNN"),
-    ("04", "Mask binding and release",
-     "Assess binding untethered, tethered and after cleavage",
-     "Boltz-2.2.1, mask + nanobody with no tether; Boltz-2.2.1, mask + linker + "
-     "nanobody + antigen, the construct as one molecule via a bond constraint; "
-     "heavy-atom interface contacts",
-     "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA; BioEmu-1"),
-    ("05", "Linker cleavability",
-     "Assess protease responsiveness and structural access",
-     "CleaveNet selectivity across 18 MMPs; position weight matrix and "
-     "nearest-neighbour over the Kukreja library; extension, exposure and "
-     "17&nbsp;&#8491; catalytic-domain clearance",
-     "MEROPS; PROSPERous; DeepCleave; SitePrediction; MD of the cleavage site"),
-    ("06", "Multiobjective ranking",
-     "Select candidates satisfying the three objectives",
-     "Pareto non-domination over feasibility, cleavability and masking",
-     "NSGA-II; hypervolume; hard thresholds; uncertainty- and "
-     "diversity-based selection"),
-]
+#: What each module could use, beyond what was run. Attached to the module and
+#: shown once per group, since it does not vary by experiment.
+MODULE_ALTERNATIVES = {
+    "01": "CALVADOS 2; Martini 3; Rosetta ddG; FoldX 5",
+    "02a": "RFdiffusion; RFantibody; BindCraft; ESM-2 650M; ProGen2; AfDesign",
+    "02b": "MEROPS; PROSPERous; DeepCleave; Procleave; iProt-Sub",
+    "03": "AlphaFold3; Boltz-2; Chai-1; BioEmu-1; Rosetta; FoldX 5; ThermoMPNN",
+    "04": "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA; BioEmu-1",
+    "05": "MEROPS; PROSPERous; DeepCleave; SitePrediction; MD of the cleavage site",
+    "06": "NSGA-II; hypervolume; hard thresholds; uncertainty- and diversity-based selection",
+    "\u2014": "",
+}
+
+MODULE_TITLES = {
+    "01": "Usable mask affinity",
+    "02a": "Mask design",
+    "02b": "Cleavable linker design",
+    "03": "Structural feasibility",
+    "04": "Mask binding and release",
+    "05": "Linker cleavability",
+    "06": "Multiobjective ranking",
+    "\u2014": "Not yet implemented",
+}
 
 
-def module_summary_table() -> str:
-    # the target is a config value, not a constant: a literal id here would go
-    # stale the moment NBSWITCH_TARGET changes
-    rows = "".join(
-        f"<tr><td><b>{num}. {title}</b></td><td>{objective}</td>"
-        f"<td>{run.format(pdb=PDB_ID)}</td><td class=\"dim\">{avail}</td></tr>"
-        for num, title, objective, run, avail in MODULE_SUMMARY)
-    return ('<div class="scroll"><table class="wrap">'
-            '<colgroup><col style="width:20%"><col style="width:22%">'
-            '<col style="width:31%"><col style="width:27%"></colgroup>'
-            '<thead><tr><th>module</th><th>objective</th><th>run here</th>'
-            '<th>also available</th></tr></thead>'
-            f'<tbody>{rows}</tbody></table></div>')
+def pipeline_table(rows) -> str:
+    """One table: every experiment, under the module it belongs to.
+
+    The module summary and the experiment register said the same thing at two
+    levels of detail, so they are one table. Each row is an experiment with the
+    method that produced its number; the module's objective and the
+    alternatives it could use instead are shown once per group.
+    """
+    label_of, colour_of = {}, {}
+    for k, (lab, col) in EXP_STATUS.items():
+        label_of[k], colour_of[k] = lab, col
+
+    groups = []
+    for r in rows:
+        mod = r.get("module", "\u2014")
+        if not groups or groups[-1][0] != mod:
+            groups.append((mod, []))
+        groups[-1][1].append(r)
+
+    body = ""
+    for mod, items in groups:
+        title = MODULE_TITLES.get(mod, "")
+        alts = MODULE_ALTERNATIVES.get(mod, "")
+        body += (f'<tr class="modhead"><td colspan="5">'
+                 f'<b>{mod}. {title}</b>'
+                 + (f'<span class="alts">also available: {alts}</span>' if alts else "")
+                 + "</td></tr>")
+        for r in items:
+            label = label_of.get(r["status"], "proposed")
+            colour = colour_of.get(r["status"], "#6E7880")
+            pending = r["status"] in ("not run", "proposed", "running")
+            result = r.get("result") or ""
+            if pending and not result:
+                result = '<span class="pending">no data yet</span>'
+            tag = (f'<span class="stat-tag" style="color:{colour};'
+                   f'border-color:{colour}">{label}</span>')
+            cls = ' class="ctrl"' if pending else ""
+            body += (f'<tr{cls}><td class="mono">{r["stage"]}</td>'
+                     f'<td><b>{r["name"]}</b></td><td>{r["question"]}</td>'
+                     f'<td class="mono">{r.get("method", "")}</td>'
+                     f'<td>{tag} {result}</td></tr>')
+    return ('<div class="scroll"><table class="tbl exp wrap">'
+            '<colgroup><col style="width:6%"><col style="width:16%">'
+            '<col style="width:22%"><col style="width:26%">'
+            '<col style="width:30%"></colgroup>'
+            '<thead><tr><th>stage</th><th>experiment</th><th>question</th>'
+            '<th>method</th><th>result</th></tr></thead>'
+            f'<tbody>{body}</tbody></table></div>')
 
 
 def implementation_table(rows) -> str:
@@ -1518,36 +1533,6 @@ EXP_STATUS = {
     "proposed": ("proposed", "#6E7880"),
     "failed": ("ran, did not work", "#C06014"),
 }
-
-
-def experiment_register(rows) -> str:
-    """Every experiment the pipeline defines, whether or not it has a result.
-
-    A page that shows only the experiments that produced numbers is a
-    selective report. Listing the rest, with the slot left empty, keeps the
-    shape of the work visible: what was asked, what was answered, and what is
-    still a placeholder.
-    """
-    head = ("<tr><th>stage</th><th>experiment</th><th>question</th>"
-            "<th>status</th><th>result</th></tr>")
-    body = ""
-    for r in rows:
-        label, colour = EXP_STATUS.get(r["status"], EXP_STATUS["proposed"])
-        pending = r["status"] in ("not run", "proposed", "running")
-        result = r.get("result") or ""
-        if pending and not result:
-            result = '<span class="pending">no data yet</span>'
-        tag = (f'<span class="stat-tag" style="color:{colour};border-color:{colour}">'
-               f'{label}</span>')
-        cls = ' class="ctrl"' if pending else ""
-        body += (f'<tr{cls}><td class="mono">{r["stage"]}</td>'
-                 f'<td><b>{r["name"]}</b></td><td>{r["question"]}</td>'
-                 f'<td>{tag}</td><td>{result}</td></tr>')
-    return ('<div class="scroll"><table class="tbl exp wrap">'
-            '<colgroup><col style="width:7%"><col style="width:20%">'
-            '<col style="width:27%"><col style="width:12%">'
-            '<col style="width:34%"></colgroup>'
-            f'<thead>{head}</thead><tbody>{body}</tbody></table></div>')
 
 
 def rebuild_banner(stale, n_total: int) -> str:

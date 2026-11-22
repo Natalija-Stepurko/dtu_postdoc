@@ -777,16 +777,22 @@ except FileNotFoundError:
 COUNTS = _count_rows()
 
 
+#: Which module each stage belongs to, and the method that produced its
+#: number. Keeping it here means the table cannot claim a method a stage does
+#: not use.
+STAGE_MODULE = {'01': ('01', 'Shrake–Rupley SASA, biotite 1.6'), '02': ('01', 'worm-like chain; competitive equilibria'), '02b': ('02b', 'CleaveNet conditional generator + predictor'), '18': ('02b', 'position weight matrix and nearest neighbour over the Kukreja library'), '16': ('02b', 'flank-length sweep, substrate held constant; ESMFold'), '03a': ('02a', 'antigen contact face at 3.5 Å; window variants'), '03': ('02a', 'every mask on every linker'), '04': ('03', 'ESMFold facebook/esmfold_v1'), '07': ('02a', 'ProteinMPNN v_48_020, nanobody and linker fixed'), '12': ('03', 'pLDDT; Cα core RMSD; SASA; SG–SG distance'), '10': ('05', 'extension × exposure × 17 Å clearance'), '17': ('04', 'Boltz-2.2.1, mask + nanobody, no tether'), '09': ('04', 'Boltz-2.2.1, no alignments'), '19': ('04', 'Boltz-2.2.1, whole construct with antigen, alignments on public chains'), '13': ('06', 'Pareto non-domination'), '15': ('03', 'the same measures on independent complexes')}
+
+
 def _exp(stage, name, question, loader):
-    """One register row. A stage with no output is listed, not omitted."""
+    """One row. A stage with no output is listed, not omitted."""
+    module, method = STAGE_MODULE.get(stage, ("\u2014", ""))
+    base = {"stage": stage, "name": name, "question": question,
+            "module": module, "method": method}
     try:
-        result = loader()
-        return {"stage": stage, "name": name, "question": question,
-                "status": "run", "result": result}
+        return {**base, "status": "run", "result": loader()}
     except (FileNotFoundError, KeyError, IndexError, TypeError, ValueError,
             ZeroDivisionError, StopIteration):
-        return {"stage": stage, "name": name, "question": question,
-                "status": "not run", "result": ""}
+        return {**base, "status": "not run", "result": ""}
 
 
 def _f(name):
@@ -898,23 +904,29 @@ def _build_register():
     a(_exp("15", "Independent complexes", "Does this interface look like other nanobody–toxin pairs?",
            lambda: f"{len(_f('15_interface_controls.json')['comparators'])} complexes compared"))
 
-    R_.append({"stage": "—", "name": "Conformational ensemble",
+    R_.append({"stage": "—", "module": "—", "method": "BioEmu-1",
+               "name": "Conformational ensemble",
                "question": "Does one construct sample a masked and an unmasked state?",
                "status": "proposed",
                "result": "BioEmu-1, one construct at a time. Stage 14 superimposes "
                          "different designs on one backbone, which is a comparison "
                          "across designs and not an ensemble for a sequence."})
-    R_.append({"stage": "—", "name": "Venom protease specificity",
+    R_.append({"stage": "—", "module": "—", "method": "no model exists",
+               "name": "Venom protease specificity",
                "question": "Is the linker cut by a snake venom metalloproteinase?",
                "status": "proposed",
                "result": "No substrate dataset exists for SVMPs. The host "
                          "gelatinases stand in and the page says so."})
-    R_.append({"stage": "—", "name": "Wet-lab measurement",
+    R_.append({"stage": "—", "module": "—", "method": "BLI or SPR; cleavage time-course",
+               "name": "Wet-lab measurement",
                "question": "Does any of this hold outside a predictor?",
                "status": "proposed",
                "result": "Expression, affinity by BLI or SPR, and a cleavage "
                          "time-course would test one scoring function each."})
-    return R_
+    # grouped by module, pipeline order preserved inside each group
+    order = {m: i for i, m in enumerate(
+        ("01", "02a", "02b", "03", "04", "05", "06", "\u2014"))}
+    return sorted(R_, key=lambda r: order.get(r.get("module", "\u2014"), 99))
 
 
 REGISTER = _build_register()
@@ -1020,7 +1032,6 @@ its antigen, which is the only step that asks directly whether the antigen can s
 module can use several computational methods, so individual methods can be compared or replaced
 without altering the pipeline.</p></div>
 <div class="chart wide">{R.architecture_schematic()}</div>
-{R.module_summary_table()}
 <div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
 <p>The three scores are not combined into a single value, since a high score on one objective
 would otherwise compensate for failure on another. Pareto optimisation identifies the nondominated
@@ -1038,9 +1049,11 @@ measured.</p>
 {R.generation_table(COUNTS)}
 <p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
 that produced it.</p>
-<p><b>Every experiment the pipeline defines.</b> Those with no result yet are listed with the slot
-left empty rather than omitted, so what has been answered and what has not are both visible.</p>
-{R.experiment_register(REGISTER)}</div>
+<p><b>Every experiment the pipeline defines, under the module it belongs to:</b> the question it
+asks, the method that produced its number, and what came out. Experiments with no result yet are
+listed with the slot empty, so what has been answered and what has not are both visible. Each
+module heading carries the other methods that module could use.</p>
+{R.pipeline_table(REGISTER)}</div>
 
 <h3 class="mod"><span>Reference</span>Structural characterisation of the complex</h3>
 {mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
