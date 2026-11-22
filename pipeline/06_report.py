@@ -1049,9 +1049,21 @@ secreted protein.</td><td>Not selected</td></tr>
 <div class="chart wide">{R.architecture_schematic()}</div>
 <div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
 <p>The three scores are not combined into a single value, since a high score on one objective
-would otherwise compensate for failure on another. Pareto optimisation identifies the nondominated
-candidates, which is a set rather than an ordered list, so a further criterion would be required to
-order candidates within a front.</p>
+would otherwise compensate for failure on another. Selection runs in three steps. Hard constraints
+remove constructs that cannot work at all, before any comparison, so that a failed requirement
+cannot be offset by a strong score elsewhere. Pareto optimisation then identifies the nondominated
+candidates among the rest, with no weights.</p>
+<p>That leaves a set rather than an ordered list, and ordering it is a separate decision that has
+to be stated. The criterion used here is <b>maximin</b>: the scores are normalised to a common
+scale and each candidate is ranked by its lowest objective, so a design that is adequate on all
+three comes before one that is excellent on two and poor on the third. The ordered front is then
+deduplicated by mask, because predictions made for near-identical constructs carry the same
+systematic errors and a shortlist of variants tests one hypothesis repeatedly.</p>
+<div class="eq">R(x) = min<sub>i</sub> [ &#349;<sub>i</sub>(x) &minus; &lambda;&sigma;<sub>i</sub>(x) ]</div>
+<p>The discount term is in the implementation and set to zero. It would down-weight a candidate
+promoted by a single optimistic model, which is a real risk here, but no calibrated uncertainty
+exists for any of the three scores and supplying a number would make the ordering look better
+founded than it is.</p>
 </section>
 
 <section class="sec">
