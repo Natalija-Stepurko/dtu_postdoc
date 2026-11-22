@@ -1,7 +1,7 @@
 {
   "constructs": [
     {
-      "id": "mpnn000_epi_core_cn01",
+      "id": "mpnn00_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -31,37 +31,7 @@
       ]
     },
     {
-      "id": "mpnn001_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVIAPGVVPACGG",
-      "mpnn_score": 1.1782,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVIAPGVVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn002_epi_core_cn01",
+      "id": "mpnn01_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -91,97 +61,7 @@
       ]
     },
     {
-      "id": "mpnn003_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVPAPGVVPACGG",
-      "mpnn_score": 1.1919,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVPAPGVVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn004_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVIAPGVVPACAG",
-      "mpnn_score": 1.1989,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVIAPGVVPACAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn005_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPIIAPGVVPACGG",
-      "mpnn_score": 1.2103,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPIIAPGVVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn006_epi_core_cn01",
+      "id": "mpnn02_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -211,37 +91,7 @@
       ]
     },
     {
-      "id": "mpnn007_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVLAPGLVPPCCG",
-      "mpnn_score": 1.2145,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLAPGLVPPCCGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn008_epi_core_cn01",
+      "id": "mpnn03_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -271,67 +121,7 @@
       ]
     },
     {
-      "id": "mpnn009_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVLAPGVVPDCCG",
-      "mpnn_score": 1.2231,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLAPGVVPDCCGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn010_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVLAPGLVPPCGG",
-      "mpnn_score": 1.2326,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLAPGLVPPCGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn011_epi_core_cn01",
+      "id": "mpnn04_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -361,7 +151,7 @@
       ]
     },
     {
-      "id": "mpnn012_epi_core_cn01",
+      "id": "mpnn05_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -391,157 +181,7 @@
       ]
     },
     {
-      "id": "mpnn013_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVLAPGAVPACAG",
-      "mpnn_score": 1.2614,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLAPGAVPACAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn014_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPLPAPGVVPACCG",
-      "mpnn_score": 1.2621,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPLPAPGVVPACCGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn015_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPVCPPLGPGFPVPCAPPP",
-      "mpnn_score": 1.2649,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPVCPPLGPGFPVPCAPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn016_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPPCPPVGPGVPLPCAPPP",
-      "mpnn_score": 1.2707,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPPCPPVGPGVPLPCAPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn017_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVLAPGLVPPCVG",
-      "mpnn_score": 1.2709,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLAPGLVPPCVGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn018_epi_core_cn01",
+      "id": "mpnn06_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -571,7 +211,7 @@
       ]
     },
     {
-      "id": "mpnn019_epi_core_cn01",
+      "id": "mpnn07_epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -601,7 +241,7 @@
       ]
     },
     {
-      "id": "mpnn020_epi_core_ext2_cn01",
+      "id": "mpnn00_epi_core_ext2_cn01",
       "length": 163,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -619,11 +259,11 @@
         1,
         16
       ],
-      "mask_seq": "APCPVIAPGFVPACGG",
-      "mpnn_score": 1.2837,
+      "mask_seq": "CPCPVIAPGVVPACGG",
+      "mpnn_score": 1.1782,
       "native_score": 1.8776,
       "parent": "epi_core_ext2_cn01",
-      "sequence": "APCPVIAPGFVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPCPVIAPGVVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "temperature": 0.1,
       "vhh_range": [
         41,
@@ -631,7 +271,7 @@
       ]
     },
     {
-      "id": "mpnn021_epi_core_ext2_cn01",
+      "id": "mpnn01_epi_core_ext2_cn01",
       "length": 163,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -649,19 +289,19 @@
         1,
         16
       ],
-      "mask_seq": "CPCPVLAPGISPSCGG",
-      "mpnn_score": 1.2875,
+      "mask_seq": "CPCPVPAPGVVPACGG",
+      "mpnn_score": 1.1919,
       "native_score": 1.8776,
       "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLAPGISPSCGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
+      "sequence": "CPCPVPAPGVVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
       "vhh_range": [
         41,
         163
       ]
     },
     {
-      "id": "mpnn022_epi_core_ext2_cn01",
+      "id": "mpnn02_epi_core_ext2_cn01",
       "length": 163,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -679,11 +319,41 @@
         1,
         16
       ],
-      "mask_seq": "CPCPLLAPGVVPPCCS",
-      "mpnn_score": 1.2877,
+      "mask_seq": "CPCPVIAPGVVPACAG",
+      "mpnn_score": 1.1989,
       "native_score": 1.8776,
       "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPLLAPGVVPPCCSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPCPVIAPGVVPACAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "mpnn03_epi_core_ext2_cn01",
+      "length": 163,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        17,
+        40
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "CPCPIIAPGVVPACGG",
+      "mpnn_score": 1.2103,
+      "native_score": 1.8776,
+      "parent": "epi_core_ext2_cn01",
+      "sequence": "CPCPIIAPGVVPACGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "temperature": 0.2,
       "vhh_range": [
         41,
@@ -691,7 +361,127 @@
       ]
     },
     {
-      "id": "mpnn023_epi_core_cn01",
+      "id": "mpnn04_epi_core_ext2_cn01",
+      "length": 163,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        17,
+        40
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "CPCPVLAPGLVPPCCG",
+      "mpnn_score": 1.2145,
+      "native_score": 1.8776,
+      "parent": "epi_core_ext2_cn01",
+      "sequence": "CPCPVLAPGLVPPCCGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "mpnn05_epi_core_ext2_cn01",
+      "length": 163,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        17,
+        40
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "CPCPVLAPGVVPDCCG",
+      "mpnn_score": 1.2231,
+      "native_score": 1.8776,
+      "parent": "epi_core_ext2_cn01",
+      "sequence": "CPCPVLAPGVVPDCCGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "mpnn06_epi_core_ext2_cn01",
+      "length": 163,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        17,
+        40
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "CPCPVLAPGLVPPCGG",
+      "mpnn_score": 1.2326,
+      "native_score": 1.8776,
+      "parent": "epi_core_ext2_cn01",
+      "sequence": "CPCPVLAPGLVPPCGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "mpnn07_epi_core_ext2_cn01",
+      "length": 163,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        17,
+        40
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        16
+      ],
+      "mask_seq": "CPCPVLAPGAVPACAG",
+      "mpnn_score": 1.2614,
+      "native_score": 1.8776,
+      "parent": "epi_core_ext2_cn01",
+      "sequence": "CPCPVLAPGAVPACAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "mpnn00_polyG_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -703,25 +493,25 @@
       "linker_selectivity": 1.708,
       "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
       "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
+      "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "GPVLRPGVPLVT",
-      "mpnn_score": 1.2988,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPVLRPGVPLVTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
+      "mask_seq": "SGGGGGGGGGSG",
+      "mpnn_score": 1.2383,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "SGGGGGGGGGSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
       "vhh_range": [
         37,
         159
       ]
     },
     {
-      "id": "mpnn024_epi_core_cn01",
+      "id": "mpnn01_polyG_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -733,17 +523,17 @@
       "linker_selectivity": 1.708,
       "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
       "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
+      "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "GPVLRPGRVLPL",
-      "mpnn_score": 1.3078,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPVLRPGRVLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "GGGGGPGGSGGG",
+      "mpnn_score": 1.3397,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "GGGGGPGGSGGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "temperature": 0.1,
       "vhh_range": [
         37,
@@ -751,37 +541,247 @@
       ]
     },
     {
-      "id": "mpnn025_epi_core_ext2_cn01",
-      "length": 163,
+      "id": "mpnn02_polyG_cn01",
+      "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
       "linker_range": [
-        17,
-        40
+        13,
+        36
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
       "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
       "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
+      "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
         1,
-        16
+        12
       ],
-      "mask_seq": "CPCPLLSPGVVPPCCS",
-      "mpnn_score": 1.3118,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPLLSPGVVPPCCSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "SGGGGGPGGGSG",
+      "mpnn_score": 1.3545,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "SGGGGGPGGGSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn03_polyG_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "SGSSGGGGGGSG",
+      "mpnn_score": 1.3896,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "SGSSGGGGGGSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "temperature": 0.3,
       "vhh_range": [
-        41,
-        163
+        37,
+        159
       ]
     },
     {
-      "id": "mpnn026_epi_core_ext4_cn01",
+      "id": "mpnn04_polyG_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "SGGGAPGGGGGG",
+      "mpnn_score": 1.393,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "SGGGAPGGGGGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn05_polyG_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGSSPGGSGGG",
+      "mpnn_score": 1.413,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "GGGSSPGGSGGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn06_polyG_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGPSGPGGGSG",
+      "mpnn_score": 1.4254,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "GGGPSGPGGGSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn07_polyG_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_polyG_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "SGGAAGGGGGSG",
+      "mpnn_score": 1.4543,
+      "native_score": 1.2354,
+      "parent": "polyG_cn01",
+      "sequence": "SGGAAGGGGGSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn00_epi_core_ext4_cn01",
+      "length": 167,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        21,
+        44
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext4_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        20
+      ],
+      "mask_seq": "PPPVCPPLGPGFPVPCAPPP",
+      "mpnn_score": 1.2649,
+      "native_score": 2.4662,
+      "parent": "epi_core_ext4_cn01",
+      "sequence": "PPPVCPPLGPGFPVPCAPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "mpnn01_epi_core_ext4_cn01",
+      "length": 167,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        21,
+        44
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_ext4_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        20
+      ],
+      "mask_seq": "PPPPCPPVGPGVPLPCAPPP",
+      "mpnn_score": 1.2707,
+      "native_score": 2.4662,
+      "parent": "epi_core_ext4_cn01",
+      "sequence": "PPPPCPPVGPGVPLPCAPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "mpnn02_epi_core_ext4_cn01",
       "length": 167,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -811,187 +811,7 @@
       ]
     },
     {
-      "id": "mpnn027_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "PPCPLIAPGVVPLCAG",
-      "mpnn_score": 1.3147,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "PPCPLIAPGVVPLCAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn028_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPILAPGVVPDCSG",
-      "mpnn_score": 1.3183,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPILAPGVVPDCSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn029_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "PPCPILAPGVVPDCSG",
-      "mpnn_score": 1.3199,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "PPCPILAPGVVPDCSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn030_epi_core_noCys_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_noCys_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPPLPL",
-      "mpnn_score": 1.3282,
-      "native_score": 2.559,
-      "parent": "epi_core_noCys_cn01",
-      "sequence": "PPPPPPPPPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn031_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "PPCPIPAPGVVPDCSG",
-      "mpnn_score": 1.3304,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "PPCPIPAPGVVPDCSGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn032_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "APCPVIAPGFVPQCGG",
-      "mpnn_score": 1.331,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "APCPVIAPGFVPQCGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn033_epi_core_ext4_cn01",
+      "id": "mpnn03_epi_core_ext4_cn01",
       "length": 167,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1021,7 +841,7 @@
       ]
     },
     {
-      "id": "mpnn034_epi_core_ext4_cn01",
+      "id": "mpnn04_epi_core_ext4_cn01",
       "length": 167,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1051,127 +871,7 @@
       ]
     },
     {
-      "id": "mpnn035_epi_core_noCys_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_noCys_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPVLPL",
-      "mpnn_score": 1.3386,
-      "native_score": 2.559,
-      "parent": "epi_core_noCys_cn01",
-      "sequence": "PPPPPPPPVLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn036_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPPLPL",
-      "mpnn_score": 1.3467,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn037_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPLLAPGISPLCGG",
-      "mpnn_score": 1.3574,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPLLAPGISPLCGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn038_epi_core_noCys_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_noCys_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPLPLPL",
-      "mpnn_score": 1.3582,
-      "native_score": 2.559,
-      "parent": "epi_core_noCys_cn01",
-      "sequence": "PPPPPPPLPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn039_epi_core_ext4_cn01",
+      "id": "mpnn05_epi_core_ext4_cn01",
       "length": 167,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1201,7 +901,7 @@
       ]
     },
     {
-      "id": "mpnn040_epi_core_ext4_cn01",
+      "id": "mpnn06_epi_core_ext4_cn01",
       "length": 167,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1231,7 +931,7 @@
       ]
     },
     {
-      "id": "mpnn041_epi_core_ext4_cn01",
+      "id": "mpnn07_epi_core_ext4_cn01",
       "length": 167,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1261,7 +961,7 @@
       ]
     },
     {
-      "id": "mpnn042_epi_sub03_cn01",
+      "id": "mpnn00_epi_core_noCys_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1273,107 +973,17 @@
       "linker_selectivity": 1.708,
       "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
       "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
+      "mask": "mpnn_epi_core_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "PPPPPPPPPLTL",
-      "mpnn_score": 1.3727,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPPLTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn043_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPPCPSLGPGVPVPCAPPA",
-      "mpnn_score": 1.3805,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPPCPSLGPGVPVPCAPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn044_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CPCPVLTPGATPACAG",
-      "mpnn_score": 1.383,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "CPCPVLTPGATPACAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn045_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPPLSL",
-      "mpnn_score": 1.3908,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPPLSLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "PPPPPPPPPLPL",
+      "mpnn_score": 1.3282,
+      "native_score": 2.559,
+      "parent": "epi_core_noCys_cn01",
+      "sequence": "PPPPPPPPPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "temperature": 0.1,
       "vhh_range": [
         37,
@@ -1381,7 +991,67 @@
       ]
     },
     {
-      "id": "mpnn046_epi_core_noCys_cn01",
+      "id": "mpnn01_epi_core_noCys_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPVLPL",
+      "mpnn_score": 1.3386,
+      "native_score": 2.559,
+      "parent": "epi_core_noCys_cn01",
+      "sequence": "PPPPPPPPVLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn02_epi_core_noCys_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_noCys_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPLPLPL",
+      "mpnn_score": 1.3582,
+      "native_score": 2.559,
+      "parent": "epi_core_noCys_cn01",
+      "sequence": "PPPPPPPLPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn03_epi_core_noCys_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1411,277 +1081,7 @@
       ]
     },
     {
-      "id": "mpnn047_epi_core_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GPVLRPGVEIET",
-      "mpnn_score": 1.3949,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPVLRPGVEIETGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn048_epi_core_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GPVLRPGYTLDL",
-      "mpnn_score": 1.397,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPVLRPGYTLDLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn049_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPVCPPLGPGFVPPCSAPA",
-      "mpnn_score": 1.4,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPVCPPLGPGFVPPCSAPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn050_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPLLYLVPGAPPPLLRPGYVPPA",
-      "mpnn_score": 1.404,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPLLYLVPGAPPPLLRPGYVPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn051_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPRCPPIGPGVPLPCAPPA",
-      "mpnn_score": 1.4066,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPRCPPIGPGVPLPCAPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn052_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPVCPPVGPGVVPPCSAPA",
-      "mpnn_score": 1.4104,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPVCPPVGPGVVPPCSAPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn053_epi_core_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GPTLRPGIPIST",
-      "mpnn_score": 1.4126,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPTLRPGIPISTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn054_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPLPLPL",
-      "mpnn_score": 1.4156,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPLPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn055_epi_core_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GPVLRPGVPIAN",
-      "mpnn_score": 1.4165,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPVLRPGVPIANGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn056_epi_core_noCys_cn01",
+      "id": "mpnn04_epi_core_noCys_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1711,7 +1111,7 @@
       ]
     },
     {
-      "id": "mpnn057_epi_core_noCys_cn01",
+      "id": "mpnn05_epi_core_noCys_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -1741,307 +1141,7 @@
       ]
     },
     {
-      "id": "mpnn058_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPLLVL",
-      "mpnn_score": 1.4324,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPLLVLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn059_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPVCPPVGPGVTPPCSAPA",
-      "mpnn_score": 1.4355,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPVCPPVGPGVTPPCSAPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn060_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPVLTL",
-      "mpnn_score": 1.4359,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPVLTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn061_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPPLVL",
-      "mpnn_score": 1.4369,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPPLVLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn062_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "GPPVCPPIGPGFPVPCAPPS",
-      "mpnn_score": 1.439,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "GPPVCPPIGPGFPVPCAPPSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn063_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPVCPPVGPGFLPACAAPA",
-      "mpnn_score": 1.4426,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPVCPPVGPGFLPACAAPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn064_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPVILYYVPGSPPPLLRPGYVPPL",
-      "mpnn_score": 1.4429,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPVILYYVPGSPPPLLRPGYVPPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn065_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPLPLSL",
-      "mpnn_score": 1.4431,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPLPLSLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn066_epi_core_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GPVLRPGTAIVT",
-      "mpnn_score": 1.4495,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPVLRPGTAIVTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn067_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPILTLVPGAPPPLLSPGYVPPP",
-      "mpnn_score": 1.4535,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPILTLVPGAPPPLLSPGYVPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn068_epi_core_noCys_cn01",
+      "id": "mpnn06_epi_core_noCys_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -2071,277 +1171,7 @@
       ]
     },
     {
-      "id": "mpnn069_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPILTLVPGEPLPLLRPGYVPPA",
-      "mpnn_score": 1.4608,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPILTLVPGEPLPLLRPGYVPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn070_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPTLTL",
-      "mpnn_score": 1.4618,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPTLTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn071_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPPCPTLGPGFPPLCSPPP",
-      "mpnn_score": 1.4703,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPPCPTLGPGFPPLCSPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn072_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "APPLLYLTPGAPPPLLAPGFVPAP",
-      "mpnn_score": 1.4726,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "APPLLYLTPGAPPPLLAPGFVPAPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn073_epi_core_ext4_cn01",
-      "length": 167,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext4_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "PPPVCPPVGPGSLPACAAPA",
-      "mpnn_score": 1.4726,
-      "native_score": 2.4662,
-      "parent": "epi_core_ext4_cn01",
-      "sequence": "PPPVCPPVGPGSLPACAAPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "mpnn074_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "APPLLYYTPGSPPPLLSPGYVPAP",
-      "mpnn_score": 1.4738,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "APPLLYYTPGSPPPLLSPGYVPAPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn075_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPILYFTPGSPPPLFRPGYVPDA",
-      "mpnn_score": 1.479,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPILYFTPGSPPPLFRPGYVPDAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn076_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "APPPPPPPVLTL",
-      "mpnn_score": 1.4809,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "APPPPPPPVLTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn077_epi_sub03_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_sub03_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPPPPPPPALVL",
-      "mpnn_score": 1.4824,
-      "native_score": 2.9378,
-      "parent": "epi_sub03_cn01",
-      "sequence": "PPPPPPPPALVLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn078_epi_core_noCys_cn01",
+      "id": "mpnn07_epi_core_noCys_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -2371,7 +1201,457 @@
       ]
     },
     {
-      "id": "mpnn079_epi_both_cn01",
+      "id": "mpnn00_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPPLPL",
+      "mpnn_score": 1.3467,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPPPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn01_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPPLTL",
+      "mpnn_score": 1.3727,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPPPLTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn02_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPPLSL",
+      "mpnn_score": 1.3908,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPPPLSLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn03_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPLPLPL",
+      "mpnn_score": 1.4156,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPLPLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn04_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPLLVL",
+      "mpnn_score": 1.4324,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPPLLVLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn05_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPVLTL",
+      "mpnn_score": 1.4359,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPPVLTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn06_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPPLVL",
+      "mpnn_score": 1.4369,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPPPLVLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn07_epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub03_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPLPLSL",
+      "mpnn_score": 1.4431,
+      "native_score": 2.9378,
+      "parent": "epi_sub03_cn01",
+      "sequence": "PPPPPPPLPLSLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn00_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PPPLLYLVPGAPPPLLRPGYVPPA",
+      "mpnn_score": 1.404,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "PPPLLYLVPGAPPPLLRPGYVPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn01_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PPVILYYVPGSPPPLLRPGYVPPL",
+      "mpnn_score": 1.4429,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "PPVILYYVPGSPPPLLRPGYVPPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn02_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PPPILTLVPGAPPPLLSPGYVPPP",
+      "mpnn_score": 1.4535,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "PPPILTLVPGAPPPLLSPGYVPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn03_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PPPILTLVPGEPLPLLRPGYVPPA",
+      "mpnn_score": 1.4608,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "PPPILTLVPGEPLPLLRPGYVPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn04_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "APPLLYLTPGAPPPLLAPGFVPAP",
+      "mpnn_score": 1.4726,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "APPLLYLTPGAPPPLLAPGFVPAPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn05_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "APPLLYYTPGSPPPLLSPGYVPAP",
+      "mpnn_score": 1.4738,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "APPLLYYTPGSPPPLLSPGYVPAPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn06_epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_both_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PPPILYFTPGSPPPLFRPGYVPDA",
+      "mpnn_score": 1.479,
+      "native_score": 2.61,
+      "parent": "epi_both_cn01",
+      "sequence": "PPPILYFTPGSPPPLFRPGYVPDAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "mpnn07_epi_both_cn01",
       "length": 171,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -2401,67 +1681,7 @@
       ]
     },
     {
-      "id": "mpnn080_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPILYLVPGSPPPLLSPGYVPPV",
-      "mpnn_score": 1.4873,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPILYLVPGSPPPLLSPGYVPPVGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn081_epi_core_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GPTLRPGIAIST",
-      "mpnn_score": 1.4887,
-      "native_score": 2.0905,
-      "parent": "epi_core_cn01",
-      "sequence": "GPTLRPGIAISTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn082_epi_core_scram_cn01",
+      "id": "mpnn00_epi_core_scram_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -2491,187 +1711,7 @@
       ]
     },
     {
-      "id": "mpnn083_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "APPLLYLTPGAPPPLLAPGFEPPP",
-      "mpnn_score": 1.5015,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "APPLLYLTPGAPPPLLAPGFEPPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn084_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPVLVLTPGAPPPLLRPGLVPPA",
-      "mpnn_score": 1.5073,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPVLVLTPGAPPPLLRPGLVPPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.1,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn085_epi_core_ext2_cn01",
-      "length": 163,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_ext2_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "PPCPLIAEGIVPLCAG",
-      "mpnn_score": 1.5114,
-      "native_score": 1.8776,
-      "parent": "epi_core_ext2_cn01",
-      "sequence": "PPCPLIAEGIVPLCAGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "mpnn086_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "PPPLLYLSPGSPLPLLRPGYPPPV",
-      "mpnn_score": 1.5168,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "PPPLLYLSPGSPLPLLRPGYPPPVGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn087_epi_both_cn01",
-      "length": 171,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        25,
-        48
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_both_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        24
-      ],
-      "mask_seq": "APPVLYLVPGSPPPLLSPGYAPAP",
-      "mpnn_score": 1.517,
-      "native_score": 2.61,
-      "parent": "epi_both_cn01",
-      "sequence": "APPVLYLVPGSPPPLLSPGYAPAPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.2,
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "mpnn088_epi_core_noCys_cn01",
-      "length": 159,
-      "linker_id": "cn01",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
-      "linker_substrate": "MTPYGYTGTG",
-      "mask": "mpnn_epi_core_noCys_cn01",
-      "mask_kind": "ProteinMPNN redesign",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "PPQPPPPPALPL",
-      "mpnn_score": 1.5207,
-      "native_score": 2.559,
-      "parent": "epi_core_noCys_cn01",
-      "sequence": "PPQPPPPPALPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "temperature": 0.3,
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "mpnn089_epi_core_scram_cn01",
+      "id": "mpnn01_epi_core_scram_cn01",
       "length": 159,
       "linker_id": "cn01",
       "linker_kind": "generated",
@@ -2699,11 +1739,1151 @@
         37,
         159
       ]
+    },
+    {
+      "id": "mpnn02_epi_core_scram_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPLPPGLPS",
+      "mpnn_score": 1.548,
+      "native_score": 2.8099,
+      "parent": "epi_core_scram_cn01",
+      "sequence": "PPPLPLPPGLPSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn03_epi_core_scram_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPFPAPPGLPS",
+      "mpnn_score": 1.5505,
+      "native_score": 2.8099,
+      "parent": "epi_core_scram_cn01",
+      "sequence": "PPPFPAPPGLPSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn04_epi_core_scram_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPLPPGLPG",
+      "mpnn_score": 1.5659,
+      "native_score": 2.8099,
+      "parent": "epi_core_scram_cn01",
+      "sequence": "PPPPPLPPGLPGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn05_epi_core_scram_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPAPPGLPG",
+      "mpnn_score": 1.5734,
+      "native_score": 2.8099,
+      "parent": "epi_core_scram_cn01",
+      "sequence": "PPPLPAPPGLPGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn06_epi_core_scram_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPAPPGLPL",
+      "mpnn_score": 1.5979,
+      "native_score": 2.8099,
+      "parent": "epi_core_scram_cn01",
+      "sequence": "PPPLPAPPGLPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn07_epi_core_scram_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_scram_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLLLPPGLPT",
+      "mpnn_score": 1.5989,
+      "native_score": 2.8099,
+      "parent": "epi_core_scram_cn01",
+      "sequence": "PPPLLLPPGLPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn00_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPLPLP",
+      "mpnn_score": 1.5286,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPPPPPPLPLPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn01_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPAPVP",
+      "mpnn_score": 1.5776,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPPPPPPAPVPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn02_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPPPPLPVP",
+      "mpnn_score": 1.6177,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPLPPPPLPVPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn03_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPLPLS",
+      "mpnn_score": 1.6456,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPPPPPPLPLSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn04_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPPPPLPLP",
+      "mpnn_score": 1.654,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPLPPPPLPLPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn05_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPAPAT",
+      "mpnn_score": 1.6555,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPPPPPPAPATGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn06_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "LPPPPPLPLPLP",
+      "mpnn_score": 1.6685,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "LPPPPPLPLPLPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn07_epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub01_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPLPVG",
+      "mpnn_score": 1.6737,
+      "native_score": 3.0134,
+      "parent": "epi_sub01_cn01",
+      "sequence": "PPPPPPPPLPVGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn00_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPLPP",
+      "mpnn_score": 1.5502,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPLPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn01_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPLVP",
+      "mpnn_score": 1.5932,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPLVPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn02_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPVPP",
+      "mpnn_score": 1.6326,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPVPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn03_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPPVP",
+      "mpnn_score": 1.6379,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPPVPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn04_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPIPP",
+      "mpnn_score": 1.6738,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPIPPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn05_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPVVP",
+      "mpnn_score": 1.6747,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPVVPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn06_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPLAP",
+      "mpnn_score": 1.676,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPLAPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn07_epi_core_half_cn01",
+      "length": 153,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        7,
+        30
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_core_half_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        6
+      ],
+      "mask_seq": "PPPAVP",
+      "mpnn_score": 1.703,
+      "native_score": 2.7155,
+      "parent": "epi_core_half_cn01",
+      "sequence": "PPPAVPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        31,
+        153
+      ]
+    },
+    {
+      "id": "mpnn00_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPPVPL",
+      "mpnn_score": 1.6108,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "PPPPPPPPPVPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn01_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPPPPPPPYPL",
+      "mpnn_score": 1.6639,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "PPPPPPPPPYPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn02_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPPPPLLLR",
+      "mpnn_score": 1.6705,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "PPPLPPPPLLLRGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn03_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPPPPLVSL",
+      "mpnn_score": 1.697,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "PPPLPPPPLVSLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn04_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPPPPLVTL",
+      "mpnn_score": 1.7208,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "PPPLPPPPLVTLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn05_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "APPLPPPPLLVL",
+      "mpnn_score": 1.7209,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "APPLPPPPLLVLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn06_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "APPLPPPPLVVA",
+      "mpnn_score": 1.7245,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "APPLPPPPLVVAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn07_epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_sub02_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "PPPLPPPVPIPL",
+      "mpnn_score": 1.7536,
+      "native_score": 2.8553,
+      "parent": "epi_sub02_cn01",
+      "sequence": "PPPLPPPVPIPLGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "mpnn00_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "APPAAAAPT",
+      "mpnn_score": 1.6696,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "APPAAAAPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn01_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "APPATAAPT",
+      "mpnn_score": 1.7291,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "APPATAAPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn02_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "APPALALPT",
+      "mpnn_score": 1.7612,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "APPALALPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.2,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn03_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPAAAAPT",
+      "mpnn_score": 1.7786,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "AAPAAAAPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn04_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "APPAAAAPA",
+      "mpnn_score": 1.7799,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "APPAAAAPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn05_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "AAPALALPT",
+      "mpnn_score": 1.8212,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "AAPALALPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.3,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn06_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "GAPAAAAPT",
+      "mpnn_score": 1.8378,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "GAPAAAAPTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "mpnn07_epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "mpnn_epi_face2_cn01",
+      "mask_kind": "ProteinMPNN redesign",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "APPAPASPA",
+      "mpnn_score": 1.8656,
+      "native_score": 3.3161,
+      "parent": "epi_face2_cn01",
+      "sequence": "APPAPASPAGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "temperature": 0.1,
+      "vhh_range": [
+        34,
+        156
+      ]
     }
   ],
   "method": "ProteinMPNN, nanobody and linker fixed",
-  "n_designs": 264,
-  "n_unique": 90,
+  "n_designs": 19,
+  "n_unique": 96,
   "native_scores": {
     "epi_both_cn01": 2.61,
     "epi_core_cn01": 2.0905,
@@ -2715,7 +2895,8 @@
     "epi_face2_cn01": 3.3161,
     "epi_sub01_cn01": 3.0134,
     "epi_sub02_cn01": 2.8553,
-    "epi_sub03_cn01": 2.9378
+    "epi_sub03_cn01": 2.9378,
+    "polyG_cn01": 1.2354
   },
   "parents": [
     "epi_both_cn01",
@@ -2728,7 +2909,8 @@
     "epi_face2_cn01",
     "epi_sub01_cn01",
     "epi_sub02_cn01",
-    "epi_sub03_cn01"
+    "epi_sub03_cn01",
+    "polyG_cn01"
   ],
   "per_temperature": 8,
   "temperatures": [
