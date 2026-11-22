@@ -1,6 +1,168 @@
 {
   "constructs": [
     {
+      "id": "epi_both_cn01",
+      "length": 171,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_both",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PGETNCYKKGSGCPTVKPGIKLNC",
+      "sequence": "PGETNCYKKGSGCPTVKPGIKLNCGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "epi_both_cn02",
+      "length": 171,
+      "linker_id": "cn02",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
+      "mask": "epi_both",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PGETNCYKKGSGCPTVKPGIKLNC",
+      "sequence": "PGETNCYKKGSGCPTVKPGIKLNCGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "epi_both_cn03",
+      "length": 171,
+      "linker_id": "cn03",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
+      "mask": "epi_both",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PGETNCYKKGSGCPTVKPGIKLNC",
+      "sequence": "PGETNCYKKGSGCPTVKPGIKLNCGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "epi_both_cn04",
+      "length": 171,
+      "linker_id": "cn04",
+      "linker_kind": "generated",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
+      "mask": "epi_both",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PGETNCYKKGSGCPTVKPGIKLNC",
+      "sequence": "PGETNCYKKGSGCPTVKPGIKLNCGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "epi_both_ctrl_gs",
+      "length": 171,
+      "linker_id": "ctrl_gs",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_both",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PGETNCYKKGSGCPTVKPGIKLNC",
+      "sequence": "PGETNCYKKGSGCPTVKPGIKLNCGGSGGSGGGGGSGGGGSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
+      "id": "epi_both_ctrl_scram",
+      "length": 171,
+      "linker_id": "ctrl_scram",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        25,
+        48
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_both",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        24
+      ],
+      "mask_seq": "PGETNCYKKGSGCPTVKPGIKLNC",
+      "sequence": "PGETNCYKKGSGCPTVKPGIKLNCGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        49,
+        171
+      ]
+    },
+    {
       "id": "epi_core_cn01",
       "length": 159,
       "linker_id": "cn01",
@@ -11,16 +173,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "epi_core",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGIKLNCGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -36,17 +199,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "epi_core",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGIKLNCGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -62,17 +226,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "epi_core",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGIKLNCGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -88,121 +253,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "epi_core",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_cn05",
-      "length": 159,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_cn06",
-      "length": 159,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_cn07",
-      "length": 159,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_cn08",
-      "length": 159,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGIKLNCGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -218,11 +280,12 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "epi_core",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
@@ -245,175 +308,20 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "epi_core",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGIKLNCGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
-      ]
-    },
-    {
-      "id": "epi_core_cn01_n16",
-      "length": 151,
-      "linker_id": "cn01_n16",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        28
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        29,
-        151
-      ]
-    },
-    {
-      "id": "epi_core_cn01_n32",
-      "length": 167,
-      "linker_id": "cn01_n32",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        44
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_ctrl_gs_n16",
-      "length": 151,
-      "linker_id": "ctrl_gs_n16",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        13,
-        28
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGGGSGGGGSGGS",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        29,
-        151
-      ]
-    },
-    {
-      "id": "epi_core_ctrl_gs_n32",
-      "length": 167,
-      "linker_id": "ctrl_gs_n32",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        13,
-        44
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_ctrl_scram_n16",
-      "length": 151,
-      "linker_id": "ctrl_scram_n16",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        13,
-        28
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        29,
-        151
-      ]
-    },
-    {
-      "id": "epi_core_ctrl_scram_n32",
-      "length": 167,
-      "linker_id": "ctrl_scram_n32",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        13,
-        44
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "CPTVKPGIKLNC",
-      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
       ]
     },
     {
@@ -427,16 +335,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "epi_core_ext2",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         16
       ],
       "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         41,
         163
@@ -452,17 +361,18 @@
         40
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "epi_core_ext2",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         16
       ],
       "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         41,
         163
@@ -478,17 +388,18 @@
         40
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "epi_core_ext2",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         16
       ],
       "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         41,
         163
@@ -504,121 +415,18 @@
         40
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "epi_core_ext2",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         16
       ],
       "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "epi_core_ext2_cn05",
-      "length": 163,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "epi_core_ext2_cn06",
-      "length": 163,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "epi_core_ext2_cn07",
-      "length": 163,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        41,
-        163
-      ]
-    },
-    {
-      "id": "epi_core_ext2_cn08",
-      "length": 163,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        40
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         41,
         163
@@ -634,11 +442,12 @@
         40
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "epi_core_ext2",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         16
@@ -661,175 +470,20 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "epi_core_ext2",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         16
       ],
       "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         41,
         163
-      ]
-    },
-    {
-      "id": "epi_core_ext2_cn01_n16",
-      "length": 155,
-      "linker_id": "cn01_n16",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        32
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        33,
-        155
-      ]
-    },
-    {
-      "id": "epi_core_ext2_cn01_n32",
-      "length": 171,
-      "linker_id": "cn01_n32",
-      "linker_kind": "generated",
-      "linker_range": [
-        17,
-        48
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "epi_core_ext2_ctrl_gs_n16",
-      "length": 155,
-      "linker_id": "ctrl_gs_n16",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        17,
-        32
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGGGSGGGGSGGS",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        33,
-        155
-      ]
-    },
-    {
-      "id": "epi_core_ext2_ctrl_gs_n32",
-      "length": 171,
-      "linker_id": "ctrl_gs_n32",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        17,
-        48
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        49,
-        171
-      ]
-    },
-    {
-      "id": "epi_core_ext2_ctrl_scram_n16",
-      "length": 155,
-      "linker_id": "ctrl_scram_n16",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        17,
-        32
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        33,
-        155
-      ]
-    },
-    {
-      "id": "epi_core_ext2_ctrl_scram_n32",
-      "length": 171,
-      "linker_id": "ctrl_scram_n32",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        17,
-        48
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_ext2",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        16
-      ],
-      "mask_seq": "CGCPTVKPGIKLNCCT",
-      "sequence": "CGCPTVKPGIKLNCCTGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        49,
-        171
       ]
     },
     {
@@ -843,16 +497,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "epi_core_ext4",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         20
       ],
       "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         45,
         167
@@ -868,17 +523,18 @@
         44
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "epi_core_ext4",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         20
       ],
       "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         45,
         167
@@ -894,17 +550,18 @@
         44
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "epi_core_ext4",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         20
       ],
       "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         45,
         167
@@ -920,121 +577,18 @@
         44
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "epi_core_ext4",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         20
       ],
       "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_ext4_cn05",
-      "length": 167,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_ext4_cn06",
-      "length": 167,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_ext4_cn07",
-      "length": 167,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_ext4_cn08",
-      "length": 167,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        44
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         45,
         167
@@ -1050,11 +604,12 @@
         44
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "epi_core_ext4",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         20
@@ -1077,175 +632,20 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "epi_core_ext4",
       "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         20
       ],
       "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         45,
         167
-      ]
-    },
-    {
-      "id": "epi_core_ext4_cn01_n16",
-      "length": 159,
-      "linker_id": "cn01_n16",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        36
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_ext4_cn01_n32",
-      "length": 175,
-      "linker_id": "cn01_n32",
-      "linker_kind": "generated",
-      "linker_range": [
-        21,
-        52
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        53,
-        175
-      ]
-    },
-    {
-      "id": "epi_core_ext4_ctrl_gs_n16",
-      "length": 159,
-      "linker_id": "ctrl_gs_n16",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        21,
-        36
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGGGSGGGGSGGS",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_ext4_ctrl_gs_n32",
-      "length": 175,
-      "linker_id": "ctrl_gs_n32",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        21,
-        52
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        53,
-        175
-      ]
-    },
-    {
-      "id": "epi_core_ext4_ctrl_scram_n16",
-      "length": 159,
-      "linker_id": "ctrl_scram_n16",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        21,
-        36
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_ext4_ctrl_scram_n32",
-      "length": 175,
-      "linker_id": "ctrl_scram_n32",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        21,
-        52
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_ext4",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        20
-      ],
-      "mask_seq": "RGCGCPTVKPGIKLNCCTTD",
-      "sequence": "RGCGCPTVKPGIKLNCCTTDGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        53,
-        175
       ]
     },
     {
@@ -1259,16 +659,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "epi_core_half",
       "mask_kind": "truncated control",
+      "mask_method": "control",
       "mask_range": [
         1,
         6
       ],
       "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         31,
         153
@@ -1284,17 +685,18 @@
         30
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "epi_core_half",
       "mask_kind": "truncated control",
+      "mask_method": "control",
       "mask_range": [
         1,
         6
       ],
       "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         31,
         153
@@ -1310,17 +712,18 @@
         30
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "epi_core_half",
       "mask_kind": "truncated control",
+      "mask_method": "control",
       "mask_range": [
         1,
         6
       ],
       "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         31,
         153
@@ -1336,121 +739,18 @@
         30
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "epi_core_half",
       "mask_kind": "truncated control",
+      "mask_method": "control",
       "mask_range": [
         1,
         6
       ],
       "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        31,
-        153
-      ]
-    },
-    {
-      "id": "epi_core_half_cn05",
-      "length": 153,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        7,
-        30
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        31,
-        153
-      ]
-    },
-    {
-      "id": "epi_core_half_cn06",
-      "length": 153,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        7,
-        30
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        31,
-        153
-      ]
-    },
-    {
-      "id": "epi_core_half_cn07",
-      "length": 153,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        7,
-        30
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        31,
-        153
-      ]
-    },
-    {
-      "id": "epi_core_half_cn08",
-      "length": 153,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        7,
-        30
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         31,
         153
@@ -1466,11 +766,12 @@
         30
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "epi_core_half",
       "mask_kind": "truncated control",
+      "mask_method": "control",
       "mask_range": [
         1,
         6
@@ -1493,175 +794,20 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "epi_core_half",
       "mask_kind": "truncated control",
+      "mask_method": "control",
       "mask_range": [
         1,
         6
       ],
       "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "CPTVKPGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         31,
         153
-      ]
-    },
-    {
-      "id": "epi_core_half_cn01_n16",
-      "length": 145,
-      "linker_id": "cn01_n16",
-      "linker_kind": "generated",
-      "linker_range": [
-        7,
-        22
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        23,
-        145
-      ]
-    },
-    {
-      "id": "epi_core_half_cn01_n32",
-      "length": 161,
-      "linker_id": "cn01_n32",
-      "linker_kind": "generated",
-      "linker_range": [
-        7,
-        38
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        39,
-        161
-      ]
-    },
-    {
-      "id": "epi_core_half_ctrl_gs_n16",
-      "length": 145,
-      "linker_id": "ctrl_gs_n16",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        7,
-        22
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGGGSGGGGSGGS",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        23,
-        145
-      ]
-    },
-    {
-      "id": "epi_core_half_ctrl_gs_n32",
-      "length": 161,
-      "linker_id": "ctrl_gs_n32",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        7,
-        38
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        39,
-        161
-      ]
-    },
-    {
-      "id": "epi_core_half_ctrl_scram_n16",
-      "length": 145,
-      "linker_id": "ctrl_scram_n16",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        7,
-        22
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        23,
-        145
-      ]
-    },
-    {
-      "id": "epi_core_half_ctrl_scram_n32",
-      "length": 161,
-      "linker_id": "ctrl_scram_n32",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        7,
-        38
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_half",
-      "mask_kind": "truncated control",
-      "mask_range": [
-        1,
-        6
-      ],
-      "mask_seq": "CPTVKP",
-      "sequence": "CPTVKPGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        39,
-        161
       ]
     },
     {
@@ -1675,16 +821,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "epi_core_noCys",
       "mask_kind": "epitope graft",
+      "mask_method": "staple variant",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "SPTVKPGIKLNSGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -1700,17 +847,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "epi_core_noCys",
       "mask_kind": "epitope graft",
+      "mask_method": "staple variant",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "SPTVKPGIKLNSGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -1726,17 +874,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "epi_core_noCys",
       "mask_kind": "epitope graft",
+      "mask_method": "staple variant",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "SPTVKPGIKLNSGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -1752,121 +901,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "epi_core_noCys",
       "mask_kind": "epitope graft",
+      "mask_method": "staple variant",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_noCys_cn05",
-      "length": 159,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_noCys_cn06",
-      "length": 159,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_noCys_cn07",
-      "length": 159,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_noCys_cn08",
-      "length": 159,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "SPTVKPGIKLNSGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -1882,11 +928,12 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "epi_core_noCys",
       "mask_kind": "epitope graft",
+      "mask_method": "staple variant",
       "mask_range": [
         1,
         12
@@ -1909,175 +956,20 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "epi_core_noCys",
       "mask_kind": "epitope graft",
+      "mask_method": "staple variant",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "SPTVKPGIKLNSGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
-      ]
-    },
-    {
-      "id": "epi_core_noCys_cn01_n16",
-      "length": 151,
-      "linker_id": "cn01_n16",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        28
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        29,
-        151
-      ]
-    },
-    {
-      "id": "epi_core_noCys_cn01_n32",
-      "length": 167,
-      "linker_id": "cn01_n32",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        44
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_noCys_ctrl_gs_n16",
-      "length": 151,
-      "linker_id": "ctrl_gs_n16",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        13,
-        28
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGGGSGGGGSGGS",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        29,
-        151
-      ]
-    },
-    {
-      "id": "epi_core_noCys_ctrl_gs_n32",
-      "length": 167,
-      "linker_id": "ctrl_gs_n32",
-      "linker_kind": "protease-resistant control",
-      "linker_range": [
-        13,
-        44
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
-      ]
-    },
-    {
-      "id": "epi_core_noCys_ctrl_scram_n16",
-      "length": 151,
-      "linker_id": "ctrl_scram_n16",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        13,
-        28
-      ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        29,
-        151
-      ]
-    },
-    {
-      "id": "epi_core_noCys_ctrl_scram_n32",
-      "length": 167,
-      "linker_id": "ctrl_scram_n32",
-      "linker_kind": "scrambled control",
-      "linker_range": [
-        13,
-        44
-      ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_noCys",
-      "mask_kind": "epitope graft",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "SPTVKPGIKLNS",
-      "sequence": "SPTVKPGIKLNSGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        45,
-        167
       ]
     },
     {
@@ -2091,16 +983,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "epi_core_scram",
       "mask_kind": "scrambled control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "IPTKLGCVKCPNGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2116,17 +1009,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "epi_core_scram",
       "mask_kind": "scrambled control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "IPTKLGCVKCPNGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2142,17 +1036,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "epi_core_scram",
       "mask_kind": "scrambled control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "IPTKLGCVKCPNGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2168,121 +1063,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "epi_core_scram",
       "mask_kind": "scrambled control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_scram_cn05",
-      "length": 159,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_scram_cn06",
-      "length": 159,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_scram_cn07",
-      "length": 159,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "epi_core_scram_cn08",
-      "length": 159,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "IPTKLGCVKCPNGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2298,11 +1090,12 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "epi_core_scram",
       "mask_kind": "scrambled control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
@@ -2325,175 +1118,668 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "epi_core_scram",
       "mask_kind": "scrambled control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "IPTKLGCVKCPNGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
       ]
     },
     {
-      "id": "epi_core_scram_cn01_n16",
-      "length": 151,
-      "linker_id": "cn01_n16",
+      "id": "epi_face2_cn01",
+      "length": 156,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_face2",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "PGETNCYKK",
+      "sequence": "PGETNCYKKGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "epi_face2_cn02",
+      "length": 156,
+      "linker_id": "cn02",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
+      "mask": "epi_face2",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "PGETNCYKK",
+      "sequence": "PGETNCYKKGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "epi_face2_cn03",
+      "length": 156,
+      "linker_id": "cn03",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
+      "mask": "epi_face2",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "PGETNCYKK",
+      "sequence": "PGETNCYKKGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "epi_face2_cn04",
+      "length": 156,
+      "linker_id": "cn04",
+      "linker_kind": "generated",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
+      "mask": "epi_face2",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "PGETNCYKK",
+      "sequence": "PGETNCYKKGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "epi_face2_ctrl_gs",
+      "length": 156,
+      "linker_id": "ctrl_gs",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_face2",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "PGETNCYKK",
+      "sequence": "PGETNCYKKGGSGGSGGGGGSGGGGSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "epi_face2_ctrl_scram",
+      "length": 156,
+      "linker_id": "ctrl_scram",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        10,
+        33
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_face2",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        9
+      ],
+      "mask_seq": "PGETNCYKK",
+      "sequence": "PGETNCYKKGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        34,
+        156
+      ]
+    },
+    {
+      "id": "epi_sub01_cn01",
+      "length": 159,
+      "linker_id": "cn01",
       "linker_kind": "generated",
       "linker_range": [
         13,
-        28
+        36
       ],
-      "linker_residues": 16,
+      "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_sub01",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CATIQPALRLNC",
+      "sequence": "CATIQPALRLNCGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        29,
-        151
+        37,
+        159
       ]
     },
     {
-      "id": "epi_core_scram_cn01_n32",
-      "length": 167,
-      "linker_id": "cn01_n32",
+      "id": "epi_sub01_cn02",
+      "length": 159,
+      "linker_id": "cn02",
       "linker_kind": "generated",
       "linker_range": [
         13,
-        44
+        36
       ],
-      "linker_residues": 32,
+      "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
       "linker_substrate": "VMPSGFTASG",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
+      "mask": "epi_sub01",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CATIQPALRLNC",
+      "sequence": "CATIQPALRLNCGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        45,
-        167
+        37,
+        159
       ]
     },
     {
-      "id": "epi_core_scram_ctrl_gs_n16",
-      "length": 151,
-      "linker_id": "ctrl_gs_n16",
+      "id": "epi_sub01_cn03",
+      "length": 159,
+      "linker_id": "cn03",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
+      "mask": "epi_sub01",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIQPALRLNC",
+      "sequence": "CATIQPALRLNCGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub01_cn04",
+      "length": 159,
+      "linker_id": "cn04",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
+      "mask": "epi_sub01",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIQPALRLNC",
+      "sequence": "CATIQPALRLNCGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub01_ctrl_gs",
+      "length": 159,
+      "linker_id": "ctrl_gs",
       "linker_kind": "protease-resistant control",
       "linker_range": [
         13,
-        28
+        36
       ],
-      "linker_residues": 16,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGGGSGGGGSGGS",
+      "linker_residues": 24,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
+      "mask": "epi_sub01",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CATIQPALRLNC",
+      "sequence": "CATIQPALRLNCGGSGGSGGGGGSGGGGSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        29,
-        151
+        37,
+        159
       ]
     },
     {
-      "id": "epi_core_scram_ctrl_gs_n32",
-      "length": 167,
-      "linker_id": "ctrl_gs_n32",
+      "id": "epi_sub01_ctrl_scram",
+      "length": 159,
+      "linker_id": "ctrl_scram",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_sub01",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIQPALRLNC",
+      "sequence": "CATIQPALRLNCGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub02_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_sub02",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIRPAVRLNC",
+      "sequence": "CATIRPAVRLNCGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub02_cn02",
+      "length": 159,
+      "linker_id": "cn02",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
+      "mask": "epi_sub02",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIRPAVRLNC",
+      "sequence": "CATIRPAVRLNCGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub02_cn03",
+      "length": 159,
+      "linker_id": "cn03",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
+      "mask": "epi_sub02",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIRPAVRLNC",
+      "sequence": "CATIRPAVRLNCGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub02_cn04",
+      "length": 159,
+      "linker_id": "cn04",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
+      "mask": "epi_sub02",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CATIRPAVRLNC",
+      "sequence": "CATIRPAVRLNCGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub02_ctrl_gs",
+      "length": 159,
+      "linker_id": "ctrl_gs",
       "linker_kind": "protease-resistant control",
       "linker_range": [
         13,
-        44
+        36
       ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
+      "linker_residues": 24,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
+      "mask": "epi_sub02",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CATIRPAVRLNC",
+      "sequence": "CATIRPAVRLNCGGSGGSGGGGGSGGGGSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        45,
-        167
+        37,
+        159
       ]
     },
     {
-      "id": "epi_core_scram_ctrl_scram_n16",
-      "length": 151,
-      "linker_id": "ctrl_scram_n16",
+      "id": "epi_sub02_ctrl_scram",
+      "length": 159,
+      "linker_id": "ctrl_scram",
       "linker_kind": "scrambled control",
       "linker_range": [
         13,
-        28
+        36
       ],
-      "linker_residues": 16,
+      "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_sub02",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CATIRPAVRLNC",
+      "sequence": "CATIRPAVRLNCGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        29,
-        151
+        37,
+        159
       ]
     },
     {
-      "id": "epi_core_scram_ctrl_scram_n32",
-      "length": 167,
-      "linker_id": "ctrl_scram_n32",
-      "linker_kind": "scrambled control",
+      "id": "epi_sub03_cn01",
+      "length": 159,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         13,
-        44
+        36
       ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
-      "mask": "epi_core_scram",
-      "mask_kind": "scrambled control",
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_sub03",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "IPTKLGCVKCPN",
-      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CGTLRPAVQLNC",
+      "sequence": "CGTLRPAVQLNCGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        45,
-        167
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub03_cn02",
+      "length": 159,
+      "linker_id": "cn02",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
+      "mask": "epi_sub03",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CGTLRPAVQLNC",
+      "sequence": "CGTLRPAVQLNCGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub03_cn03",
+      "length": 159,
+      "linker_id": "cn03",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
+      "mask": "epi_sub03",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CGTLRPAVQLNC",
+      "sequence": "CGTLRPAVQLNCGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub03_cn04",
+      "length": 159,
+      "linker_id": "cn04",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
+      "mask": "epi_sub03",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CGTLRPAVQLNC",
+      "sequence": "CGTLRPAVQLNCGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub03_ctrl_gs",
+      "length": 159,
+      "linker_id": "ctrl_gs",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_sub03",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CGTLRPAVQLNC",
+      "sequence": "CGTLRPAVQLNCGGSGGSGGGGGSGGGGSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
+      ]
+    },
+    {
+      "id": "epi_sub03_ctrl_scram",
+      "length": 159,
+      "linker_id": "ctrl_scram",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        36
+      ],
+      "linker_residues": 24,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_sub03",
+      "mask_kind": "epitope graft",
+      "mask_method": "substitution",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CGTLRPAVQLNC",
+      "sequence": "CGTLRPAVQLNCGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        37,
+        159
       ]
     },
     {
@@ -2507,16 +1793,17 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSGGSGMTPYGYTGTGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2532,17 +1819,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.481,
-      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
-      "linker_substrate": "PMPTAFHGMA",
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGVMPSGFTASGGGSGGSG",
+      "linker_substrate": "VMPSGFTASG",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSGGSGVMPSGFTASGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2558,17 +1846,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.417,
-      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
-      "linker_substrate": "VTPMQYFGMV",
+      "linker_selectivity": 1.481,
+      "linker_seq": "GGSGGSGPMPTAFHGMAGGSGGSG",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSGGSGPMPTAFHGMAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2584,121 +1873,18 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 1.365,
-      "linker_seq": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "linker_substrate": "MGPYTLFGMF",
+      "linker_selectivity": 1.417,
+      "linker_seq": "GGSGGSGVTPMQYFGMVGGSGGSG",
+      "linker_substrate": "VTPMQYFGMV",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGMGPYTLFGMFGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "polyG_cn05",
-      "length": 159,
-      "linker_id": "cn05",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.318,
-      "linker_seq": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "linker_substrate": "SGPYTLVGTA",
-      "mask": "polyG",
-      "mask_kind": "inert control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGSGPYTLVGTAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "polyG_cn06",
-      "length": 159,
-      "linker_id": "cn06",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.268,
-      "linker_seq": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "linker_substrate": "VMPSGFLGLS",
-      "mask": "polyG",
-      "mask_kind": "inert control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGVMPSGFLGLSGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "polyG_cn07",
-      "length": 159,
-      "linker_id": "cn07",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "linker_substrate": "QGPWTILGMT",
-      "mask": "polyG",
-      "mask_kind": "inert control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGQGPWTILGMTGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
-      "vhh_range": [
-        37,
-        159
-      ]
-    },
-    {
-      "id": "polyG_cn08",
-      "length": 159,
-      "linker_id": "cn08",
-      "linker_kind": "generated",
-      "linker_range": [
-        13,
-        36
-      ],
-      "linker_residues": 24,
-      "linker_selectivity": 1.249,
-      "linker_seq": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "linker_substrate": "VYPSKLYGMV",
-      "mask": "polyG",
-      "mask_kind": "inert control",
-      "mask_range": [
-        1,
-        12
-      ],
-      "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGVYPSKLYGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSGGSGVTPMQYFGMVGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
@@ -2714,11 +1900,12 @@
         36
       ],
       "linker_residues": 24,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
@@ -2741,19 +1928,317 @@
       ],
       "linker_residues": 24,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGMVGGTFSPSAGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSGGSGTMGGTYTPYGGGSGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         37,
         159
+      ]
+    },
+    {
+      "id": "epi_core_cn01_n12",
+      "length": 147,
+      "linker_id": "cn01_n12",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GMTPYGYTGTGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGMTPYGYTGTGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "epi_core_scram_cn01_n12",
+      "length": 147,
+      "linker_id": "cn01_n12",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GMTPYGYTGTGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGMTPYGYTGTGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "polyG_cn01_n12",
+      "length": 147,
+      "linker_id": "cn01_n12",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GMTPYGYTGTGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGMTPYGYTGTGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_gs_n12",
+      "length": 147,
+      "linker_id": "ctrl_gs_n12",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGGGGSGGGGSG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGGGGSGGGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_gs_n12",
+      "length": 147,
+      "linker_id": "ctrl_gs_n12",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGGGGSGGGGSG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGGGGSGGGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "polyG_ctrl_gs_n12",
+      "length": 147,
+      "linker_id": "ctrl_gs_n12",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGGGGSGGGGSG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGGGGSGGGGSGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_scram_n12",
+      "length": 147,
+      "linker_id": "ctrl_scram_n12",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GTMGGTYTPYGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGTMGGTYTPYGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_scram_n12",
+      "length": 147,
+      "linker_id": "ctrl_scram_n12",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GTMGGTYTPYGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGTMGGTYTPYGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "polyG_ctrl_scram_n12",
+      "length": 147,
+      "linker_id": "ctrl_scram_n12",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        24
+      ],
+      "linker_residues": 12,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GTMGGTYTPYGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGTMGGTYTPYGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        25,
+        147
+      ]
+    },
+    {
+      "id": "epi_core_cn01_n16",
+      "length": 151,
+      "linker_id": "cn01_n16",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        28
+      ],
+      "linker_residues": 16,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSMTPYGYTGTGGGS",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSMTPYGYTGTGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        29,
+        151
+      ]
+    },
+    {
+      "id": "epi_core_scram_cn01_n16",
+      "length": 151,
+      "linker_id": "cn01_n16",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        28
+      ],
+      "linker_residues": 16,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSMTPYGYTGTGGGS",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSMTPYGYTGTGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        29,
+        151
       ]
     },
     {
@@ -2767,45 +2252,74 @@
       ],
       "linker_residues": 16,
       "linker_selectivity": 1.708,
-      "linker_seq": "GGSVMPSGFTASGGGS",
-      "linker_substrate": "VMPSGFTASG",
+      "linker_seq": "GGSMTPYGYTGTGGGS",
+      "linker_substrate": "MTPYGYTGTG",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSVMPSGFTASGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSMTPYGYTGTGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         29,
         151
       ]
     },
     {
-      "id": "polyG_cn01_n32",
-      "length": 167,
-      "linker_id": "cn01_n32",
-      "linker_kind": "generated",
+      "id": "epi_core_ctrl_gs_n16",
+      "length": 151,
+      "linker_id": "ctrl_gs_n16",
+      "linker_kind": "protease-resistant control",
       "linker_range": [
         13,
-        44
+        28
       ],
-      "linker_residues": 32,
-      "linker_selectivity": 1.708,
-      "linker_seq": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "linker_substrate": "VMPSGFTASG",
-      "mask": "polyG",
-      "mask_kind": "inert control",
+      "linker_residues": 16,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGGGSGGGGSGGS",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGVMPSGFTASGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        45,
-        167
+        29,
+        151
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_gs_n16",
+      "length": 151,
+      "linker_id": "ctrl_gs_n16",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        28
+      ],
+      "linker_residues": 16,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGGGSGGGGSGGS",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGGGSGGGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        29,
+        151
       ]
     },
     {
@@ -2818,11 +2332,12 @@
         28
       ],
       "linker_residues": 16,
-      "linker_selectivity": 0.238,
+      "linker_selectivity": 0.309,
       "linker_seq": "GGSGGGGSGGGGSGGS",
       "linker_substrate": "GGGGSGGGGS",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
@@ -2835,29 +2350,57 @@
       ]
     },
     {
-      "id": "polyG_ctrl_gs_n32",
-      "length": 167,
-      "linker_id": "ctrl_gs_n32",
-      "linker_kind": "protease-resistant control",
+      "id": "epi_core_ctrl_scram_n16",
+      "length": 151,
+      "linker_id": "ctrl_scram_n16",
+      "linker_kind": "scrambled control",
       "linker_range": [
         13,
-        44
+        28
       ],
-      "linker_residues": 32,
-      "linker_selectivity": 0.238,
-      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
-      "linker_substrate": "GGGGSGGGGS",
-      "mask": "polyG",
-      "mask_kind": "inert control",
+      "linker_residues": 16,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSTMGGTYTPYGGGS",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
       "mask_range": [
         1,
         12
       ],
-      "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSTMGGTYTPYGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
-        45,
-        167
+        29,
+        151
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_scram_n16",
+      "length": 151,
+      "linker_id": "ctrl_scram_n16",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        28
+      ],
+      "linker_residues": 16,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSTMGGTYTPYGGGS",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSTMGGTYTPYGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        29,
+        151
       ]
     },
     {
@@ -2871,19 +2414,722 @@
       ],
       "linker_residues": 16,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSMVGGTFSPSAGGS",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSTMGGTYTPYGGGS",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSMVGGTFSPSAGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSTMGGTYTPYGGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         29,
         151
+      ]
+    },
+    {
+      "id": "epi_core_cn01_n20",
+      "length": 155,
+      "linker_id": "cn01_n20",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGMTPYGYTGTGGGSGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGMTPYGYTGTGGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "epi_core_scram_cn01_n20",
+      "length": 155,
+      "linker_id": "cn01_n20",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGMTPYGYTGTGGGSGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGMTPYGYTGTGGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "polyG_cn01_n20",
+      "length": 155,
+      "linker_id": "cn01_n20",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGMTPYGYTGTGGGSGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGMTPYGYTGTGGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_gs_n20",
+      "length": 155,
+      "linker_id": "ctrl_gs_n20",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGGGGGSGGGGSGGSGG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGGGGGSGGGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_gs_n20",
+      "length": 155,
+      "linker_id": "ctrl_gs_n20",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGGGGGSGGGGSGGSGG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGGGGGSGGGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "polyG_ctrl_gs_n20",
+      "length": 155,
+      "linker_id": "ctrl_gs_n20",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGGGGGSGGGGSGGSGG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGGGGGSGGGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_scram_n20",
+      "length": 155,
+      "linker_id": "ctrl_scram_n20",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGTMGGTYTPYGGGSGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGTMGGTYTPYGGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_scram_n20",
+      "length": 155,
+      "linker_id": "ctrl_scram_n20",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGTMGGTYTPYGGGSGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGTMGGTYTPYGGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "polyG_ctrl_scram_n20",
+      "length": 155,
+      "linker_id": "ctrl_scram_n20",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        32
+      ],
+      "linker_residues": 20,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGTMGGTYTPYGGGSGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGTMGGTYTPYGGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        33,
+        155
+      ]
+    },
+    {
+      "id": "epi_core_cn01_n28",
+      "length": 163,
+      "linker_id": "cn01_n28",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGGSMTPYGYTGTGGGSGGSGGS",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGSGGSMTPYGYTGTGGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "epi_core_scram_cn01_n28",
+      "length": 163,
+      "linker_id": "cn01_n28",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGGSMTPYGYTGTGGGSGGSGGS",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGSGGSMTPYGYTGTGGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "polyG_cn01_n28",
+      "length": 163,
+      "linker_id": "cn01_n28",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGGSMTPYGYTGTGGGSGGSGGS",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGSGGSMTPYGYTGTGGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_gs_n28",
+      "length": 163,
+      "linker_id": "ctrl_gs_n28",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGSGGGGSGGGGSGGSGGSGGS",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGGGSGGGGSGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_gs_n28",
+      "length": 163,
+      "linker_id": "ctrl_gs_n28",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGSGGGGSGGGGSGGSGGSGGS",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGGGSGGGGSGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "polyG_ctrl_gs_n28",
+      "length": 163,
+      "linker_id": "ctrl_gs_n28",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGSGGGGSGGGGSGGSGGSGGS",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGGGSGGGGSGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_scram_n28",
+      "length": 163,
+      "linker_id": "ctrl_scram_n28",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGGSTMGGTYTPYGGGSGGSGGS",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGSGGSTMGGTYTPYGGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_scram_n28",
+      "length": 163,
+      "linker_id": "ctrl_scram_n28",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGGSTMGGTYTPYGGGSGGSGGS",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGSGGSTMGGTYTPYGGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "polyG_ctrl_scram_n28",
+      "length": 163,
+      "linker_id": "ctrl_scram_n28",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        40
+      ],
+      "linker_residues": 28,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGGSTMGGTYTPYGGGSGGSGGS",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGSGGSTMGGTYTPYGGGSGGSGGSQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        41,
+        163
+      ]
+    },
+    {
+      "id": "epi_core_cn01_n32",
+      "length": 167,
+      "linker_id": "cn01_n32",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "epi_core_scram_cn01_n32",
+      "length": 167,
+      "linker_id": "cn01_n32",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "polyG_cn01_n32",
+      "length": 167,
+      "linker_id": "cn01_n32",
+      "linker_kind": "generated",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 1.708,
+      "linker_seq": "GGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGG",
+      "linker_substrate": "MTPYGYTGTG",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_gs_n32",
+      "length": 167,
+      "linker_id": "ctrl_gs_n32",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_gs_n32",
+      "length": 167,
+      "linker_id": "ctrl_gs_n32",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "polyG_ctrl_gs_n32",
+      "length": 167,
+      "linker_id": "ctrl_gs_n32",
+      "linker_kind": "protease-resistant control",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 0.309,
+      "linker_seq": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
+      "linker_substrate": "GGGGSGGGGS",
+      "mask": "polyG",
+      "mask_kind": "inert control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "GGGGGGGGGGGG",
+      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "epi_core_ctrl_scram_n32",
+      "length": 167,
+      "linker_id": "ctrl_scram_n32",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core",
+      "mask_kind": "epitope graft",
+      "mask_method": "graft",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "CPTVKPGIKLNC",
+      "sequence": "CPTVKPGIKLNCGGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
+      ]
+    },
+    {
+      "id": "epi_core_scram_ctrl_scram_n32",
+      "length": 167,
+      "linker_id": "ctrl_scram_n32",
+      "linker_kind": "scrambled control",
+      "linker_range": [
+        13,
+        44
+      ],
+      "linker_residues": 32,
+      "linker_selectivity": 0.05,
+      "linker_seq": "GGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGG",
+      "linker_substrate": "TMGGTYTPYG",
+      "mask": "epi_core_scram",
+      "mask_kind": "scrambled control",
+      "mask_method": "control",
+      "mask_range": [
+        1,
+        12
+      ],
+      "mask_seq": "IPTKLGCVKCPN",
+      "sequence": "IPTKLGCVKCPNGGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "vhh_range": [
+        45,
+        167
       ]
     },
     {
@@ -2897,16 +3143,17 @@
       ],
       "linker_residues": 32,
       "linker_selectivity": 0.05,
-      "linker_seq": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "linker_substrate": "MVGGTFSPSA",
+      "linker_seq": "GGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGG",
+      "linker_substrate": "TMGGTYTPYG",
       "mask": "polyG",
       "mask_kind": "inert control",
+      "mask_method": "control",
       "mask_range": [
         1,
         12
       ],
       "mask_seq": "GGGGGGGGGGGG",
-      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
+      "sequence": "GGGGGGGGGGGGGGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGGQVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
       "vhh_range": [
         45,
         167
@@ -2924,6 +3171,7 @@
       "linker_substrate": "",
       "mask": null,
       "mask_kind": "reference",
+      "mask_method": "reference",
       "mask_range": null,
       "mask_seq": "",
       "sequence": "QVQLQESGGGLVRPGGSLRLSCAVSGVSESIFANYVVGWFRQQDSGTGRDLVAQSSSDDEYNHVSGSVKGRFTISRDNAKNTVSLQMDNLKPEDTAIYICAAAIGPGDNYIYWGQGTQVTVSS",
@@ -2953,14 +3201,60 @@
       "length": 12,
       "n_contact": 9,
       "n_epitope": 9,
+      "per_residue_buried_A2": [
+        71.2,
+        24.7,
+        133.9,
+        47.0,
+        43.3,
+        51.3,
+        13.2,
+        13.0,
+        13.8,
+        62.9,
+        63.4,
+        43.1
+      ],
       "seq": "CPTVKPGIKLNC",
       "start": 42,
       "start_label": "C42"
+    },
+    {
+      "buried_A2": 42.7,
+      "contact_labels": [
+        "N22"
+      ],
+      "cutoff_A": 3.5,
+      "end": 22,
+      "end_label": "N22",
+      "length": 1,
+      "n_contact": 1,
+      "n_epitope": 1,
+      "per_residue_buried_A2": [
+        42.7
+      ],
+      "seq": "N",
+      "start": 22,
+      "start_label": "N22"
     }
+  ],
+  "length_linkers": [
+    "cn01",
+    "ctrl_gs",
+    "ctrl_scram"
   ],
   "linkers": [
     {
       "id": "cn01",
+      "kind": "generated",
+      "off_target_z": -0.335,
+      "selectivity": 1.708,
+      "sequence": "GGSGGSGMTPYGYTGTGGGSGGSG",
+      "substrate": "MTPYGYTGTG",
+      "target_z": 1.373
+    },
+    {
+      "id": "cn02",
       "kind": "generated",
       "off_target_z": -0.151,
       "selectivity": 1.708,
@@ -2969,7 +3263,7 @@
       "target_z": 1.557
     },
     {
-      "id": "cn02",
+      "id": "cn03",
       "kind": "generated",
       "off_target_z": -0.252,
       "selectivity": 1.481,
@@ -2978,7 +3272,7 @@
       "target_z": 1.228
     },
     {
-      "id": "cn03",
+      "id": "cn04",
       "kind": "generated",
       "off_target_z": 0.061,
       "selectivity": 1.417,
@@ -2987,111 +3281,143 @@
       "target_z": 1.478
     },
     {
-      "id": "cn04",
-      "kind": "generated",
-      "off_target_z": 0.145,
-      "selectivity": 1.365,
-      "sequence": "GGSGGSGMGPYTLFGMFGGSGGSG",
-      "substrate": "MGPYTLFGMF",
-      "target_z": 1.51
-    },
-    {
-      "id": "cn05",
-      "kind": "generated",
-      "off_target_z": 0.166,
-      "selectivity": 1.318,
-      "sequence": "GGSGGSGSGPYTLVGTAGGSGGSG",
-      "substrate": "SGPYTLVGTA",
-      "target_z": 1.484
-    },
-    {
-      "id": "cn06",
-      "kind": "generated",
-      "off_target_z": -0.059,
-      "selectivity": 1.268,
-      "sequence": "GGSGGSGVMPSGFLGLSGGSGGSG",
-      "substrate": "VMPSGFLGLS",
-      "target_z": 1.209
-    },
-    {
-      "id": "cn07",
-      "kind": "generated",
-      "off_target_z": 0.36,
-      "selectivity": 1.249,
-      "sequence": "GGSGGSGQGPWTILGMTGGSGGSG",
-      "substrate": "QGPWTILGMT",
-      "target_z": 1.609
-    },
-    {
-      "id": "cn08",
-      "kind": "generated",
-      "off_target_z": 0.093,
-      "selectivity": 1.249,
-      "sequence": "GGSGGSGVYPSKLYGMVGGSGGSG",
-      "substrate": "VYPSKLYGMV",
-      "target_z": 1.342
-    },
-    {
       "id": "ctrl_gs",
       "kind": "protease-resistant control",
-      "off_target_z": -0.893,
-      "selectivity": 0.238,
+      "off_target_z": -0.953,
+      "selectivity": 0.309,
       "sequence": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "substrate": "GGGGSGGGGS",
-      "target_z": -0.656
+      "target_z": -0.643
     },
     {
       "id": "ctrl_scram",
       "kind": "scrambled control",
       "off_target_z": -1.14,
       "selectivity": 0.05,
-      "sequence": "GGSGGSGMVGGTFSPSAGGSGGSG",
-      "substrate": "MVGGTFSPSA",
+      "sequence": "GGSGGSGTMGGTYTPYGGGSGGSG",
+      "substrate": "TMGGTYTPYG",
       "target_z": -1.09
+    },
+    {
+      "flank": "G",
+      "id": "cn01_n12",
+      "kind": "generated",
+      "off_target_z": -0.335,
+      "selectivity": 1.708,
+      "sequence": "GMTPYGYTGTGG",
+      "substrate": "MTPYGYTGTG",
+      "target_z": 1.373,
+      "total_length": 12
     },
     {
       "flank": "GGS",
       "id": "cn01_n16",
       "kind": "generated",
-      "off_target_z": -0.151,
+      "off_target_z": -0.335,
       "selectivity": 1.708,
-      "sequence": "GGSVMPSGFTASGGGS",
-      "substrate": "VMPSGFTASG",
-      "target_z": 1.557,
+      "sequence": "GGSMTPYGYTGTGGGS",
+      "substrate": "MTPYGYTGTG",
+      "target_z": 1.373,
       "total_length": 16
+    },
+    {
+      "flank": "GGSGG",
+      "id": "cn01_n20",
+      "kind": "generated",
+      "off_target_z": -0.335,
+      "selectivity": 1.708,
+      "sequence": "GGSGGMTPYGYTGTGGGSGG",
+      "substrate": "MTPYGYTGTG",
+      "target_z": 1.373,
+      "total_length": 20
+    },
+    {
+      "flank": "GGSGGSGGS",
+      "id": "cn01_n28",
+      "kind": "generated",
+      "off_target_z": -0.335,
+      "selectivity": 1.708,
+      "sequence": "GGSGGSGGSMTPYGYTGTGGGSGGSGGS",
+      "substrate": "MTPYGYTGTG",
+      "target_z": 1.373,
+      "total_length": 28
     },
     {
       "flank": "GGSGGSGGSGG",
       "id": "cn01_n32",
       "kind": "generated",
-      "off_target_z": -0.151,
+      "off_target_z": -0.335,
       "selectivity": 1.708,
-      "sequence": "GGSGGSGGSGGVMPSGFTASGGGSGGSGGSGG",
-      "substrate": "VMPSGFTASG",
-      "target_z": 1.557,
+      "sequence": "GGSGGSGGSGGMTPYGYTGTGGGSGGSGGSGG",
+      "substrate": "MTPYGYTGTG",
+      "target_z": 1.373,
       "total_length": 32
+    },
+    {
+      "flank": "G",
+      "id": "ctrl_gs_n12",
+      "kind": "protease-resistant control",
+      "off_target_z": -0.953,
+      "selectivity": 0.309,
+      "sequence": "GGGGGSGGGGSG",
+      "substrate": "GGGGSGGGGS",
+      "target_z": -0.643,
+      "total_length": 12
     },
     {
       "flank": "GGS",
       "id": "ctrl_gs_n16",
       "kind": "protease-resistant control",
-      "off_target_z": -0.893,
-      "selectivity": 0.238,
+      "off_target_z": -0.953,
+      "selectivity": 0.309,
       "sequence": "GGSGGGGSGGGGSGGS",
       "substrate": "GGGGSGGGGS",
-      "target_z": -0.656,
+      "target_z": -0.643,
       "total_length": 16
+    },
+    {
+      "flank": "GGSGG",
+      "id": "ctrl_gs_n20",
+      "kind": "protease-resistant control",
+      "off_target_z": -0.953,
+      "selectivity": 0.309,
+      "sequence": "GGSGGGGGGSGGGGSGGSGG",
+      "substrate": "GGGGSGGGGS",
+      "target_z": -0.643,
+      "total_length": 20
+    },
+    {
+      "flank": "GGSGGSGGS",
+      "id": "ctrl_gs_n28",
+      "kind": "protease-resistant control",
+      "off_target_z": -0.953,
+      "selectivity": 0.309,
+      "sequence": "GGSGGSGGSGGGGSGGGGSGGSGGSGGS",
+      "substrate": "GGGGSGGGGS",
+      "target_z": -0.643,
+      "total_length": 28
     },
     {
       "flank": "GGSGGSGGSGG",
       "id": "ctrl_gs_n32",
       "kind": "protease-resistant control",
-      "off_target_z": -0.893,
-      "selectivity": 0.238,
+      "off_target_z": -0.953,
+      "selectivity": 0.309,
       "sequence": "GGSGGSGGSGGGGGGSGGGGSGGSGGSGGSGG",
       "substrate": "GGGGSGGGGS",
-      "target_z": -0.656,
+      "target_z": -0.643,
       "total_length": 32
+    },
+    {
+      "flank": "G",
+      "id": "ctrl_scram_n12",
+      "kind": "scrambled control",
+      "off_target_z": -1.14,
+      "selectivity": 0.05,
+      "sequence": "GTMGGTYTPYGG",
+      "substrate": "TMGGTYTPYG",
+      "target_z": -1.09,
+      "total_length": 12
     },
     {
       "flank": "GGS",
@@ -3099,10 +3425,32 @@
       "kind": "scrambled control",
       "off_target_z": -1.14,
       "selectivity": 0.05,
-      "sequence": "GGSMVGGTFSPSAGGS",
-      "substrate": "MVGGTFSPSA",
+      "sequence": "GGSTMGGTYTPYGGGS",
+      "substrate": "TMGGTYTPYG",
       "target_z": -1.09,
       "total_length": 16
+    },
+    {
+      "flank": "GGSGG",
+      "id": "ctrl_scram_n20",
+      "kind": "scrambled control",
+      "off_target_z": -1.14,
+      "selectivity": 0.05,
+      "sequence": "GGSGGTMGGTYTPYGGGSGG",
+      "substrate": "TMGGTYTPYG",
+      "target_z": -1.09,
+      "total_length": 20
+    },
+    {
+      "flank": "GGSGGSGGS",
+      "id": "ctrl_scram_n28",
+      "kind": "scrambled control",
+      "off_target_z": -1.14,
+      "selectivity": 0.05,
+      "sequence": "GGSGGSGGSTMGGTYTPYGGGSGGSGGS",
+      "substrate": "TMGGTYTPYG",
+      "target_z": -1.09,
+      "total_length": 28
     },
     {
       "flank": "GGSGGSGGSGG",
@@ -3110,18 +3458,26 @@
       "kind": "scrambled control",
       "off_target_z": -1.14,
       "selectivity": 0.05,
-      "sequence": "GGSGGSGGSGGMVGGTFSPSAGGSGGSGGSGG",
-      "substrate": "MVGGTFSPSA",
+      "sequence": "GGSGGSGGSGGTMGGTYTPYGGGSGGSGGSGG",
+      "substrate": "TMGGTYTPYG",
       "target_z": -1.09,
       "total_length": 32
     }
   ],
   "masks": {
+    "epi_both": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "both contact faces, joined by a spacer in place of the antigen residues between them, which make no contact",
+      "seq": "PGETNCYKKGSGCPTVKPGIKLNC"
+    },
     "epi_core": {
       "end": 53,
       "extension": 0,
       "kind": "epitope graft",
-      "note": "antigen C42-C53, contact face, 2 cysteines",
+      "method": "graft",
+      "note": "contact face, 2 cysteines",
       "seq": "CPTVKPGIKLNC",
       "start": 42
     },
@@ -3129,7 +3485,8 @@
       "end": 55,
       "extension": 2,
       "kind": "epitope graft",
-      "note": "antigen C40-T55, contact face plus 2 residues each side, 4 cysteines",
+      "method": "graft",
+      "note": "contact face plus 2 residues of antigen each side, 4 cysteines",
       "seq": "CGCPTVKPGIKLNCCT",
       "start": 40
     },
@@ -3137,38 +3494,74 @@
       "end": 57,
       "extension": 4,
       "kind": "epitope graft",
-      "note": "antigen R38-D57, contact face plus 4 residues each side, 4 cysteines",
+      "method": "graft",
+      "note": "contact face plus 4 residues of antigen each side, 4 cysteines",
       "seq": "RGCGCPTVKPGIKLNCCTTD",
       "start": 38
     },
     "epi_core_half": {
       "extension": 0,
       "kind": "truncated control",
-      "note": "leading half of the contact face",
+      "method": "control",
+      "note": "leading half of the face: right residues, not enough of them",
       "seq": "CPTVKP"
     },
     "epi_core_noCys": {
       "extension": 0,
       "kind": "epitope graft",
-      "note": "contact face with cysteines substituted to serine, which removes the disulfide that holds it in shape",
+      "method": "staple variant",
+      "note": "cysteines substituted to serine, which removes the disulfide holding the face in shape and changes nothing else",
       "seq": "SPTVKPGIKLNS"
     },
     "epi_core_scram": {
       "extension": 0,
       "kind": "scrambled control",
-      "note": "the contact face shuffled (seed 42): same composition, same length, no order",
+      "method": "control",
+      "note": "the face shuffled, seed 42: same composition, same length, no order",
       "seq": "IPTKLGCVKCPN"
+    },
+    "epi_face2": {
+      "end": 26,
+      "extension": 4,
+      "kind": "epitope graft",
+      "method": "graft",
+      "note": "second contact face, around a hotspot burying 43 A2",
+      "seq": "PGETNCYKK",
+      "start": 18
+    },
+    "epi_sub01": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "substitution",
+      "note": "contact face with its hotspots and cysteines held, and the other 6 positions conservatively substituted",
+      "seq": "CATIQPALRLNC"
+    },
+    "epi_sub02": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "substitution",
+      "note": "contact face with its hotspots and cysteines held, and the other 6 positions conservatively substituted",
+      "seq": "CATIRPAVRLNC"
+    },
+    "epi_sub03": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "method": "substitution",
+      "note": "contact face with its hotspots and cysteines held, and the other 6 positions conservatively substituted",
+      "seq": "CGTLRPAVQLNC"
     },
     "polyG": {
       "extension": 0,
       "kind": "inert control",
+      "method": "control",
       "note": "no designed interaction, matched to the face at 12 residues",
       "seq": "GGGGGGGGGGGG"
     }
   },
-  "n_constructs": 113,
-  "n_linkers": 16,
-  "n_substrates_generated": 479,
+  "n_constructs": 118,
+  "n_linkers": 21,
+  "n_pairs": 117,
+  "n_substrates_generated": 714,
   "off_target_proteases": [
     "MMP1",
     "MMP3",
@@ -3201,6 +3594,7 @@
     "Y110",
     "W113"
   ],
+  "reference_length": 24,
   "target_proteases": [
     "MMP2",
     "MMP9",

@@ -824,8 +824,7 @@ def architecture_schematic() -> str:
                 f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>'
                 f'<text x="{W-24}" y="{y+30}" class="p-m" fill="{STR}" '
                 f'text-anchor="end">{methods}</text>'
-                f'<text x="{W-24}" y="{y+54}" class="p-s" fill="{STR}" '
-                f'text-anchor="end">RUN</text>')
+                )
 
     def arrow(x1, y1, x2, y2):
         return (f'<path d="M {x1} {y1} L {x2} {y2}" stroke="{NULL}" stroke-width="1.6" '
@@ -838,8 +837,7 @@ def architecture_schematic() -> str:
     s.append(box(0, 60, W, 112, CHROME, "01", "Usable mask affinity and linker length",
                  ["Interface geometry sets where to attach, how long the linker must be, and the",
                   "range of mask affinity that masking and release can both tolerate."],
-                 ["interface analysis · worm-like-chain tether model · competition equilibria"],
-                 "RUN", CHROME))
+                 ["interface analysis · worm-like chain · competition equilibria"]))
 
     # the two design stages are independent: neither constrains the other
     s.append(arrow(245, 172, 245, 196))
@@ -847,11 +845,11 @@ def architecture_schematic() -> str:
     s.append(box(0, 200, 478, 168, SEQ, "02a", "Mask design",
                  ["What does the antigen present at the", "paratope, and how much of it to carry?"],
                  ["contact face at 3.5 Å · window variants",
-                  "ProteinMPNN · RFdiffusion · BindCraft"], "PART RUN", STR))
+                  "ProteinMPNN · RFdiffusion · BindCraft"]))
     s.append(box(502, 200, 478, 168, SEQ, "02b", "Cleavable linker design",
                  ["Which sequences does the protease cut,", "and does it reach past the enzyme?"],
                  ["CleaveNet, conditioned on a target profile",
-                  "measured substrate library · flank length"], "RUN", CHROME))
+                  "measured substrate library · flank length"]))
 
     # they only meet here
     s.append(f'<path d="M 239 368 L 239 392 L 490 392" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
@@ -863,7 +861,7 @@ def architecture_schematic() -> str:
     s.append(shared(480, "Structure prediction",
                     "Every construct folded once, as a single chain: mask, linker "
                     "and nanobody together.",
-                    "ESMFold · CPU"))
+                    "ESMFold"))
 
     s.append(f'<path d="M 490 556 L 490 574" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     s.append(f'<path d="M 160 574 L 820 574" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
@@ -873,13 +871,13 @@ def architecture_schematic() -> str:
     for n, (num, title, lines, methods, tag, col) in enumerate([
         ("03", "Structural feasibility",
          ["Is the fold kept, and can", "it be produced?"],
-         ["pLDDT · core RMSD", "surface · measured disulfides"], "RUN", CHROME),
+         ["pLDDT · core RMSD", "surface · measured disulfides"], None, None),
         ("04", "Mask binding and release",
-         ["Does the mask bind untethered,", "and release once cut?"],
-         ["Boltz-2, mask alone and tethered", "interface analysis"], "PART RUN", STR),
+         ["Is the site occupied before", "cleavage, and free after?"],
+         ["Boltz-2, mask alone and tethered", "interface analysis"], None, None),
         ("05", "Linker cleavability",
          ["Is the linker recognised,", "and can a protease reach it?"],
-         ["CleaveNet · measured library", "extension · clearance"], "RUN", CHROME),
+         ["CleaveNet · measured library", "extension · clearance"], None, None),
     ]):
         s.append(box(n * 330, 606, 320, 176, SEQ, num, title, lines, methods, tag, col))
         s.append(f'<text x="{n*330+300}" y="{800}" class="p-m" fill="{INK3}" '
@@ -891,7 +889,7 @@ def architecture_schematic() -> str:
     s.append(box(166, 852, 648, 110, CHROME, "06", "Multiobjective ranking",
                  ["The nondominated set, with no weights applied, so no",
                   "score can compensate for another."],
-                 ["Pareto front · uncertainty · diversity"], "RUN", CHROME))
+                 ["Pareto front · uncertainty · diversity"]))
     s.append(arrow(490, 962, 490, 982))
     s.append(band(986, "OUTPUT · CANDIDATES THAT NO OTHER CANDIDATE BEATS ON ALL THREE"))
     s.append("</svg>")

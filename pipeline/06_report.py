@@ -948,6 +948,12 @@ N["rmsd_mean"] = _np.mean([r["vhh_core_rmsd_A"] for r in _feas.values()
                            if r.get("vhh_core_rmsd_A")]) if _feas else 0
 
 
+masks_rows_full = "".join(
+    f"<tr><td class='mono'>{k}</td><td class='mono'>{m['seq']}</td>"
+    f"<td>{len(m['seq'])}</td><td>{m.get('method', 'graft')}</td>"
+    f"<td>{m['kind']}</td><td class='dim'>{m['note']}</td></tr>"
+    for k, m in lib["masks"].items())
+
 masks_rows_compact = "".join(
     f"<tr><td>{k}</td><td class='mono'>{m['seq']}</td><td>{m['kind']}</td></tr>"
     for k, m in lib["masks"].items())
@@ -1018,10 +1024,62 @@ construct, so a weak interaction is sufficient to block antigen binding. After c
 local concentration is lost and the mask must dissociate, which an interaction of high affinity
 would not do. The design target is therefore a bounded range of mask affinity rather than a
 maximum, which is the opposite of the objective most protein design methods optimise.</p>
+<p>That bounded range is the whole design problem in one sentence, and it is why this cannot be
+approached by maximising affinity. Everything downstream exists to find sequences inside it.</p>
+</section>
+
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">03</div><h2>Constraints on mask affinity and linker geometry</h2>
+<p>Before any sequence is generated, the structure and a polymer model say what a workable mask
+would have to look like. The mask has to occupy the paratope while it is tethered and leave once
+the linker is cut, and those two requirements pull on its affinity from opposite sides.</p>
+<p>The tether raises the mask&rsquo;s effective local concentration near the paratope, so a weak
+interaction is enough to block the antigen in the intact construct. After cleavage that advantage
+is gone and the antigen has to compete the mask off, which a tight mask would not allow. The
+usable range therefore depends on the nanobody&rsquo;s own antigen affinity, on the concentrations
+of antigen and released mask, and on where the linker attaches and how long it is.</p></div>
+
+{mri("The Gly/Ser linker was treated as a worm-like chain with persistence length "
+     f"{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue, giving "
+     "the effective concentration of the tethered mask at the distance measured above. An upper "
+     "bound on the mask dissociation constant follows from requiring that little of the construct "
+     "is unmasked before cleavage, and a lower bound from requiring that most of it binds antigen "
+     "afterwards.",
+     f"For an N-terminal attachment the effective concentration is {N['ceff']:.0f} mM and the "
+     f"usable range of mask dissociation constants is {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM, "
+     f"widest at a {N['linker_best']}-residue linker. A C-terminal attachment gives a narrower "
+     f"range.",
+     "Candidate masks should be designed towards micromolar rather than nanomolar affinity. The "
+     "values depend on the assumptions of the polymer model and on the assumed antigen "
+     "concentration, so they constrain the search rather than specify a target.")}
+<div class="two">
+{chart("design_window", "Usable mask affinity against linker length.")}
+{chart("tradeoff", "The two requirements as functions of mask affinity.")}
+</div>
+<p><b>What the window rests on.</b> Two of these quantities are measured on the structure and
+four are chosen. The window moves with all six, so they are given here rather than in a note
+further down.</p>
+{R.assumptions_table(ASSUMPTIONS)}
+<p>Of the four chosen values, the nanobody&rsquo;s own antigen affinity is the one with a
+published measurement behind it, and it is reported as a range rather than per pair. The window
+is therefore given across that range.</p>
+{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
+<details class="tech"><summary>Model and equations</summary><div class="techbody">
+<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
+<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
+<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
+<br>P<sub>bound</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,M</sub>)</div>
+<p>The bounds correspond to at most {model['leak_max']*100:.0f}% of the construct unmasked before
+cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.</p>
+{chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
+</div></details>
+
+
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">03</div><h2>Proposed computational pipeline</h2>
+<div class="stack"><div class="eyebrow">04</div><h2>Proposed computational pipeline</h2>
 <p>The pipeline has six modules. One estimates what mask affinity and linker length could work at
 all. Two generate independently: the mask comes from the antigen's contact face on this nanobody,
 the linker from substrate data, and neither constrains the other until they are assembled into one
@@ -1040,11 +1098,17 @@ order candidates within a front.</p>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">04</div><h2>Worked computational example</h2>
+<div class="stack"><div class="eyebrow">05</div><h2>Worked computational example</h2>
 <p>The pipeline was implemented in part and applied to {meta['title'][:66]}, a {N['resolution']} Å
-X-ray structure deposited in {meta['deposition_date'][:4]}. All results below are computational.
-No construct has been expressed and no affinity, expression level or cleavage rate has been
-measured.</p>
+X-ray structure deposited in {meta['deposition_date'][:4]}.</p>
+<p><b>This is a model system, not the clinical target.</b> The entry is a nanobody bound to short
+neurotoxin 1 from <i>Naja pallida</i>, a spitting cobra: an elapid, where the case concerns vipers.
+It was chosen because it is a crystallographically characterised nanobody&ndash;toxin complex with
+a single binding site, which is what the geometry and the masking measurements need. The
+architecture and the methods are what transfer; a viper application would start from a viper
+toxin complex and redesign the mask for it.</p>
+<p>All results below are computational. No construct has been expressed, and no affinity,
+expression level or cleavage rate has been measured.</p>
 <p>What was produced at each stage, and how much of it survived:</p>
 {R.generation_table(COUNTS)}
 <p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
@@ -1140,42 +1204,6 @@ the light chain. A VHH has no light chain, so that face is exposed and available
 The consequence for the design is that a mask has to cover framework 2 as well as the loops, which
 is more surface than a graft taken from the CDR contacts alone would address.</p>
 
-<h3 class="mod"><span>Module 01</span>Estimation of the usable mask affinity</h3>
-{mri("The Gly/Ser linker was treated as a worm-like chain with persistence length "
-     f"{model['persistence_length_A']} Å and {model['rise_per_residue_A']} Å per residue, giving "
-     "the effective concentration of the tethered mask at the distance measured above. An upper "
-     "bound on the mask dissociation constant follows from requiring that little of the construct "
-     "is unmasked before cleavage, and a lower bound from requiring that most of it binds antigen "
-     "afterwards.",
-     f"For an N-terminal attachment the effective concentration is {N['ceff']:.0f} mM and the "
-     f"usable range of mask dissociation constants is {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM, "
-     f"widest at a {N['linker_best']}-residue linker. A C-terminal attachment gives a narrower "
-     f"range.",
-     "Candidate masks should be designed towards micromolar rather than nanomolar affinity. The "
-     "values depend on the assumptions of the polymer model and on the assumed antigen "
-     "concentration, so they constrain the search rather than specify a target.")}
-<div class="two">
-{chart("design_window", "Usable mask affinity against linker length.")}
-{chart("tradeoff", "The two requirements as functions of mask affinity.")}
-</div>
-<p><b>What the window rests on.</b> Two of these quantities are measured on the structure and
-four are chosen. The window moves with all six, so they are given here rather than in a note
-further down.</p>
-{R.assumptions_table(ASSUMPTIONS)}
-<p>Of the four chosen values, the nanobody&rsquo;s own antigen affinity is the one with a
-published measurement behind it, and it is reported as a range rather than per pair. The window
-is therefore given across that range.</p>
-{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
-<details class="tech"><summary>Model and equations</summary><div class="techbody">
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
-<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
-<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
-<br>P<sub>bound</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,M</sub>)</div>
-<p>The bounds correspond to at most {model['leak_max']*100:.0f}% of the construct unmasked before
-cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.</p>
-{chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
-</div></details>
-
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
 {mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
      "poly-glycine controls. Linkers were not fixed sequences but generated: CleaveNet was "
@@ -1188,11 +1216,20 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
      f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
      "ProteinMPNN generated sequence diversity, but sequence compatibility with a backbone is not "
      "a substitute for functional scoring and should not be used as one.")}
-<div class="two">
-{chart("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion.")}
-<div class="scroll"><table class="wrap"><thead><tr><th>mask</th><th>sequence</th><th>kind</th>
-</tr></thead><tbody>{masks_rows_compact}</tbody></table></div>
-</div>
+{chart_wide("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion. "
+   "A sequence that fits the backbone better does not occlude the paratope more.")}
+<details class="tech"><summary>Every mask in the design space</summary><div class="techbody">
+<div class="scroll"><table class="wrap"><thead><tr><th>mask</th><th>sequence</th><th>length</th>
+<th>method</th><th>kind</th><th>note</th>
+</tr></thead><tbody>{masks_rows_full}</tbody></table></div></div></details>
+
+</section>
+
+<section class="sec">
+<div class="stack"><div class="eyebrow">06</div><h2>Scoring and computational results</h2>
+<p>Each construct is scored on three independent requirements. Two of the three work, in the sense
+that they separate designs from matched controls. The third does not, and that is the result this
+section is mainly about.</p></div>
 
 <h3 class="mod"><span>Module 03</span>Structural feasibility</h3>
 {mri("Each construct was folded with ESMFold as one chain: mask, linker and nanobody "
@@ -1286,10 +1323,11 @@ over time.</p></div></details>
      "than two independent models would be. CleaveNet is trained on human MMPs; the protease that "
      "arrives first at a bite site is a snake venom metalloproteinase, which is not in its "
      "training set, so the gelatinases stand in for it.")}
-<p>The linkers carried forward, and the two controls they are read against. Target is the mean
+<p>The linkers carried forward, and the controls they are read against. Target is the mean
 predicted cleavage by {N['target_proteases']}; off-target is the mean over the membrane-type and
 constitutive enzymes.</p>
-{R.linker_table(LINKERS)}
+<details class="tech"><summary>Every linker, with its predicted cleavage profile</summary>
+<div class="techbody">{R.linker_table(LINKERS)}</div></details>
 <div class="two">
 {chart("cleavability_panel", "Recognition against reach. The controls say whether either axis "
        "discriminates.")}
@@ -1341,7 +1379,7 @@ have hidden.</p>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">05</div><h2>Experimental work</h2>
+<div class="stack"><div class="eyebrow">07</div><h2>Experimental collaboration and further development</h2>
 <p>I would work with experimental PhD students to establish measurements corresponding to the
 three scoring functions: protein stability and developability, mask interaction and dissociation,
 and protease responsiveness. Purification behaviour and gel analysis address the first,
@@ -1351,7 +1389,15 @@ third.</p>
 assessed and would identify which parts of the pipeline require development. As more measurements
 accumulate, I would investigate whether sequence and structural representations of the constructs
 can be used to train more accurate scoring functions and improve the selection of subsequent
-candidates.</p></div>
+candidates.</p>
+<p>The preliminary implementation shows how structural information can constrain candidate
+generation and how several molecular properties can be combined into a selection framework. The
+principal remaining challenge is predicting masking and release: a tethered mask acts at a high
+local concentration, so a weak isolated interaction may still be functional, and a static complex
+prediction gives neither an affinity nor an off-rate. I would prioritise that component while
+working with the experimental researchers to establish the measurements needed to assess
+structural feasibility, binding and protease responsiveness. The aim is a method that can be
+applied to other nanobody&ndash;antigen pairs without altering their binding interfaces.</p></div>
 </section>
 
 <section class="sec">
