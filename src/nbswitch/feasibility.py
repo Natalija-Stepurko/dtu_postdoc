@@ -109,7 +109,18 @@ def feasibility(construct: dict, structure_dir: Path, plddt: dict,
         "unpaired_cysteines": unpaired_cys,
         "f_fold": round(f_fold, 3), "f_preserved": round(f_preserved, 3),
         "f_surface": round(f_surface, 3), "f_cysteine": round(f_cys, 3),
+        # The product is a heuristic, not a measured quantity. The four terms
+        # are on different scales and none is calibrated against expression or
+        # stability, so they are reported separately and this is a convenience
+        # for ordering, labelled as such wherever it is shown.
         "feasibility_score": round(float(f_fold * f_preserved * f_surface * f_cys), 3),
+        "feasibility_is_heuristic": True,
+        "descriptors": {
+            "plddt_all": round(plddt_all, 1),
+            "vhh_core_rmsd_A": round(rmsd, 3) if rmsd == rmsd else None,
+            "exposed_hydrophobic_fraction": round(phobic_fraction, 3),
+            "unpaired_cysteines": unpaired_cys,
+            "added_cysteines": added_cys},
     }
 
 

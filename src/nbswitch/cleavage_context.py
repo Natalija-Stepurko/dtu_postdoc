@@ -63,8 +63,15 @@ def _fibonacci_directions(n: int) -> np.ndarray:
                             np.cos(phi)])
 
 
+#: Residues either side of the scissile bond that the catalytic cleft holds,
+#: about P3 to P3'. Extension over this window is what decides whether the
+#: groove can bind; extension over the whole linker is a different quantity
+#: and a long flexible linker will look coiled whatever its cleavage site does.
+CLEFT_HALF_WIDTH = 3
+
+
 def extension(atoms, linker_range: tuple[int, int]) -> float:
-    """Span of the segment against its fully extended length, 0 to 1."""
+    """Span of a segment against its fully extended length, 0 to 1."""
     start, stop = linker_range
     ca = atoms[(atoms.atom_name == "CA") &
                (atoms.res_id >= start) & (atoms.res_id <= stop)]
@@ -128,18 +135,31 @@ def cleavage_accessibility(atoms, linker_range: tuple[int, int]) -> dict:
     The product is deliberate: these are requirements, not contributions. A
     construct that fails any one of them is not cleavable, so a high score
     elsewhere must not compensate.
+
+    Extension is measured over the cleft window around the scissile bond, not
+    over the whole linker. A protease holds about six residues; whether the
+    other twenty are coiled is a fact about the tether and not about whether
+    this bond can be bound. The whole-linker value is reported alongside,
+    because it is what decides how far the mask reaches.
     """
     start, stop = linker_range
     scissile = (start + stop) // 2
-    ext = extension(atoms, linker_range)
-    exp = exposure(atoms, linker_range)
+    cleft = (max(start, scissile - CLEFT_HALF_WIDTH),
+             min(stop, scissile + CLEFT_HALF_WIDTH))
+    ext_local = extension(atoms, cleft)
+    ext_whole = extension(atoms, linker_range)
+    exp = exposure(atoms, cleft)
+    exp_whole = exposure(atoms, linker_range)
     clear = clearance(atoms, scissile)
-    score = ext * exp * clear["open_fraction"]
+    score = ext_local * exp * clear["open_fraction"]
     return {
-        "extension": round(ext, 3),
+        "extension": round(ext_local, 3),
+        "extension_whole_linker": round(ext_whole, 3),
         "exposure": round(exp, 3),
+        "exposure_whole_linker": round(exp_whole, 3),
         "clearance_open_fraction": round(clear["open_fraction"], 3),
         "clearance_min_occupancy": round(clear["min_occupancy"], 4),
         "scissile_residue": scissile,
+        "cleft_window": list(cleft),
         "context_score": round(score, 4),
     }

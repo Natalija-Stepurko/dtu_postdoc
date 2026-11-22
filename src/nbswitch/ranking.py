@@ -12,22 +12,27 @@ from __future__ import annotations
 import numpy as np
 
 #: The three objectives, in the order they are reported.
-OBJECTIVES = ("feasibility", "trigger", "unmasking")
+OBJECTIVES = ("feasibility", "cleavability", "surface_occlusion")
 
 #: What each objective is actually computed from, as opposed to what it is
 #: meant to capture. These are not the same thing here, and the difference is
-#: the main limitation of the ranking: "unmasking" is fed by predicted
-#: paratope occlusion in the folded construct, which the controls show does
-#: not separate designed masks from scrambled or inert ones. It is reported
-#: under its own name so that a front built on it is not read as a list of
+#: the main limitation of the ranking. The third objective is named for the
+#: quantity it computes, surface occlusion, and not for the property it was
+#: meant to stand in for. The controls show it does not separate designed
+#: masks from scrambled or inert ones, so a front built on it is not a list of
 #: constructs predicted to mask.
 OBJECTIVE_BASIS = {
-    "feasibility": "predicted fold confidence, nanobody preservation, exposed "
-                   "hydrophobic surface and added cysteine",
-    "trigger": "predicted human-MMP selectivity times structural reach of the "
-               "linker; not a cleavage rate and not venom-protease specificity",
-    "unmasking": "predicted paratope occlusion in the folded construct; a "
-                 "surface measure, not a demonstration of blocked binding",
+    "feasibility": "a heuristic combination of predicted fold confidence, "
+                   "nanobody preservation, exposed hydrophobic surface and "
+                   "measured disulfide pairing",
+    "cleavability": "predicted human-MMP selectivity times structural reach of "
+                    "the linker; not a cleavage rate, and not specificity for "
+                    "a snake venom metalloproteinase",
+    "surface_occlusion": "paratope surface lost in the folded construct. It is "
+                         "named for what it measures: the controls show it does "
+                         "not separate designed masks from scrambled or inert "
+                         "ones, so it is not a masking score and a front built "
+                         "on it is not a list of masked nanobodies",
 }
 
 
@@ -61,10 +66,10 @@ def combine(feasibility_rows, trigger_rows, unmasking_rows=None) -> list[dict]:
             # reach alone would compare it against others on a different
             # quantity, which is worse than leaving it out, since rank()
             # already excludes designs that are missing an objective.
-            table[r["id"]]["trigger"] = r.get("cleavability_score")
+            table[r["id"]]["cleavability"] = r.get("cleavability_score")
     for r in (unmasking_rows or []):
         if r["id"] in table:
-            table[r["id"]]["unmasking"] = r.get("occlusion")
+            table[r["id"]]["surface_occlusion"] = r.get("occlusion")
     return list(table.values())
 
 
@@ -74,9 +79,12 @@ def rank(rows, objectives=None) -> dict:
     A construct with no linker has no trigger score, so it is excluded rather
     than allowed to dominate on the objectives it happens to have.
     """
+    # All three or none. Dropping an objective because it is missing compares
+    # candidates on different requirements and calls the result a front.
     if objectives is None:
-        objectives = [o for o in OBJECTIVES
-                      if sum(1 for r in rows if r.get(o) is not None) > len(rows) / 2]
+        missing = [o for o in OBJECTIVES
+                   if not any(r.get(o) is not None for r in rows)]
+        objectives = [] if missing else list(OBJECTIVES)
     complete = [r for r in rows
                 if all(r.get(o) is not None for o in objectives)]
     skipped = len(rows) - len(complete)
@@ -88,14 +96,15 @@ def rank(rows, objectives=None) -> dict:
     for r, on_front in zip(rows, keep):
         r["on_front"] = bool(on_front)
     front = [r for r, k in zip(rows, keep) if k]
-    # The front is a set, not an order. Sorting it by the sum of the
-    # objectives would apply equal weights immediately after saying that no
-    # weights are used, and would hide that choice inside a display detail.
-    # It is ordered by its worst objective instead, which is a stated rule and
-    # keeps members whose weakest score is least bad at the top, and the order
-    # is labelled rather than presented as a ranking.
-    front.sort(key=lambda r: -min(float(r[o]) for o in objectives))
+    # The front is a set, not a ranking. Ordering it by the sum applies equal
+    # weights after saying none are used; ordering it by the weakest objective
+    # compares scores on different scales. Neither is defensible, so it is
+    # returned in a stable arbitrary order and labelled unordered. Choosing
+    # between its members needs a stated rule: a feasibility threshold,
+    # predictive uncertainty, or diversity.
+    front.sort(key=lambda r: r["id"])
     return {"objectives": list(objectives), "n_total": len(rows),
             "n_front": len(front), "n_skipped": skipped,
-            "front_order": "by weakest objective; the front itself is unordered",
+            "front_order": "unordered; sorted by id for stability only",
+            "objective_basis": {o: OBJECTIVE_BASIS[o] for o in objectives},
             "front": front, "rows": rows}
