@@ -290,7 +290,12 @@ use however well it masks, and one that cannot be cut is of no use however well 
 the three scores were averaged, a high score on one would hide a failure on another, so instead I
 keep a design unless some other design is at least as good on every score and better on at least
 one. No weights are applied.</p>
-<p>Of {ranking_data['n_total']} scored designs, {ranking_data['n_front']} survive this test. The
+<p>Of {ranking_data['n_total']} scored designs, {ranking_data.get('n_excluded', 0)} are excluded
+by hard constraints before any comparison: a nanobody that is not confidently predicted, a fold
+that has moved, a linker cut no more at the site than in circulation, or one a protease cannot
+reach. None of those can be compensated for by another score, which is what a front would
+otherwise allow. Of the {ranking_data.get('n_feasible', 0)} that remain,
+{ranking_data['n_front']} survive this test. The
 rest are beaten outright by something else.</p></div>
 <div class="scroll"><table class="wrap"><thead><tr><th>construct</th>{_hdr}</tr></thead>
 <tbody>{_rows}</tbody></table></div>

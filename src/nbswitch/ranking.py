@@ -59,6 +59,11 @@ def combine(feasibility_rows, trigger_rows, unmasking_rows=None) -> list[dict]:
                                    "kind": r["kind"],
                                    "linker_residues": r["linker_residues"]})
         table[r["id"]]["feasibility"] = r["feasibility_score"]
+        # carried so the hard constraints can be checked on the molecule
+        # rather than on the heuristic that summarises it
+        for key in ("plddt_vhh", "vhh_core_rmsd_A", "unpaired_cysteines"):
+            if key in r:
+                table[r["id"]][key] = r[key]
     for r in trigger_rows:
         if r["id"] in table:
             # recognition times reach. A construct whose linker carries no
@@ -67,44 +72,203 @@ def combine(feasibility_rows, trigger_rows, unmasking_rows=None) -> list[dict]:
             # quantity, which is worse than leaving it out, since rank()
             # already excludes designs that are missing an objective.
             table[r["id"]]["cleavability"] = r.get("cleavability_score")
+            for key in ("selectivity", "context_score"):
+                if key in r:
+                    table[r["id"]][key] = r[key]
     for r in (unmasking_rows or []):
         if r["id"] in table:
             table[r["id"]]["surface_occlusion"] = r.get("occlusion")
     return list(table.values())
 
 
-def rank(rows, objectives=None) -> dict:
-    """Pareto front over the objectives, using only designs that carry all of them.
+def rank(rows, objectives=None, penalty: float = 0.0, n_shortlist: int = 6) -> dict:
+    """Hard constraints, then the nondominated set, then a stated ordering.
 
-    A construct with no linker has no trigger score, so it is excluded rather
-    than allowed to dominate on the objectives it happens to have.
+    Three steps, each doing one thing:
+
+    **Constraints.** Drop what cannot work regardless of its other scores. A
+    Pareto front would otherwise let a construct survive on two objectives
+    while failing a requirement outright.
+
+    **Non-domination.** Keep a design unless another is at least as good on
+    every objective and better on one. No weights, so no score compensates.
+
+    **Ordering.** The front is a set, so turning it into a list needs a rule.
+    The rule is maximin on the normalised scores: a construct is worth no more
+    than its weakest requirement. It is reported as the rule it is.
+
+    A design with any objective missing is excluded rather than ranked on the
+    rest, which would compare candidates on different requirements.
     """
-    # All three or none. Dropping an objective because it is missing compares
-    # candidates on different requirements and calls the result a front.
     if objectives is None:
         missing = [o for o in OBJECTIVES
                    if not any(r.get(o) is not None for r in rows)]
         objectives = [] if missing else list(OBJECTIVES)
-    complete = [r for r in rows
-                if all(r.get(o) is not None for o in objectives)]
-    skipped = len(rows) - len(complete)
-    if not objectives or not complete:
-        return {"objectives": [], "front": [], "rows": rows, "n_skipped": skipped}
-    rows = complete
-    points = np.array([[float(r[o]) for o in objectives] for r in rows])
+
+    scored = [r for r in rows if all(r.get(o) is not None for o in objectives)]
+    n_unscored = len(rows) - len(scored)
+    if not objectives or not scored:
+        return {"objectives": [], "front": [], "rows": rows,
+                "n_skipped": n_unscored}
+
+    feasible, excluded = apply_hard_constraints(scored)
+    if not feasible:
+        return {"objectives": list(objectives), "front": [], "rows": scored,
+                "n_total": len(scored), "n_front": 0,
+                "n_skipped": n_unscored, "n_excluded": len(excluded),
+                "excluded": excluded}
+
+    points = np.array([[float(r[o]) for o in objectives] for r in feasible])
     keep = pareto_front(points)
-    for r, on_front in zip(rows, keep):
+    for r, on_front in zip(feasible, keep):
         r["on_front"] = bool(on_front)
-    front = [r for r, k in zip(rows, keep) if k]
-    # The front is a set, not a ranking. Ordering it by the sum applies equal
-    # weights after saying none are used; ordering it by the weakest objective
-    # compares scores on different scales. Neither is defensible, so it is
-    # returned in a stable arbitrary order and labelled unordered. Choosing
-    # between its members needs a stated rule: a feasibility threshold,
-    # predictive uncertainty, or diversity.
-    front.sort(key=lambda r: r["id"])
-    return {"objectives": list(objectives), "n_total": len(rows),
-            "n_front": len(front), "n_skipped": skipped,
-            "front_order": "unordered; sorted by id for stability only",
-            "objective_basis": {o: OBJECTIVE_BASIS[o] for o in objectives},
-            "front": front, "rows": rows}
+    for r in excluded:
+        r["on_front"] = False
+    front = [r for r, k in zip(feasible, keep) if k]
+
+    scale = normalise(feasible, objectives)
+    for r in feasible:
+        r["robust_score"] = round(robust_score(r, scale, objectives, penalty), 4)
+    ordered = sorted(front, key=lambda r: -r["robust_score"])
+    shortlist = select_diverse(ordered, n=n_shortlist)
+
+    from collections import Counter
+    why = Counter(k for r in excluded for k in r["failed_constraints"])
+
+    return {
+        "objectives": list(objectives),
+        "objective_basis": {o: OBJECTIVE_BASIS[o] for o in objectives},
+        "n_total": len(scored), "n_skipped": n_unscored,
+        "n_feasible": len(feasible), "n_excluded": len(excluded),
+        "excluded_by": dict(why),
+        "constraints": [{"field": f, "op": o, "limit": l, "why": w}
+                        for f, o, l, w in HARD_CONSTRAINTS],
+        "n_front": len(front),
+        "front_order": "maximin on the normalised objectives: ordered by the "
+                       "weakest of the three. The front itself is a set; this "
+                       "is a stated rule applied to it, not a property of it.",
+        "normalisation": "min-max within the feasible set, so the three scales "
+                         "are comparable. Not a calibration against measured "
+                         "quantities, which do not exist for these scores.",
+        "uncertainty_penalty": penalty,
+        "front": ordered,
+        "shortlist": [r["id"] for r in shortlist],
+        "rows": feasible + excluded,
+    }
+
+
+# --------------------------------------------------------------------------
+# Constrained Pareto selection, then a stated ordering rule
+#
+# A front is a set. Turning it into a list needs a rule, and the rule has to
+# be said out loud rather than hidden in a sort key. What follows is three
+# steps, in order: drop what cannot work at all, take the nondominated set of
+# what remains, then order that set by its weakest normalised objective.
+# --------------------------------------------------------------------------
+
+#: Requirements a construct has to meet before its scores are worth comparing.
+#: Each is a property of the molecule rather than a quantile of the observed
+#: distribution, so the set does not move when the library changes.
+HARD_CONSTRAINTS = (
+    ("plddt_vhh", "ge", 70.0,
+     "the nanobody itself must be confidently predicted, or nothing measured "
+     "on its paratope means anything"),
+    ("vhh_core_rmsd_A", "le", 2.0,
+     "the fold has to survive the fusion; past about 2 A the core has moved"),
+    ("selectivity", "gt", 0.0,
+     "a linker cut no more at the site than in circulation unmasks in transit, "
+     "which is the failure the design exists to prevent"),
+    ("context_score", "gt", 0.0,
+     "a linker a protease cannot reach is not cleavable at any sequence"),
+)
+
+
+def apply_hard_constraints(rows, constraints=HARD_CONSTRAINTS):
+    """Split candidates into those worth ranking and those ruled out.
+
+    A construct that fails one of these is not a worse candidate, it is not a
+    candidate: no score on another axis can compensate, which is exactly what
+    a Pareto front would otherwise let it do.
+    """
+    ops = {"ge": lambda a, b: a >= b, "le": lambda a, b: a <= b,
+           "gt": lambda a, b: a > b, "lt": lambda a, b: a < b}
+    feasible, excluded = [], []
+    for r in rows:
+        failed = []
+        for key, op, limit, _why in constraints:
+            value = r.get(key)
+            if value is None:
+                continue                      # not measured is not a failure
+            if not ops[op](float(value), limit):
+                failed.append(key)
+        (excluded if failed else feasible).append(
+            {**r, "failed_constraints": failed} if failed else r)
+    return feasible, excluded
+
+
+def normalise(rows, objectives=OBJECTIVES) -> dict:
+    """Min-max each objective over the candidates being compared.
+
+    The three scores are on unrelated scales, so comparing their raw values
+    would make the ordering an artefact of which happens to be numerically
+    smallest. This puts them on 0 to 1 within the set being ranked.
+
+    It is a within-run normalisation and not a calibration: it says where a
+    construct sits among those tested, not whether any of them is good.
+    """
+    out = {}
+    for o in objectives:
+        vals = [float(r[o]) for r in rows if r.get(o) is not None]
+        lo, hi = (min(vals), max(vals)) if vals else (0.0, 1.0)
+        span = hi - lo
+        out[o] = (lo, span if span > 0 else 1.0)
+    return out
+
+
+def robust_score(row, scale, objectives=OBJECTIVES, penalty: float = 0.0,
+                 uncertainty=None) -> float:
+    """The weakest normalised objective, optionally discounted for uncertainty.
+
+    Maximin: a construct is worth no more than its worst requirement, because
+    all three have to hold at once. Ordering by this prefers the balanced
+    candidate over one that is excellent twice and poor once.
+
+    ``penalty`` multiplies a per-objective uncertainty before taking the
+    minimum, which stops a design being promoted by one optimistic model. No
+    calibrated uncertainty exists for these scores yet, so it defaults to
+    nothing and the hook is here for when one does.
+    """
+    uncertainty = uncertainty or {}
+    worst = None
+    for o in objectives:
+        value = row.get(o)
+        if value is None:
+            return float("-inf")
+        lo, span = scale[o]
+        z = (float(value) - lo) / span
+        z -= penalty * float(uncertainty.get(o, 0.0))
+        worst = z if worst is None else min(worst, z)
+    return float(worst if worst is not None else float("-inf"))
+
+
+def select_diverse(rows, n: int = 6, key=lambda r: r.get("mask")):
+    """Take the best of each distinct design, then fill up by order.
+
+    Predictions made for near-identical constructs share whatever systematic
+    error they carry, so a shortlist of six variants of one mask tests one
+    hypothesis six times. ``rows`` must already be ordered.
+    """
+    seen, chosen = set(), []
+    for r in rows:
+        k = key(r)
+        if k not in seen:
+            seen.add(k)
+            chosen.append(r)
+        if len(chosen) >= n:
+            return chosen
+    for r in rows:
+        if r not in chosen:
+            chosen.append(r)
+        if len(chosen) >= n:
+            break
+    return chosen

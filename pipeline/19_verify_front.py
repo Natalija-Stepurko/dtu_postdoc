@@ -46,9 +46,14 @@ cases = [("control_free_vhh_msa", None,
 # the front, if the ranking has run; otherwise a derived pair so the stage can
 # still be exercised before there is anything to verify
 try:
-    front = load_json("13_ranking.json")["front"]
-    chosen = [r["id"] for r in front[:N_VERIFY] if r["id"] in by_id]
-    source = f"top {len(chosen)} of the {len(front)} nondominated designs"
+    rk = load_json("13_ranking.json")
+    # the shortlist is the front ordered by its weakest objective and then
+    # deduplicated by mask, so six predictions test six designs rather than
+    # six variants of one
+    picks = rk.get("shortlist") or [r["id"] for r in rk["front"]]
+    chosen = [cid for cid in picks[:N_VERIFY] if cid in by_id]
+    source = (f"{len(chosen)} of the {rk.get('n_front', len(picks))} "
+              f"nondominated designs, one per distinct mask")
 except FileNotFoundError:
     chosen, source = [], "ranking has not run"
 
