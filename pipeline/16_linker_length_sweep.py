@@ -45,7 +45,14 @@ for base in (generated, gs_control):
                                 kind=base.get("kind", "generated"),
                                 selectivity=base.get("selectivity"))
 
-masks = {name: m for name, m in lib["masks"].items()}
+#: The library now carries length as an axis of its own at three points, so
+#: this stage is the fine-grained version: five lengths on a reduced set of
+#: masks. One graft, one scramble and the inert control are enough to say
+#: whether a gain with length belongs to the mask or to crowding.
+SWEEP_MASKS = ("epi_core", "epi_core_scram", "polyG")
+masks = {name: m for name, m in lib["masks"].items() if name in SWEEP_MASKS}
+if not masks:
+    masks = dict(list(lib["masks"].items())[:3])
 library = [c for c in C.build_library(lib["vhh_sequence"], masks, series)
            if c["id"] != "VHH_only"]
 print(f"{len(masks)} masks x {len(series)} linkers = {len(library)} constructs "
