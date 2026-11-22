@@ -943,7 +943,7 @@ tell you that a target is unsuitable before you spend anything on it.</p>
 </details>"""
 
 
-def background_section(window_lo_nM: float, window_hi_nM: float) -> str:
+def background_section() -> str:
     """Prior work, told as a sequence rather than a gallery.
 
     Follistatin's C-terminal tail is an endogenous tethered competitor for the
@@ -959,15 +959,10 @@ def background_section(window_lo_nM: float, window_hi_nM: float) -> str:
 
     return f"""
 <details class="fold">
-<summary><b>Background: a tethered competitive regulator, measured</b>
-<span>PhD work on follistatin, which solves this same two-state problem naturally.</span>
+<summary><b>Background in solution behaviour modelling of flexible multidomain signalling
+inhibitor</b>
 </summary>
 <div class="foldbody">
-
-<p>The construct on this page needs a tethered module that binds its own protein tightly enough to
-block and weakly enough to let go. Follistatin already does this. Its isoforms differ only at the
-C-terminus, and the longest, FST315, carries an acidic tail that folds back onto the FS1 domain —
-the same surface that binds heparan sulphate. The tail is an <b>endogenous mask</b>.</p>
 
 {step("01", "The molecule, and where the isoforms differ")}
 {f("fst_domains", "Domain organisation, charge and conservation. FST288, FST303 and FST315 differ "
@@ -984,14 +979,6 @@ the same surface that binds heparan sulphate. The tail is an <b>endogenous mask<
 {step("03", "What the tail competes with")}
 {f("fig4_1_4_e", "Isoform binding to heparan sulphate, the ligand the tail displaces from that "
    "same surface.", "wide")}
-
-<div class="note good"><b>Those affinities land inside the window this pipeline computes.</b>
-Masking and release together allow a mask dissociation constant between roughly
-<b>{window_lo_nM:.0f} nM and {window_hi_nM:.0f} µM</b> for the nanobody here. The follistatin tail
-works at 145 nM to 34.6 µM depending on ionic strength — inside that range at every salt
-concentration measured. A natural tethered competitor sits where the model says a designed one
-should. Different protein and different geometry, so this says the regime is physically sensible
-rather than that the model is right.</div>
 
 {step("04", "Two states, resolved experimentally rather than predicted")}
 {f("fst_saxs_abc", "From crystal structure to solution ensemble. (a) FST288 in the "

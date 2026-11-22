@@ -111,8 +111,7 @@ if TARGET_ID != CAUTIONARY:
     except FileNotFoundError:
         cautionary_html = ""
 
-background_html = R.background_section(
-    bN["km_min_for_release_M"] * 1e9, bN["km_max_for_masking_M"] * 1e6)
+background_html = R.background_section()
 
 R.copy_assets(lib["constructs"])
 R.write_reference_pdb()
