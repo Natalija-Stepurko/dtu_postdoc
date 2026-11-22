@@ -770,14 +770,23 @@ COUNTS = _count_rows()
 #: Which module each stage belongs to, and the method that produced its
 #: number. Keeping it here means the table cannot claim a method a stage does
 #: not use.
+#:
+#: Stage numbers are execution order of the code and collide with the module
+#: numbers while meaning something different, so they are not shown as a
+#: column. The script name is given instead, which is unambiguously a file.
 STAGE_MODULE = {'01': ('01', 'Shrake–Rupley SASA, biotite 1.6'), '02': ('01', 'worm-like chain; competitive equilibria'), '02b': ('02b', 'CleaveNet conditional generator + predictor'), '18': ('02b', 'position weight matrix and nearest neighbour over the Kukreja library'), '16': ('02b', 'flank-length sweep, substrate held constant; ESMFold'), '03a': ('02a', 'antigen contact face at 3.5 Å; window variants'), '03': ('02a', 'every mask on every linker'), '04': ('03', 'ESMFold facebook/esmfold_v1'), '07': ('02a', 'ProteinMPNN v_48_020, nanobody and linker fixed'), '12': ('03', 'pLDDT; Cα core RMSD; SASA; SG–SG distance'), '10': ('05', 'extension × exposure × 17 Å clearance'), '17': ('04', 'Boltz-2.2.1, mask + nanobody, no tether'), '09': ('04', 'Boltz-2.2.1, no alignments'), '19': ('04', 'Boltz-2.2.1, whole construct with antigen, alignments on public chains'), '13': ('06', 'Pareto non-domination'), '15': ('03', 'the same measures on independent complexes')}
+
+
+SCRIPTS = {path.name.split("_")[0]: path.name
+           for path in sorted((Path(__file__).resolve().parent).glob("*.py"))}
 
 
 def _exp(stage, name, question, loader):
     """One row. A stage with no output is listed, not omitted."""
     module, method = STAGE_MODULE.get(stage, ("\u2014", ""))
     base = {"stage": stage, "name": name, "question": question,
-            "module": module, "method": method}
+            "module": module, "method": method,
+            "script": SCRIPTS.get(stage, "")}
     try:
         return {**base, "status": "run", "result": loader()}
     except (FileNotFoundError, KeyError, IndexError, TypeError, ValueError,

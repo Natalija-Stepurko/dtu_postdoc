@@ -106,15 +106,16 @@ tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
 tr.warnrow td{background:#FDF4EC}
 .await{border:1px dashed var(--rule);border-radius:3px;padding:13px 16px;margin:10px 0 18px;font-size:.88rem;color:var(--ink-3);background:#FAFBFB}
-table.cuts{table-layout:fixed;width:100%}
-table.cuts th,table.cuts td{white-space:normal;text-align:left;vertical-align:top;font-family:var(--sans);font-size:.88rem;line-height:1.45;padding:11px 13px}
-table.cuts td:first-child{font-family:var(--mono);font-size:.78rem;font-weight:600}
-table.cuts thead th{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase}
+table.tbl{table-layout:fixed;width:100%}
+table.tbl th,table.tbl td{white-space:normal;text-align:left;vertical-align:top;font-family:var(--sans);font-size:.88rem;line-height:1.45;padding:11px 13px;overflow-wrap:break-word}
+table.tbl td.mono,table.tbl td:first-child{font-family:var(--mono);font-size:.78rem}
+table.tbl thead th,table.tbl tr:first-child th{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
 table.exp td{overflow-wrap:normal;word-break:normal}
 .register{border:1px solid var(--rule);border-radius:3px;overflow:hidden}
 .modblock+.modblock{border-top:1px solid var(--rule)}
 .modbar{display:flex;gap:18px;align-items:baseline;justify-content:space-between;background:#F4F8F8;padding:11px 14px}
 .modname{font-weight:600;font-size:.95rem;color:var(--ink)}
+.script{display:block;font-family:var(--mono);font-size:.66rem;color:var(--ink-3);font-weight:400;margin-top:3px}
 .register table.exp{border:0}
 .register table.exp tbody tr:last-child td{border-bottom:0}
 .alts{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;text-align:right;flex:1 1 auto}
@@ -1311,14 +1312,15 @@ def pipeline_table(rows) -> str:
             tag = (f'<span class="stat-tag" style="color:{colour};'
                    f'border-color:{colour}">{label}</span>')
             cls = ' class="ctrl"' if pending_row else ""
-            body += (f'<tr{cls}><td class="mono">{r["stage"]}</td>'
-                     f'<td><b>{r["name"]}</b></td><td>{r["question"]}</td>'
+            script = r.get("script") or ""
+            name_cell = (f'<b>{r["name"]}</b>'
+                         + (f'<span class="script">{script}</span>' if script else ""))
+            body += (f'<tr{cls}><td>{name_cell}</td><td>{r["question"]}</td>'
                      f'<td class="mono">{r.get("method", "")}</td>'
                      f'<td>{tag} {result}</td></tr>')
         out.append('<table class="tbl exp wrap">'
-                   '<colgroup><col style="width:6%"><col style="width:16%">'
-                   '<col style="width:23%"><col style="width:25%">'
-                   '<col style="width:30%"></colgroup>'
+                   '<colgroup><col style="width:19%"><col style="width:24%">'
+                   '<col style="width:26%"><col style="width:31%"></colgroup>'
                    f'<tbody>{body}</tbody></table></div>')
     return '<div class="register">' + "".join(out) + "</div>"
 
@@ -1401,7 +1403,10 @@ def interface_controls_table(controls, target: str) -> str:
 
 def generation_table(counts) -> str:
     """The funnel: what entered each stage, what left, and which stage takes it."""
-    head = ("<tr><th>stage</th><th>what happens</th><th>in</th><th>out</th>"
+    head = ('<colgroup><col style="width:8%"><col style="width:46%">'
+            '<col style="width:7%"><col style="width:7%">'
+            '<col style="width:32%"></colgroup>'
+            "<tr><th>stage</th><th>what happens</th><th>in</th><th>out</th>"
             "<th>consumed by</th></tr>")
     body = ""
     for r in counts:
@@ -1421,7 +1426,10 @@ def linker_table(linkers) -> str:
     """The generated substrates and their controls, with the contrast they scored."""
     if not linkers:
         return pending("linker generation, stage 02b")
-    head = ("<tr><th>linker</th><th>sequence</th><th>kind</th>"
+    head = ('<colgroup><col style="width:11%"><col style="width:34%">'
+            '<col style="width:21%"><col style="width:11%">'
+            '<col style="width:12%"><col style="width:11%"></colgroup>'
+            "<tr><th>linker</th><th>sequence</th><th>kind</th>"
             "<th>target</th><th>off&#8209;target</th><th>selectivity</th></tr>")
     body = ""
     for item in linkers:
@@ -1447,7 +1455,9 @@ def assumptions_table(rows) -> str:
     are measured and which are chosen should be visible next to the number
     rather than in a methods note further down.
     """
-    head = ("<tr><th>quantity</th><th>value</th><th>where it comes from</th>"
+    head = ('<colgroup><col style="width:21%"><col style="width:12%">'
+            '<col style="width:30%"><col style="width:37%"></colgroup>'
+            "<tr><th>quantity</th><th>value</th><th>where it comes from</th>"
             "<th>effect if it moves</th></tr>")
     body = ""
     for r in rows:
@@ -1459,7 +1469,9 @@ def assumptions_table(rows) -> str:
 
 def affinity_scan_table(scan, used_M, closes_M) -> str:
     """The design window as a function of the nanobody's own antigen affinity."""
-    head = ("<tr><th>V<sub>H</sub>H&ndash;antigen K<sub>D</sub></th>"
+    head = ('<colgroup><col style="width:30%"><col style="width:35%">'
+            '<col style="width:35%"></colgroup>'
+            "<tr><th>V<sub>H</sub>H&ndash;antigen K<sub>D</sub></th>"
             "<th>release floor on the mask</th><th>usable window</th></tr>")
     body = ""
     for r in scan:
