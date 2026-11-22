@@ -13,6 +13,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from nbswitch import complex_prediction as CP
+from nbswitch.constructs import complex_cases
 from nbswitch.config import load_json, save_json, RESULTS, RANDOM_SEED
 
 BOLTZ = "/scratch/.venv-dtu/bin/boltz"
@@ -28,10 +29,10 @@ paratope = [i + 1 for i, l in enumerate(lib["vhh_residue_labels"])
 
 cases = [("control_free_vhh_msa", None,
           "free nanobody with its toxin; the crystal structure already answers this")]
-for cid in ("epi1_L5", "epi1_L15", "polyG_L5"):
-    if cid in by_id:
-        cases.append((f"{cid}_msa", cid, f"{by_id[cid]['mask_kind']}, "
-                      f"{by_id[cid]['linker_residues']}-residue linker"))
+for cid, note in complex_cases(lib["constructs"]):
+    cases.append((f"{cid}_msa", cid, note))
+if len(cases) == 1:
+    raise SystemExit("no masked construct to predict: the library has no mask+linker pair")
 
 results = []
 for name, cid, note in cases:

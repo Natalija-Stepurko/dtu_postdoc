@@ -114,3 +114,46 @@ def build_library(vhh_sequence, masks, linkers) -> list[dict]:
                     "mask_range": None, "linker_range": None,
                     "vhh_range": [1, len(vhh_sequence)]})
     return library
+
+
+def complex_cases(constructs, n_linkers: int = 2):
+    """Which constructs to spend a complex prediction on.
+
+    Derived from the library rather than named, because construct ids change
+    whenever the linkers are regenerated: a hardcoded list silently selects
+    nothing, or worse, reports results for molecules no longer in the library.
+
+    The comparison needs a grafted mask and an inert one on the same linker, so
+    that a difference between them is attributable to the mask, plus the same
+    graft on a second linker to show whether the linker matters.
+    """
+    masked = [c for c in constructs if c.get("mask") and c.get("linker_id")]
+    if not masked:
+        return []
+
+    def selectivity(c):
+        s = c.get("linker_selectivity")
+        return -1e9 if s is None else s
+
+    linkers, seen = [], set()
+    for c in sorted(masked, key=selectivity, reverse=True):
+        if c["linker_id"] not in seen:
+            seen.add(c["linker_id"])
+            linkers.append(c["linker_id"])
+    linkers = linkers[:max(1, n_linkers)]
+
+    graft = next((c["mask"] for c in masked if c.get("mask_kind") == "epitope graft"), None)
+    inert = next((c["mask"] for c in masked if c.get("mask_kind") == "inert control"), None)
+
+    cases = []
+    for mask, label in ((graft, "grafted mask"), (inert, "inert mask, should not block")):
+        if mask is None:
+            continue
+        for i, lid in enumerate(linkers):
+            if mask is inert and i > 0:
+                continue        # the inert control only needs the one linker
+            hit = next((c for c in masked
+                        if c["mask"] == mask and c["linker_id"] == lid), None)
+            if hit:
+                cases.append((hit["id"], f"{label}, linker {lid}"))
+    return cases

@@ -11,6 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from nbswitch import complex_prediction as CP
+from nbswitch.constructs import complex_cases
 from nbswitch.config import load_json, save_json, RESULTS, RANDOM_SEED
 
 BOLTZ = "/scratch/.venv-dtu/bin/boltz"
@@ -23,10 +24,11 @@ by_id = {c["id"]: c for c in lib["constructs"]}
 toxin = lib["toxin_sequence"]
 
 cases = [("control_free_vhh", "VHH_only", "free nanobody with toxin — the crystal "
-          "structure already answers this, so it calibrates the rest"),
-         ("masked_epi1_L5", "epi1_L5", "grafted mask on the shortest linker"),
-         ("masked_epi1_L20", "epi1_L20", "same mask, linker four times longer"),
-         ("masked_polyG_L5", "polyG_L5", "inert mask — should not block")]
+          "structure already answers this, so it calibrates the rest")]
+cases += [(f"masked_{cid}", cid, note)
+          for cid, note in complex_cases(lib["constructs"])]
+if len(cases) == 1:
+    raise SystemExit("no masked construct to predict: the library has no mask+linker pair")
 
 try:
     redesign = load_json("08_redesign_folding.json")
