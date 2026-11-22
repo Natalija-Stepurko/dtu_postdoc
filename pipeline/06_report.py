@@ -498,6 +498,7 @@ N["cdr3"] = region["CDR3"]
 N["n_term"] = geom["n_term_to_nearest_paratope_A"]
 N["c_term"] = geom["c_term_to_nearest_paratope_A"]
 N["window"] = bN["window_decades"]
+N["window_fold"] = 10 ** bN["window_decades"]
 N["linker_best"] = bN["linker_residues"]
 N["km_lo"] = bN["km_min_for_release_M"] * 1e9
 N["km_hi"] = bN["km_max_for_masking_M"] * 1e6
@@ -1107,11 +1108,15 @@ of antigen and released mask, and on where the linker attaches and how long it i
      "afterwards.",
      f"For an N-terminal attachment the effective concentration is {N['ceff']:.0f} mM and the "
      f"usable range of mask dissociation constants is {N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM, "
-     f"widest at a {N['linker_best']}-residue linker. A C-terminal attachment gives a narrower "
-     f"range.",
+     f"widest at a {N['linker_best']}-residue linker. That is a factor of "
+     f"{N['window_fold']:,.0f}, or {N['window']:.2f} decades, where a decade means a factor of "
+     f"ten. A C-terminal attachment gives a narrower range.",
      "Candidate masks should be designed towards micromolar rather than nanomolar affinity. The "
-     "values depend on the assumptions of the polymer model and on the assumed antigen "
-     "concentration, so they constrain the search rather than specify a target.")}
+     "width of the window is the engineering tolerance: a design can miss its affinity target by "
+     "a factor of thousands and still switch, which is why this is a search problem rather than "
+     "an optimisation. The values depend on the assumptions of the polymer model and on the "
+     "assumed antigen concentration, so they constrain the search rather than specify a "
+     "target.")}
 <div class="two">
 {chart("design_window", "Usable mask affinity against linker length.")}
 {chart("tradeoff", "The two requirements as functions of mask affinity.")}
