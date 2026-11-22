@@ -18,16 +18,18 @@ from nbswitch.config import load_json, save_json, STRUCTURES, RANDOM_SEED
 TEMPERATURES = (0.1, 0.2, 0.3)
 PER_TEMPERATURE = 8
 
-#: Only grafts and the scramble are redesigned. Redesigning the inert control
-#: asks ProteinMPNN to improve a sequence with nothing to improve, and
-#: redesigning every window variant of one face produces near-duplicates of
-#: the same answer. Parents are one construct per eligible mask.
-REDESIGN_KINDS = ("epitope graft", "scrambled control")
+#: Every mask is redesigned, controls included. An earlier version redesigned
+#: only the grafts and the scramble, which leaves the redesigned set with no
+#: inert control: any comparison then pits redesigned grafts against
+#: un-redesigned controls, which is the confound the controls exist to remove.
+#: ProteinMPNN run on poly-glycine is itself the control that matters - what
+#: does it produce when the input carries no information about the paratope?
+REDESIGN_ALL_MASKS = True
 
-#: Folding the redesigns costs the same per construct as folding the library,
-#: so the same kind of budget applies. Designs past this are dropped by
-#: ProteinMPNN score, keeping the best of each parent.
-MAX_REDESIGNS = 90
+#: Kept per parent, not across the library. A global cap lets one parent's
+#: high-scoring designs crowd out another's, and the parent most likely to be
+#: crowded out is the control.
+PER_PARENT = 8
 
 PYTHON = sys.executable
 
@@ -66,14 +68,11 @@ try:
     _ref_len = load_json("02b_linkers.json").get("reference_length")
 except FileNotFoundError:
     _ref_len = None
-_eligible = {name for name, m in lib["masks"].items()
-             if m["kind"] in REDESIGN_KINDS}
-# match the construct's own mask field, not a prefix of its id: mask names
-# nest, so "epi_core_half_cn01" starts with "epi_core_" and a prefix test let
-# a truncated control through as if it were the graft it is named after
+# match the construct's own mask field, never a prefix of its id: mask names
+# nest, so "epi_core_half_cn01" starts with "epi_core_"
 _mask_of = {c["id"]: c.get("mask") for c in lib["constructs"]}
 PARENTS = [cid for cid in _parents(lib["constructs"], _ref_len)
-           if _mask_of.get(cid) in _eligible]
+           if _mask_of.get(cid) in set(lib["masks"])]
 if not PARENTS:
     raise SystemExit("no constructs to redesign: the library is empty")
 print(f"  redesigning {len(PARENTS)} parents: {', '.join(PARENTS)}")
@@ -117,18 +116,27 @@ for d in designs:
     key = (d["parent"], d["mask_seq"])
     if key not in best or d["score"] < best[key]["score"]:
         best[key] = d
-unique = sorted(best.values(), key=lambda d: d["score"])
-if len(unique) > MAX_REDESIGNS:
-    print(f"  {len(unique)} unique designs, keeping the {MAX_REDESIGNS} best "
-          f"by ProteinMPNN score")
-    unique = unique[:MAX_REDESIGNS]
+# the best PER_PARENT of each parent, so every mask is represented
+by_parent = {}
+for d in sorted(best.values(), key=lambda d: d["score"]):
+    by_parent.setdefault(d["parent"], []).append(d)
+unique = []
+for parent, designs in by_parent.items():
+    unique.extend(designs[:PER_PARENT])
+print(f"  {len(best)} unique designs, keeping the best {PER_PARENT} of each of "
+      f"{len(by_parent)} parents = {len(unique)}")
 
 constructs = []
+_seen_per_parent = {}
 for i, d in enumerate(unique):
+    _k = _seen_per_parent.get(d["parent"], 0)
+    _seen_per_parent[d["parent"]] = _k + 1
+    d = {**d, "_index": _k}
     mask_end = len(d["mask_seq"])
     n = d["linker_residues"]
     constructs.append({
-        "id": f"mpnn{i:03d}_{d['parent']}", "mask": f"mpnn_{d['parent']}",
+        "id": f"mpnn{d['_index']:02d}_{d['parent']}",
+        "mask": f"mpnn_{d['parent']}",
         "mask_seq": d["mask_seq"], "mask_kind": "ProteinMPNN redesign",
         "parent": d["parent"], "temperature": d["temperature"],
         "mpnn_score": d["score"], "native_score": native_scores.get(d["parent"]),
