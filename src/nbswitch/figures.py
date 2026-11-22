@@ -67,7 +67,9 @@ def paratope_footprint(ref, cdrs, chain="A"):
             region[r] = name
 
     paratope = set(data["paratope_labels"])
-    contacts = set(data.get("paratope_contact_labels", []))
+    # the set the mask is designed from, so the plot and the mask agree
+    contacts = set(data.get("paratope_near_labels")
+                   or data.get("paratope_contact_labels", []))
 
     fig, ax = plt.subplots(figsize=(8.6, 2.7))
     for name in ("CDR1", "CDR2", "CDR3"):
@@ -95,9 +97,10 @@ def paratope_footprint(ref, cdrs, chain="A"):
             ax.plot([i], [delta[i] + top * 0.05], marker="v", markersize=4.5,
                     color="#12191F", linestyle="none", zorder=5)
     if contacts:
-        cut = data.get("contact_cutoff_A", 3.0)
+        cut = data.get("mask_contact_cutoff_A",
+                       data.get("contact_cutoff_A", 3.5))
         ax.plot([], [], marker="v", markersize=4.5, color="#12191F", linestyle="none",
-                label=f"within {cut:.0f} \u00c5")
+                label=f"within {cut:g} \u00c5")
 
     for label, value in sorted(data["paratope_delta_sasa"].items(),
                                key=lambda kv: -kv[1])[:5]:

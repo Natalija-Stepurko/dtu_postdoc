@@ -82,11 +82,26 @@
         "C54",
         "T55"
       ],
+      "epitope_near_labels": [
+        "N22",
+        "C42",
+        "P43",
+        "T44",
+        "V45",
+        "K46",
+        "P47",
+        "L51",
+        "N52",
+        "C53"
+      ],
       "interface_area_A2": 630.9,
+      "mask_contact_cutoff_A": 3.5,
       "n_epitope": 19,
       "n_epitope_contacts": 5,
+      "n_epitope_near": 10,
       "n_paratope": 19,
       "n_paratope_contacts": 6,
+      "n_paratope_near": 13,
       "paratope_contact_labels": [
         "R49",
         "D50",
@@ -184,6 +199,21 @@
         "Y35": 6.68,
         "Y61": 3.26
       },
+      "paratope_near_labels": [
+        "V36",
+        "R49",
+        "D50",
+        "L51",
+        "Q54",
+        "E60",
+        "Y61",
+        "A103",
+        "G107",
+        "D108",
+        "N109",
+        "Y110",
+        "W113"
+      ],
       "toxin_chain": "B",
       "toxin_delta_sasa_all": [
         0.0,
@@ -600,11 +630,26 @@
         "C54",
         "T55"
       ],
+      "epitope_near_labels": [
+        "N22",
+        "C42",
+        "P43",
+        "T44",
+        "V45",
+        "K46",
+        "P47",
+        "L51",
+        "N52",
+        "C53"
+      ],
       "interface_area_A2": 600.9,
+      "mask_contact_cutoff_A": 3.5,
       "n_epitope": 17,
       "n_epitope_contacts": 5,
+      "n_epitope_near": 10,
       "n_paratope": 19,
       "n_paratope_contacts": 4,
+      "n_paratope_near": 14,
       "paratope_contact_labels": [
         "R49",
         "E60",
@@ -701,6 +746,22 @@
         "Y35": 6.84,
         "Y61": 3.09
       },
+      "paratope_near_labels": [
+        "V36",
+        "R49",
+        "D50",
+        "L51",
+        "Q54",
+        "E60",
+        "Y61",
+        "H63",
+        "A103",
+        "G107",
+        "D108",
+        "N109",
+        "Y110",
+        "W113"
+      ],
       "toxin_chain": "D",
       "toxin_delta_sasa_all": [
         0.0,

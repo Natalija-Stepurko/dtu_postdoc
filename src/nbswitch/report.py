@@ -207,6 +207,7 @@ const SOLVED_FILE = __SOLVED__;
 const ENSEMBLE = __ENSEMBLE__;
 const CDRS = __CDRS__;
 const TOP_PARATOPE = __TOPPARA__;
+const TOXIN_CONTACT = __TOXCONTACT__;
 const SCORES = __SCORES__;
 let v1 = null, v2 = null;
 
@@ -238,16 +239,14 @@ function boot() {
     v1.setStyle({chain: 'A'}, {cartoon: {colorfunc: function (atom) {
       return nanobodyColour(atom.resi, 0, '#337D79');
     }}});
-    v1.setStyle({chain: 'B'}, {cartoon: {color: '#C99555'}});
+    // the antigen's contacting face is shown by colouring its cartoon, not by
+    // drawing side chains: what matters here is which part of the fold meets
+    // the nanobody, and sticks on both partners obscure exactly that
+    const toxContact = (typeof TOXIN_CONTACT !== 'undefined' ? TOXIN_CONTACT : []);
+    v1.setStyle({chain: 'B'}, {cartoon: {colorfunc: function (atom) {
+      return toxContact.indexOf(atom.resi) >= 0 ? '#B8541F' : '#E0C49A';
+    }}});
     v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
-    (typeof TOP_PARATOPE !== 'undefined' ? TOP_PARATOPE : []).forEach(function (r) {
-      const sel = m.selectedAtoms({chain: 'A', resi: r.resi, atom: 'CA'});
-      if (!sel.length) return;
-      const a = sel[0];
-      v1.addLabel(r.label, {position: {x: a.x, y: a.y, z: a.z},
-        backgroundColor: '#C06014', backgroundOpacity: 0.9, fontColor: 'white',
-        fontSize: 10, borderThickness: 0, inFront: true});
-    });
     termini(v1, m, {chain: 'A'}, '');
     termini(v1, m, {chain: 'X'}, '\u2032');
     v1.zoomTo(); v1.zoom(1.75); v1.render();

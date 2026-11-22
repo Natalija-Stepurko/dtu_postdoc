@@ -15,7 +15,8 @@ import biotite.structure as struc
 import biotite.structure.io.pdbx as pdbx
 
 from .config import (
-    CONTACT_CUTOFF_A, CDR_SCHEME, DATA, PDB_ID, BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINTS)
+    CONTACT_CUTOFF_A, MASK_CONTACT_CUTOFF_A, CDR_SCHEME, DATA, PDB_ID,
+    BURIAL_THRESHOLD_A2, SASA_PROBE_A, SASA_POINTS)
 
 RCSB = "https://files.rcsb.org/download/{pdb_id}.cif.gz"
 
@@ -162,6 +163,11 @@ def interface(atoms, vhh_chain: str, toxin_chain: str) -> dict:
     epi = [i for i in range(len(res_b)) if delta_b[i] > BURIAL_THRESHOLD_A2]
     contact_a = [i for i in range(len(res_a)) if dist_a[i] <= CONTACT_CUTOFF_A]
     contact_b = [i for i in range(len(res_b)) if dist_b[i] <= CONTACT_CUTOFF_A]
+    # the wider cutoff the mask is designed from, reported on both partners so
+    # the figures and the viewer can show the same set the mask was taken from
+    wide_a, wide_b = contact_residues(a, b, MASK_CONTACT_CUTOFF_A)
+    near_a = [i for i in range(len(res_a)) if wide_a[i] <= MASK_CONTACT_CUTOFF_A]
+    near_b = [i for i in range(len(res_b)) if wide_b[i] <= MASK_CONTACT_CUTOFF_A]
     total = float(delta_a.sum() + delta_b.sum())
     return {
         "toxin_chain": toxin_chain,
@@ -170,6 +176,10 @@ def interface(atoms, vhh_chain: str, toxin_chain: str) -> dict:
         "n_epitope_contacts": len(contact_b),
         "paratope_contact_labels": [res_a.labels[i] for i in contact_a],
         "epitope_contact_labels": [res_b.labels[i] for i in contact_b],
+        "mask_contact_cutoff_A": MASK_CONTACT_CUTOFF_A,
+        "n_paratope_near": len(near_a), "n_epitope_near": len(near_b),
+        "paratope_near_labels": [res_a.labels[i] for i in near_a],
+        "epitope_near_labels": [res_b.labels[i] for i in near_b],
         "paratope_min_distance": {res_a.labels[i]: round(float(dist_a[i]), 2)
                                   for i in range(len(res_a)) if np.isfinite(dist_a[i])
                                   and dist_a[i] <= 8.0},

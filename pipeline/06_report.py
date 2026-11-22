@@ -574,9 +574,14 @@ N["fw2_para"] = ", ".join(l for l in _para_labels
 cdr_resi = {name: [int("".join(c for c in l[1:] if c.isdigit())) for l in v["residues"]]
             for name, v in ref["cdrs"].items()}
 
+# the set the mask is designed from, shown on both partners
 top_paratope = [
     {"resi": int("".join(c for c in lbl[1:] if c.isdigit())), "label": lbl}
-    for lbl in iface["paratope_contact_labels"]]
+    for lbl in iface.get("paratope_near_labels", iface["paratope_contact_labels"])]
+toxin_contact = sorted(int("".join(c for c in lbl[1:] if c.isdigit()))
+                       for lbl in iface.get("epitope_near_labels", []))
+N["mask_cutoff"] = iface.get("mask_contact_cutoff_A", 3.5)
+N["n_near"] = len(top_paratope)
 N["n_contacts"] = iface["n_paratope_contacts"]
 N["contact_cutoff"] = iface["contact_cutoff_A"]
 
@@ -1024,12 +1029,14 @@ constant for this pair.</p>
 <div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
 <span><i style="background:#C99555"></i>short neurotoxin 1</span>
 <span><i style="background:#C06014"></i>buried on binding, sticks</span>
-<span><i style="background:#C06014"></i>within {N['contact_cutoff']:.0f} &#8491;, labelled</span>
+<span><i style="background:#C06014"></i>within {N['mask_cutoff']:g} &#8491;, sticks</span>
+<span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 {chart_wide("paratope_footprint",
-  "Surface buried per nanobody residue on complex formation. The six residues burying the most "
-  "surface are labelled in the viewer above.")}
+  f"Surface buried per nanobody residue on complex formation. Markers show the {N['n_near']} "
+  f"residues with a heavy atom within {N['mask_cutoff']:g} Å of the antigen, which is the "
+  f"set the mask is designed from.")}
 <p>Two cutoffs describe this interface and they answer different questions. Taking a heavy-atom
 distance of {N['contact_cutoff']:.0f} &#8491;, the range of hydrogen bonds and salt bridges, gives
 {N['n_contacts']} residues: {N['contact_labels']}. These are labelled in the viewer and marked on the
@@ -1298,7 +1305,7 @@ Data Bank.</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
-<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES))}</script>
+<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES))}</script>
 </body></html>"""
 
 import re
