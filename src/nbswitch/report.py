@@ -1526,3 +1526,21 @@ def rebuild_banner(stale, n_total: int) -> str:
         f'constructs. The structural characterisation, the affinity window, the '
         f'linker generation, the length sweep and the untethered mask-binding '
         f'test are current.</div>')
+
+
+def protonation_table(scan) -> str:
+    """Histidine protonation in blood against a bite site, across its pKa range."""
+    head = ('<colgroup><col style="width:17%"><col style="width:27%">'
+            '<col style="width:27%"><col style="width:29%"></colgroup>'
+            "<tr><th>histidine pK<sub>a</sub></th><th>protonated in blood</th>"
+            "<th>protonated at the bite site</th><th>change</th></tr>")
+    body = ""
+    for r in scan:
+        here = abs(r["pka"] - 6.0) < 1e-9
+        cls = ' class="hl"' if here else ""
+        mark = " &larr; free histidine" if here else ""
+        body += (f'<tr{cls}><td class="mono">{r["pka"]:.1f}{mark}</td>'
+                 f'<td class="mono">{r["blood_worst"]:.1%}</td>'
+                 f'<td class="mono">{r["site_worst"]:.1%}</td>'
+                 f'<td class="mono">{r["fold_change"]:.1f}&times;</td></tr>')
+    return f'<table class="tbl proton">{head}{body}</table>'

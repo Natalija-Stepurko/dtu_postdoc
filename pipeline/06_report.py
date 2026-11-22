@@ -594,6 +594,11 @@ except (FileNotFoundError, KeyError, IndexError):
 N["n_contacts"] = iface["n_paratope_contacts"]
 N["contact_cutoff"] = iface["contact_cutoff_A"]
 
+# what a pH trigger would have to work with, computed rather than asserted
+from nbswitch import triggers as _trig
+PH = _trig.switch_window()
+PH_SCAN = _trig.sensitivity()
+
 # every quantity the design window depends on, and whether it was measured or
 # chosen. Values are read from the stage output so the table cannot drift.
 AFF = tether["affinity"]
@@ -1000,14 +1005,29 @@ hypoxia.</p></div>
 <div class="scroll"><table class="wrap">
 <colgroup><col style="width:22%"><col style="width:52%"><col style="width:26%"></colgroup>
 <thead><tr><th>environmental cue</th><th>consideration</th><th>decision</th></tr></thead><tbody>
-<tr><td>Acidic pH</td><td>The physiological range at a bite site would require further
-characterisation before a switching threshold could be chosen.</td><td>Not selected</td></tr>
+<tr><td>Acidic pH</td><td>Blood is pH {PH['blood_ph'][0]}&ndash;{PH['blood_ph'][1]}; the brief
+gives roughly {PH['site_ph'][0]}&ndash;{PH['site_ph'][1]} at a bite site. The only side chain that
+changes state across that range is histidine, so a pH switch is a histidine switch. At a pKa of
+{PH['pka']:.1f} it is <b>{PH['blood_worst']:.1%}</b> protonated in blood and
+<b>{PH['site_worst']:.1%}</b> at pH {PH['site_ph'][1]} &mdash; a {PH['fold_change']:.1f}-fold
+change, but {PH['unprotonated_at_site']:.0%} of the residue is still neutral where it has to
+act.</td><td>Not selected</td></tr>
 <tr class="good"><td>Protease activity</td><td>Proteolysis is irreversible, which makes activation a
 single committed event rather than an equilibrium, and venom metalloproteinases are themselves part
 of the pathology being treated.</td><td>Selected</td></tr>
 <tr><td>Hypoxia</td><td>Would require an oxygen-sensitive molecular mechanism suitable for a small
 secreted protein.</td><td>Not selected</td></tr>
 </tbody></table></div>
+
+<p>The pH case is worth the arithmetic rather than a dismissal, because the obvious objection is
+that the pKa can be engineered. It can, and that is the problem: the same shift that gives more
+protonation at the site gives more in circulation, which is the state the design exists to keep
+off.</p>
+{R.protonation_table(PH_SCAN)}
+<p class="dim" style="font-size:.9rem">Henderson&ndash;Hasselbalch,
+f = 1/(1 + 10<sup>pH&minus;pKa</sup>), over the pKa range a histidine takes in a protein. The
+conservative pairing is used throughout: the blood value that protonates most against the
+bite-site value that protonates least.</p>
 
 <p>I propose to develop a computational approach for designing protease-responsive nanobodies
 while preserving their original antigen-binding properties. Responsiveness is introduced by
