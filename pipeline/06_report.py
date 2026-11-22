@@ -1119,9 +1119,10 @@ need. The architecture and the methods are what transfer; a viper application wo
 from a viper toxin complex and redesign the mask for it.</p>
 <p>What each module produced, in the order the modules ran. The numbers are those in the diagram above, and rows marked &mdash; are the assembly and structure-prediction steps that every module depends on. Three steps discard candidates and are marked; the rest transform what they are given.</p>
 {R.generation_table(COUNTS)}
-<p><b>Every experiment the pipeline defines, under the module it belongs to:</b> the question it
-asks, the method that produced its number, and what came out.</p>
-{R.pipeline_table(REGISTER)}</div>
+<details class="tech"><summary><b>Every experiment the pipeline defines, under the module it
+belongs to</b> &mdash; the question it asks, the method that produced its number, and what came
+out</summary><div class="techbody">
+{R.pipeline_table(REGISTER)}</div></details></div>
 
 <h3 class="mod"><span>Module 01</span>Constraints on mask affinity and linker geometry</h3>
 <div class="stack">
