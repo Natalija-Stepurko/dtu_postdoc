@@ -68,8 +68,12 @@ except FileNotFoundError:
     _ref_len = None
 _eligible = {name for name, m in lib["masks"].items()
              if m["kind"] in REDESIGN_KINDS}
+# match the construct's own mask field, not a prefix of its id: mask names
+# nest, so "epi_core_half_cn01" starts with "epi_core_" and a prefix test let
+# a truncated control through as if it were the graft it is named after
+_mask_of = {c["id"]: c.get("mask") for c in lib["constructs"]}
 PARENTS = [cid for cid in _parents(lib["constructs"], _ref_len)
-           if any(cid.startswith(f"{name}_") for name in _eligible)]
+           if _mask_of.get(cid) in _eligible]
 if not PARENTS:
     raise SystemExit("no constructs to redesign: the library is empty")
 print(f"  redesigning {len(PARENTS)} parents: {', '.join(PARENTS)}")

@@ -83,3 +83,25 @@ def test_build_library_honours_the_matrix():
     for item in library[:-1]:
         a, b = item["vhh_range"]
         assert item["sequence"][a - 1:b] == "QVQL" * 5
+
+
+def test_mask_names_nest_so_prefix_matching_is_wrong():
+    """epi_core_half starts with epi_core_, and is a different mask.
+
+    Selecting constructs by a prefix of their id let a truncated control
+    through as if it were the graft whose name it extends.
+    """
+    masks = {"epi_core": {"seq": "X" * 12, "kind": "epitope graft"},
+             "epi_core_half": {"seq": "X" * 6, "kind": "truncated control"},
+             "polyG": {"seq": "G" * 12, "kind": "inert control"}}
+    linkers = _linkers(1)
+    library = C.build_library("QVQL" * 5, masks, linkers)
+
+    eligible = {n for n, m in masks.items() if m["kind"] == "epitope graft"}
+    by_prefix = [c["id"] for c in library if c.get("mask")
+                 and any(c["id"].startswith(f"{n}_") for n in eligible)]
+    by_field = [c["id"] for c in library if c.get("mask") in eligible]
+
+    assert len(by_prefix) == 2, "the prefix test matches the truncated control too"
+    assert len(by_field) == 1
+    assert by_field == ["epi_core_cn01"]
