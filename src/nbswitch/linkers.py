@@ -57,10 +57,23 @@ OFF_TARGET_PROTEASES = ("MMP1", "MMP3", "MMP7", "MMP14", "MMP15", "MMP16",
 #: inside TensorFlow with a shape error rather than a useful message.
 SUBSTRATE_LENGTH = 10
 
-#: Flanks between the mask, the substrate and the nanobody. Short Gly/Ser runs
-#: keep the substrate accessible without contributing a cleavage site of their
-#: own, which is the one job a Gly/Ser repeat is right for.
-FLANK = "GGS"
+#: Flanks between the mask, the substrate and the nanobody. Inert Gly/Ser runs,
+#: which contribute no cleavage site of their own: being uncuttable is the one
+#: job a Gly/Ser repeat is right for.
+#:
+#: Length is set by measurement, not by convention. Stage 16 holds the
+#: substrate constant and varies only these flanks: with three residues a side,
+#: giving a 16-residue linker, the mask sits 26 A from the paratope in the
+#: predicted fold and never contacts it, so every masking score computed on
+#: such a construct is measuring nothing. Contact appears at seven residues a
+#: side, a 24-residue linker, and costs 0.08 decades of the affinity window
+#: against the worm-like-chain optimum at 14.
+#:
+#: The gap between those two numbers is itself a result: the tether model puts
+#: the mask at the end of the linker as a point, and the mask is a peptide with
+#: its own dimensions that has to reach across the paratope rather than touch
+#: its centre.
+FLANK = "GGSGGSG"
 
 CLEAVENET = Path("/scratch/cleavenet")
 

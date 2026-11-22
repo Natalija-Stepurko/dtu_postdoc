@@ -142,6 +142,21 @@ def plt_style():
 #: is why the masking footprint uses buried surface rather than this cutoff.
 CONTACT_CUTOFF_A = 3.0
 
+#: Cutoff used to seed a mask from the antigen. Wider than the polar-contact
+#: cutoff above, which answers a different question: 3 A is hydrogen-bond and
+#: salt-bridge range and picks out the chemical core, while a mask has to
+#: reproduce the whole contacting face, van der Waals packing included.
+MASK_CONTACT_CUTOFF_A = 3.5
+
+#: Residues allowed between two contact runs before they are treated as
+#: separate segments. The two runs on this antigen are 42-47 and 51-53; the
+#: three residues between them are part of the same loop and omitting them
+#: would mean grafting a peptide the antigen does not contain.
+MASK_MAX_GAP = 3
+
+#: Shortest contact run worth grafting on its own.
+MASK_MIN_RUN = 2
+
 #: Antibody numbering scheme for CDR assignment: "kabat", "chothia" or "imgt".
 #: The schemes disagree: on 9RIU, Kabat CDR2 is 17 residues and IMGT CDR2 is 7,
 #: so anything quoting a CDR count has to name the scheme alongside it.

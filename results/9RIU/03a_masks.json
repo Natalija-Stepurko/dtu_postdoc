@@ -1,0 +1,89 @@
+{
+  "cutoff_A": 3.5,
+  "masks": {
+    "epi_core": {
+      "end": 53,
+      "extension": 0,
+      "kind": "epitope graft",
+      "note": "antigen C42-C53, contact face, 2 cysteines",
+      "seq": "CPTVKPGIKLNC",
+      "start": 42
+    },
+    "epi_core_ext2": {
+      "end": 55,
+      "extension": 2,
+      "kind": "epitope graft",
+      "note": "antigen C40-T55, contact face plus 2 residues each side, 4 cysteines",
+      "seq": "CGCPTVKPGIKLNCCT",
+      "start": 40
+    },
+    "epi_core_ext4": {
+      "end": 57,
+      "extension": 4,
+      "kind": "epitope graft",
+      "note": "antigen R38-D57, contact face plus 4 residues each side, 4 cysteines",
+      "seq": "RGCGCPTVKPGIKLNCCTTD",
+      "start": 38
+    },
+    "epi_core_half": {
+      "extension": 0,
+      "kind": "truncated control",
+      "note": "leading half of the contact face",
+      "seq": "CPTVKP"
+    },
+    "epi_core_noCys": {
+      "extension": 0,
+      "kind": "epitope graft",
+      "note": "contact face with cysteines substituted to serine, which removes the disulfide that holds it in shape",
+      "seq": "SPTVKPGIKLNS"
+    },
+    "epi_core_scram": {
+      "extension": 0,
+      "kind": "scrambled control",
+      "note": "the contact face shuffled (seed 42): same composition, same length, no order",
+      "seq": "IPTKLGCVKCPN"
+    },
+    "polyG": {
+      "extension": 0,
+      "kind": "inert control",
+      "note": "no designed interaction, matched to the face at 12 residues",
+      "seq": "GGGGGGGGGGGG"
+    }
+  },
+  "max_gap": 3,
+  "method": "antigen residues within 3.5 A of the nanobody, runs merged across gaps of up to 3 residues",
+  "min_run": 2,
+  "primary_cysteines_orphaned": [],
+  "primary_disulfides_internal": [
+    [
+      42,
+      53
+    ]
+  ],
+  "segments": [
+    {
+      "buried_A2": 580.7,
+      "contact_labels": [
+        "C42",
+        "P43",
+        "T44",
+        "V45",
+        "K46",
+        "P47",
+        "L51",
+        "N52",
+        "C53"
+      ],
+      "cutoff_A": 3.5,
+      "end": 53,
+      "end_label": "C53",
+      "length": 12,
+      "n_contact": 9,
+      "n_epitope": 9,
+      "seq": "CPTVKPGIKLNC",
+      "start": 42,
+      "start_label": "C42"
+    }
+  ],
+  "toxin_chain": "B"
+}

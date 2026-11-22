@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-"""Stage 3. Derive mask candidates from the structure and enumerate constructs."""
+"""Stage 3. Assemble constructs from the designed masks and the designed linkers.
+
+This stage designs nothing. Masks come from stage 03a and linkers from stage
+02b, and the only work here is enumerating the combinations and recording where
+each part sits in the fused sequence. Keeping assembly separate means a change
+to how masks are designed cannot quietly alter the linkers, or the reverse.
+"""
 import sys; sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "src"))
 from nbswitch import constructs as C
 from nbswitch.structure import trim_expression_tags
@@ -16,8 +22,8 @@ if removed:
     print(f"  trimmed {removed!r} from the C-terminus "
           f"({len(ref_data['sequence'])} -> {len(vhh_seq)} residues)")
 
-segments = C.epitope_segments(ref["toxin_residue_labels"], toxin_seq, ref["epitope_labels"])
-masks = C.mask_candidates(segments)
+mask_data = load_json("03a_masks.json")
+segments, masks = mask_data["segments"], mask_data["masks"]
 linker_data = load_json("02b_linkers.json")
 linkers = linker_data["linkers"]
 library = C.build_library(vhh_seq, masks, linkers)
@@ -34,12 +40,8 @@ save_json("03_constructs.json", {
     "off_target_proteases": linker_data["off_target_proteases"],
     "n_constructs": len(library), "constructs": library})
 
-print(f"epitope segments (>=3 residues): {len(segments)}")
-for s in segments:
-    print(f"  {s['start_label']}-{s['end_label']:<6} {s['seq']:<8} "
-          f"{s['n_epitope']} contacts")
-print(f"\nmasks: {len(masks)}")
-for name, m in masks.items():
-    print(f"  {name:12s} {m['seq']:<10s} {m['kind']}")
-print(f"\n{len(library)} constructs, "
+print(f"{len(masks)} masks x {len(linkers)} linkers + the free nanobody "
+      f"= {len(library)} constructs, "
       f"{min(c['length'] for c in library)}-{max(c['length'] for c in library)} residues")
+print(f"  masks from stage 03a ({mask_data['cutoff_A']} A contact seed), "
+      f"linkers from stage 02b ({linker_data['n_generated']} substrates generated)")

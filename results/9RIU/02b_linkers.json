@@ -1437,14 +1437,14 @@
       "substrate": "TMNALHRMMT"
     }
   ],
-  "flank": "GGS",
+  "flank": "GGSGGSG",
   "linkers": [
     {
       "id": "cn01",
       "kind": "generated",
       "off_target_z": -0.252,
       "selectivity": 1.481,
-      "sequence": "GGSPMPTAFHGMAGGS",
+      "sequence": "GGSGGSGPMPTAFHGMAGGSGGSG",
       "substrate": "PMPTAFHGMA",
       "target_z": 1.228
     },
@@ -1453,7 +1453,7 @@
       "kind": "generated",
       "off_target_z": 0.061,
       "selectivity": 1.417,
-      "sequence": "GGSVTPMQYFGMVGGS",
+      "sequence": "GGSGGSGVTPMQYFGMVGGSGGSG",
       "substrate": "VTPMQYFGMV",
       "target_z": 1.478
     },
@@ -1462,7 +1462,7 @@
       "kind": "generated",
       "off_target_z": 0.145,
       "selectivity": 1.365,
-      "sequence": "GGSMGPYTLFGMFGGS",
+      "sequence": "GGSGGSGMGPYTLFGMFGGSGGSG",
       "substrate": "MGPYTLFGMF",
       "target_z": 1.51
     },
@@ -1471,7 +1471,7 @@
       "kind": "generated",
       "off_target_z": -0.059,
       "selectivity": 1.268,
-      "sequence": "GGSVMPSGFLGLSGGS",
+      "sequence": "GGSGGSGVMPSGFLGLSGGSGGSG",
       "substrate": "VMPSGFLGLS",
       "target_z": 1.209
     },
@@ -1480,7 +1480,7 @@
       "kind": "generated",
       "off_target_z": 0.36,
       "selectivity": 1.249,
-      "sequence": "GGSQGPWTILGMTGGS",
+      "sequence": "GGSGGSGQGPWTILGMTGGSGGSG",
       "substrate": "QGPWTILGMT",
       "target_z": 1.609
     },
@@ -1489,7 +1489,7 @@
       "kind": "generated",
       "off_target_z": -0.046,
       "selectivity": 1.23,
-      "sequence": "GGSVGPSTLFGMRGGS",
+      "sequence": "GGSGGSGVGPSTLFGMRGGSGGSG",
       "substrate": "VGPSTLFGMR",
       "target_z": 1.185
     },
@@ -1498,7 +1498,7 @@
       "kind": "generated",
       "off_target_z": 0.038,
       "selectivity": 1.225,
-      "sequence": "GGSQNPAQMFGMAGGS",
+      "sequence": "GGSGGSGQNPAQMFGMAGGSGGSG",
       "substrate": "QNPAQMFGMA",
       "target_z": 1.262
     },
@@ -1507,7 +1507,7 @@
       "kind": "generated",
       "off_target_z": -0.539,
       "selectivity": 1.196,
-      "sequence": "GGSSGPYKYTGTAGGS",
+      "sequence": "GGSGGSGSGPYKYTGTAGGSGGSG",
       "substrate": "SGPYKYTGTA",
       "target_z": 0.658
     },
@@ -1516,7 +1516,7 @@
       "kind": "protease-resistant control",
       "off_target_z": -0.4,
       "selectivity": 0.161,
-      "sequence": "GGSGGGGSGGGGSGGS",
+      "sequence": "GGSGGSGGGGGSGGGGSGGSGGSG",
       "substrate": "GGGGSGGGGS",
       "target_z": -0.239
     },
@@ -1525,7 +1525,7 @@
       "kind": "scrambled control",
       "off_target_z": -1.14,
       "selectivity": 0.05,
-      "sequence": "GGSMPAAHFMPTGGGS",
+      "sequence": "GGSGGSGMPAAHFMPTGGGSGGSG",
       "substrate": "MPAAHFMPTG",
       "target_z": -1.09
     }
