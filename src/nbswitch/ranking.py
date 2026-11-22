@@ -14,6 +14,22 @@ import numpy as np
 #: The three objectives, in the order they are reported.
 OBJECTIVES = ("feasibility", "trigger", "unmasking")
 
+#: What each objective is actually computed from, as opposed to what it is
+#: meant to capture. These are not the same thing here, and the difference is
+#: the main limitation of the ranking: "unmasking" is fed by predicted
+#: paratope occlusion in the folded construct, which the controls show does
+#: not separate designed masks from scrambled or inert ones. It is reported
+#: under its own name so that a front built on it is not read as a list of
+#: constructs predicted to mask.
+OBJECTIVE_BASIS = {
+    "feasibility": "predicted fold confidence, nanobody preservation, exposed "
+                   "hydrophobic surface and added cysteine",
+    "trigger": "predicted human-MMP selectivity times structural reach of the "
+               "linker; not a cleavage rate and not venom-protease specificity",
+    "unmasking": "predicted paratope occlusion in the folded construct; a "
+                 "surface measure, not a demonstration of blocked binding",
+}
+
 
 def pareto_front(points: np.ndarray) -> np.ndarray:
     """Boolean mask of the non-dominated rows. Higher is better in every column."""
@@ -40,12 +56,12 @@ def combine(feasibility_rows, trigger_rows, unmasking_rows=None) -> list[dict]:
         table[r["id"]]["feasibility"] = r["feasibility_score"]
     for r in trigger_rows:
         if r["id"] in table:
-            # cleavability is recognition times reach; fall back to reach alone
-            # for constructs whose linker carries no selectivity score
-            table[r["id"]]["trigger"] = (
-                r.get("cleavability_score")
-                if r.get("cleavability_score") is not None
-                else r.get("context_score"))
+            # recognition times reach. A construct whose linker carries no
+            # selectivity score has no value for this objective: substituting
+            # reach alone would compare it against others on a different
+            # quantity, which is worse than leaving it out, since rank()
+            # already excludes designs that are missing an objective.
+            table[r["id"]]["trigger"] = r.get("cleavability_score")
     for r in (unmasking_rows or []):
         if r["id"] in table:
             table[r["id"]]["unmasking"] = r.get("occlusion")
@@ -72,7 +88,14 @@ def rank(rows, objectives=None) -> dict:
     for r, on_front in zip(rows, keep):
         r["on_front"] = bool(on_front)
     front = [r for r, k in zip(rows, keep) if k]
-    front.sort(key=lambda r: -sum(r[o] for o in objectives))
+    # The front is a set, not an order. Sorting it by the sum of the
+    # objectives would apply equal weights immediately after saying that no
+    # weights are used, and would hide that choice inside a display detail.
+    # It is ordered by its worst objective instead, which is a stated rule and
+    # keeps members whose weakest score is least bad at the top, and the order
+    # is labelled rather than presented as a ranking.
+    front.sort(key=lambda r: -min(float(r[o]) for o in objectives))
     return {"objectives": list(objectives), "n_total": len(rows),
             "n_front": len(front), "n_skipped": skipped,
+            "front_order": "by weakest objective; the front itself is unordered",
             "front": front, "rows": rows}

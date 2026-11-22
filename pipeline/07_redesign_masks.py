@@ -66,7 +66,16 @@ for parent_id in PARENTS:
                             "mask_seq": mask_seq, "score": row["score"],
                             "global_score": row["global_score"],
                             "linker_residues": parent["linker_residues"],
-                            "linker_seq": parent["linker_seq"]})
+                            "linker_seq": parent["linker_seq"],
+                            # the linker is held fixed through the redesign, so
+                            # its identity and its scores carry over. Dropping
+                            # them left every redesign without a cleavability
+                            # score, which the ranking then quietly filled in
+                            # from reach alone.
+                            "linker_id": parent.get("linker_id"),
+                            "linker_kind": parent.get("linker_kind"),
+                            "linker_substrate": parent.get("linker_substrate", ""),
+                            "linker_selectivity": parent.get("linker_selectivity")})
     print(f"  {parent_id}: native {native_scores.get(parent_id, float('nan')):.3f}, "
           f"{len([d for d in designs if d['parent'] == parent_id])} designs")
 
@@ -88,6 +97,9 @@ for i, d in enumerate(unique):
         "parent": d["parent"], "temperature": d["temperature"],
         "mpnn_score": d["score"], "native_score": native_scores.get(d["parent"]),
         "linker_residues": n, "linker_seq": d["linker_seq"],
+        "linker_id": d.get("linker_id"), "linker_kind": d.get("linker_kind"),
+        "linker_substrate": d.get("linker_substrate", ""),
+        "linker_selectivity": d.get("linker_selectivity"),
         "sequence": d["mask_seq"] + d["linker_seq"] + vhh,
         "length": mask_end + n + len(vhh),
         "mask_range": [1, mask_end], "linker_range": [mask_end + 1, mask_end + n],

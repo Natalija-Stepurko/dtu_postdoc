@@ -1,4 +1,79 @@
 {
+  "affinity": {
+    "koff_max_s": 0.00055,
+    "linker_residues": 14,
+    "reported_range_M": [
+      1e-10,
+      1e-08
+    ],
+    "scan": [
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 9.081735620585263e-09,
+        "vhh_toxin_kd_M": 9.999999999999999e-11,
+        "window_decades": 4.870452420326149,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 1.6264825326219765e-08,
+        "vhh_toxin_kd_M": 1.778279410038923e-10,
+        "window_decades": 4.617371871681153,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 2.9294227265600532e-08,
+        "vhh_toxin_kd_M": 3.162277660168379e-10,
+        "window_decades": 4.361839228772534,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 5.3308711499315766e-08,
+        "vhh_toxin_kd_M": 5.623413251903491e-10,
+        "window_decades": 4.101823089763297,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 9.890109890109883e-08,
+        "vhh_toxin_kd_M": 9.999999999999999e-10,
+        "window_decades": 3.8334201581619674,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 1.9054017762204227e-07,
+        "vhh_toxin_kd_M": 1.7782794100389228e-09,
+        "window_decades": 3.548634709548007,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 3.9782915061496614e-07,
+        "vhh_toxin_kd_M": 3.162277660168379e-09,
+        "window_decades": 3.2289246727426897,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 1.0247308427281862e-06,
+        "vhh_toxin_kd_M": 5.623413251903491e-09,
+        "window_decades": 2.8180114673208916,
+        "window_open": true
+      },
+      {
+        "km_max_for_masking_M": 0.0006739400647034873,
+        "km_min_for_release_M": 8.99999999999996e-06,
+        "vhh_toxin_kd_M": 1e-08,
+        "window_decades": 1.8743787658408753,
+        "window_open": true
+      }
+    ],
+    "used_M": 1e-09,
+    "window_closes_above_M": 1.1094648744017834e-08
+  },
   "best_per_terminus": {
     "C": {
       "c_eff_M": 0.0030529121205852103,

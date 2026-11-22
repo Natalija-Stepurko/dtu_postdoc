@@ -129,3 +129,25 @@ def predict_with_msa(job_yaml: Path, out_dir: Path, binary: str = "boltz",
     if not hits:
         raise FileNotFoundError(f"no prediction written for {job_yaml.stem}")
     return hits[0]
+
+
+def write_binding_job(path: Path, vhh: str, peptide: str,
+                      vhh_msa: str = "server", peptide_msa: str = "empty") -> Path:
+    """A free peptide against the bare nanobody: two chains, no tether, no antigen.
+
+    This asks the question the tethered prediction cannot. In the construct the
+    mask is held at the paratope by its linker whether or not it has any
+    affinity for it, so proximity there is not evidence of binding. Cut the
+    tether and the peptide has to find the site on its own.
+
+    As elsewhere, the nanobody is a public sequence and takes a real alignment,
+    while the designed peptide takes none and never leaves the machine.
+    """
+    lines = ["version: 1", "sequences:",
+             "  - protein:", "      id: A", f"      sequence: {vhh}"]
+    if vhh_msa != "server":
+        lines.append(f"      msa: {vhh_msa}")
+    lines += ["  - protein:", "      id: B", f"      sequence: {peptide}",
+              f"      msa: {peptide_msa}"]
+    path.write_text("\n".join(lines) + "\n")
+    return path

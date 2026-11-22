@@ -64,11 +64,17 @@ TOXIN_CONC_M = 1e-7
 
 #: Nanobody-toxin dissociation constant. VHH5 a-sNTx, the nanobody of the
 #: worked example, is reported as low nanomolar against its short-neurotoxin
-#: targets (Ahmadi et al. 2025, Fig. 2c and Supplementary Table 5), which is
-#: where this value comes from. The entry's own complex is with P01426; the
-#: paper does not label which of its sNTx targets that is, so this is the
-#: reported range for the nanobody rather than the measured value for this pair.
+#: targets by BLI, with dissociation rates below 5.5e-4 per second (Ahmadi et
+#: al. 2025, main text and Fig. 2c). Four of the measured pairs sit below the
+#: instrument's dissociation limit and are therefore tighter still.
+#:
+#: The entry's own complex is with P01426, and the paper does not say which of
+#: its numbered short-neurotoxin targets that is, so there is no single
+#: measured constant to use here. The range is what was reported, and the
+#: window is reported across it rather than at one invented point.
 VHH_TOXIN_KD_M = 1e-9
+VHH_TOXIN_KD_RANGE_M = (1e-10, 1e-8)
+VHH_TOXIN_KOFF_MAX_S = 5.5e-4
 
 #: Residue is counted in the interface if it buries more than this on binding.
 BURIAL_THRESHOLD_A2 = 1.0

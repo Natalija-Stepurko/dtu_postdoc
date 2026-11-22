@@ -104,6 +104,8 @@ table.wrap td:first-child{font-weight:600;color:var(--ink)}
 .scroll:has(table.wrap){overflow-x:visible}
 tr.hl td{background:var(--seq-wash)}
 tr.ctrl td{color:var(--ink-3)}
+tr.warnrow td{background:#FDF4EC}
+td.dead{color:var(--chrome);font-weight:600}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
      color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:1px 7px}
 .tag.run{color:var(--chrome);border-color:#A9CFCE}
@@ -1386,13 +1388,18 @@ def interface_controls_table(controls, target: str) -> str:
 def generation_table(counts) -> str:
     """How many of what, at each stage. Every figure read from a stage output."""
     head = ("<tr><th>module</th><th>what is produced</th><th>how many</th>"
-            "<th>kept</th></tr>")
+            "<th>kept</th><th>what it feeds</th></tr>")
     body = ""
     for row in counts:
         kept = row.get("kept")
         kept = "&mdash;" if kept is None else f"<b>{kept}</b>"
-        body += (f'<tr><td class="mono">{row["stage"]}</td><td>{row["what"]}</td>'
-                 f'<td>{row["made"]}</td><td>{kept}</td></tr>')
+        feeds = row.get("feeds", "")
+        # a stage whose output no later stage reads is a finding, not a detail
+        dead = feeds == "nothing downstream"
+        cell = f'<td class="dead">{feeds}</td>' if dead else f"<td>{feeds}</td>"
+        tr = '<tr class="warnrow">' if dead else "<tr>"
+        body += (f'{tr}<td class="mono">{row["stage"]}</td><td>{row["what"]}</td>'
+                 f'<td>{row["made"]}</td><td>{kept}</td>{cell}</tr>')
     return f'<table class="tbl gen">{head}{body}</table>'
 
 
@@ -1415,3 +1422,44 @@ def linker_table(linkers) -> str:
                  f'<td>{"&mdash;" if oz is None else f"{oz:+.2f}"}</td>'
                  f'<td><b>{sel}</b></td></tr>')
     return f'<table class="tbl linkers">{head}{body}</table>'
+
+
+def assumptions_table(rows) -> str:
+    """Every constant the design window rests on, with where it came from.
+
+    The window is a model output, not a specification, and which parts of it
+    are measured and which are chosen should be visible next to the number
+    rather than in a methods note further down.
+    """
+    head = ("<tr><th>quantity</th><th>value</th><th>where it comes from</th>"
+            "<th>effect if it moves</th></tr>")
+    body = ""
+    for r in rows:
+        cls = ' class="ctrl"' if r.get("kind") == "measured" else ""
+        body += (f'<tr{cls}><td>{r["what"]}</td><td class="mono"><b>{r["value"]}</b></td>'
+                 f'<td>{r["source"]}</td><td>{r["effect"]}</td></tr>')
+    return f'<table class="tbl assume">{head}{body}</table>'
+
+
+def affinity_scan_table(scan, used_M, closes_M) -> str:
+    """The design window as a function of the nanobody's own antigen affinity."""
+    head = ("<tr><th>V<sub>H</sub>H&ndash;antigen K<sub>D</sub></th>"
+            "<th>release floor on the mask</th><th>usable window</th></tr>")
+    body = ""
+    for r in scan:
+        kd = r["vhh_toxin_kd_M"] * 1e9
+        here = abs(kd - used_M * 1e9) < 1e-6
+        dec = r["window_decades"]
+        shown = f"{dec:.2f} decades" if dec == dec and dec != float("-inf") else "closed"
+        cls = ' class="hl"' if here else ""
+        mark = " &larr; used here" if here else ""
+        body += (f'<tr{cls}><td class="mono">{kd:.2f} nM{mark}</td>'
+                 f'<td class="mono">{r["km_min_for_release_M"] * 1e9:,.0f} nM</td>'
+                 f'<td class="mono">{shown}</td></tr>')
+    return (f'<table class="tbl affin">{head}{body}</table>'
+            f'<div class="note warn"><b>The architecture has a hard limit here.</b> '
+            f'Above a V<sub>H</sub>H&ndash;antigen K<sub>D</sub> of about '
+            f'<b>{closes_M * 1e9:.0f} nM</b> the window closes: the antigen can no longer '
+            f'outcompete the released mask, and no mask affinity satisfies both '
+            f'requirements. That is a property of the design, not of any particular mask.'
+            f'</div>')

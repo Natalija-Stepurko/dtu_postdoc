@@ -79,3 +79,48 @@ def widest_window(rows):
     """The linker length giving the most room for mask affinity, or None."""
     openings = [r for r in rows if r["window_open"]]
     return max(openings, key=lambda r: r["window_decades"]) if openings else None
+
+
+def window_across_affinity(span_A, n_residues, kd_values, **kw) -> list[dict]:
+    """The design window as a function of the nanobody's own affinity.
+
+    The release floor depends on how tightly the nanobody holds its antigen,
+    and that quantity is reported as a range rather than measured for this
+    pair. Quoting a window at one assumed value hides that; this reports it
+    across the range so the reader sees how much of the result is the
+    assumption.
+    """
+    c_eff = float(effective_concentration(n_residues, span_A))
+    ceiling = masking_ceiling(c_eff)
+    rows = []
+    for kd in kd_values:
+        floor = release_floor(toxin_kd=kd, **kw)
+        open_ = np.isfinite(floor) and ceiling > floor
+        rows.append({
+            "vhh_toxin_kd_M": float(kd),
+            "km_min_for_release_M": float(floor),
+            "km_max_for_masking_M": float(ceiling),
+            "window_open": bool(open_),
+            "window_decades": float(np.log10(ceiling / floor)) if open_
+                              else float("-inf")})
+    return rows
+
+
+def affinity_at_which_window_closes(span_A, n_residues, **kw) -> float:
+    """The weakest nanobody-antigen affinity that still leaves a usable window.
+
+    Above this the antigen cannot outcompete the released mask, and no mask
+    affinity satisfies both requirements: the switch has no solution, however
+    it is designed.
+    """
+    c_eff = float(effective_concentration(n_residues, span_A))
+    ceiling = masking_ceiling(c_eff)
+    lo, hi = 1e-12, 1e-4
+    for _ in range(200):
+        mid = (lo * hi) ** 0.5
+        floor = release_floor(toxin_kd=mid, **kw)
+        if np.isfinite(floor) and ceiling > floor:
+            lo = mid
+        else:
+            hi = mid
+    return float(lo)

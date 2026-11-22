@@ -13,9 +13,15 @@ N–L–M   ──protease──▶   N + M        then        N + T ⇌ NT
 ```
 
 Everything is computed from one experimental complex,
-[PDB 9GCN](https://www.rcsb.org/structure/9GCN) (VHH TPL1158_01_C09 bound to
-α-cobratoxin). Each stage writes a JSON file, and the figures and the page are generated
-from those files, so no number is entered by hand.
+[PDB 9RIU](https://www.rcsb.org/structure/9RIU) (V<sub>H</sub>H5 a-sNTx bound to short
+neurotoxin 1, P01426, from *Naja pallida*; Ahmadi et al., *Nature* 2025). Each stage writes a
+JSON file, and the figures and the page are generated from those files, so no number is entered
+by hand.
+
+[PDB 9GCN](https://www.rcsb.org/structure/9GCN) (VHH TPL1158_01_C09 bound to α-cobratoxin) was
+the first target and is kept only as a set-aside case: its own N-terminus sits in its paratope,
+so masking it is trivially easy and the measure says nothing. The target is selected by
+`NBSWITCH_TARGET`, and results are written per target under `results/<id>/`.
 
 ## What it shows
 

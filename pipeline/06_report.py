@@ -579,6 +579,42 @@ top_paratope = [
     for lbl in iface["paratope_contact_labels"]]
 N["n_contacts"] = iface["n_paratope_contacts"]
 N["contact_cutoff"] = iface["contact_cutoff_A"]
+
+# every quantity the design window depends on, and whether it was measured or
+# chosen. Values are read from the stage output so the table cannot drift.
+AFF = tether["affinity"]
+_m = tether["model"]
+ASSUMPTIONS = [
+    {"what": "distance, N-terminus to paratope centroid", "kind": "measured",
+     "value": f"{tether['spans_A']['N']:.1f} Å",
+     "source": f"the deposited structure, {PDB_ID}",
+     "effect": "sets where the effective concentration peaks, so it sets the linker length"},
+    {"what": "paratope", "kind": "measured",
+     "value": f"{N['paratope']} residues",
+     "source": "surface lost on binding in the deposited complex",
+     "effect": "defines the surface a mask has to cover"},
+    {"what": "V<sub>H</sub>H–antigen K<sub>D</sub>", "kind": "chosen",
+     "value": f"{AFF['used_M'] * 1e9:.0f} nM",
+     "source": "reported low nanomolar for this nanobody, not measured for this pair",
+     "effect": "sets the release floor; the window closes above "
+               f"{AFF['window_closes_above_M'] * 1e9:.0f} nM"},
+    {"what": "systemic leak allowed", "kind": "chosen",
+     "value": f"{_m['leak_max'] * 100:.0f}%",
+     "source": "a design budget, not a measurement",
+     "effect": "sets the masking ceiling; five times looser buys about 0.7 decades"},
+    {"what": "antigen recovery required", "kind": "chosen",
+     "value": f"{_m['recovery_min'] * 100:.0f}%",
+     "source": "a design budget, not a measurement",
+     "effect": "sets the release floor; demanding 99% closes the window almost entirely"},
+    {"what": "construct and antigen concentrations", "kind": "chosen",
+     "value": f"{_m['mask_conc_M'] * 1e6:.0f} µM / {_m['toxin_conc_M'] * 1e9:.0f} nM",
+     "source": "plausible dosing and bite-site values, not measured here",
+     "effect": "the released mask competes at its own concentration, so both move the floor"},
+    {"what": "persistence length, rise per residue", "kind": "chosen",
+     "value": f"{_m['persistence_length_A']:.1f} Å, {_m['rise_per_residue_A']:.1f} Å",
+     "source": "generic flexible-chain values, not fitted to this linker",
+     "effect": "shifts the peak; the shape of the curve is robust to them"},
+]
 _ref_feas = next((r for r in (feas_data["results"] if feas_data else [])
                   if r["mask"] is None), None)
 N["ref_surface"] = _ref_feas["f_surface"] if _ref_feas else float("nan")
@@ -613,30 +649,38 @@ def _count_rows():
         lk = load_json("02b_linkers.json")
         rows.append({"stage": "02", "what": "protease substrates generated, "
                      "conditioned on the target profile", "made": lk["n_generated"],
-                     "kept": lk["n_kept"]})
+                     "kept": lk["n_kept"], "feeds": "the linker set"})
         rows.append({"stage": "02", "what": "controls: a protease-resistant "
                      "Gly/Ser repeat and a scramble of the best substrate",
                      "made": lk.get("n_controls", 0),
-                     "kept": lk.get("n_controls", 0)})
+                     "kept": lk.get("n_controls", 0),
+                     "feeds": "the linker set, as the thing to beat"})
         rows.append({"stage": "02", "what": "linkers entering the library",
-                     "made": len(lk["linkers"]), "kept": len(lk["linkers"])})
+                     "made": len(lk["linkers"]), "kept": len(lk["linkers"]),
+                     "feeds": "the construct library"})
     except FileNotFoundError:
         pass
     try:
         cl = load_json("03_constructs.json")
         rows.append({"stage": "02", "what": "masks: epitope grafts, a truncation, "
                      "a scramble and an inert poly-glycine",
-                     "made": len(cl["masks"]), "kept": len(cl["masks"])})
+                     "made": len(cl["masks"]), "kept": len(cl["masks"]),
+                     "feeds": "the construct library"})
         rows.append({"stage": "02", "what": "constructs: every mask on every "
                      "linker, plus the free nanobody",
-                     "made": cl["n_constructs"], "kept": cl["n_constructs"]})
+                     "made": cl["n_constructs"], "kept": cl["n_constructs"],
+                     "feeds": "structure prediction"})
     except FileNotFoundError:
         pass
-    for name, stage, what in (
-            ("04_folding.json", "03", "constructs folded with ESMFold"),
-            ("07_redesign.json", "02", "mask sequences redesigned with ProteinMPNN"),
-            ("08_redesign_folding.json", "03", "redesigns folded with ESMFold"),
-            ("11_complexes_msa.json", "04", "complexes predicted with alignments"),
+    for name, stage, what, feeds in (
+            ("04_folding.json", "03", "constructs folded with ESMFold",
+             "all three scores"),
+            ("07_redesign.json", "02", "mask sequences redesigned with ProteinMPNN",
+             "structure prediction"),
+            ("08_redesign_folding.json", "03", "redesigns folded with ESMFold",
+             "all three scores"),
+            ("11_complexes_msa.json", "04", "complexes predicted with alignments",
+             "nothing downstream"),
     ):
         try:
             d = load_json(name)
@@ -653,12 +697,13 @@ def _count_rows():
         # n_folded counts the free-nanobody reference too; results does not
         n = d.get("n_folded") or len(d.get("results", d.get("constructs", [])))
         # these stages transform rather than select: everything made goes on
-        rows.append({"stage": stage, "what": what, "made": n, "kept": n})
+        rows.append({"stage": stage, "what": what, "made": n, "kept": n,
+                     "feeds": feeds})
     try:
         rk = load_json("13_ranking.json")
         rows.append({"stage": "06", "what": "carried all three scores and were "
                      "ranked", "made": rk["n_total"],
-                     "kept": rk["n_front"]})
+                     "kept": rk["n_front"], "feeds": "the reported front"})
     except (FileNotFoundError, KeyError):
         pass
     rows.sort(key=lambda r: r["stage"])
@@ -878,6 +923,14 @@ is more surface than a graft taken from the CDR contacts alone would address.</p
 {chart("design_window", "Usable mask affinity against linker length.")}
 {chart("tradeoff", "The two requirements as functions of mask affinity.")}
 </div>
+<p><b>What the window rests on.</b> Two of these quantities are measured on the structure and
+four are chosen. The window moves with all six, so they are given here rather than in a note
+further down.</p>
+{R.assumptions_table(ASSUMPTIONS)}
+<p>Of the four chosen values, the nanobody&rsquo;s own antigen affinity is the one with a
+published measurement behind it, and it is reported as a range rather than per pair. The window
+is therefore given across that range.</p>
+{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
 <details class="tech"><summary>Model and equations</summary><div class="techbody">
 <div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
 <br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>

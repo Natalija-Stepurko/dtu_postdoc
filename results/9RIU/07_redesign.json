@@ -3,12 +3,16 @@
     {
       "id": "mpnn000_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -29,12 +33,16 @@
     {
       "id": "mpnn001_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -55,12 +63,16 @@
     {
       "id": "mpnn002_epi2_cn01",
       "length": 142,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         4,
         19
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi2_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -81,12 +93,16 @@
     {
       "id": "mpnn003_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -107,12 +123,16 @@
     {
       "id": "mpnn004_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -133,12 +153,16 @@
     {
       "id": "mpnn005_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -159,12 +183,16 @@
     {
       "id": "mpnn006_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -185,12 +213,16 @@
     {
       "id": "mpnn007_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -211,12 +243,16 @@
     {
       "id": "mpnn008_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -237,12 +273,16 @@
     {
       "id": "mpnn009_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -263,12 +303,16 @@
     {
       "id": "mpnn010_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -289,12 +333,16 @@
     {
       "id": "mpnn011_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -315,12 +363,16 @@
     {
       "id": "mpnn012_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -341,12 +393,16 @@
     {
       "id": "mpnn013_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -367,12 +423,16 @@
     {
       "id": "mpnn014_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -393,12 +453,16 @@
     {
       "id": "mpnn015_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -419,12 +483,16 @@
     {
       "id": "mpnn016_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -445,12 +513,16 @@
     {
       "id": "mpnn017_epi2_cn01",
       "length": 142,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         4,
         19
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi2_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -471,12 +543,16 @@
     {
       "id": "mpnn018_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -497,12 +573,16 @@
     {
       "id": "mpnn019_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -523,12 +603,16 @@
     {
       "id": "mpnn020_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -549,12 +633,16 @@
     {
       "id": "mpnn021_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -575,12 +663,16 @@
     {
       "id": "mpnn022_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -601,12 +693,16 @@
     {
       "id": "mpnn023_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -627,12 +723,16 @@
     {
       "id": "mpnn024_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -653,12 +753,16 @@
     {
       "id": "mpnn025_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -679,12 +783,16 @@
     {
       "id": "mpnn026_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -705,12 +813,16 @@
     {
       "id": "mpnn027_epi2_cn01",
       "length": 142,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         4,
         19
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi2_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -731,12 +843,16 @@
     {
       "id": "mpnn028_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -757,12 +873,16 @@
     {
       "id": "mpnn029_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -783,12 +903,16 @@
     {
       "id": "mpnn030_epi1_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -809,12 +933,16 @@
     {
       "id": "mpnn031_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -835,12 +963,16 @@
     {
       "id": "mpnn032_epi2_cn01",
       "length": 142,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         4,
         19
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi2_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -861,12 +993,16 @@
     {
       "id": "mpnn033_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -887,12 +1023,16 @@
     {
       "id": "mpnn034_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -913,12 +1053,16 @@
     {
       "id": "mpnn035_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -939,12 +1083,16 @@
     {
       "id": "mpnn036_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -965,12 +1113,16 @@
     {
       "id": "mpnn037_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -991,12 +1143,16 @@
     {
       "id": "mpnn038_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1017,12 +1173,16 @@
     {
       "id": "mpnn039_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1043,12 +1203,16 @@
     {
       "id": "mpnn040_epi2_cn01",
       "length": 142,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         4,
         19
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi2_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1069,12 +1233,16 @@
     {
       "id": "mpnn041_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1095,12 +1263,16 @@
     {
       "id": "mpnn042_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1121,12 +1293,16 @@
     {
       "id": "mpnn043_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1147,12 +1323,16 @@
     {
       "id": "mpnn044_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1173,12 +1353,16 @@
     {
       "id": "mpnn045_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1199,12 +1383,16 @@
     {
       "id": "mpnn046_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1225,12 +1413,16 @@
     {
       "id": "mpnn047_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1251,12 +1443,16 @@
     {
       "id": "mpnn048_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1277,12 +1473,16 @@
     {
       "id": "mpnn049_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1303,12 +1503,16 @@
     {
       "id": "mpnn050_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1329,12 +1533,16 @@
     {
       "id": "mpnn051_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1355,12 +1563,16 @@
     {
       "id": "mpnn052_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1381,12 +1593,16 @@
     {
       "id": "mpnn053_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1407,12 +1623,16 @@
     {
       "id": "mpnn054_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1433,12 +1653,16 @@
     {
       "id": "mpnn055_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1459,12 +1683,16 @@
     {
       "id": "mpnn056_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1485,12 +1713,16 @@
     {
       "id": "mpnn057_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1511,12 +1743,16 @@
     {
       "id": "mpnn058_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1537,12 +1773,16 @@
     {
       "id": "mpnn059_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1563,12 +1803,16 @@
     {
       "id": "mpnn060_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1589,12 +1833,16 @@
     {
       "id": "mpnn061_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1615,12 +1863,16 @@
     {
       "id": "mpnn062_epi2_cn01",
       "length": 142,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         4,
         19
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi2_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1641,12 +1893,16 @@
     {
       "id": "mpnn063_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1667,12 +1923,16 @@
     {
       "id": "mpnn064_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1693,12 +1953,16 @@
     {
       "id": "mpnn065_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1719,12 +1983,16 @@
     {
       "id": "mpnn066_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1745,12 +2013,16 @@
     {
       "id": "mpnn067_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1771,12 +2043,16 @@
     {
       "id": "mpnn068_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1797,12 +2073,16 @@
     {
       "id": "mpnn069_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1823,12 +2103,16 @@
     {
       "id": "mpnn070_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1849,12 +2133,16 @@
     {
       "id": "mpnn071_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1875,12 +2163,16 @@
     {
       "id": "mpnn072_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1901,12 +2193,16 @@
     {
       "id": "mpnn073_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1927,12 +2223,16 @@
     {
       "id": "mpnn074_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1953,12 +2253,16 @@
     {
       "id": "mpnn075_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -1979,12 +2283,16 @@
     {
       "id": "mpnn076_epi1_scram_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_scram_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2005,12 +2313,16 @@
     {
       "id": "mpnn077_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2031,12 +2343,16 @@
     {
       "id": "mpnn078_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2057,12 +2373,16 @@
     {
       "id": "mpnn079_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2083,12 +2403,16 @@
     {
       "id": "mpnn080_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2109,12 +2433,16 @@
     {
       "id": "mpnn081_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2135,12 +2463,16 @@
     {
       "id": "mpnn082_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2161,12 +2493,16 @@
     {
       "id": "mpnn083_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2187,12 +2523,16 @@
     {
       "id": "mpnn084_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2213,12 +2553,16 @@
     {
       "id": "mpnn085_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2239,12 +2583,16 @@
     {
       "id": "mpnn086_epi1_half_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_half_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2265,12 +2613,16 @@
     {
       "id": "mpnn087_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2291,12 +2643,16 @@
     {
       "id": "mpnn088_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2317,12 +2673,16 @@
     {
       "id": "mpnn089_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2343,12 +2703,16 @@
     {
       "id": "mpnn090_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2369,12 +2733,16 @@
     {
       "id": "mpnn091_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2395,12 +2763,16 @@
     {
       "id": "mpnn092_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2421,12 +2793,16 @@
     {
       "id": "mpnn093_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2447,12 +2823,16 @@
     {
       "id": "mpnn094_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2473,12 +2853,16 @@
     {
       "id": "mpnn095_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2499,12 +2883,16 @@
     {
       "id": "mpnn096_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2525,12 +2913,16 @@
     {
       "id": "mpnn097_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2551,12 +2943,16 @@
     {
       "id": "mpnn098_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2577,12 +2973,16 @@
     {
       "id": "mpnn099_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2603,12 +3003,16 @@
     {
       "id": "mpnn100_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2629,12 +3033,16 @@
     {
       "id": "mpnn101_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2655,12 +3063,16 @@
     {
       "id": "mpnn102_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2681,12 +3093,16 @@
     {
       "id": "mpnn103_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2707,12 +3123,16 @@
     {
       "id": "mpnn104_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2733,12 +3153,16 @@
     {
       "id": "mpnn105_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2759,12 +3183,16 @@
     {
       "id": "mpnn106_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2785,12 +3213,16 @@
     {
       "id": "mpnn107_epi1_noCys_cn01",
       "length": 155,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         17,
         32
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_epi1_noCys_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2811,12 +3243,16 @@
     {
       "id": "mpnn108_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
@@ -2837,12 +3273,16 @@
     {
       "id": "mpnn109_polyG_cn01",
       "length": 147,
+      "linker_id": "cn01",
+      "linker_kind": "generated",
       "linker_range": [
         9,
         24
       ],
       "linker_residues": 16,
+      "linker_selectivity": 1.481,
       "linker_seq": "GGSPMPTAFHGMAGGS",
+      "linker_substrate": "PMPTAFHGMA",
       "mask": "mpnn_polyG_cn01",
       "mask_kind": "ProteinMPNN redesign",
       "mask_range": [
