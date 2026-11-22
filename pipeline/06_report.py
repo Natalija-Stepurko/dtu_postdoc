@@ -59,7 +59,7 @@ except FileNotFoundError:
 for _name, _key in (("02b_linkers.json", "linkers"),
                     ("13_ranking.json", "ranking_data"),
                     ("12_feasibility.json", "feas_data"),
-                    ("11_complexes_msa.json", "complexes_msa"),
+                    ("19_verification.json", "verification"),
                     ("10_trigger.json", "trigger"),
                     ("07_redesign.json", "redesign"),
                     ("08_redesign_folding.json", "redesign_fold"),
@@ -398,7 +398,7 @@ if complexes:
         f"<td>{r['buried_surface_area_A2']:.0f}</td>"
         f"<td>{r['fraction_of_contacts_on_paratope']:.2f}</td>"
         f"<td>{r['seconds']/60:.0f}</td></tr>" for r in ok)
-    _m = {r["case"]: r for r in (complexes_msa["results"] if complexes_msa else [])
+    _m = {r["case"]: r for r in (verification["results"] if verification else [])
           if r["status"] == "ok"}
     _masked = [r for r in _m.values() if r.get("construct")]
     _msa_lo = min((r["fraction_of_contacts_on_paratope"] for r in _masked), default=0.0)
@@ -474,10 +474,10 @@ _inert = _np.mean([r["occlusion"] * 100 for r in fold["results"]
                    if r["kind"] == "inert control"]) if fold else float("nan")
 _acc_rows = trigger["results"] if trigger else []
 _msa_ctrl = None
-if complexes_msa:
-    _msa_ctrl = next((r for r in complexes_msa["results"]
+if verification:
+    _msa_ctrl = next((r for r in verification["results"]
                       if r["case"].startswith("control") and r["status"] == "ok"), None)
-_msa_masked = [r for r in (complexes_msa["results"] if complexes_msa else [])
+_msa_masked = [r for r in (verification["results"] if verification else [])
                if r["status"] == "ok" and r.get("construct")]
 _msa_lo = min((r["fraction_of_contacts_on_paratope"] for r in _msa_masked), default=0)
 _msa_hi = max((r["fraction_of_contacts_on_paratope"] for r in _msa_masked), default=0)
@@ -536,7 +536,7 @@ N["least_ctx"] = _least["context_score"] if _least else 0.0
 N["least_sel"] = _least["selectivity"] if _least else 0.0
 N["least_cleav"] = _least["cleavability_score"] if _least else 0.0
 
-_mm = {r["case"]: r for r in (complexes_msa["results"] if complexes_msa else [])
+_mm = {r["case"]: r for r in (verification["results"] if verification else [])
        if r["status"] == "ok"}
 _mk = [r for r in _mm.values() if r.get("construct")]
 N["boltz_ctrl_noalign"] = (_ctrl["fraction_of_contacts_on_paratope"] if _ctrl else 0) * 100
@@ -592,6 +592,20 @@ toxin_contact = sorted(int("".join(c for c in lbl[1:] if c.isdigit()))
                        for lbl in iface.get("epitope_near_labels", []))
 N["mask_cutoff"] = iface.get("mask_contact_cutoff_A", 3.5)
 N["n_near"] = len(top_paratope)
+N["n_epitope_near"] = len(iface.get("epitope_near_labels", []))
+_lk_len = next((len(x["sequence"]) for x in lib["linkers"]), 0)
+N["linker_len"] = _lk_len
+_scan_by_n = {r["linker_residues"]: r["window_decades"]
+              for r in tether["scan"] if r["terminus"] == "N"}
+N["window_cost"] = (_scan_by_n.get(tether["best_per_terminus"]["N"]["linker_residues"], 0)
+                    - _scan_by_n.get(_lk_len, 0))
+N["n_epitope_contacts"] = iface.get("n_epitope_contacts", 0)
+N["n_epitope"] = iface.get("n_epitope", 0)
+try:
+    _seg = load_json("03a_masks.json")["segments"][0]
+    N["mask_face"] = f"{_seg['start_label']}\u2013{_seg['end_label']}"
+except (FileNotFoundError, KeyError, IndexError):
+    N["mask_face"] = "not yet designed"
 N["n_contacts"] = iface["n_paratope_contacts"]
 N["contact_cutoff"] = iface["contact_cutoff_A"]
 
@@ -726,15 +740,15 @@ def _count_rows():
     try:
         rk = load_json("13_ranking.json")
         row("13", "ranked: the set no other construct beats on all three scores",
-            rk["n_total"], rk["n_front"], "11 verification")
+            rk["n_total"], rk["n_front"], "19 verification")
     except (FileNotFoundError, KeyError):
         pass
     try:
-        cx = load_json("11_complexes_msa.json")
+        cx = load_json("19_verification.json")
         ok = [r for r in cx["results"] if r.get("status") == "ok" and r.get("construct")]
         feeds = ("the reported shortlist" if cx.get("from_front")
                  else "nothing downstream")
-        row("11", "front verified by predicting the whole assembly with the antigen",
+        row("19", "front verified by predicting the whole assembly with the antigen",
             len(cx["results"]), len(ok), feeds)
     except FileNotFoundError:
         pass
@@ -857,8 +871,13 @@ def _build_register():
            lambda: (lambda d: f"positive control (antigen) "
                               f"{next(r['fraction_of_contacts_on_paratope'] for r in d['results'] if r['case']=='antigen_positive_control'):.0%} "
                               f"on the paratope; "
-                              f"{sum(1 for r in d['results'] if r.get('fraction_of_contacts_on_paratope',0) >= 0.5 and r['case']!='antigen_positive_control')} "
-                              f"of {len(d['results'])-1} masks reach half that")
+                              f"the grafts place "
+                              f"{max(r['fraction_of_contacts_on_paratope'] for r in d['results'] if 'core' in r['case'] and 'scram' not in r['case']):.0%} "
+                              f"of their contacts there against "
+                              f"{next(r['fraction_of_contacts_on_paratope'] for r in d['results'] if r['case']=='polyG'):.0%} "
+                              f"for poly-glycine and "
+                              f"{next(r['fraction_of_contacts_on_paratope'] for r in d['results'] if 'scram' in r['case']):.0%} "
+                              f"for a scramble")
                    (_f('17_mask_binding.json'))))
 
     a(_exp("09", "Complex without alignments", "Does the predictor work with no alignment?",
@@ -866,11 +885,11 @@ def _build_register():
                    f"{next(r['fraction_of_contacts_on_paratope'] for r in _f('09_complexes.json')['results'] if r['case']=='control_free_vhh'):.0%} "
                    f"of antigen contacts on the known paratope"))
 
-    a(_exp("11", "Verify the front", "With the mask on, can the antigen still bind?",
+    a(_exp("19", "Verify the front", "With the mask on, can the antigen still bind?",
            lambda: (lambda d: f"{d['n_worth_testing']} of {d['n_verified']} verified constructs "
                               f"block the antigen against a free-nanobody control at "
                               f"{d['free_vhh_fraction_on_paratope']:.0%}")
-                   (_f('11_complexes_msa.json'))))
+                   (_f('19_verification.json'))))
 
     a(_exp("13", "Multiobjective ranking", "Which constructs does nothing else beat?",
            lambda: f"{_f('13_ranking.json')['n_front']} of "
@@ -903,9 +922,16 @@ N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
 
 _feas = {r["id"]: r for r in (feas_data["results"] if feas_data else [])}
-_graft_feas = [r for r in _feas.values() if r["mask"] == "epi1"]
-N["feas_graft"] = _np.mean([r["feasibility_score"] for r in _graft_feas]) if _graft_feas else 0
-N["feas_cys"] = _graft_feas[0]["unpaired_cysteines"] if _graft_feas else 0
+# the primary graft, whatever it is called: masks are renamed when the
+# design changes, and a literal name here silently selects nothing
+_primary_mask = next((k for k, m in lib["masks"].items()
+                      if m["kind"] == "epitope graft"), None)
+_graft_feas = [r for r in _feas.values() if r["mask"] == _primary_mask]
+# no rows for the current graft means the scores predate it, which must not
+# render as a score of zero
+N["has_graft_feas"] = bool(_graft_feas)
+N["feas_graft"] = _np.mean([r["feasibility_score"] for r in _graft_feas]) if _graft_feas else float("nan")
+N["feas_cys"] = _graft_feas[0]["unpaired_cysteines"] if _graft_feas else -1
 N["rmsd_mean"] = _np.mean([r["vhh_core_rmsd_A"] for r in _feas.values()
                            if r.get("vhh_core_rmsd_A")]) if _feas else 0
 
@@ -984,12 +1010,15 @@ maximum, which is the opposite of the objective most protein design methods opti
 
 <section class="sec">
 <div class="stack"><div class="eyebrow">03</div><h2>Proposed computational pipeline</h2>
-<p>The pipeline consists of five modules. Candidate constructs are generated, three independent
-scoring functions assess structural feasibility, the interaction between mask and nanobody, and
-the susceptibility of the linker to proteolysis, and the three scores are combined by multiobjective
-ranking. The output is a list of candidate sequences with their associated scores. Each module can
-use several computational methods, so individual methods can be compared or replaced without
-altering the pipeline.</p></div>
+<p>The pipeline has six modules. One estimates what mask affinity and linker length could work at
+all. Two generate independently: the mask comes from the antigen's contact face on this nanobody,
+the linker from substrate data, and neither constrains the other until they are assembled into one
+chain. Three scoring functions then assess structural feasibility, the interaction between mask and
+nanobody, and the susceptibility of the linker to proteolysis. The three scores are combined by
+multiobjective ranking, and the resulting front is verified by predicting the whole assembly with
+its antigen, which is the only step that asks directly whether the antigen can still bind. Each
+module can use several computational methods, so individual methods can be compared or replaced
+without altering the pipeline.</p></div>
 <div class="chart wide">{R.architecture_schematic()}</div>
 {R.module_summary_table()}
 <div class="eq">S(x) = [ S<sub>structure</sub>(x), S<sub>binding</sub>(x), S<sub>cleavage</sub>(x) ]</div>
@@ -1048,14 +1077,32 @@ constant for this pair.</p>
   f"Surface buried per nanobody residue on complex formation. Markers show the {N['n_near']} "
   f"residues with a heavy atom within {N['mask_cutoff']:g} Å of the antigen, which is the "
   f"set the mask is designed from.")}
-<p>Two cutoffs describe this interface and they answer different questions. Taking a heavy-atom
-distance of {N['contact_cutoff']:.0f} &#8491;, the range of hydrogen bonds and salt bridges, gives
-{N['n_contacts']} residues: {N['contact_labels']}. These are labelled in the viewer and marked on the
-plot. Taking every residue that loses solvent-accessible surface gives {N['n_paratope']}, because
-van der Waals packing reaches further than a hydrogen bond. The smaller set is what is interacting
-chemically; the larger one is the surface a mask has to cover, so the pipeline targets the larger
-one. On one of the other complexes examined the {N['contact_cutoff']:.0f} &#8491; criterion returns a
-single residue, which is too little to define a footprint from.</p>
+<p><b>Three cutoffs, and each one is used for something different.</b> They are not alternative
+answers to one question, so it matters which is which.</p>
+<table class="tbl cuts">
+<tr><th>criterion</th><th>on the nanobody</th><th>on the antigen</th><th>what it is used for</th></tr>
+<tr><td class="mono">heavy atoms within {N['contact_cutoff']:g} &#8491;</td>
+<td>{N['n_contacts']} residues &mdash; {N['contact_labels']}</td>
+<td>{N['n_epitope_contacts']}</td>
+<td>hydrogen-bond and salt-bridge range: the chemically interacting core. Reported so this
+interface can be compared with others, and used for nothing else.</td></tr>
+<tr class="hl"><td class="mono">heavy atoms within {N['mask_cutoff']:g} &#8491;</td>
+<td>{N['n_near']} residues, marked on the plot above</td>
+<td>{N['n_epitope_near']} residues, {N['mask_face']}</td>
+<td><b>the contact face.</b> On the antigen side this is the sequence the mask is built from, in
+Module 02a. Wider than the polar core because a mask reproduces a face, not a set of bonds.</td></tr>
+<tr><td class="mono">loses more than 1 &#8491;<sup>2</sup> of surface</td>
+<td>{N['n_paratope']} residues</td><td>{N['n_epitope']}</td>
+<td><b>the footprint.</b> The surface a mask has to cover, so this is what occlusion is measured
+against in Modules 03 and 04. Van der Waals packing reaches further than a hydrogen bond, so it is
+the largest of the three.</td></tr>
+</table>
+<p>The {N['contact_cutoff']:g} &#8491; criterion is too strict to define a mask from: on one of the
+comparator complexes below it returns a single residue. The footprint is too permissive to build a
+peptide from, since it is a set of residues and not a contiguous sequence the antigen contains. The
+{N['mask_cutoff']:g} &#8491; face sits between them, and on this antigen it has a property neither
+of the others has: it cuts at C42 and C53, which are bonded to each other, so the excised peptide
+keeps the disulfide that holds its shape and leaves no cysteine without a partner.</p>
 <p>One interface measured on its own says little, so the same quantities were measured on
 independent VHH complexes: two further nanobody&ndash;three-finger-toxin structures from other
 groups, and a nanobody bound to a much larger toxin.</p>
@@ -1141,12 +1188,17 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
      "descriptors were calculated over the whole construct for exposed hydrophobic "
      "surface and unpaired cysteines.",
      f"{N['n_folded']} constructs were folded and {N['n_ensemble']} superimposed on the nanobody. "
-     f"The mean core RMSD against the free nanobody is {N['rmsd_mean']:.2f} Å. The mask grafted "
-     f"from the antigen carries {N['feas_cys']} unpaired cysteines and scores "
-     f"{N['feas_graft']:.2f} on this module.",
-     "The nanobody fold is retained, which is a necessary condition rather than evidence of "
-     "expression or thermodynamic stability. Cysteine content is the dominant liability and is "
-     "detected by no other module.")}
+     f"The mean core RMSD against the free nanobody is {N['rmsd_mean']:.2f} Å. "
+     + (f"The graft taken from the antigen's contact face leaves {N['feas_cys']} cysteine "
+        f"unpaired in the predicted model and scores {N['feas_graft']:.2f} here."
+        if N["has_graft_feas"] else
+        "Per-mask feasibility is not shown: these scores were computed on the previous "
+        "library and carry no row for the current graft."),
+     "The nanobody fold is retained, which is a necessary condition and not evidence of "
+     "expression or thermodynamic stability. Cysteine is the liability this module exists to "
+     "catch, and it is measured from the predicted disulfides: an earlier version counted every "
+     "cysteine past the nanobody's own pair as unpaired, which sent any cysteine-rich graft to "
+     "zero on an assumption.")}
 {chart("feasibility_components", "Feasibility components by construct family. A low score on any "
        "one component is enough to make a construct unusable. The dashed line is the unmasked "
        f"nanobody, which scores {N['ref_surface']:.2f} on surface liability itself, so that "
@@ -1235,8 +1287,12 @@ constitutive enzymes.</p>
    R.ramp_legend("least reachable", "most"))}
 <p>Every linker is the same length, so length is held constant and only sequence varies. Reach in
 the construct averages {N['ctx_mean']:.2f} and reaches {N['ctx_max']:.2f} at best; the affinity
-window of Module 01 is widest at {N['linker_best']} residues, which the generated linkers sit
-close to.</p>
+window of Module 01 is widest at {N['linker_best']} residues, and the linkers here are
+{N['linker_len']}. That gap is deliberate and is a result in its own right: the tether model treats
+the mask as a point at the end of the linker, and the mask is a peptide with its own dimensions
+that has to reach across the paratope. Stage 16 measured the difference by holding the substrate
+constant and lengthening only the inert flanks, and the extra length costs
+{N['window_cost']:.2f} decades of the affinity window.</p>
 <p><b>Both axes have to hold at once.</b> The lowest-scoring construct in the library,
 {N['least_id']}, is physically reachable &mdash; its reach score of {N['least_ctx']:.2f} is
 mid-pack &mdash; but its linker is a scramble of a good substrate, so recognition falls to

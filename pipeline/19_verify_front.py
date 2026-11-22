@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Stage 11. Verify the ranked front by predicting the whole assembly.
+"""Stage 19. Verify the ranked front by predicting the whole assembly.
 
 This is the last narrowing in the funnel and the only stage that asks the
 question the design exists to answer: with the mask in place, can the antigen
@@ -31,7 +31,7 @@ N_VERIFY = 6
 
 BOLTZ = "/scratch/.venv-dtu/bin/boltz"
 WORK = Path("/scratch/boltz_msa_stage")
-OUT = RESULTS / "complexes_msa"
+OUT = RESULTS / "verification"
 WORK.mkdir(parents=True, exist_ok=True)
 
 lib = load_json("03_constructs.json")
@@ -135,7 +135,7 @@ for r in results:
 verified = [r for r in results if r.get("construct") and r["status"] == "ok"]
 worth = [r for r in verified if r.get("blocks")]
 
-save_json("11_complexes_msa.json", {
+save_json("19_verification.json", {
     "method": "Boltz-2; the construct as one molecule, nanobody and mask-linker "
               "joined by a bond, with its antigen; alignments for the public "
               "nanobody and antigen sequences only",
