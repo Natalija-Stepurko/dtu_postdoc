@@ -158,7 +158,7 @@ if free_fraction is not None:
           f"{BLOCKING_MARGIN:.0%} of those away while its own mask holds the site.\n")
     for r in verified:
         print(f"  {r['construct']:<26s} antigen {r['fraction_of_contacts_on_paratope']:.2f} "
-              f"(-{r['antigen_contacts_displaced']:+.2f})  mask "
+              f"(-{r['antigen_contacts_displaced']:.2f})  mask "
               f"{r.get('mask_fraction_on_paratope', float('nan')):.2f}   {r['verdict']}")
     print(f"\n{len(worth)} of {len(verified)} worth taking to the bench"
           + (f": {', '.join(r['construct'] for r in worth)}" if worth else ""))

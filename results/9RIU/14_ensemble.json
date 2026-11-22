@@ -1,0 +1,246 @@
+{
+  "constructs": [
+    {
+      "id": "epi_both_cn01",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_both_cn02",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_both_cn03",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_both_cn04",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_both_ctrl_gs",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_both_ctrl_scram",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_both_cn01_n12",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_both_cn01_n16",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_both_cn01_n20",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_both_cn01_n28",
+      "linker_end": 52
+    },
+    {
+      "id": "epi_both_cn01_n32",
+      "linker_end": 56
+    },
+    {
+      "id": "epi_both_ctrl_gs_n12",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_both_ctrl_gs_n16",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_both_ctrl_gs_n20",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_both_ctrl_gs_n28",
+      "linker_end": 52
+    },
+    {
+      "id": "epi_both_ctrl_gs_n32",
+      "linker_end": 56
+    },
+    {
+      "id": "epi_both_ctrl_scram_n12",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_both_ctrl_scram_n16",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_both_ctrl_scram_n20",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_both_ctrl_scram_n28",
+      "linker_end": 52
+    },
+    {
+      "id": "epi_both_ctrl_scram_n32",
+      "linker_end": 56
+    },
+    {
+      "id": "epi_core_cn01",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_cn02",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_cn03",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_cn04",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_ctrl_gs",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_ctrl_scram",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_cn01_n12",
+      "linker_end": 24
+    },
+    {
+      "id": "epi_core_cn01_n16",
+      "linker_end": 28
+    },
+    {
+      "id": "epi_core_cn01_n20",
+      "linker_end": 32
+    },
+    {
+      "id": "epi_core_cn01_n28",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_cn01_n32",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_core_ctrl_gs_n12",
+      "linker_end": 24
+    },
+    {
+      "id": "epi_core_ctrl_gs_n16",
+      "linker_end": 28
+    },
+    {
+      "id": "epi_core_ctrl_gs_n20",
+      "linker_end": 32
+    },
+    {
+      "id": "epi_core_ctrl_gs_n28",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ctrl_gs_n32",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_core_ctrl_scram_n12",
+      "linker_end": 24
+    },
+    {
+      "id": "epi_core_ctrl_scram_n16",
+      "linker_end": 28
+    },
+    {
+      "id": "epi_core_ctrl_scram_n20",
+      "linker_end": 32
+    },
+    {
+      "id": "epi_core_ctrl_scram_n28",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ctrl_scram_n32",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_core_ext2_cn01",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ext2_cn02",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ext2_cn03",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ext2_cn04",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ext2_ctrl_gs",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ext2_ctrl_scram",
+      "linker_end": 40
+    },
+    {
+      "id": "epi_core_ext2_cn01_n12",
+      "linker_end": 28
+    },
+    {
+      "id": "epi_core_ext2_cn01_n16",
+      "linker_end": 32
+    },
+    {
+      "id": "epi_core_ext2_cn01_n20",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_ext2_cn01_n28",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_core_ext2_cn01_n32",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_core_ext2_ctrl_gs_n12",
+      "linker_end": 28
+    },
+    {
+      "id": "epi_core_ext2_ctrl_gs_n16",
+      "linker_end": 32
+    },
+    {
+      "id": "epi_core_ext2_ctrl_gs_n20",
+      "linker_end": 36
+    },
+    {
+      "id": "epi_core_ext2_ctrl_gs_n28",
+      "linker_end": 44
+    },
+    {
+      "id": "epi_core_ext2_ctrl_gs_n32",
+      "linker_end": 48
+    },
+    {
+      "id": "epi_core_ext2_ctrl_scram_n12",
+      "linker_end": 28
+    },
+    {
+      "id": "epi_core_ext2_ctrl_scram_n16",
+      "linker_end": 32
+    }
+  ],
+  "file": "structures/ensemble.pdb",
+  "n_models": 61
+}
