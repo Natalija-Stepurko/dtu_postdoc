@@ -1429,8 +1429,8 @@ def generation_table(counts) -> str:
     head = ('<colgroup><col style="width:8%"><col style="width:46%">'
             '<col style="width:7%"><col style="width:7%">'
             '<col style="width:32%"></colgroup>'
-            "<tr><th>stage</th><th>what happens</th><th>in</th><th>out</th>"
-            "<th>consumed by</th></tr>")
+            "<tr><th>module</th><th>what happens</th><th>in</th><th>out</th>"
+            "<th>feeds</th></tr>")
     body = ""
     for r in counts:
         feeds = r.get("feeds", "")

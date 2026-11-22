@@ -679,84 +679,115 @@ N["lattice_area"] = _lat.get("interface_area_A2", 0)
 N["lattice_n"] = _lat.get("n_paratope", 0)
 N["cdr3_other"] = _by.get("9GCN", {}).get("cdr3_percent_bsa", 0)
 def _count_rows():
-    """The funnel, in the order the pipeline runs, read back from stage outputs.
+    """The funnel, labelled by the module each step belongs to.
 
-    Each row says what entered, what left, and which stage consumes it. A row
-    whose output nothing consumes is a stage doing no work, and should be
-    visible as such rather than buried.
+    Rows are in execution order, which is how the work actually ran, and each
+    carries the module from the diagram rather than the number of the script
+    that produced it. The two numbering systems are different things and
+    showing both was the confusing part.
     """
     rows = []
 
-    def row(stage, what, came_in, went_out, feeds):
-        rows.append({"stage": stage, "what": what, "in": came_in,
+    def row(module, what, came_in, went_out, feeds):
+        rows.append({"stage": module, "what": what, "in": came_in,
                      "out": went_out, "feeds": feeds})
 
     try:
+        ref = load_json("01_reference.json")["chain_pairs"][REFERENCE_VHH_CHAIN]
+        teth = load_json("02_tether.json")
+        row("01", "the deposited complex measured: paratope, termini and contact "
+                  "faces, then the tether model turned into bounds on mask affinity",
+            "1 complex",
+            f"a {teth['best_per_terminus']['N']['window_decades']:.2f}-decade window",
+            "02a and 02b")
+    except (FileNotFoundError, KeyError):
+        pass
+
+    try:
         lk = load_json("02b_linkers.json")
-        row("02b", "protease substrates generated, conditioned on the target profile",
-            lk["n_generated"], lk["n_kept"], "02b controls")
-        row("02b", "+ a protease-resistant Gly/Ser linker and a scramble, as controls",
-            lk["n_kept"], len(lk["linkers"]), "03 assembly")
+        row("02b", "protease substrates generated against the target profile",
+            lk["n_generated"], lk["n_kept"], "02b")
+        row("02b", "+ controls, and the same substrates at other lengths",
+            lk["n_kept"], len(lk["linkers"]), "assembly")
     except FileNotFoundError:
         pass
+
     try:
         mk = load_json("03a_masks.json")
         n_contact = sum(seg["n_contact"] for seg in mk["segments"])
-        row("03a", f"masks seeded from the {n_contact} antigen residues within "
-                   f"{mk['cutoff_A']} \u00c5 of the nanobody, with window variants "
-                   f"and controls",
-            n_contact, len(mk["masks"]), "03 assembly")
+        row("02a", f"masks designed from the antigen residues within "
+                   f"{mk['cutoff_A']} \u00c5 of the nanobody, with window and "
+                   f"substitution variants and matched controls",
+            n_contact, len(mk["masks"]), "assembly")
     except FileNotFoundError:
         pass
+
+    folded_total = 0
     try:
         cl = load_json("03_constructs.json")
         n_mask, n_link = len(cl["masks"]), cl["n_linkers"]
-        row("03", f"constructs assembled: {n_mask} masks \u00d7 {n_link} linkers, "
-                  f"plus the free nanobody",
-            n_mask * n_link, cl["n_constructs"], "04 folding")
+        row("\u2014", f"assembled: {n_mask} masks and {n_link} linkers, paired by "
+                      f"the design matrix rather than fully crossed",
+            n_mask * n_link, cl["n_constructs"], "structure prediction")
+        f = load_json("04_folding.json")
+        folded_total = f.get("n_folded", 0)
+        row("\u2014", "folded once with ESMFold, as a single chain",
+            cl["n_constructs"], folded_total, "03, 04 and 05")
     except FileNotFoundError:
         pass
 
-    folded = 0
-    try:
-        f = load_json("04_folding.json")
-        folded = f.get("n_folded", 0)
-        row("04", "constructs folded with ESMFold", folded, folded,
-            "10 cleavability, 12 feasibility")
-    except FileNotFoundError:
-        pass
     try:
         rd = load_json("07_redesign.json")
         n_rd = len(rd["constructs"])
-        row("07", "mask sequences redesigned with ProteinMPNN on the folded backbones",
-            len(rd.get("parents", [])) or 1, n_rd, "08 folding")
+        row("02a", "mask sequences redesigned with ProteinMPNN on those backbones",
+            len(rd.get("parents", [])) or 1, n_rd, "structure prediction")
         rf = load_json("08_redesign_folding.json")
         n_rf = rf.get("n_folded") or len(rf["results"])
-        row("08", "redesigns folded with ESMFold", n_rd, n_rf,
-            "10 cleavability, 12 feasibility")
-        folded += n_rf
+        row("\u2014", "redesigns folded with ESMFold", n_rd, n_rf,
+            "03, 04 and 05")
+        folded_total += n_rf
     except FileNotFoundError:
         pass
 
     try:
-        tr = load_json("10_trigger.json")
-        n = len(tr["results"])
-        row("10 + 12", "scored for cleavability and for feasibility", n, n, "13 ranking")
+        n = len(load_json("12_feasibility.json")["results"])
+        row("03", "scored for fold retention, surface and disulfides", n, n, "06")
     except FileNotFoundError:
         pass
     try:
+        n = len(load_json("10_trigger.json")["results"])
+        row("05", "scored for protease recognition and reach", n, n, "06")
+    except FileNotFoundError:
+        pass
+    try:
+        n = len(load_json("04_folding.json")["results"])
+        row("04", "paratope surface occlusion measured on the folded construct",
+            n, n, "06")
+    except FileNotFoundError:
+        pass
+    try:
+        mb = load_json("17_mask_binding.json")
+        ok = [r for r in mb["results"] if r.get("status") == "ok"]
+        row("04", "each mask predicted against the bare nanobody, untethered",
+            len(mb["results"]), len(ok), "read alongside 06")
+    except FileNotFoundError:
+        pass
+
+    try:
         rk = load_json("13_ranking.json")
-        row("13", "ranked: the set no other construct beats on all three scores",
-            rk["n_total"], rk["n_front"], "19 verification")
+        row("06", "hard constraints applied, then the nondominated set, then "
+                  "ordered by weakest objective and deduplicated by mask",
+            rk.get("n_total", 0), len(rk.get("shortlist", [])) or rk.get("n_front", 0),
+            "04 verification")
     except (FileNotFoundError, KeyError):
         pass
     try:
         cx = load_json("19_verification.json")
         ok = [r for r in cx["results"] if r.get("status") == "ok" and r.get("construct")]
-        feeds = ("the reported shortlist" if cx.get("from_front")
-                 else "nothing downstream")
-        row("19", "front verified by predicting the whole assembly with the antigen",
-            len(cx["results"]), len(ok), feeds)
+        worth = cx.get("n_worth_testing")
+        row("04", "the shortlist predicted as a whole assembly with its antigen",
+            len(ok), worth if worth is not None else len(ok),
+            "the reported candidates")
     except FileNotFoundError:
         pass
     return rows
@@ -780,6 +811,7 @@ except FileNotFoundError:
     N.update({"n_linkers": 0, "n_generated": 0, "sel_min": 0.0, "sel_max": 0.0,
               "sel_ctrl": 0.0, "target_proteases": "", "off_target_proteases": ""})
     LINKERS = []
+
 
 COUNTS = _count_rows()
 
@@ -1079,7 +1111,7 @@ architecture and the methods are what transfer; a viper application would start 
 toxin complex and redesign the mask for it.</p>
 <p>All results below are computational. No construct has been expressed, and no affinity,
 expression level or cleavage rate has been measured.</p>
-<p>What was produced at each stage, and how much of it survived:</p>
+<p>What each module produced, in the order it ran, and how much of it survived. The module numbers are those in the diagram above; rows marked &mdash; are the assembly and structure-prediction steps that every module depends on.</p>
 {R.generation_table(COUNTS)}
 <p class="dim" style="font-size:.9rem">Every figure above is read from the output of the stage
 that produced it.</p>
