@@ -59,21 +59,45 @@ def fold(sequence: str, model, tokenizer, device: str = "cpu") -> tuple[str, np.
     return to_pdb(protein), plddt
 
 
+def pdb_sequence(path: Path) -> str:
+    """The one-letter sequence actually present in a PDB file."""
+    from biotite.structure.io.pdb import PDBFile
+    import biotite.structure as struc
+
+    atoms = PDBFile.read(str(path)).get_structure(model=1)
+    codes = struc.get_residues(atoms)[1]
+    return "".join(struc.info.one_letter_code(c) or "X" for c in codes)
+
+
 def fold_library(library, out_dir: Path, model=None, tokenizer=None, device=None,
                  skip_existing: bool = True, log=print) -> dict:
-    """Fold every construct, writing one PDB each. Resumable."""
+    """Fold every construct, writing one PDB each. Resumable.
+
+    The cache is keyed on the sequence in the file, not on the construct id.
+    Ids are reused across rebuilds - ``VHH_only`` keeps its name while the
+    sequence under it changes - so an id-keyed cache silently serves a model of
+    a different molecule, and every number measured against it is then wrong.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
-    if model is None:
-        model, tokenizer, device = load_model(device)
     plddt = {}
     start = time.time()
     for i, item in enumerate(library, 1):
         path = out_dir / f"{item['id']}.pdb"
         npy = out_dir / f"{item['id']}.plddt.npy"
         if skip_existing and path.exists() and npy.exists():
-            plddt[item["id"]] = np.load(npy)
-            log(f"[{i:2d}/{len(library)}] {item['id']:16s} cached")
-            continue
+            try:
+                cached = pdb_sequence(path)
+            except Exception:
+                cached = None
+            if cached == item["sequence"]:
+                plddt[item["id"]] = np.load(npy)
+                log(f"[{i:2d}/{len(library)}] {item['id']:16s} cached")
+                continue
+            log(f"[{i:2d}/{len(library)}] {item['id']:16s} stale "
+                f"({len(cached) if cached else '?'} aa on disk, "
+                f"{len(item['sequence'])} aa wanted) - refolding")
+        if model is None:
+            model, tokenizer, device = load_model(device)
         text, scores = fold(item["sequence"], model, tokenizer, device)
         path.write_text(text)
         np.save(npy, scores)
