@@ -285,23 +285,7 @@ of the pathology being treated.</td><td>Selected</td></tr>
 secreted protein.</td><td>Not selected</td></tr>
 </tbody></table></div>
 
-<p>The pH case is worth the arithmetic rather than a dismissal, because the obvious objection is
-that the pKa can be engineered. It can, and that is the problem: the same shift that gives more
-protonation at the site gives more in circulation, which is the state the design exists to keep
-off.</p>
-<table class="tbl proton"><colgroup><col style="width:17%"><col style="width:27%"><col style="width:27%"><col style="width:29%"></colgroup><tr><th>histidine pK<sub>a</sub></th><th>protonated in blood</th><th>protonated at the bite site</th><th>change</th></tr><tr><td class="mono">5.5</td><td class="mono">1.4%</td><td class="mono">9.1%</td><td class="mono">6.5&times;</td></tr><tr class="hl"><td class="mono">6.0 &larr; free histidine</td><td class="mono">4.3%</td><td class="mono">24.0%</td><td class="mono">5.6&times;</td></tr><tr><td class="mono">6.5</td><td class="mono">12.4%</td><td class="mono">50.0%</td><td class="mono">4.0&times;</td></tr><tr><td class="mono">7.0</td><td class="mono">30.9%</td><td class="mono">76.0%</td><td class="mono">2.5&times;</td></tr></table>
-<p class="dim" style="font-size:.9rem">Henderson&ndash;Hasselbalch,
-f = 1/(1 + 10<sup>pH&minus;pKa</sup>), over the pKa range a histidine takes in a protein. The
-conservative pairing is used throughout: the blood value that protonates most against the
-bite-site value that protonates least.</p>
 
-<p>I propose to develop a computational approach for designing protease-responsive nanobodies
-while preserving their original antigen-binding properties. Responsiveness is introduced by
-attaching a masking domain through a protease-cleavable linker. The mask should prevent antigen
-binding while attached and dissociate once the linker is cleaved. To make the approach applicable
-to more than one nanobody, the antigen-binding domain is left unchanged and only the regulatory
-components are designed, so that the architecture and the computational methods transfer even
-though individual mask sequences will not.</p>
 <div class="chart wide"><div class="states"><figure class="stfig"><img src="states/a.png" alt="Intact construct"><figcaption><b>A · Intact construct</b><span>The mask and linker are attached at the N-terminus of the nanobody.</span></figcaption></figure><figure class="stfig"><img src="states/b.png" alt="After cleavage"><figcaption><b>B · After cleavage</b><span>Proteolysis separates the mask, which then diffuses away.</span></figcaption></figure><figure class="stfig"><img src="states/c.png" alt="Antigen bound"><figcaption><b>C · Antigen bound</b><span>The antigen engages the same surface, as in the deposited complex.</span></figcaption></figure></div><div class="stkey"><span><i style="background:#337D79"></i>nanobody</span><span><i style="background:#8C72AD"></i>mask</span><span><i style="background:#9AA7B1"></i>linker</span><span><i style="background:#C06014"></i>antigen-binding residues</span><span><i style="background:#C99555"></i>antigen</span></div></div>
 </section>
 

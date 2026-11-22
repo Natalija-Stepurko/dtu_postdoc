@@ -1025,23 +1025,7 @@ of the pathology being treated.</td><td>Selected</td></tr>
 secreted protein.</td><td>Not selected</td></tr>
 </tbody></table></div>
 
-<p>The pH case is worth the arithmetic rather than a dismissal, because the obvious objection is
-that the pKa can be engineered. It can, and that is the problem: the same shift that gives more
-protonation at the site gives more in circulation, which is the state the design exists to keep
-off.</p>
-{R.protonation_table(PH_SCAN)}
-<p class="dim" style="font-size:.9rem">Henderson&ndash;Hasselbalch,
-f = 1/(1 + 10<sup>pH&minus;pKa</sup>), over the pKa range a histidine takes in a protein. The
-conservative pairing is used throughout: the blood value that protonates most against the
-bite-site value that protonates least.</p>
 
-<p>I propose to develop a computational approach for designing protease-responsive nanobodies
-while preserving their original antigen-binding properties. Responsiveness is introduced by
-attaching a masking domain through a protease-cleavable linker. The mask should prevent antigen
-binding while attached and dissociate once the linker is cleaved. To make the approach applicable
-to more than one nanobody, the antigen-binding domain is left unchanged and only the regulatory
-components are designed, so that the architecture and the computational methods transfer even
-though individual mask sequences will not.</p>
 <div class="chart wide">{R.states_schematic()}</div>
 </section>
 
