@@ -37,11 +37,20 @@ def test_effective_concentration_is_physically_plausible():
 
 
 def test_masking_and_release_are_complementary():
+    """Each bound is exactly the affinity that just satisfies its own requirement.
+
+    Read the budgets from the config rather than pinning the numbers here: they
+    are design choices and get changed, and a test that hardcodes them fails on
+    the change instead of checking the relation that has to hold.
+    """
+    from nbswitch.config import MAX_SYSTEMIC_LEAK, MIN_TOXIN_RECOVERY
+
     c_eff = T.effective_concentration(5, 11.78)
     ceiling = T.masking_ceiling(c_eff)
-    assert T.fraction_masked(c_eff, ceiling) == pytest.approx(0.99, abs=1e-6)
+    assert T.fraction_masked(c_eff, ceiling) == pytest.approx(1 - MAX_SYSTEMIC_LEAK,
+                                                              abs=1e-6)
     floor = T.release_floor()
-    assert T.fraction_toxin_bound(floor) == pytest.approx(0.90, abs=1e-6)
+    assert T.fraction_toxin_bound(floor) == pytest.approx(MIN_TOXIN_RECOVERY, abs=1e-6)
 
 
 def test_window_closes_for_a_long_span_and_short_linker():

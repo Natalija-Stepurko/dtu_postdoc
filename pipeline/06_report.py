@@ -647,7 +647,8 @@ def _count_rows():
             continue
         # n_folded counts the free-nanobody reference too; results does not
         n = d.get("n_folded") or len(d.get("results", d.get("constructs", [])))
-        rows.append({"stage": stage, "what": what, "made": n, "kept": None})
+        # these stages transform rather than select: everything made goes on
+        rows.append({"stage": stage, "what": what, "made": n, "kept": n})
     try:
         rk = load_json("13_ranking.json")
         rows.append({"stage": "06", "what": "carried all three scores and were "
