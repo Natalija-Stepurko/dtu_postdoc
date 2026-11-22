@@ -1003,10 +1003,6 @@ rather than that the model is right.</div>
 {f("fig4_1_23_a_isoforms", "Conformational space explored for each isoform, radius of gyration "
    "against maximum dimension. The longer the tail, the more closed states appear.", "full")}
 
-<div class="note"><b>Why this is the relevant experience.</b> The problem on this page is a
-two-state one: hold a conformation while tethered, lose it when cut, at an affinity inside a narrow
-window. That is the system characterised above — by SEC-SAXS, ensemble modelling and direct
-affinity measurement — rather than predicted.</div>
 </div>
 </details>"""
 
