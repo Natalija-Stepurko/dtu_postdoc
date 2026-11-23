@@ -1591,22 +1591,6 @@ these scores, and inventing one would make the ordering look better founded than
 {R.front_table(RANK_FRONT, RANK_OBJECTIVES, RANK_SHORTLIST)}
 
 {chart("pareto_panels", "The three scores plotted pairwise, with the nondominated set marked.")}
-
-<h3 class="mod"><span>Summary</span>Implementation status</h3>
-{R.implementation_table([
-  ("01 Affinity estimation", "Interface geometry and tether model",
-   "Validation against measured mask affinities"),
-  ("02 Generation", "Candidate library and ProteinMPNN redesign",
-   "De novo masking architectures"),
-  ("03 Structural feasibility", "Static predictions and structural descriptors",
-   "Conformational modelling; experimental expression data"),
-  ("04 Mask binding", "Occlusion and complex prediction",
-   "Reliable affinity and release prediction"),
-  ("05 Linker cleavability", "Structural accessibility",
-   "Protease-specific recognition and selectivity"),
-  ("06 Ranking", "Pareto analysis on preliminary scores",
-   "Ranking on validated functional scores"),
-])}
 </section>
 
 <section class="sec">

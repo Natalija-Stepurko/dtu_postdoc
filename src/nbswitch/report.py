@@ -1289,17 +1289,6 @@ def pipeline_table(rows) -> str:
                    f'<tbody>{body}</tbody></table></div>')
     return '<div class="register">' + "".join(out) + "</div>"
 
-def implementation_table(rows) -> str:
-    """Implemented against remaining, one row per module."""
-    body = "".join(f"<tr><td><b>{m}</b></td><td>{done}</td><td>{todo}</td></tr>"
-                   for m, done, todo in rows)
-    return ('<div class="scroll"><table class="wrap">'
-            '<colgroup><col style="width:24%"><col style="width:38%">'
-            '<col style="width:38%"></colgroup>'
-            '<thead><tr><th>module</th><th>implemented</th><th>remaining work</th></tr></thead>'
-            f'<tbody>{body}</tbody></table></div>')
-
-
 def ensemble_viewer(element_id: str, score_key: str | None, caption: str,
                     legend: str) -> str:
     """A viewer over the aligned ensemble, coloured by one score."""
