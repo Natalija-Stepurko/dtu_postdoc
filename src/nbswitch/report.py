@@ -225,6 +225,9 @@ h4.subh{font-size:1.02rem;margin:32px 0 6px;color:var(--ink)}
 h4.subh span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
   text-transform:uppercase;color:var(--chrome);margin-right:11px}
 h5.subh2{font-size:.95rem;margin:30px 0 4px;color:var(--ink);font-weight:600}
+.sharedbox{background:#FBF8F3;border:1.2px dashed #C06014;border-radius:4px;
+  padding:4px 22px 18px;margin:14px 0 20px}
+.sharedbox>.stack:first-child{margin-top:14px}
 .pairstat{display:flex;align-items:baseline;gap:8px;padding:9px 13px;
   border-bottom:1px solid var(--rule);flex-wrap:wrap}
 .pairstat b{font-family:var(--mono);font-size:1.02rem;color:var(--ink)}
@@ -288,10 +291,19 @@ function makeViewer(hostId, opts) {
   VIEWERS.push({id: hostId, view: view});
   return view;
 }
+// Each viewer registers how it frames itself, because a camera computed
+// against a 0 x 0 canvas is degenerate: resizing alone leaves the model
+// off-screen or filling the frame. refit() is set once the model has loaded.
+function setRefit(hostId, fn) {
+  VIEWERS.forEach(function (entry) { if (entry.id === hostId) entry.refit = fn; });
+}
 function wakeViewers(root) {
   VIEWERS.forEach(function (entry) {
     const el = document.getElementById(entry.id);
-    if (el && root.contains(el)) { entry.view.resize(); entry.view.render(); }
+    if (!el || !root.contains(el)) return;
+    entry.view.resize();
+    if (entry.refit) entry.refit();
+    entry.view.render();
   });
 }
 
@@ -333,7 +345,9 @@ function boot() {
     v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
     termini(v1, m, {chain: 'A'}, '');
     termini(v1, m, {chain: 'X'}, '\u2032');
-    v1.zoomTo(); v1.zoom(1.75); v1.render();
+    const fit1 = function () { v1.zoomTo(); v1.zoom(1.75); };
+    setRefit('stage-solved', fit1);
+    fit1(); v1.render();
   });
 
   bootFinalPair();
@@ -360,7 +374,7 @@ function boot() {
 // linking them would let a drag on one silently reframe the other.
 function bootFinalPair() {
   if (!FINAL_PAIR || !document.getElementById('stage-final-ref')) return;
-  const paint = function (view, spec) {
+  const paint = function (view, hostId, spec) {
     jQuery.get('structures/' + spec.file, function (data) {
       view.addModel(data, 'pdb');
       view.setStyle({chain: spec.vhh}, {cartoon: {colorfunc: function (atom) {
@@ -373,15 +387,16 @@ function bootFinalPair() {
         view.setStyle({chain: spec.mask}, {cartoon: {color: '#8C72AD'}});
         view.addStyle({chain: spec.mask}, STICK_MASK);
       }
-      view.zoomTo({chain: spec.vhh});
-      view.zoom(1.5);
+      const fit = function () { view.zoomTo({chain: spec.vhh}); view.zoom(1.5); };
+      setRefit(hostId, fit);
+      fit();
       view.render();
     });
   };
   vRef = makeViewer('stage-final-ref', {backgroundColor: '#FFFFFF'});
   vMask = makeViewer('stage-final-mask', {backgroundColor: '#FFFFFF'});
-  paint(vRef, FINAL_PAIR.reference);
-  paint(vMask, FINAL_PAIR.masked);
+  paint(vRef, 'stage-final-ref', FINAL_PAIR.reference);
+  paint(vMask, 'stage-final-mask', FINAL_PAIR.masked);
 }
 
 function loadDesigned(id) {
@@ -412,7 +427,9 @@ function loadDesigned(id) {
     if (spec.mask) v2.addStyle({resi: spec.mask}, STICK_MASK);
     if (spec.paratope) v2.addStyle({resi: spec.paratope}, STICK_PARATOPE);
     termini(v2, m, {}, '');
-    v2.zoomTo(); v2.zoom(1.15); v2.render();
+    const fit2 = function () { v2.zoomTo(); v2.zoom(1.15); };
+    setRefit('stage-designed', fit2);
+    fit2(); v2.render();
     document.getElementById('dcap').textContent = spec.caption;
   });
 }
@@ -469,7 +486,9 @@ function mountEnsemble(hostId, scoreKey) {
       v.addStyle({model: n + 1, atom: ['N', 'CA', 'C']},
                  {stick: {radius: 0.1, color: '#8A949B'}});
     });
-    v.zoomTo(); v.zoom(1.55); v.render();
+    const fitE = function () { v.zoomTo(); v.zoom(1.55); };
+    setRefit(hostId, fitE);
+    fitE(); v.render();
   });
 }
 
@@ -1322,8 +1341,8 @@ def fold_modules(html: str) -> str:
 
     The modules are siblings inside their section, so a module runs from its
     own h3 to the next one or to the end of the section, and that span is
-    already balanced. Open by default: folding is for putting a section away
-    once it has been read, not for hiding the page behind its headings.
+    already balanced. Closed by default, so the page opens as its structure
+    and a reader expands the module they want.
     """
     open_tag = '<h3 class="mod">'
     out, i = [], 0
@@ -1337,7 +1356,7 @@ def fold_modules(html: str) -> str:
         nxt = html.find(open_tag, head_end)
         end = html.find("</section>", head_end)
         stop = min(x for x in (nxt, end) if x != -1)
-        out.append('<details class="modfold" open><summary>')
+        out.append('<details class="modfold"><summary>')
         out.append(html[start:head_end])
         out.append("</summary><div class=\"modbody\">")
         out.append(html[head_end:stop])

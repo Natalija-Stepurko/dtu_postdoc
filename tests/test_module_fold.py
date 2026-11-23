@@ -44,7 +44,7 @@ PAGE = ('<section class="sec"><p>intro</p>'
 
 def test_every_module_heading_becomes_a_summary():
     out = R.fold_modules(PAGE)
-    assert out.count('<details class="modfold" open>') == 2
+    assert out.count('<details class="modfold">') == 2
     assert out.count("</details>") == 3          # two modules plus the inner one
     for title in ("First", "Second"):
         assert f"<summary><h3 class=\"mod\">" in out
@@ -70,10 +70,12 @@ def test_a_page_with_no_modules_is_returned_unchanged():
     assert R.fold_modules(plain) == plain
 
 
-def test_modules_open_by_default():
-    """Folding is for putting a section away once read, not for hiding the
-    page behind its headings."""
-    assert "<details class=\"modfold\" open>" in R.fold_modules(PAGE)
+def test_modules_are_closed_by_default():
+    """The page opens as its structure, and a reader expands the module they
+    want rather than scrolling past all seven."""
+    out = R.fold_modules(PAGE)
+    assert '<details class="modfold">' in out
+    assert "modfold\" open" not in out
 
 
 def test_every_viewer_goes_through_the_registry():
@@ -91,3 +93,14 @@ def test_opening_a_module_resizes_the_viewers_inside_it():
     assert "details.modfold" in js and "toggle" in js
     assert "wakeViewers" in js
     assert ".resize()" in js and ".render()" in js
+
+
+def test_every_viewer_registers_how_it_frames_itself():
+    """Modules start closed, so every camera is first computed against a
+    0 x 0 canvas. Resizing alone leaves the model off-screen or filling the
+    frame, so each viewer has to re-fit when its module opens."""
+    js = R.VIEWER_JS
+    assert "function setRefit(" in js
+    assert "if (entry.refit) entry.refit();" in js
+    # one registration per created viewer
+    assert js.count("setRefit('") + js.count("setRefit(hostId") == js.count("makeViewer(") - 1

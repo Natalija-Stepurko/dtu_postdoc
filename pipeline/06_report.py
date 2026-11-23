@@ -1480,6 +1480,7 @@ the buried residues stay, and whether the disulphide matters. The last group is 
 others have to beat.</figcaption></figure>
 
 <h5 class="subh2">Combining them into constructs</h5>
+<div class="sharedbox">
 <div class="stack">
 <p>Every mask was paired with every linker: {N['n_masks']} masks
 &times; {lib['n_linkers']} linkers = {lib['n_pairs']} pairs, and the free nanobody as a reference,
@@ -1499,7 +1500,20 @@ functional inhibition.</p></div>
 antigen-derived mask joined to CleaveNet linker 01, and
 <span class="mono">mpnn00_{CORE_ID}_cn01</span> is a ProteinMPNN redesign of that construct. The
 ids stay as the files are named; the figure above gives each mask a readable label.</p></div>
-
+<details class="tech"><summary>Any construct in the library, folded</summary>
+<div class="techbody">
+<div class="viewer">
+<div class="vbar"><select id="pick">{options}</select>
+<button data-spin="designed">spin</button></div>
+<div class="vstage" id="stage-designed"></div>
+<div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
+<span><i style="background:#8C72AD"></i>mask</span>
+<span><i style="background:#9AA7B1"></i>linker</span>
+<span><i style="background:#C06014"></i>antigen-binding residues</span></div>
+<p class="dim" id="dcap" style="font-size:.85rem"></p>
+</div>
+</div></details>
+</div>
 
 <h4 class="subh"><span>Step 3</span>Redesign the mask sequences</h4>
 <div class="stack">
@@ -1673,16 +1687,7 @@ paratope in those predictions, so they do not establish specific binding.</p>
    "Every folded construct, coloured by paratope occlusion. The masks do not concentrate over "
    "the antigen-binding residues, which is the result reported above.",
    R.ramp_legend("least occluding", "most"))}
-<div class="viewer">
-<div class="vbar"><select id="pick">{options}</select>
-<button data-spin="designed">spin</button></div>
-<div class="vstage" id="stage-designed"></div>
-<div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
-<span><i style="background:#8C72AD"></i>mask</span>
-<span><i style="background:#9AA7B1"></i>linker</span>
-<span><i style="background:#C06014"></i>antigen-binding residues</span></div>
-<p class="dim" id="dcap" style="font-size:.85rem"></p>
-</div>
+
 </div></details>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
