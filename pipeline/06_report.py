@@ -1707,6 +1707,8 @@ have hidden.</p>
      "separate designed masks from controls. The shortlist is therefore a set of candidates "
      "worth investigating, not a set of confirmed functional masks.")}
 <figure class="fig wide"><div class="figbody">{R.selection_funnel(FUNNEL)}</div></figure>
+{chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
+   "marked.")}
 <details class="tech"><summary>Ranking methods</summary><div class="techbody">
 <p><b>What is removed before anything is compared.</b> A construct failing one of these is not a
 worse candidate but not a candidate, and no score on another axis can make up for it. This is
@@ -1718,8 +1720,6 @@ normalised within the feasible set and each construct takes its lowest normalise
 That prefers a design that is adequate three times over one that is excellent twice and poor
 once, which is the right preference when all three requirements have to hold at once.</p>
 {R.front_table(RANK_FRONT, RANK_OBJECTIVES, RANK_SHORTLIST)}
-{chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
-   "marked.")}
 </div></details>
 
 <h3 class="mod"><span>Final screen</span>Structural assessment with Boltz-2</h3>
