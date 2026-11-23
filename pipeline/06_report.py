@@ -474,7 +474,6 @@ N["n_folded"] = fold["n_folded"] if fold else 0
 _k = {}
 for _r in (fold["results"] if fold else []):
     _k.setdefault(_r["kind"], []).append(_r["occlusion"] * 100)
-N["occ_graft"] = _np.mean(_k.get("epitope graft", [0]))
 N["occ_scram"] = _np.mean(_k.get("scrambled control", [0]))
 N["occ_inert"] = _np.mean(_k.get("inert control", [0]))
 
@@ -892,11 +891,6 @@ def _occ_row(mask, what, question):
             f"<td>{question}</td><td><b>{mean:.1f}%</b></td></tr>")
 
 OCC_CONTROL_ROWS = "".join(_occ_row(m, w, q) for m, (w, q) in _CONTROL_Q.items())
-for _k, _m in (("occ_core", "epi_core"), ("occ_core_scram", "epi_core_scram"),
-               ("occ_core_half", "epi_core_half"), ("occ_polyG", "polyG")):
-    N[_k] = float(_np.mean(_occ_by_mask.get(_m, [0])))
-N["n_grafts"] = len({r["mask"] for r in (fold["results"] if fold else [])
-                     if r["kind"] == "epitope graft"})
 
 N["occ_trunc"] = float(_np.mean([r["occlusion"] * 100 for r in fold["results"]
                                  if r["kind"] == "truncated control"])) if fold else 0.0
@@ -1388,20 +1382,12 @@ peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the ap
 extension of this module and are not implemented here.</p></div></details>
 
 <h3 class="mod"><span>Module 04</span>Paratope occlusion</h3>
-{mri(f"I measured how much of the nanobody's antigen-binding surface the mask covers in each "
-     f"ESMFold-predicted construct, against the free nanobody folded the same way. The surface "
-     f"compared is that of the {N['n_paratope']} residues the antigen buries in the deposited "
-     f"complex, so the antigen decides which residues are counted while the free nanobody "
-     f"provides the surface they are counted against; the antigen is in neither structure. "
-     f"This is the masking measure carried into the ranking of all {N['rank_total']} "
-     f"constructs.",
-     f"Against its own controls, mean occlusion was <b>{N['occ_core']:.1f}%</b> for the "
-     f"antigen-derived contact loop, {N['occ_core_scram']:.1f}% for the scrambled control, "
-     f"{N['occ_core_half']:.1f}% for the truncated control and {N['occ_polyG']:.1f}% for "
-     f"poly-glycine. Across all {R.word(N['n_grafts'])} antigen-derived masks the mean is "
-     f"{N['occ_graft']:.1f}%.",
-     "Surface occlusion did not distinguish designed masks from controls. It was kept as a "
-     "preliminary ranking measure, but it cannot establish specific mask binding.")}
+<div class="stack">
+<p>I calculated how much of the nanobody's antigen-binding surface becomes buried when the mask
+and linker are attached. For each ESMFold-predicted construct, I compared the solvent-accessible
+area of the {N['n_paratope']} paratope residues with that of the free nanobody.</p>
+<p>The designed masks showed no greater occlusion than their controls, indicating that surface
+coverage alone cannot establish specific mask binding.</p></div>
 <div class="stack">
 <p><b>Controls for paratope occlusion.</b> To test whether surface coverage depends on the
 antigen-derived sequence, I compared the main contact-loop mask
@@ -1413,34 +1399,37 @@ that differs between them.</p></div>
 <colgroup><col style="width:21%"><col style="width:36%"><col style="width:33%"><col style="width:10%"></colgroup>
 <thead><tr><th>mask</th><th>what it is</th><th>the question it asks</th>
 <th>mean</th></tr></thead><tbody>{OCC_CONTROL_ROWS}</tbody></table>
-{chart_wide("occlusion_by_group", "Every construct as a point, with the mask's mean marked. "
-   "The antigen-derived mask does not outperform its controls.")}
-<div class="stack">
-<p>The antigen-derived sequence did not beat its controls. Surface occlusion therefore measures
-geometric coverage in the predicted structure; it is not evidence of specific mask binding. The
-truncated control is not fully inert either, since it still carries real antigen residues, which
-is part of why it lands where it does.</p></div>
-<details class="tech"><summary>Effect of mask design</summary><div class="techbody">
-<p>The other antigen-derived masks, each against the same
-{lib['n_linkers']} linkers. Extensions, substitutions and the cysteine-free variant all sit in
-the same band.</p>
-{chart_wide("occlusion_by_mask", "Mean occlusion per antigen-derived mask.")}
-</div></details>
 <div class="stack">
 <p><b>Effect of linker length on paratope occlusion.</b> Predicted coverage across linker
 lengths of {N['len_lo']}&ndash;{N['len_hi']} residues, with the mask and the cleavage sequence
 held constant along each line, so the only thing varying is the length.</p></div>
-{chart_wide("occlusion_by_linker", "One antigen-derived mask against its two controls, all on "
+<div class="two">
+<div class="stackfig">
+{chart("occlusion_by_group", "Every construct as a point, with the mask's mean marked. "
+   "The antigen-derived mask does not outperform its controls.")}
+<details class="tech"><summary>Every antigen-derived mask</summary><div class="techbody">
+<p>The other antigen-derived masks, each against the same
+{lib['n_linkers']} linkers. Extensions, substitutions and the cysteine-free variant all sit in
+the same band.</p>
+{chart("occlusion_by_mask", "Mean occlusion per antigen-derived mask.")}
+</div></details>
+</div>
+<div class="stackfig">
+{chart("occlusion_by_linker", "One antigen-derived mask against its two controls, all on "
    "the same cleavage motif. Longer linkers generally raise predicted occlusion, but the "
    "scrambled and poly-glycine controls rise with them, so part of the effect is geometric: a "
    "flexible peptide covers some of the surface without a specific interaction.")}
+<details class="tech"><summary>Every mask with a length series</summary><div class="techbody">
+{chart("occlusion_by_linker_all", "The same comparison for every mask carrying a length "
+   "series, coloured by family.")}
+</div></details>
+</div>
+</div>
 <div class="stack">
 <p>Linker length decides whether the mask can reach the paratope at all. It does not say whether
 the mask binds, and the controls are why: coverage alone cannot separate a designed interaction
 from a peptide with room to move.</p></div>
 <details class="tech"><summary>Occlusion across the library</summary><div class="techbody">
-{chart_wide("occlusion_by_linker_all", "The same comparison for every mask carrying a length "
-   "series, coloured by family.")}
 {R.ensemble_viewer("ens-mask", "masking",
    "Every folded construct, coloured by paratope occlusion. The masks do not concentrate over "
    "the antigen-binding residues, which is the result reported above.",
@@ -1449,10 +1438,8 @@ from a peptide with room to move.</p></div>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
 <div class="stack">
-<p>One question runs through this module: <b>will the linker be cleaved by the intended
-proteases, and can those proteases physically reach it?</b> A good cleavage sequence is no use
-buried against the nanobody, and an exposed linker is no use if the protease does not recognise
-its sequence, so the two are scored apart and multiplied.</p></div>
+<p><b>Linker has to be cleaved by the intended proteases and also has to be physically
+accessible to those proteases.</b></p></div>
 {mri("Two requirements. <b>Sequence recognition:</b> CleaveNet predicts preferential cleavage "
      f"by {CLEAVE_TARGETS} against {R.word(LINKER_GEN['n_off'])} off-target MMPs, scored as the "
      "difference between the two group means. <b>Structural accessibility:</b> the predicted "

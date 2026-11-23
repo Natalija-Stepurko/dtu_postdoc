@@ -257,7 +257,14 @@ def occlusion_by_group(fold, masks=OCCLUSION_CONTROLS,
         raise ValueError("no construct matches any mask in the comparison; "
                          "the names have drifted from the library")
 
-    fig, ax = plt.subplots(figsize=(6.4, 3.2))
+    # four columns leave room for an upright label under each one and for the
+    # mean to be written beside its line; nine do not, and both then overprint
+    # their neighbours. Past five the labels go on an angle and the means move
+    # on top of their own lines. The figure is kept narrow deliberately: it is
+    # served into one half of a two-column grid, where a wide figure is scaled
+    # down and takes its type with it.
+    crowded = len(groups) > 5
+    fig, ax = plt.subplots(figsize=(5.6, 4.6) if crowded else (6.4, 3.2))
     rng = np.random.default_rng(42)
     for i, (label, colour, vals) in enumerate(groups):
         jitter = rng.uniform(-0.17, 0.17, len(vals))
@@ -265,13 +272,26 @@ def occlusion_by_group(fold, masks=OCCLUSION_CONTROLS,
                    alpha=0.45, linewidth=0, zorder=2)
         m = float(np.mean(vals))
         ax.hlines(m, i - 0.32, i + 0.32, color=colour, linewidth=2.2, zorder=3)
-        ax.annotate(f"{m:.1f}%", (i + 0.36, m), fontsize=8.5, color=colour,
-                    va="center", fontweight="semibold")
+        if crowded:
+            ax.annotate(f"{m:.1f}%", (i, m), fontsize=7.5, color=colour,
+                        ha="center", va="bottom", textcoords="offset points",
+                        xytext=(0, 3), fontweight="semibold")
+        else:
+            ax.annotate(f"{m:.1f}%", (i + 0.36, m), fontsize=8.5, color=colour,
+                        va="center", fontweight="semibold")
     ax.axhline(0, color=INK3, linewidth=0.8, alpha=0.4, zorder=1)
     ax.set_xticks(range(len(groups)))
-    ax.set_xticklabels([g[0].replace(" ", "\n", 1) for g in groups], fontsize=8)
+    if crowded:
+        ax.set_xticklabels([g[0].replace("\n", " ") for g in groups],
+                           fontsize=7, rotation=35, ha="right",
+                           rotation_mode="anchor")
+    else:
+        ax.set_xticklabels([g[0].replace(" ", "\n", 1) for g in groups],
+                           fontsize=8)
     ax.set_ylabel("paratope occluded  (%)")
-    ax.set_xlim(-0.6, len(groups) - 0.2)
+    # the uncrowded form writes each mean to the right of its line, so the
+    # last column needs room past it; the crowded form writes it on top
+    ax.set_xlim(-0.6, len(groups) - 0.4 if crowded else len(groups) - 0.2)
     return _save(fig, name)
 
 
@@ -310,7 +330,12 @@ def occlusion_by_linker(folding, motif="cn01", series=LENGTH_SERIES_MASKS,
     """
     plt = _style()
     rows = folding["results"]
-    fig, ax = plt.subplots(figsize=(5.4, 3.2))
+    # three lines can each carry their name at their end; eleven cannot. Past
+    # four the end labels are stacked apart so far that they leave the axes,
+    # and they are long enough to run off the right of a half-column figure,
+    # so the names move to a legend below the plot instead.
+    many = len(series) > 4
+    fig, ax = plt.subplots(figsize=(5.4, 4.6) if many else (5.4, 3.2))
     drawn, ends = 0, []
     for mask, label, colour in series:
         pts = sorted((r for r in rows
@@ -322,42 +347,67 @@ def occlusion_by_linker(folding, motif="cn01", series=LENGTH_SERIES_MASKS,
         x = [p["linker"] for p in pts]
         y = [p["occlusion"] * 100 for p in pts]
         ax.plot(x, y, lw=2, marker="o", ms=5, color=colour,
-                markeredgecolor="white", markeredgewidth=1.1, zorder=3)
+                markeredgecolor="white", markeredgewidth=1.1, zorder=3,
+                label=label.replace("\n", " "))
         ends.append((y[-1], x[-1], label, colour))
-    # two series can finish within a line's height of each other, so the end
-    # labels are pushed apart rather than drawn on top of one another
-    ends.sort()
-    span = max(e[0] for e in ends) - min(e[0] for e in ends) if len(ends) > 1 else 1
-    gap = max(span * 0.11, 0.9)
-    placed = []
-    for value, xend, label, colour in ends:
-        at = value if not placed else max(value, placed[-1] + gap)
-        placed.append(at)
-        ax.annotate(label, (xend, value), xytext=(xend + 1.2, at),
-                    textcoords="data", fontsize=8, color=colour, va="center",
-                    arrowprops=(dict(arrowstyle="-", color=colour, lw=0.8,
-                                     shrinkA=2, shrinkB=0)
-                                if abs(at - value) > 0.35 else None))
     if not drawn:
         raise ValueError(f"no construct matches the series for motif {motif!r}; "
                          "the mask names have drifted from the library again")
+    if not many:
+        # two series can finish within a line's height of each other, so the
+        # end labels are pushed apart rather than drawn on top of one another
+        ends.sort()
+        span = (max(e[0] for e in ends) - min(e[0] for e in ends)
+                if len(ends) > 1 else 1)
+        gap = max(span * 0.11, 0.9)
+        placed = []
+        for value, xend, label, colour in ends:
+            at = value if not placed else max(value, placed[-1] + gap)
+            placed.append(at)
+            ax.annotate(label, (xend, value), xytext=(xend + 1.2, at),
+                        textcoords="data", fontsize=8, color=colour,
+                        va="center",
+                        arrowprops=(dict(arrowstyle="-", color=colour, lw=0.8,
+                                         shrinkA=2, shrinkB=0)
+                                    if abs(at - value) > 0.35 else None))
     ax.axhline(0, lw=1.1, color=INK3, alpha=0.4, ls=(0, (2, 3)))
     lens = sorted({r["linker"] for r in rows if r["linker"]})
     ax.set_xticks(lens)
-    ax.set_xlim(min(lens) - 2, max(lens) + 9)
+    ax.set_xlim(min(lens) - 2, max(lens) + (1 if many else 9))
     ax.set_xlabel("linker length  (residues)")
     ax.set_ylabel("paratope occluded  (%)")
+    if many:
+        # several lines share a colour because the colour is the family, so
+        # the legend is folded to one entry per name. Listing eleven masks
+        # against six colours would promise an identification the figure
+        # cannot make.
+        handles, labels = ax.get_legend_handles_labels()
+        seen, h, lab = set(), [], []
+        for handle, text in zip(handles, labels):
+            if text in seen:
+                continue
+            seen.add(text)
+            h.append(handle)
+            lab.append(text)
+        ax.legend(h, lab, loc="upper center", bbox_to_anchor=(0.5, -0.22),
+                  ncol=2, frameon=False, fontsize=7.5, handlelength=1.6,
+                  columnspacing=1.2, labelspacing=0.5, borderaxespad=0)
     return _save(fig, name)
 
 
 def occlusion_by_linker_all(folding, motif="cn01"):
-    """The same comparison across every mask that has a length series."""
-    from .mask_design import MASK_FAMILY_COLOUR, MASK_LABELS, family_of
+    """The same comparison across every mask that has a length series.
+
+    Lines are named for their family, not for the mask, because the colour is
+    the family: three substitution masks are one green, and a legend that gave
+    them three names would say they can be told apart on the plot.
+    """
+    from .mask_design import MASK_FAMILY_COLOUR, MASK_FAMILY_SHORT, family_of
     rows = folding["results"]
     masks = sorted({r["mask"] for r in rows if r["mask"]
                     and any(x["mask"] == r["mask"] and x["id"].startswith(f"{r['mask']}_{motif}")
                             and x["linker"] != 24 for x in rows)})
-    series = tuple((m, MASK_LABELS.get(m, m),
+    series = tuple((m, MASK_FAMILY_SHORT.get(family_of(m), m),
                     MASK_FAMILY_COLOUR.get(family_of(m), NULL)) for m in masks)
     return occlusion_by_linker(folding, motif, series, "occlusion_by_linker_all")
 
