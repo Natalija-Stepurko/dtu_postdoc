@@ -1447,11 +1447,10 @@ folded construct.</b></p></div>
    "extension, exposure and clearance, each from 0 to 1.")}
 </div>
 <div class="stackfig">
-{chart("cleavability_components", "The three accessibility requirements and the product "
-   f"they make, for all {N['rank_total']} constructs. Each runs from 0 to 1, and because they "
-   "are multiplied the product can be no larger than the smallest of them. Clearance is the "
-   "smallest almost everywhere, so it is the requirement that decides whether a site is "
-   "reachable.")}
+{chart("cleavability_components", "Cleavage-site accessibility across "
+   f"{N['rank_total']} constructs, ordered from lowest to highest overall score. Extension, "
+   "exposure and clearance are multiplied to give overall accessibility (grey). Limited "
+   "protease clearance is the main constraint.")}
 </div>
 </div>
 {R.ensemble_viewer("ens-cleave", "cleavability",

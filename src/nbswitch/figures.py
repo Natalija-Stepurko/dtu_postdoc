@@ -800,10 +800,12 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
 
 
 #: The three measurements accessibility is built from, in the order they are
-#: described on the page.
-CONTEXT_PARTS = (("extension", SEQ, "extension"),
-                 ("exposure", CHROME, "exposure"),
-                 ("clearance_open_fraction", STR, "clearance"))
+#: described on the page. Each is named for what it is a property of, not for
+#: the bare noun: "clearance" and "product" both needed the method to be read
+#: again before the figure meant anything.
+CONTEXT_PARTS = (("extension", SEQ, "Backbone extension"),
+                 ("exposure", CHROME, "Solvent exposure"),
+                 ("clearance_open_fraction", STR, "Protease clearance"))
 
 
 def cleavability_components(trigger):
@@ -826,22 +828,27 @@ def cleavability_components(trigger):
     fig, ax = plt.subplots(figsize=(5.6, 4.4))
     x = np.arange(1, len(rows) + 1)
 
-    ax.fill_between(x, [r["context_score"] for r in rows], color="#E3E9EC",
-                    linewidth=0, zorder=0, label="product")
-    for key, colour, label in CONTEXT_PARTS:
-        ax.plot(x, [r[key] for r in rows], lw=1.3, color=colour, label=label,
-                solid_capstyle="round", zorder=3)
+    overall = ax.fill_between(x, [r["context_score"] for r in rows],
+                              color="#E3E9EC", linewidth=0, zorder=0,
+                              label="Overall accessibility")
+    parts = [ax.plot(x, [r[key] for r in rows], lw=1.3, color=colour,
+                     label=label, solid_capstyle="round", zorder=3)[0]
+             for key, colour, label in CONTEXT_PARTS]
 
     ax.set_xlim(1, len(rows))
     ax.set_ylim(0, 1.02)
-    ax.set_xlabel(f"all {len(rows)} constructs, ordered by the product")
-    ax.set_ylabel("score")
+    ax.set_title("What limits cleavage-site accessibility?", fontsize=10,
+                 color=INK, fontweight="semibold", pad=10)
+    ax.set_xlabel("constructs ranked by overall accessibility")
+    ax.set_ylabel("accessibility component score  (0–1)")
     # the legend goes under the axes for the same reason as the panel it is
-    # paired with: half a column is too narrow to spend on a legend column
-    leg = ax.legend(fontsize=7.5, loc="upper center",
-                    bbox_to_anchor=(0.5, -0.22), ncol=4, frameon=False,
-                    handlelength=1.4, handletextpad=.5, columnspacing=1.1,
-                    borderaxespad=0)
+    # paired with: half a column is too narrow to spend on a legend column.
+    # The three components come first and the product they make last, which
+    # is the order the figure is read in; fill_between would otherwise lead.
+    leg = ax.legend(handles=parts + [overall], fontsize=7.5, loc="upper center",
+                    bbox_to_anchor=(0.5, -0.20), ncol=2, frameon=False,
+                    handlelength=1.4, handletextpad=.5, columnspacing=1.4,
+                    labelspacing=.55, borderaxespad=0)
     leg._legend_box.align = "left"
     return _save(fig, "cleavability_components")
 
