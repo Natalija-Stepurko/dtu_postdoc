@@ -163,71 +163,6 @@ def chart_wide(n, c):
         return R.pending(f"the figure <span class='mono'>{n}</span>")
     return R._chart(n, c).replace('class="chart"', 'class="chart wide"')
 
-# ---- folding section ----
-if fold:
-    rows = fold["results"]
-    kinds = {}
-    for r in rows:
-        kinds.setdefault(r["kind"], []).append(r["occlusion"] * 100)
-    graft = np.mean(kinds.get("epitope graft", [0]))
-    inert = np.mean(kinds.get("inert control", [0]))
-    scram = np.mean(kinds.get("scrambled control", [0]))
-    best_row = max(rows, key=lambda r: r["occlusion"])
-    rmsd = [r["vhh_core_rmsd_A"] for r in rows]
-    import statistics as _st
-    graft = kinds.get("epitope graft", [])
-    inert = kinds.get("inert control", [])
-    scram = kinds.get("scrambled control", [])
-    separation = (np.mean(graft) - np.mean(inert)) if graft and inert else float("nan")
-    discriminates = separation > 2 * (np.std(graft, ddof=1) if len(graft) > 1 else 0)
-    verdict = ("the designed masks separate from the controls"
-               if discriminates else
-               "the designed masks do <b>not</b> separate from the controls")
-    fold_cards = "".join([
-        card(f"{np.mean(graft):+.0f}%", "epitope grafts", "mean occlusion"),
-        card(f"{np.mean(scram):+.0f}%", "scrambled", "same residues, shuffled"),
-        card(f"{np.mean(inert):+.0f}%", "poly-glycine", "no designed interaction", hl=True),
-        card(f"{separation:+.1f} pp", "graft minus inert", "the quantity that matters"),
-        card(f"{np.mean(rmsd):.2f} Å", "VHH core RMSD", "fusion against free nanobody"),
-    ])
-    table_rows = "".join(
-        f"<tr class=\"{'hl' if r['kind']=='epitope graft' else 'ctrl' if 'control' in r['kind'] else ''}\">"
-        f"<td>{r['id']}</td><td>{r['kind']}</td><td>{r['linker']}</td>"
-        f"<td>{r['occlusion']*100:+.1f}</td><td>{r.get('min_mask_paratope_CA_A','—')}</td>"
-        f"<td>{r.get('n_mask_paratope_contacts_8A','—')}</td>"
-        f"<td>{r['plddt_vhh']:.0f}</td><td>{r['vhh_core_rmsd_A']:.2f}</td></tr>"
-        for r in sorted(rows, key=lambda r: -r["occlusion"]))
-    folding_html = f"""
-<section class="sec">
-<div class="stack"><div class="eyebrow">Step 04 · does it mask</div>
-<h2>Does the mask actually reach the paratope?</h2>
-<p>Every construct folded with ESMFold, then the paratope's solvent-accessible surface in the
-fusion compared against the same residues in the folded free nanobody. The grafts are read against
-their scrambled, truncated and inert controls at matched linker length; the controls are the
-reason the comparison means anything.</p></div>
-<div class="chart wide">{R.occlusion_schematic()}</div>
-<div class="cards">{fold_cards}</div>
-<div class="charts2">
-{chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
-{chart("occlusion_vs_confidence", "Occlusion against fold confidence in the nanobody region.")}
-</div>
-<div class="scroll"><table><thead><tr>
-<th>construct</th><th>kind</th><th>linker</th><th>occluded %</th><th>min CA–CA Å</th>
-<th>contacts &lt;8 Å</th><th>VHH pLDDT</th><th>core RMSD Å</th>
-</tr></thead><tbody>{table_rows}</tbody></table></div>
-<div class="banner" style="border-left-color:#C06014"><b>The result is negative, and that is the
-point of running the controls.</b> {verdict}: the grafts occlude {np.mean(graft):+.1f}% of the
-paratope on average, the scrambled masks {np.mean(scram):+.1f}% and the inert poly-glycine mask
-{np.mean(inert):+.1f}% — a separation of {separation:+.1f} percentage points, with the inert
-control <b>above</b> the designed one. Any peptide tethered at this N-terminus lands near the
-paratope, so this measurement is reading <b>tether geometry, not design</b>.</div>
-<div class="banner"><b>What follows from that.</b> Occlusion measured this way cannot rank masks,
-and the module needs a discriminating readout before it can feed a ranking step — the two-chain
-competition below is the first candidate. Had the controls been left out, the grafts'
-{np.mean(graft):+.1f}% would have looked like a working design.</div>
-</section>"""
-else:
-    folding_html = ""
 
 # ---- redesign section ----
 # names this block defines that the live page reads, defined first so that a
@@ -1109,29 +1044,33 @@ _VROWS = _VER["results"]
 _CTL = next(r for r in _VROWS if r["construct"] is None)
 _NOALIGN = next(r for r in load_json("09_complexes.json")["results"]
                 if r["case"] == "control_free_vhh")
-# what each control group removes, so the figure's four columns are readable
-_GROUP_MEANING = {
-    "epitope graft": "nothing: these are the designs",
-    "scrambled control": "the order of the residues, keeping their composition",
-    "truncated control": "half the loop, keeping the residues that remain",
-    "inert control": "any designed interaction at all",
+# the matched comparison: one antigen-derived mask against the three controls
+# built from it, each over the same linker set
+_CONTROL_Q = {
+    "epi_core": ("the antigen's main contact loop, grafted",
+                 "does reproducing a contact surface help cover the paratope?"),
+    "epi_core_scram": ("the same residues in a different order",
+                       "does the order matter, or only the composition?"),
+    "epi_core_half": ("the first half of that loop",
+                      "does the whole contact region beat a fragment of it?"),
+    "polyG": ("twelve glycines, matched in length",
+              "how much coverage comes from a flexible peptide alone?"),
 }
-_GROUP_LABEL = {"epitope graft": "antigen-derived grafts",
-                "scrambled control": "scrambled control",
-                "truncated control": "truncated control",
-                "inert control": "poly-glycine control"}
-_gmasks = {}
-for _name, _m in lib["masks"].items():
-    _gmasks.setdefault(_m["kind"], []).append(_name)
-_gcount = {}
+_occ_by_mask = {}
 for _r in (fold["results"] if fold else []):
-    _gcount[_r["kind"]] = _gcount.get(_r["kind"], 0) + 1
-OCC_GROUP_ROWS = "".join(
-    f"<tr><td>{_GROUP_LABEL.get(_k, _k)}</td><td>{_gcount.get(_k, 0)}</td>"
-    f"<td class='mono' style='font-size:.72rem'>{', '.join(sorted(_v))}</td>"
-    f"<td>{_GROUP_MEANING.get(_k, '')}</td></tr>"
-    for _k, _v in sorted(_gmasks.items(),
-                         key=lambda kv: -_gcount.get(kv[0], 0)))
+    _occ_by_mask.setdefault(_r["mask"], []).append(_r["occlusion"] * 100)
+def _occ_row(mask, what, question):
+    cls = " class='hl'" if mask == CORE_ID else ""
+    mean = _np.mean(_occ_by_mask.get(mask, [0]))
+    return (f"<tr{cls}><td class='mono'>{mask}</td><td>{what}</td>"
+            f"<td>{question}</td><td><b>{mean:.1f}%</b></td></tr>")
+
+OCC_CONTROL_ROWS = "".join(_occ_row(m, w, q) for m, (w, q) in _CONTROL_Q.items())
+for _k, _m in (("occ_core", "epi_core"), ("occ_core_scram", "epi_core_scram"),
+               ("occ_core_half", "epi_core_half"), ("occ_polyG", "polyG")):
+    N[_k] = float(_np.mean(_occ_by_mask.get(_m, [0])))
+N["n_grafts"] = len({r["mask"] for r in (fold["results"] if fold else [])
+                     if r["kind"] == "epitope graft"})
 
 N["occ_trunc"] = float(_np.mean([r["occlusion"] * 100 for r in fold["results"]
                                  if r["kind"] == "truncated control"])) if fold else 0.0
@@ -1678,25 +1617,52 @@ extension of this module and are not implemented here.</p></div></details>
      f"provides the surface they are counted against; the antigen is in neither structure. "
      f"This is the masking measure carried into the ranking of all {N['rank_total']} "
      f"constructs.",
-     f"Mean occlusion was <b>{N['occ_graft']:.1f}%</b> for antigen-derived masks, against "
-     f"{N['occ_scram']:.1f}% for scrambled controls, {N['occ_trunc']:.1f}% for truncated "
-     f"controls and {N['occ_inert']:.1f}% for poly-glycine.",
+     f"Against its own controls, mean occlusion was <b>{N['occ_core']:.1f}%</b> for the "
+     f"antigen-derived contact loop, {N['occ_core_scram']:.1f}% for the scrambled control, "
+     f"{N['occ_core_half']:.1f}% for the truncated control and {N['occ_polyG']:.1f}% for "
+     f"poly-glycine. Across all {R.word(N['n_grafts'])} antigen-derived masks the mean is "
+     f"{N['occ_graft']:.1f}%.",
      "Surface occlusion did not distinguish designed masks from controls. It was kept as a "
      "preliminary ranking measure, but it cannot establish specific mask binding.")}
 <div class="stack">
-<p><b>What the four groups are.</b> Every mask was paired with all
-{lib['n_linkers']} linkers, so each group below holds
-{lib['n_linkers']} constructs per mask in it. The three control groups remove one thing each,
-and together they ask whether anything about the design is doing work:</p></div>
+<p><b>Controls for paratope occlusion.</b> To test whether surface coverage depends on the
+antigen-derived sequence, I compared the main contact-loop mask
+(<span class="mono">{CORE_ID}</span>) with scrambled, truncated and poly-glycine controls, each
+built from it. All four were paired with the same {lib['n_linkers']} linker variants, so a
+column here is {lib['n_linkers']} constructs and the only thing differing between columns is
+the mask.</p></div>
 <table class="tbl">
-<colgroup><col style="width:22%"><col style="width:10%"><col style="width:32%"><col style="width:36%"></colgroup>
-<thead><tr><th>group</th><th>constructs</th><th>masks in it</th>
-<th>what it removes</th></tr></thead><tbody>{OCC_GROUP_ROWS}</tbody></table>
-{chart_wide("occlusion_by_group", "Paratope occlusion by group, every construct as a point with "
-   "its group mean marked. The designed grafts sit inside the spread of the controls, and below "
-   "two of them, so this measure cannot rank a mask.")}
+<colgroup><col style="width:21%"><col style="width:36%"><col style="width:33%"><col style="width:10%"></colgroup>
+<thead><tr><th>mask</th><th>what it is</th><th>the question it asks</th>
+<th>mean</th></tr></thead><tbody>{OCC_CONTROL_ROWS}</tbody></table>
+{chart_wide("occlusion_by_group", "Every construct as a point, with the mask's mean marked. "
+   "The antigen-derived mask does not outperform its controls.")}
+<div class="stack">
+<p>The antigen-derived sequence did not beat its controls. Surface occlusion therefore measures
+geometric coverage in the predicted structure; it is not evidence of specific mask binding. The
+truncated control is not fully inert either, since it still carries real antigen residues, which
+is part of why it lands where it does.</p></div>
+<details class="tech"><summary>Effect of mask design</summary><div class="techbody">
+<p>The other antigen-derived masks, each against the same
+{lib['n_linkers']} linkers. Extensions, substitutions and the cysteine-free variant all sit in
+the same band.</p>
+{chart_wide("occlusion_by_mask", "Mean occlusion per antigen-derived mask.")}
+</div></details>
+<div class="stack">
+<p><b>Effect of linker length on paratope occlusion.</b> Predicted coverage across linker
+lengths of {N['len_lo']}&ndash;{N['len_hi']} residues, with the mask and the cleavage sequence
+held constant along each line, so the only thing varying is the length.</p></div>
+{chart_wide("occlusion_by_linker", "One antigen-derived mask against its two controls, all on "
+   "the same cleavage motif. Longer linkers generally raise predicted occlusion, but the "
+   "scrambled and poly-glycine controls rise with them, so part of the effect is geometric: a "
+   "flexible peptide covers some of the surface without a specific interaction.")}
+<div class="stack">
+<p>Linker length decides whether the mask can reach the paratope at all. It does not say whether
+the mask binds, and the controls are why: coverage alone cannot separate a designed interaction
+from a peptide with room to move.</p></div>
 <details class="tech"><summary>Occlusion across the library</summary><div class="techbody">
-{chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
+{chart_wide("occlusion_by_linker_all", "The same comparison for every mask carrying a length "
+   "series, coloured by family.")}
 {R.ensemble_viewer("ens-mask", "masking",
    "Every folded construct, coloured by paratope occlusion. The masks do not concentrate over "
    "the antigen-binding residues, which is the result reported above.",

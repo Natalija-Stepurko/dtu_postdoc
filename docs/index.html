@@ -554,7 +554,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=6d8265d1" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=a404cc91" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -615,19 +615,41 @@ extension of this module and are not implemented here.</p></div></details>
 
 </div></details>
 <details class="modfold"><summary><h3 class="mod"><span>Module 04</span>Paratope occlusion</h3></summary><div class="modbody">
-<div class="mri"><div><div class="k">Method</div><div class="v">I measured how much of the nanobody's antigen-binding surface the mask covers in each ESMFold-predicted construct, against the free nanobody folded the same way. The surface compared is that of the 19 residues the antigen buries in the deposited complex, so the antigen decides which residues are counted while the free nanobody provides the surface they are counted against; the antigen is in neither structure. This is the masking measure carried into the ranking of all 348 constructs.</div></div><div><div class="k">Result</div><div class="v">Mean occlusion was <b>7.6%</b> for antigen-derived masks, against 8.8% for scrambled controls, 8.1% for truncated controls and 4.5% for poly-glycine.</div></div><div><div class="k">Interpretation</div><div class="v">Surface occlusion did not distinguish designed masks from controls. It was kept as a preliminary ranking measure, but it cannot establish specific mask binding.</div></div></div>
+<div class="mri"><div><div class="k">Method</div><div class="v">I measured how much of the nanobody's antigen-binding surface the mask covers in each ESMFold-predicted construct, against the free nanobody folded the same way. The surface compared is that of the 19 residues the antigen buries in the deposited complex, so the antigen decides which residues are counted while the free nanobody provides the surface they are counted against; the antigen is in neither structure. This is the masking measure carried into the ranking of all 348 constructs.</div></div><div><div class="k">Result</div><div class="v">Against its own controls, mean occlusion was <b>8.1%</b> for the antigen-derived contact loop, 8.8% for the scrambled control, 8.1% for the truncated control and 4.5% for poly-glycine. Across all nine antigen-derived masks the mean is 7.6%.</div></div><div><div class="k">Interpretation</div><div class="v">Surface occlusion did not distinguish designed masks from controls. It was kept as a preliminary ranking measure, but it cannot establish specific mask binding.</div></div></div>
 <div class="stack">
-<p><b>What the four groups are.</b> Every mask was paired with all
-21 linkers, so each group below holds
-21 constructs per mask in it. The three control groups remove one thing each,
-and together they ask whether anything about the design is doing work:</p></div>
+<p><b>Controls for paratope occlusion.</b> To test whether surface coverage depends on the
+antigen-derived sequence, I compared the main contact-loop mask
+(<span class="mono">epi_core</span>) with scrambled, truncated and poly-glycine controls, each
+built from it. All four were paired with the same 21 linker variants, so a
+column here is 21 constructs and the only thing differing between columns is
+the mask.</p></div>
 <table class="tbl">
-<colgroup><col style="width:22%"><col style="width:10%"><col style="width:32%"><col style="width:36%"></colgroup>
-<thead><tr><th>group</th><th>constructs</th><th>masks in it</th>
-<th>what it removes</th></tr></thead><tbody><tr><td>antigen-derived grafts</td><td>189</td><td class='mono' style='font-size:.72rem'>epi_both, epi_core, epi_core_ext2, epi_core_ext4, epi_core_noCys, epi_face2, epi_sub01, epi_sub02, epi_sub03</td><td>nothing: these are the designs</td></tr><tr><td>truncated control</td><td>21</td><td class='mono' style='font-size:.72rem'>epi_core_half</td><td>half the loop, keeping the residues that remain</td></tr><tr><td>scrambled control</td><td>21</td><td class='mono' style='font-size:.72rem'>epi_core_scram</td><td>the order of the residues, keeping their composition</td></tr><tr><td>poly-glycine control</td><td>21</td><td class='mono' style='font-size:.72rem'>polyG</td><td>any designed interaction at all</td></tr></tbody></table>
-<figure class="chart wide"><img src="figures/occlusion_by_group.svg?v=8f0f231f" alt=""><figcaption>Paratope occlusion by group, every construct as a point with its group mean marked. The designed grafts sit inside the spread of the controls, and below two of them, so this measure cannot rank a mask.</figcaption></figure>
+<colgroup><col style="width:21%"><col style="width:36%"><col style="width:33%"><col style="width:10%"></colgroup>
+<thead><tr><th>mask</th><th>what it is</th><th>the question it asks</th>
+<th>mean</th></tr></thead><tbody><tr class='hl'><td class='mono'>epi_core</td><td>the antigen's main contact loop, grafted</td><td>does reproducing a contact surface help cover the paratope?</td><td><b>8.1%</b></td></tr><tr><td class='mono'>epi_core_scram</td><td>the same residues in a different order</td><td>does the order matter, or only the composition?</td><td><b>8.8%</b></td></tr><tr><td class='mono'>epi_core_half</td><td>the first half of that loop</td><td>does the whole contact region beat a fragment of it?</td><td><b>8.1%</b></td></tr><tr><td class='mono'>polyG</td><td>twelve glycines, matched in length</td><td>how much coverage comes from a flexible peptide alone?</td><td><b>4.5%</b></td></tr></tbody></table>
+<figure class="chart wide"><img src="figures/occlusion_by_group.svg?v=998138d3" alt=""><figcaption>Every construct as a point, with the mask's mean marked. The antigen-derived mask does not outperform its controls.</figcaption></figure>
+<div class="stack">
+<p>The antigen-derived sequence did not beat its controls. Surface occlusion therefore measures
+geometric coverage in the predicted structure; it is not evidence of specific mask binding. The
+truncated control is not fully inert either, since it still carries real antigen residues, which
+is part of why it lands where it does.</p></div>
+<details class="tech"><summary>Effect of mask design</summary><div class="techbody">
+<p>The other antigen-derived masks, each against the same
+21 linkers. Extensions, substitutions and the cysteine-free variant all sit in
+the same band.</p>
+<figure class="chart wide"><img src="figures/occlusion_by_mask.svg?v=846d2811" alt=""><figcaption>Mean occlusion per antigen-derived mask.</figcaption></figure>
+</div></details>
+<div class="stack">
+<p><b>Effect of linker length on paratope occlusion.</b> Predicted coverage across linker
+lengths of 12&ndash;32 residues, with the mask and the cleavage sequence
+held constant along each line, so the only thing varying is the length.</p></div>
+<figure class="chart wide"><img src="figures/occlusion_by_linker.svg?v=564d342d" alt=""><figcaption>One antigen-derived mask against its two controls, all on the same cleavage motif. Longer linkers generally raise predicted occlusion, but the scrambled and poly-glycine controls rise with them, so part of the effect is geometric: a flexible peptide covers some of the surface without a specific interaction.</figcaption></figure>
+<div class="stack">
+<p>Linker length decides whether the mask can reach the paratope at all. It does not say whether
+the mask binds, and the controls are why: coverage alone cannot separate a designed interaction
+from a peptide with room to move.</p></div>
 <details class="tech"><summary>Occlusion across the library</summary><div class="techbody">
-<figure class="chart"><img src="figures/occlusion_by_linker.svg?v=9eeb8d85" alt=""><figcaption>Paratope occlusion against linker length, by mask.</figcaption></figure>
+<figure class="chart wide"><img src="figures/occlusion_by_linker_all.svg?v=09571d1f" alt=""><figcaption>The same comparison for every mask carrying a length series, coloured by family.</figcaption></figure>
 <div class="viewer"><div class="vbar"><span class="eyebrow">All constructs, aligned on the nanobody</span></div><div class="vstage" id="ens-mask" data-ensemble="masking"></div><div class="vkey"><span><i style="background:#337D79"></i>framework</span><span><i style="background:#2E7DBE"></i>CDR1</span><span><i style="background:#B8860B"></i>CDR2</span><span><i style="background:#A8324A"></i>CDR3</span><span><i style="background:#C06014"></i>antigen-binding residues</span><span style="display:flex;align-items:center;gap:0">least occluding&nbsp;<i style="background:#2C5F8A;width:18px;border-radius:0"></i><i style="background:#4E8FB0;width:18px;border-radius:0"></i><i style="background:#8FBDC9;width:18px;border-radius:0"></i><i style="background:#D8C9A3;width:18px;border-radius:0"></i><i style="background:#D79A5B;width:18px;border-radius:0"></i><i style="background:#C06014;width:18px;border-radius:0"></i>&nbsp;most</span></div><p class="dim" style="font-size:.85rem">Every folded construct, coloured by paratope occlusion. The masks do not concentrate over the antigen-binding residues, which is the result reported above.</p></div>
 </div></details>
 

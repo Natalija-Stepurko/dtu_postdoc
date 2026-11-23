@@ -223,22 +223,36 @@ def release_sensitivity(tether):
     return _save(fig, "release_sensitivity")
 
 
-def occlusion_by_group(fold):
-    """Whether covering the paratope distinguishes a designed mask at all.
+#: The matched comparison: one antigen-derived mask against the three
+#: controls built from it. Every one of the four was paired with the same 21
+#: linkers, so the only thing that differs along the axis is the mask.
+OCCLUSION_CONTROLS = (("epi_core", "main contact loop", SEQ),
+                      ("epi_core_scram", "scrambled", STR),
+                      ("epi_core_half", "truncated", "#8A9BA8"),
+                      ("polyG", "poly-glycine", NULL))
 
-    Every construct as a point against its own control group, with the group
-    mean marked. A bar of means would make three numbers look like a result;
-    the spread is the result, because the designed grafts sit inside it.
+
+def occlusion_by_group(fold, masks=OCCLUSION_CONTROLS,
+                       name="occlusion_by_group", label_fn=None):
+    """Whether covering the paratope depends on the antigen-derived sequence.
+
+    One column per mask rather than per design category. Averaging nine
+    different designs into a single "antigen-derived" bar compared a group of
+    nine against groups of one, which is not the comparison the controls were
+    built for: each control is derived from epi_core, so epi_core is what it
+    has to be read against.
+
+    Every construct is a point, because the spread is the result - the
+    designed mask sits inside it.
     """
     plt = _style()
     rows = fold["results"]
-    order = [("epitope graft", "antigen-derived grafts", SEQ),
-             ("scrambled control", "scrambled controls", STR),
-             ("truncated control", "truncated controls", "#8A9BA8"),
-             ("inert control", "poly-glycine", NULL)]
-    groups = [(label, colour, [r["occlusion"] * 100 for r in rows if r["kind"] == kind])
-              for kind, label, colour in order]
+    groups = [(label, colour, [r["occlusion"] * 100 for r in rows if r["mask"] == m])
+              for m, label, colour in masks]
     groups = [g for g in groups if g[2]]
+    if not groups:
+        raise ValueError("no construct matches any mask in the comparison; "
+                         "the names have drifted from the library")
 
     fig, ax = plt.subplots(figsize=(6.4, 3.2))
     rng = np.random.default_rng(42)
@@ -255,31 +269,94 @@ def occlusion_by_group(fold):
     ax.set_xticklabels([g[0].replace(" ", "\n", 1) for g in groups], fontsize=8)
     ax.set_ylabel("paratope occluded  (%)")
     ax.set_xlim(-0.6, len(groups) - 0.2)
-    return _save(fig, "occlusion_by_group")
+    return _save(fig, name)
 
 
-def occlusion_by_linker(folding):
+def occlusion_by_mask(fold):
+    """Every antigen-derived mask, for the panel behind the main comparison."""
+    from .mask_design import MASK_FAMILY_COLOUR, MASK_LABELS, family_of
+    kinds = {r["mask"]: r["kind"] for r in fold["results"] if r["mask"]}
+    grafts = sorted(m for m, k in kinds.items() if k == "epitope graft")
+    masks = tuple((m, MASK_LABELS.get(m, m).replace(", ", "\n"),
+                   MASK_FAMILY_COLOUR.get(family_of(m), NULL)) for m in grafts)
+    return occlusion_by_group(fold, masks, "occlusion_by_mask")
+
+
+#: The three series the length comparison is built on: one antigen-derived
+#: mask against the two controls that remove its sequence and then any
+#: designed interaction at all. Grey reads as grey to the palette checker,
+#: which is legal here because every line carries its own label.
+LENGTH_SERIES_MASKS = (("epi_core", "main contact loop", SEQ),
+                       ("epi_core_scram", "scrambled control", STR),
+                       ("polyG", "inert control", NULL))
+
+
+def occlusion_by_linker(folding, motif="cn01", series=LENGTH_SERIES_MASKS,
+                        name="occlusion_by_linker"):
+    """Paratope occlusion against linker length, one cleavage motif throughout.
+
+    The mask names here were the library's previous ones - epi1, epi2,
+    epi1_half, epi1_scram - and only polyG survived the rename, so the figure
+    had been drawing a single family out of twelve while its caption said
+    "by mask". It also joined every construct of a family in linker-length
+    order regardless of cleavage motif, which drew vertical jumps between
+    constructs that share only an x value.
+
+    Holding the motif fixed makes each line one mask across six lengths, so
+    the only thing varying along a line is the length.
+    """
     plt = _style()
     rows = folding["results"]
-    order = ["epi1", "epi2", "epi1_half", "epi1_scram", "polyG"]
-    colours = {"epi1": SEQ, "epi2": CHROME, "epi1_half": "#8A9BA8",
-               "epi1_scram": STR, "polyG": NULL}
-    fig, ax = plt.subplots(figsize=(5.0, 3.0))
-    for mask in order:
-        pts = sorted([r for r in rows if r["mask"] == mask], key=lambda r: r["linker"])
+    fig, ax = plt.subplots(figsize=(5.4, 3.2))
+    drawn, ends = 0, []
+    for mask, label, colour in series:
+        pts = sorted((r for r in rows
+                      if r["mask"] == mask and r["id"].startswith(f"{mask}_{motif}")),
+                     key=lambda r: r["linker"])
         if not pts:
             continue
+        drawn += 1
         x = [p["linker"] for p in pts]
         y = [p["occlusion"] * 100 for p in pts]
-        ax.plot(x, y, lw=2, marker="o", ms=4.5, color=colours[mask],
-                markeredgecolor="white", markeredgewidth=1)
-        ax.annotate(mask, (x[-1], y[-1]), textcoords="offset points", xytext=(5, 0),
-                    fontsize=7.5, color=colours[mask], va="center")
-    ax.axhline(0, lw=1.1, color=NULL, ls=(0, (2, 3)))
-    ax.set_xlim(2, 38)
+        ax.plot(x, y, lw=2, marker="o", ms=5, color=colour,
+                markeredgecolor="white", markeredgewidth=1.1, zorder=3)
+        ends.append((y[-1], x[-1], label, colour))
+    # two series can finish within a line's height of each other, so the end
+    # labels are pushed apart rather than drawn on top of one another
+    ends.sort()
+    span = max(e[0] for e in ends) - min(e[0] for e in ends) if len(ends) > 1 else 1
+    gap = max(span * 0.11, 0.9)
+    placed = []
+    for value, xend, label, colour in ends:
+        at = value if not placed else max(value, placed[-1] + gap)
+        placed.append(at)
+        ax.annotate(label, (xend, value), xytext=(xend + 1.2, at),
+                    textcoords="data", fontsize=8, color=colour, va="center",
+                    arrowprops=(dict(arrowstyle="-", color=colour, lw=0.8,
+                                     shrinkA=2, shrinkB=0)
+                                if abs(at - value) > 0.35 else None))
+    if not drawn:
+        raise ValueError(f"no construct matches the series for motif {motif!r}; "
+                         "the mask names have drifted from the library again")
+    ax.axhline(0, lw=1.1, color=INK3, alpha=0.4, ls=(0, (2, 3)))
+    lens = sorted({r["linker"] for r in rows if r["linker"]})
+    ax.set_xticks(lens)
+    ax.set_xlim(min(lens) - 2, max(lens) + 9)
     ax.set_xlabel("linker length  (residues)")
     ax.set_ylabel("paratope occluded  (%)")
-    return _save(fig, "occlusion_by_linker")
+    return _save(fig, name)
+
+
+def occlusion_by_linker_all(folding, motif="cn01"):
+    """The same comparison across every mask that has a length series."""
+    from .mask_design import MASK_FAMILY_COLOUR, MASK_LABELS, family_of
+    rows = folding["results"]
+    masks = sorted({r["mask"] for r in rows if r["mask"]
+                    and any(x["mask"] == r["mask"] and x["id"].startswith(f"{r['mask']}_{motif}")
+                            and x["linker"] != 24 for x in rows)})
+    series = tuple((m, MASK_LABELS.get(m, m),
+                    MASK_FAMILY_COLOUR.get(family_of(m), NULL)) for m in masks)
+    return occlusion_by_linker(folding, motif, series, "occlusion_by_linker_all")
 
 
 def occlusion_vs_confidence(folding):
@@ -313,8 +390,8 @@ def build_all():
     fold = None
     try:
         fold = load_json("04_folding.json")
-        made += [occlusion_by_group(fold), occlusion_by_linker(fold),
-                 occlusion_vs_confidence(fold)]
+        made += [occlusion_by_group(fold), occlusion_by_mask(fold),
+                 occlusion_by_linker(fold), occlusion_by_linker_all(fold)]
     except FileNotFoundError:
         pass
     try:
