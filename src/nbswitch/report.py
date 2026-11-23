@@ -1748,13 +1748,18 @@ def construct_schematic(c, free_vhh_len=None):
     total = v_hi
     px = lambda n: n * (W - 2) / total
 
-    o = [None,
+    # boxed the way a module is boxed in the pipeline diagram: white panel,
+    # rule border, a 4 px accent bar along the top. The content keeps its own
+    # coordinates and the group is translated inside the padding.
+    PAD, PAD_TOP = 22, 28
+    o = [None, None,
          '<style>'
          '.c-h{font:600 13px Inter,system-ui,sans-serif}'
          '.c-b{font:12px Inter,system-ui,sans-serif}'
          '.c-m{font:600 11.5px ui-monospace,monospace}'
          '.c-n{font:10.5px ui-monospace,monospace}'
-         '</style>']
+         '</style>',
+         f'<g transform="translate({PAD},{PAD_TOP})">']
 
     def label(x, y, text, cls="c-b", fill=INK2, anchor="start"):
         o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
@@ -1810,10 +1815,16 @@ def construct_schematic(c, free_vhh_len=None):
     y += 26
     label(0, y, f'<tspan class="c-m">{c["id"]}</tspan>  '
                 f'\u00b7  {total} residues, folded as one chain', "c-b", INK3)
-    H = int(y + 10)
-    o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
+    inner = int(y + 10)
+    BW, BH = W + 2 * PAD, inner + PAD_TOP + PAD
+    o.append("</g>")
+    o[0] = (f'<svg viewBox="0 0 {BW} {BH}" width="100%" '
             'xmlns="http://www.w3.org/2000/svg" role="img" '
             'aria-label="One assembled construct, drawn to scale">')
+    # the same two rectangles the pipeline diagram's module boxes use
+    o[1] = (f'<rect x="0.6" y="0.6" width="{BW - 1.2}" height="{BH - 1.2}" rx="4" '
+            f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1.2"/>'
+            f'<rect x="0.6" y="0.6" width="{BW - 1.2}" height="4" fill="{CHROME}"/>')
     o.append("</svg>")
     return "".join(o)
 
