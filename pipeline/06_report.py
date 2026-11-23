@@ -1386,7 +1386,7 @@ others have to beat.</figcaption></figure>
 &times; {lib['n_linkers']} linkers = {lib['n_pairs']} pairs, and the free nanobody as a reference,
 giving <b>{N['n_constructs']} constructs</b> to fold.</p>
 <p><b>How they were folded.</b> Each construct was folded as a single chain, mask and linker and
-nanobody in one sequence rather than the mask on its own, with ESMFold
+nanobody in one sequence, with ESMFold
 (<span class="mono">{FOLD_MODEL}</span>) from sequence alone and with no multiple-sequence
 alignment. The free nanobody was folded the same way, and it is the reference the rest are
 measured against: the model gives it a pLDDT of {FREE_PLDDT:.1f}, and the {N['n_paratope']}
