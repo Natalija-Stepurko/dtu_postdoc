@@ -8,7 +8,14 @@ import numpy as np
 from .config import FIGURES, load_json
 
 #: House palette. Sequence-side blue, structure-side orange, muted grey, teal accent.
-SEQ, STR, NULL, CHROME = "#2D5BD1", "#C06014", "#6E7880", "#0E7C7B"
+#:
+#: The teal was #0E7C7B, which carries a chroma of 0.088 and so falls under the
+#: 0.1 floor the palette checker sets: it reads as grey. That is a problem
+#: wherever it is a series beside the grey the same figures use for a
+#: reference or a total. Lifted to the same hue at a chroma that clears the
+#: floor; all three categorical slots then pass on every check, worst CVD
+#: separation 13.8 (deutan) and worst normal-vision separation 21.8.
+SEQ, STR, NULL, CHROME = "#2D5BD1", "#C06014", "#6E7880", "#0B9488"
 INK, INK2, INK3 = "#12191F", "#3A464F", "#6E7880"
 RULE, SEQ_WASH, STR_WASH = "#DDE4E7", "#EAEFFB", "#FAEEE5"
 #: DejaVu first so matplotlib has real metrics; the SVG keeps the whole stack as
@@ -790,25 +797,48 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
     return _save(fig, "cleavability_panel")
 
 
+#: The three measurements accessibility is built from, in the order they are
+#: described on the page.
+CONTEXT_PARTS = (("extension", SEQ, "extension"),
+                 ("exposure", CHROME, "exposure"),
+                 ("clearance_open_fraction", STR, "clearance"))
+
+
 def cleavability_components(trigger):
-    """The three necessary conditions, per construct, sorted by their product."""
+    """The three accessibility requirements, over the whole library.
+
+    Every construct is drawn, ordered along x by the product the three make,
+    so the product is the rising edge and each component can be read against
+    it. It used to show the twenty-eight best by name, which told the reader
+    what the best looked like and nothing about where the library sits or
+    which of the three is the binding constraint.
+
+    Three requirements multiplied means the product is bounded above by the
+    smallest of them, and clearance is the smallest almost everywhere: the
+    figure's job is to make that visible rather than asserted.
+    """
     plt = _style()
-    rows = sorted(trigger["results"], key=lambda r: -r["context_score"])[:28]
+    rows = sorted(trigger["results"], key=lambda r: r["context_score"])
     if not rows:
         return None
-    fig, ax = plt.subplots(figsize=(7.4, 3.0))
-    x = np.arange(len(rows))
-    for key, colour, label in (("extension", SEQ, "extension"),
-                               ("exposure", CHROME, "exposure"),
-                               ("clearance_open_fraction", STR, "clearance")):
-        ax.plot(x, [r[key] for r in rows], lw=1.6, color=colour, label=label,
-                solid_capstyle="round")
-    ax.bar(x, [r["context_score"] for r in rows], width=.7, color="#E3E9EC",
-           zorder=0, label="product")
-    ax.set_xticks(x)
-    ax.set_xticklabels([r["id"] for r in rows], rotation=90, fontsize=5.5)
-    ax.set_ylabel("score"); ax.set_ylim(0, 1.05)
-    ax.legend(fontsize=7, ncol=4, loc="upper right", frameon=False)
+    fig, ax = plt.subplots(figsize=(8.6, 3.4))
+    fig.subplots_adjust(right=0.78)
+    x = np.arange(1, len(rows) + 1)
+
+    ax.fill_between(x, [r["context_score"] for r in rows], color="#E3E9EC",
+                    linewidth=0, zorder=0, label="product")
+    for key, colour, label in CONTEXT_PARTS:
+        ax.plot(x, [r[key] for r in rows], lw=1.3, color=colour, label=label,
+                solid_capstyle="round", zorder=3)
+
+    ax.set_xlim(1, len(rows))
+    ax.set_ylim(0, 1.02)
+    ax.set_xlabel(f"all {len(rows)} constructs, ordered by the product")
+    ax.set_ylabel("score")
+    leg = ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+                    frameon=False, handlelength=1.3, handletextpad=.6,
+                    labelspacing=.7, borderaxespad=0)
+    leg._legend_box.align = "left"
     return _save(fig, "cleavability_components")
 
 

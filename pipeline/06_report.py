@@ -513,11 +513,6 @@ N["n_cleav"] = len(_lin_rows)
 N["sel_ctx_r"] = (float(_np.corrcoef([_r["selectivity"] for _r in _lin_rows],
                                      [_r["context_score"] for _r in _lin_rows])[0, 1])
                   if len(_lin_rows) > 2 else float("nan"))
-_least = min(_lin_rows, key=lambda r: r["cleavability_score"]) if _lin_rows else None
-N["least_id"] = _least["id"] if _least else ""
-N["least_ctx"] = _least["context_score"] if _least else 0.0
-N["least_sel"] = _least["selectivity"] if _least else 0.0
-N["least_cleav"] = _least["cleavability_score"] if _least else 0.0
 
 _mm = {r["case"]: r for r in (verification["results"] if verification else [])
        if r["status"] == "ok"}
@@ -576,12 +571,6 @@ toxin_contact = sorted(int("".join(c for c in lbl[1:] if c.isdigit()))
 N["mask_cutoff"] = iface.get("mask_contact_cutoff_A", 3.5)
 N["n_near"] = len(top_paratope)
 N["n_epitope_near"] = len(iface.get("epitope_near_labels", []))
-_lk_len = next((len(x["sequence"]) for x in lib["linkers"]), 0)
-N["linker_len"] = _lk_len
-_scan_by_n = {r["linker_residues"]: r["window_decades"]
-              for r in tether["scan"] if r["terminus"] == "N"}
-N["window_cost"] = (_scan_by_n.get(tether["best_per_terminus"]["N"]["linker_residues"], 0)
-                    - _scan_by_n.get(_lk_len, 0))
 N["n_epitope_contacts"] = iface.get("n_epitope_contacts", 0)
 N["n_epitope"] = iface.get("n_epitope", 0)
 try:
@@ -610,8 +599,12 @@ _occ_by = {}
 for _src in (fold, redesign_fold):
     for _r in (_src["results"] if _src else []):
         _occ_by[_r["id"]] = _r["occlusion"]
-_acc_by_id = {r["id"]: r["context_score"] for r in (trigger["results"] if trigger else [])}
-for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability", _acc_by_id)):
+# the viewer's "cleavability" ramp held the context score, which is reach in
+# the fold and only half of what the page calls cleavability. It is the score
+# the ranking uses: recognition multiplied by accessibility.
+_cleav_by_id = {r["id"]: r["cleavability_score"]
+                for r in (trigger["results"] if trigger else [])}
+for _key, _d in (("feasibility", _feas_by), ("masking", _occ_by), ("cleavability", _cleav_by_id)):
     _n = _norm({it["id"]: _d.get(it["id"]) for it in ENSEMBLE_IDS})
     for _i, _v in _n.items():
         SCORES.setdefault(_i, {})[_key] = _v
@@ -765,11 +758,9 @@ try:
     N["sel_ctrl"] = _ctrl
     N["target_proteases"] = ", ".join(_lk["target_proteases"])
     N["off_target_proteases"] = ", ".join(_lk["off_target_proteases"])
-    LINKERS = _lk["linkers"]
 except FileNotFoundError:
     N.update({"n_linkers": 0, "n_generated": 0, "sel_min": 0.0, "sel_max": 0.0,
               "sel_ctrl": 0.0, "target_proteases": "", "off_target_proteases": ""})
-    LINKERS = []
 
 
 COUNTS = _count_rows()
@@ -945,9 +936,6 @@ N["n_sel_values"] = len({l["selectivity"] for l in _LK["linkers"]
                          if l.get("selectivity") is not None})
 N["len_lo"] = min(len(l["sequence"]) for l in _LK["linkers"])
 N["len_hi"] = max(len(l["sequence"]) for l in _LK["linkers"])
-_least_row = min((r for r in (trigger["results"] if trigger else []) if r.get("linker_id")),
-                 key=lambda r: r["cleavability_score"], default=None)
-N["least_clear"] = _least_row["clearance_open_fraction"] if _least_row else 0.0
 
 N["noCys_id"] = next((r["construct"] for r in _VROWS
                       if r["construct"] and "noCys" in r["construct"]), "")
@@ -1476,31 +1464,15 @@ its target score is {N['ctrl_target']:.2f}, so it is predicted to resist both gr
 equally.</p></div>
 <h5 class="subh2">Can a protease reach the site?</h5>
 <figure class="fig wide"><div class="figbody">{R.accessibility_checks(PROBE_R, PROBE_N, PROBE_OFF)}</div></figure>
-<div class="stack">
-<p>The three are multiplied, each running from 0 to 1, because they are requirements rather than
-contributions. Clearance places a sphere the size of a catalytic domain beside the scissile bond
-and counts how many of {PROBE_N} directions are unobstructed by the rest of the construct. That
-is a geometric approximation, not a docked protease. CleaveNet reads the sequence; this reads
-the predicted structure.</p>
-<div class="note"><b>Both have to hold.</b> The lowest-scoring construct in the library,
-<span class="mono">{N['least_id']}</span>, is reachable enough &mdash; its clearance alone is
-{N['least_clear']:.2f} &mdash; but its linker is a scramble of a good substrate, so recognition
-falls to {N['least_sel']:+.2f} and the product with it:
-{N['least_sel']:.2f} × {N['least_ctx']:.3f} = {N['least_cleav']:.4f}.</div>
-<div class="note warn"><b>Linker length.</b> The polymer model of Module 01 favoured
-{N['linker_best']} residues, but in the predicted constructs the mask needed a longer linker to
-reach the paratope at all, so the reference linker is {N['linker_len']} residues and the library
-spans {N['len_lo']}–{N['len_hi']}. The extra length costs {N['window_cost']:.2f} decades of the
-affinity window. That gap is a limitation of treating the mask as a point at the end of a
-flexible chain.</div></div>
-<details class="tech"><summary>Every linker, its profile, and the component scores</summary>
-<div class="techbody">
-{R.linker_table(LINKERS)}
-{chart_wide("cleavability_components", "The three necessary conditions and their product, by construct.")}
+{chart_wide("cleavability_components", "The three accessibility requirements and the product "
+   f"they make, for all {N['rank_total']} constructs. Each runs from 0 to 1, and because they "
+   "are multiplied the product can be no larger than the smallest of them. Clearance is the "
+   "smallest almost everywhere, so it is the requirement that decides whether a site is "
+   "reachable.")}
 {R.ensemble_viewer("ens-cleave", "cleavability",
-   "The same constructs, coloured by how reachable their linker is in the folded model.",
-   R.ramp_legend("least reachable", "most"))}
-</div></details>
+   "Every folded construct aligned on the nanobody, with each mask and linker coloured by its "
+   "predicted cleavability: sequence recognition multiplied by structural accessibility.",
+   R.ramp_legend("least cleavable", "most"))}
 
 <h3 class="mod"><span>Module 06</span>Selection of candidate constructs</h3>
 {mri("Each of the " + f"{N['rank_total']}" + " constructs was assessed for structural "

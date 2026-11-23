@@ -1465,32 +1465,6 @@ def generation_table(counts) -> str:
     return f'<table class="tbl gen">{head}{body}</table>'
 
 
-def linker_table(linkers) -> str:
-    """The generated substrates and their controls, with the contrast they scored."""
-    if not linkers:
-        return pending("linker generation, stage 02b")
-    head = ('<colgroup><col style="width:11%"><col style="width:34%">'
-            '<col style="width:21%"><col style="width:11%">'
-            '<col style="width:12%"><col style="width:11%"></colgroup>'
-            "<tr><th>linker</th><th>sequence</th><th>kind</th>"
-            "<th>target</th><th>off&#8209;target</th><th>selectivity</th></tr>")
-    body = ""
-    for item in linkers:
-        sel = item.get("selectivity")
-        sel = "&mdash;" if sel is None else f"{sel:+.2f}"
-        tz = item.get("target_z")
-        oz = item.get("off_target_z")
-        control = "control" in str(item.get("kind", ""))
-        row_class = ' class="ctrl"' if control else ""
-        body += (f'<tr{row_class}><td class="mono">{item["id"]}</td>'
-                 f'<td class="mono">{item["sequence"]}</td>'
-                 f'<td>{item.get("kind", "")}</td>'
-                 f'<td>{"&mdash;" if tz is None else f"{tz:+.2f}"}</td>'
-                 f'<td>{"&mdash;" if oz is None else f"{oz:+.2f}"}</td>'
-                 f'<td><b>{sel}</b></td></tr>')
-    return f'<table class="tbl linkers">{head}{body}</table>'
-
-
 def assumptions_table(rows) -> str:
     """Every constant the design window rests on, with where it came from.
 
