@@ -1451,9 +1451,7 @@ folded construct.</b></p></div>
 <div class="stack">
 <h4 class="subh">Vertical: structural accessibility</h4>
 <p>One number per construct, measured on its own ESMFold model.</p>
-<p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.
-Higher is more accessible, and because they are multiplied the result can be no larger than the
-smallest of them.</p></div>
+<p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.</p></div>
 </div>
 {chart_wide("cleavability_components", "The three accessibility requirements and the product "
    f"they make, for all {N['rank_total']} constructs. Each runs from 0 to 1, and because they "

@@ -529,7 +529,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=087f0a82" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=3e65d864" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -650,9 +650,7 @@ nine off-target MMPs.</p></div>
 <div class="stack">
 <h4 class="subh">Vertical: structural accessibility</h4>
 <p>One number per construct, measured on its own ESMFold model.</p>
-<p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.
-Higher is more accessible, and because they are multiplied the result can be no larger than the
-smallest of them.</p></div>
+<p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.</p></div>
 </div>
 <figure class="chart wide"><img src="figures/cleavability_components.svg?v=c0548f59" alt=""><figcaption>The three accessibility requirements and the product they make, for all 348 constructs. Each runs from 0 to 1, and because they are multiplied the product can be no larger than the smallest of them. Clearance is the smallest almost everywhere, so it is the requirement that decides whether a site is reachable.</figcaption></figure>
 <div class="viewer"><div class="vbar"><span class="eyebrow">All constructs, aligned on the nanobody</span></div><div class="vstage" id="ens-cleave" data-ensemble="cleavability"></div><div class="vkey"><span><i style="background:#337D79"></i>framework</span><span><i style="background:#2E7DBE"></i>CDR1</span><span><i style="background:#B8860B"></i>CDR2</span><span><i style="background:#A8324A"></i>CDR3</span><span><i style="background:#C06014"></i>antigen-binding residues</span><span style="display:flex;align-items:center;gap:0">least cleavable&nbsp;<i style="background:#2C5F8A;width:18px;border-radius:0"></i><i style="background:#4E8FB0;width:18px;border-radius:0"></i><i style="background:#8FBDC9;width:18px;border-radius:0"></i><i style="background:#D8C9A3;width:18px;border-radius:0"></i><i style="background:#D79A5B;width:18px;border-radius:0"></i><i style="background:#C06014;width:18px;border-radius:0"></i>&nbsp;most</span></div><p class="dim" style="font-size:.85rem">Every folded construct aligned on the nanobody, with each mask and linker coloured by its predicted cleavability: sequence recognition multiplied by structural accessibility.</p></div>
