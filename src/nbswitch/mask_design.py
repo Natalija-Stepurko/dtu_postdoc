@@ -221,3 +221,101 @@ def design_masks(window, segments, hotspot_positions=None,
                                        n=n_substitutions, seed=seed)
     masks |= controls(core, seed=seed)
     return masks
+
+
+#: Each mask answers one question, and the question is what makes a list of
+#: twelve sequences readable. Defined here, next to the code that builds them,
+#: because both the page and the figures need the same grouping.
+MASK_FAMILIES = [
+    ("What part of the antigen is sufficient?", ["epi_core"]),
+    ("Does extending the peptide help?", ["epi_core_ext2", "epi_core_ext4"]),
+    ("Can another contact region contribute?", ["epi_face2", "epi_both"]),
+    ("Can the sequence change and the key contacts stay?",
+     ["epi_sub01", "epi_sub02", "epi_sub03"]),
+    ("Is the disulphide doing work?", ["epi_core_noCys"]),
+    ("Do the designed masks beat controls?",
+     ["epi_core_half", "epi_core_scram", "polyG"]),
+]
+
+#: Human-readable names. The ids stay in the code and in the construct
+#: picker, because that is what the files are called.
+MASK_LABELS = {
+    "epi_core": "Main contact loop",
+    "epi_core_ext2": "Extended, 2 residues each side",
+    "epi_core_ext4": "Extended, 4 residues each side",
+    "epi_face2": "Second contact region",
+    "epi_both": "Both regions, joined",
+    "epi_sub01": "Conservative substitutions I",
+    "epi_sub02": "Conservative substitutions II",
+    "epi_sub03": "Conservative substitutions III",
+    "epi_core_noCys": "Disulphide removed",
+    "epi_core_half": "Truncated control",
+    "epi_core_scram": "Scrambled control",
+    "polyG": "Inert control",
+}
+
+MASK_NOTES = {
+    "epi_core_noCys": "both cysteines to serine",
+    "epi_core_half": "first half of the loop",
+    "epi_core_scram": "same residues, no order",
+    "polyG": "no designed interaction",
+    "epi_sub01": "hotspots and cysteines held",
+    "epi_sub02": "hotspots and cysteines held",
+    "epi_sub03": "hotspots and cysteines held",
+}
+
+
+#: Legend-length names for the same six groups. The questions are the right
+#: headings for a figure that has room for them; a scatter legend does not.
+MASK_FAMILY_SHORT = {
+    "What part of the antigen is sufficient?": "main contact loop",
+    "Does extending the peptide help?": "extended loop",
+    "Can another contact region contribute?": "second region",
+    "Can the sequence change and the key contacts stay?": "substitutions",
+    "Is the disulphide doing work?": "disulphide removed",
+    "Do the designed masks beat controls?": "controls",
+}
+
+#: Validated against the data-viz checker on the light surface, all pairs:
+#: lightness is staggered as well as hue, because six hues at one lightness
+#: cannot clear the deuteranopia floor - evenly spaced ones collapse to a
+#: dE of 1.8 between the orange and the green.
+MASK_FAMILY_COLOUR = {
+    "What part of the antigen is sufficient?": "#2063b0",
+    "Does extending the peptide help?": "#00c9c9",
+    "Can another contact region contribute?": "#af73c9",
+    "Can the sequence change and the key contacts stay?": "#4b8323",
+    "Is the disulphide doing work?": "#d0901e",
+    "Do the designed masks beat controls?": "#93293b",
+}
+
+
+def family_of(mask_name, families=MASK_FAMILIES):
+    """Which question a mask was built to answer, by its exact id.
+
+    Exact, because the ids nest: epi_core_half starts with epi_core_ and is a
+    different mask, so any prefix rule files the truncated control under the
+    graft whose name it extends. A redesign records its mask as
+    ``mpnn_<parent construct>``; resolve that to the parent's mask with
+    :func:`family_by_construct` rather than guessing where the linker suffix
+    starts, since linker ids contain underscores too.
+    """
+    for question, members in families:
+        if mask_name in members:
+            return question
+    return None
+
+
+def family_by_construct(mask_name, parent, mask_of_construct,
+                        families=MASK_FAMILIES):
+    """Family of a folded row, whether it is a library construct or a redesign.
+
+    ``mask_of_construct`` maps a construct id to the mask it carries, which is
+    what turns a redesign's parent into a family without parsing any id.
+    """
+    direct = family_of(mask_name, families)
+    if direct is not None:
+        return direct
+    if parent and parent in mask_of_construct:
+        return family_of(mask_of_construct[parent], families)
+    return None

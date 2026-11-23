@@ -234,6 +234,8 @@ else:
 # stage which has not run leaves a missing value rather than a NameError
 corr = float("nan")
 rrows, rocc, grafts, improved = [], [], [], 0
+not_improved, not_improved_parents = [], []
+best_native_parent, best_native_score = "", float("nan")
 rbest = None
 
 if redesign_fold and fold:
@@ -243,6 +245,16 @@ if redesign_fold and fold:
     rbest = max(rrows, key=lambda r: r["occlusion"])
     improved = sum(1 for c in redesign["constructs"]
                    if c["native_score"] and c["mpnn_score"] < c["native_score"])
+    # which parents ProteinMPNN could not improve on, and by how much they
+    # already beat it. The page claimed every redesign improved its parent;
+    # the stage output says 88 of 96, and the 8 share one parent.
+    _not_improved = [c for c in redesign["constructs"]
+                     if c["native_score"] and c["mpnn_score"] >= c["native_score"]]
+    not_improved = _not_improved
+    not_improved_parents = sorted({c["parent"] for c in _not_improved})
+    best_native_parent = min(redesign["native_scores"],
+                             key=redesign["native_scores"].get)
+    best_native_score = redesign["native_scores"][best_native_parent]
     xs = np.array([r["mpnn_score"] for r in rrows])
     ys = np.array([r["occlusion"] * 100 for r in rrows])
     corr = float(np.corrcoef(xs, ys)[0, 1]) if len(xs) > 2 else float("nan")
@@ -532,7 +544,29 @@ N["occ_scram"] = _np.mean(_k.get("scrambled control", [0]))
 N["occ_inert"] = _np.mean(_k.get("inert control", [0]))
 
 N["n_redesign"] = redesign["n_unique"] if redesign else 0
+# the figure plots every construct carrying a mask, so its correlation is over
+# all of them and not only the redesigns the earlier version drew
+LIBSC = None
+try:
+    LIBSC = load_json("07b_library_scores.json")
+except FileNotFoundError:
+    pass
+ALL_CORR, ALL_N, ALL_SD = float("nan"), 0, float("nan")
+if LIBSC and fold:
+    _occ = {r["id"]: r["occlusion"] * 100
+            for src in (fold, redesign_fold) for r in (src or {}).get("results", [])}
+    _pairs = [(v["mask_score"], _occ[k]) for k, v in LIBSC["scores"].items() if k in _occ]
+    if len(_pairs) > 2:
+        ALL_CORR = float(np.corrcoef([p[0] for p in _pairs], [p[1] for p in _pairs])[0, 1])
+        ALL_N = len(_pairs)
+    ALL_SD = float(np.mean([v["mask_score_sd"] for v in LIBSC["scores"].values()]))
+
 N["mpnn_corr"] = corr if redesign else float("nan")
+N["n_improved"] = improved
+N["n_not_improved"] = len(not_improved)
+N["not_improved_parents"] = not_improved_parents
+N["best_native_parent"] = best_native_parent
+N["best_native_score"] = best_native_score
 
 _ctx = [_r["context_score"] for _r in (trigger["results"] if trigger else [])]
 N["ctx_mean"] = float(_np.mean(_ctx)) if _ctx else 0.0
@@ -1025,6 +1059,11 @@ LINKER_GEN = {"n_generated": _LK["n_generated"], "n_kept": _LK["n_kept"],
               # the z-scores the profile actually carries, not restated here
               "target_z": float(_PROFILE[_TGT[0]]),
               "off_z": float(_PROFILE[_OFF[0]])}
+# how the library was folded, read from the folding stage rather than named
+FOLD_MODEL = fold["model"] if fold else "facebook/esmfold_v1"
+FREE_PLDDT = fold["free_vhh_plddt"] if fold else float("nan")
+FREE_SASA = fold["free_vhh_paratope_sasa_A2"] if fold else float("nan")
+
 # ---- the mask side: what step 2 of module 02 is built from
 _MD = load_json("03a_masks.json")
 MASKS, HOTSPOTS = _MD["masks"], {int(l[1:]) for l in _MD["hotspot_labels"]}
@@ -1033,6 +1072,26 @@ _CORE = MASKS[CORE_ID]
 CORE_SEQ, CORE_LEN = _CORE["seq"], len(_CORE["seq"])
 CORE_RANGE = f"{_CORE['seq'][0]}{_CORE['start']}\u2013{_CORE['seq'][-1]}{_CORE['end']}"
 N["n_masks"] = len(lib["masks"])
+# the construct the schematic draws: the reference mask on the first CleaveNet
+# linker, which is the parent every redesign in step 3 came from
+REF_CONSTRUCT = next(c for c in lib["constructs"] if c["id"] == f"{CORE_ID}_cn01")
+# the worked-example funnel, every count read from the stage that produced it
+_RANK = load_json("13_ranking.json")
+try:
+    _VER = load_json("19_verification.json")
+except FileNotFoundError:
+    _VER = {"n_worth_testing": 0}
+FUNNEL = {
+    "n_masks": len(lib["masks"]), "n_linkers": lib["n_linkers"],
+    "n_pairs": lib["n_pairs"], "n_motifs": _LK["n_kept"],
+    "n_linker_controls": _LK["n_controls"], "n_generated": _LK["n_generated"],
+    "n_redesigns": redesign["n_unique"] if redesign else 0,
+    "n_structures": lib["n_constructs"] + (redesign["n_unique"] if redesign else 0),
+    "n_evaluated": _RANK["n_total"], "n_front": _RANK["n_front"],
+    "n_shortlist": len(_RANK["shortlist"]), "n_worth": _VER["n_worth_testing"],
+}
+N["n_evaluated"] = FUNNEL["n_evaluated"]
+N["n_structures"] = FUNNEL["n_structures"]
 N_PARENTS = len(redesign["parents"]) if redesign else 0
 
 # the contacting antigen residues are reported as runs along the chain, and
@@ -1170,8 +1229,13 @@ founded than it is.</p>
 complex with a single binding site, which is what the geometry and the masking measurements
 need. The architecture and the methods are what transfer; a viper application would start
 from a viper toxin complex and redesign the mask for it.</p>
-<p>What each module produced, in the order the modules ran. The numbers are those in the diagram above, and rows marked &mdash; are the assembly and structure-prediction steps that every module depends on. Three steps discard candidates and are marked; the rest transform what they are given.</p>
-{R.generation_table(COUNTS)}
+<p>What the run generated, evaluated and selected. Each of the
+{N['n_evaluated']} candidates carries all three scores, computed from its own predicted
+structure; the free nanobody is folded as the reference occlusion is measured against and is
+not itself a candidate, which is why {N['n_structures']} structures give {N['n_evaluated']}
+candidates.</p></div>
+<figure class="fig wide"><div class="figbody">{R.pipeline_funnel(FUNNEL)}</div></figure>
+<div class="stack">
 <details class="tech"><summary><b>Every experiment the pipeline defines, under the module it
 belongs to</b> &mdash; the question it asks, the method that produced its number, and what came
 out</summary><div class="techbody">
@@ -1321,6 +1385,18 @@ others have to beat.</figcaption></figure>
 <p>Every mask was paired with every linker: {N['n_masks']} masks
 &times; {lib['n_linkers']} linkers = {lib['n_pairs']} pairs, and the free nanobody as a reference,
 giving <b>{N['n_constructs']} constructs</b> to fold.</p>
+<p><b>How they were folded.</b> Each construct was folded as a single chain, mask and linker and
+nanobody in one sequence rather than the mask on its own, with ESMFold
+(<span class="mono">{FOLD_MODEL}</span>) from sequence alone and with no multiple-sequence
+alignment. The free nanobody was folded the same way, and it is the reference the rest are
+measured against: the model gives it a pLDDT of {FREE_PLDDT:.1f}, and the {N['n_paratope']}
+paratope residues expose {FREE_SASA:,.0f} Å² of surface between them, which is the denominator
+of every occlusion figure on this page.</p></div>
+<figure class="fig wide"><div class="figbody">{R.construct_schematic(REF_CONSTRUCT)}</div>
+<figcaption>One construct, drawn to scale. The mask and the cleavable linker are a short
+N-terminal addition to a nanobody that is most of the molecule, and the ten residues the
+protease has to find sit inside the linker, between inert Gly/Ser flanks.</figcaption></figure>
+<div class="stack">
 <p><b>Reading a construct name.</b> <span class="mono">{CORE_ID}_cn01</span> is the main
 antigen-derived mask joined to CleaveNet linker 01, and
 <span class="mono">mpnn00_{CORE_ID}_cn01</span> is a ProteinMPNN redesign of that construct. The
@@ -1332,13 +1408,29 @@ ids stay as the files are named; the figure above gives each mask a readable lab
 <p>Each folded construct was passed to ProteinMPNN with the nanobody and the linker held fixed,
 so only the mask positions could change. That produced <b>{N['n_redesign']} distinct redesigned
 masks</b> across {N_PARENTS} parent constructs.</p>
-<p>Every redesign scored better than the graft it came from on ProteinMPNN's own measure. That
-measure is how well a sequence fits the backbone it was given, which is not the same question as
-whether the mask covers the paratope, and the two barely move together: r = {N['mpnn_corr']:+.2f}
-across all {N['n_redesign']} redesigns.</p></div>
-{chart_wide("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion. A "
+<p>{N['n_improved']} of the {N['n_redesign']} redesigns scored better than the graft they came
+from on ProteinMPNN's own measure. The {N['n_not_improved']} that did not are all redesigns of
+<span class="mono">{N['not_improved_parents'][0]}</span>, the poly-glycine control, which already
+holds the best native score of any parent at {N['best_native_score']:.2f}: a run of glycines fits
+any backbone, so there is nothing there to improve on.</p>
+<p>That measure is how well a sequence fits the backbone it was given, which is not the same
+question as whether the mask covers the paratope, and the two barely move together:
+r = {N['mpnn_corr']:+.2f} across all {N['n_redesign']} redesigns.</p></div>
+{chart_wide("redesign_score_vs_occlusion",
+   f"ProteinMPNN score against paratope occlusion for all {ALL_N} constructs carrying a mask, "
+   "coloured by the family the mask belongs to and shaped by whether it is a library construct "
+   f"or a redesign. Across the whole library the two are unrelated, r = {ALL_CORR:+.2f}: a "
    "sequence that fits the backbone better does not occlude the paratope more, so the design "
-   "model's own score cannot stand in for a functional one.")}
+   "model's own score cannot stand in for a functional one. Each score is the mean over "
+   f"{LIBSC['n_orders'] if LIBSC else 0} decoding orders, which carry a spread of "
+   f"±{ALL_SD:.2f}.")}
+<div class="stack">
+<p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
+sequence with the backbone it was given. Lower is better, so constructs further left have the
+better ProteinMPNN scores.</p>
+<p><b>Vertical axis &mdash; paratope occlusion.</b> Calculated from the predicted structures: how
+much less solvent-accessible surface the paratope has in the fusion than in the free nanobody.
+Higher values mean more of the paratope is predicted to be covered.</p></div>
 
 </section>
 
@@ -1537,6 +1629,51 @@ prediction gives neither an affinity nor an off-rate. I would prioritise that co
 working with the experimental researchers to establish the measurements needed to assess
 structural feasibility, binding and protease responsiveness. The aim is a method that can be
 applied to other nanobody&ndash;antigen pairs without altering their binding interfaces.</p></div>
+
+<h4 class="subh"><span>First order</span>Three constructs, for diagnosis</h4>
+<div class="stack">
+<p>The first order is three constructs, and its purpose is diagnosis rather than success. Each
+measurement fails against a different part of the pipeline, so three is enough to start.</p></div>
+<table class="tbl">
+<colgroup><col style="width:38%"><col style="width:22%"><col style="width:40%"></colgroup>
+<thead><tr><th>measurement</th><th>reads out</th><th>if it fails, the problem is</th></tr></thead>
+<tbody>
+<tr><td>Purification &mdash; &Auml;KTA trace, single band on the gel</td>
+<td>can it be made at all</td>
+<td>the feasibility score: fold, aggregation, developability</td></tr>
+<tr><td>Biolayer interferometry, antigen affinity with the protease absent</td>
+<td>is it masked</td><td>the masking half of the unmasking score</td></tr>
+<tr><td>Biolayer interferometry, antigen affinity with the protease present</td>
+<td>does it activate</td><td>the trigger score, or the release half</td></tr>
+</tbody></table>
+<div class="note good"><b>Each failure mode points at a different module.</b> A construct that
+will not express, one that expresses but never masks, and one that masks but never releases are
+three different diagnoses, and each sends the work back to a different stage. Two or three cycles
+of this should give a pipeline that reliably proposes three producible, antigen-binding,
+switching variants.</div>
+
+<h4 class="subh"><span>Then twenty to thirty</span>The pipeline itself gets scored</h4>
+<div class="stack">
+<p>Once the loop reliably produces working candidates, the point of a larger batch changes. It is
+no longer about finding a molecule; it is about measuring whether the scores predict anything.
+With twenty to thirty measured constructs, each score can be scored in turn.</p></div>
+<figure class="fig wide"><div class="figbody">{R.validation_matrix()}</div>
+<figcaption>What a batch of measured constructs says about a score. The counts are illustrative;
+the metrics beneath them are computed from the cells above, so the arithmetic cannot drift from
+the example.</figcaption></figure>
+<div class="note warn"><b>The batch has to include designs the pipeline rejected.</b> If only
+top-ranked candidates are made, every measurement lands in the left-hand column: true and false
+positives can be counted, so precision is computable, but false negatives cannot be, so recall is
+not. Spending perhaps a quarter of the batch on designs the score rejected is what turns a hit
+list into a validation set.</div>
+
+<h4 class="subh"><span>Beyond a hundred</span>The labels become training data</h4>
+<div class="stack">
+<p>At around a hundred measured constructs the measurements stop being only a scorecard and start
+being a dataset: a binary label, does it switch, against the sequence and structure
+representations already computed for every candidate. That is the point at which a learned scorer
+could replace a hand-built one, and it is the reason to store those representations for designs
+that were never made.</p></div>
 </section>
 
 <section class="sec">

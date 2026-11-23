@@ -304,7 +304,12 @@ def build_all():
         redesign = load_json("08_redesign_folding.json")
         if fold is not None:
             made.append(redesign_landscape(redesign, fold))
-        made.append(redesign_score_vs_occlusion(redesign))
+        try:
+            made.append(redesign_score_vs_occlusion(
+                load_json("07b_library_scores.json"), fold, redesign,
+                load_json("03_constructs.json")))
+        except FileNotFoundError:
+            pass
     except FileNotFoundError:
         pass
     return made
@@ -333,27 +338,82 @@ def redesign_landscape(redesign_fold, base_fold):
     return _save(fig, "redesign_landscape")
 
 
-def redesign_score_vs_occlusion(redesign_fold):
-    """Does the design model's own score predict the thing we care about?"""
+def redesign_score_vs_occlusion(scores, fold, redesign_fold, lib):
+    """Does the design model's own score predict the thing the design is for?
+
+    Every construct carrying a mask, not only the redesigns. The earlier
+    version zipped twelve parents against six colours, so it drew 48 of 96
+    points while reporting a correlation over all 96: the picture and the
+    number described different sets. Both now cover the same points.
+
+    The x value is ProteinMPNN's score for the construct's own mask sequence
+    on its own folded backbone, averaged over decoding orders, so library
+    constructs and redesigns sit on one scale.
+    """
+    from .mask_design import (MASK_FAMILY_COLOUR, MASK_FAMILY_SHORT,
+                              family_by_construct)
     plt = _style()
-    rows = redesign_fold["results"]
-    parents = sorted({r["parent"] for r in rows})
-    colours = [SEQ, STR, CHROME, "#8A9BA8", "#7B5EA7", "#2E7D32"]
-    fig, ax = plt.subplots(figsize=(5.4, 3.2))
-    for parent, colour in zip(parents, colours):
-        pts = [r for r in rows if r["parent"] == parent]
-        ax.scatter([p["mpnn_score"] for p in pts], [p["occlusion"] * 100 for p in pts],
-                   s=30, color=colour, edgecolor="white", linewidth=.9, label=parent)
-    xs = np.array([r["mpnn_score"] for r in rows])
-    ys = np.array([r["occlusion"] * 100 for r in rows])
-    if len(xs) > 2:
+    mask_of = {c["id"]: c.get("mask") for c in lib["constructs"]}
+    occ, parent_of, mask_name = {}, {}, {}
+    for src in (fold, redesign_fold):
+        for r in (src or {}).get("results", []):
+            occ[r["id"]] = r["occlusion"] * 100
+            parent_of[r["id"]] = r.get("parent")
+            mask_name[r["id"]] = r.get("mask")
+
+    pts = {}
+    for cid, rec in scores["scores"].items():
+        if cid not in occ:
+            continue
+        fam = family_by_construct(mask_name.get(cid), parent_of.get(cid), mask_of)
+        if fam is None:
+            continue
+        pts.setdefault(fam, {"x": [], "y": [], "redesign": []})
+        pts[fam]["x"].append(rec["mask_score"])
+        pts[fam]["y"].append(occ[cid])
+        pts[fam]["redesign"].append(rec["source"] == "redesign")
+
+    fig, ax = plt.subplots(figsize=(8.6, 3.8))
+    fig.subplots_adjust(right=0.70)
+    order = [f for f, _ in MASK_FAMILY_SHORT.items() if f in pts]
+    for fam in order:
+        d = pts[fam]
+        colour = MASK_FAMILY_COLOUR[fam]
+        x = np.array(d["x"]); y = np.array(d["y"]); red = np.array(d["redesign"])
+        if (~red).any():
+            ax.scatter(x[~red], y[~red], s=26, color=colour, marker="o",
+                       edgecolor="white", linewidth=.7, alpha=.9,
+                       label=MASK_FAMILY_SHORT[fam], zorder=3)
+        if red.any():
+            ax.scatter(x[red], y[red], s=30, color=colour, marker="^",
+                       edgecolor="white", linewidth=.7, alpha=.9,
+                       label=None if (~red).any() else MASK_FAMILY_SHORT[fam],
+                       zorder=3)
+
+    xs = np.array([v for d in pts.values() for v in d["x"]])
+    ys = np.array([v for d in pts.values() for v in d["y"]])
+    n_red = sum(sum(d["redesign"]) for d in pts.values())
+    if xs.size > 2:
         r = float(np.corrcoef(xs, ys)[0, 1])
-        ax.annotate(f"Pearson r = {r:+.2f}  (n = {len(xs)})",
-                    xy=(.03, .95), xycoords="axes fraction", fontsize=7.5, color=INK2,
-                    va="top")
-    ax.set_xlabel("ProteinMPNN score  (lower is better)")
+        ax.annotate(f"Pearson r = {r:+.2f}   n = {xs.size}"
+                    f"  ({xs.size - n_red} library, {n_red} redesigns)",
+                    xy=(.02, .96), xycoords="axes fraction", fontsize=7.5,
+                    color=INK2, va="top")
+
+    handles, labels = ax.get_legend_handles_labels()
+    shape = [plt.Line2D([], [], marker=m, ls="none", color=INK3, ms=5.4,
+                        markeredgecolor="white", markeredgewidth=.7, label=t)
+             for m, t in (("o", "library construct"), ("^", "ProteinMPNN redesign"))]
+    leg = ax.legend(handles + shape, labels + [h.get_label() for h in shape],
+                    fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+                    frameon=False, handletextpad=.5, labelspacing=.65,
+                    borderaxespad=0)
+    leg.set_title("mask family", prop={"size": 7.5, "weight": "semibold"})
+    leg._legend_box.align = "left"
+
+    # the spread belongs in the caption, not over the points it describes
+    ax.set_xlabel("ProteinMPNN score for the mask  (lower is better)")
     ax.set_ylabel("paratope occluded  (%)")
-    ax.legend(fontsize=6.5, loc="best", ncol=2)
     return _save(fig, "redesign_score_vs_occlusion")
 
 

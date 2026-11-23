@@ -1,0 +1,2793 @@
+{
+  "method": "ProteinMPNN --score_only over the mask positions, mean of 20 decoding orders, nanobody and linker fixed",
+  "n_orders": 20,
+  "n_scored": 348,
+  "note": "the same span stage 07 designs into, so library constructs and redesigns are measured on one scale. Reported as a mean with its spread because a single decoding order carries a standard deviation of roughly 0.03 to 0.05.",
+  "scores": {
+    "epi_both_cn01": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.5564542174339295,
+      "mask_score_sd": 0.02461798569268844,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn01_n12": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.6988216280937194,
+      "mask_score_sd": 0.045185221389274756,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn01_n16": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.494294011592865,
+      "mask_score_sd": 0.02736043250087557,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn01_n20": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.550084912776947,
+      "mask_score_sd": 0.043679584426096915,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn01_n28": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.8172980427742003,
+      "mask_score_sd": 0.04105396411172468,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn01_n32": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.685411608219147,
+      "mask_score_sd": 0.029930987452708568,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn02": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.674503231048584,
+      "mask_score_sd": 0.03460900526001106,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn03": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.6060259103775025,
+      "mask_score_sd": 0.019718465378262905,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_cn04": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.6436383962631225,
+      "mask_score_sd": 0.03628288522682405,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_gs": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.705459380149841,
+      "mask_score_sd": 0.029828796028457946,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_gs_n12": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.588278126716614,
+      "mask_score_sd": 0.03156228895011661,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_gs_n16": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.7139684438705443,
+      "mask_score_sd": 0.0541902821543696,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_gs_n20": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.7360132336616516,
+      "mask_score_sd": 0.03486471225708139,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_gs_n28": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.800282347202301,
+      "mask_score_sd": 0.0514179049791636,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_gs_n32": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.6749146699905397,
+      "mask_score_sd": 0.03719166997336128,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_scram": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.811149263381958,
+      "mask_score_sd": 0.05375884825311309,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_scram_n12": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.2754678606986998,
+      "mask_score_sd": 0.02177612163046623,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_scram_n16": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.4121554255485536,
+      "mask_score_sd": 0.022089796131526823,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_scram_n20": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.391992211341858,
+      "mask_score_sd": 0.016655410283188177,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_scram_n28": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.416190731525421,
+      "mask_score_sd": 0.04565622769754999,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_both_ctrl_scram_n32": {
+      "mask": "epi_both",
+      "mask_residues": 24,
+      "mask_score": 2.8312212944030763,
+      "mask_score_sd": 0.04275660613240096,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn01": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 2.067600631713867,
+      "mask_score_sd": 0.023936273274632647,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn01_n12": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 2.0891273021698,
+      "mask_score_sd": 0.030430467446825885,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn01_n16": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.8994024753570558,
+      "mask_score_sd": 0.024712700718865086,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn01_n20": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 2.299781894683838,
+      "mask_score_sd": 0.04157565771352716,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn01_n28": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.8060382723808288,
+      "mask_score_sd": 0.10348602389304558,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn01_n32": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.9974405884742736,
+      "mask_score_sd": 0.07051885500839407,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn02": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.9917815387248994,
+      "mask_score_sd": 0.07293531291687053,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn03": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 2.0638102889060974,
+      "mask_score_sd": 0.060154216340109444,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_cn04": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 2.2901708364486693,
+      "mask_score_sd": 0.03363942906629447,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_gs": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.7868263959884643,
+      "mask_score_sd": 0.10206561521079313,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_gs_n12": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.8540715634822846,
+      "mask_score_sd": 0.11151991173566818,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_gs_n16": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.9256164312362671,
+      "mask_score_sd": 0.08150601097350714,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_gs_n20": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 2.0558256685733793,
+      "mask_score_sd": 0.038033114430740235,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_gs_n28": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.7611604928970337,
+      "mask_score_sd": 0.0700289769873014,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_gs_n32": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.728750604391098,
+      "mask_score_sd": 0.06895685096043258,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_scram": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.8977908611297607,
+      "mask_score_sd": 0.019937221571557983,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_scram_n12": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.7489229202270509,
+      "mask_score_sd": 0.029842142876786534,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_scram_n16": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.769309538602829,
+      "mask_score_sd": 0.02004428332936903,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_scram_n20": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.5386285066604615,
+      "mask_score_sd": 0.023963613456729902,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_scram_n28": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.7495630860328675,
+      "mask_score_sd": 0.10470339717236878,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ctrl_scram_n32": {
+      "mask": "epi_core",
+      "mask_residues": 12,
+      "mask_score": 1.8559694230556487,
+      "mask_score_sd": 0.07932211595164773,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.8903139114379883,
+      "mask_score_sd": 0.057946712414623146,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn01_n12": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.9670922458171844,
+      "mask_score_sd": 0.03257968580250895,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn01_n16": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.9541762351989747,
+      "mask_score_sd": 0.05241463569071116,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn01_n20": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.904502421617508,
+      "mask_score_sd": 0.05936776790169549,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn01_n28": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.8476390779018401,
+      "mask_score_sd": 0.0637451996330737,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn01_n32": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.8766268193721771,
+      "mask_score_sd": 0.04665114448181947,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn02": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.7651590406894684,
+      "mask_score_sd": 0.04426508216611785,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn03": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 2.018327409029007,
+      "mask_score_sd": 0.04441064862491858,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_cn04": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.8711272180080414,
+      "mask_score_sd": 0.04670375139818982,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_gs": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.8921959459781648,
+      "mask_score_sd": 0.04424402023524024,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_gs_n12": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.9815405309200287,
+      "mask_score_sd": 0.05580377672604649,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_gs_n16": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 2.0314903795719146,
+      "mask_score_sd": 0.07061916065905079,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_gs_n20": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.8682491540908814,
+      "mask_score_sd": 0.04774994725256036,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_gs_n28": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.782617872953415,
+      "mask_score_sd": 0.037942682612890855,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_gs_n32": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.797576653957367,
+      "mask_score_sd": 0.05250178326565143,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_scram": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.6901981115341187,
+      "mask_score_sd": 0.05981511465512691,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_scram_n12": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.7515477895736695,
+      "mask_score_sd": 0.043370870669997,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_scram_n16": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.750153124332428,
+      "mask_score_sd": 0.034659675059164514,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_scram_n20": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.7225593447685241,
+      "mask_score_sd": 0.043190477131329306,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_scram_n28": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.7786683201789857,
+      "mask_score_sd": 0.03612618208091284,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext2_ctrl_scram_n32": {
+      "mask": "epi_core_ext2",
+      "mask_residues": 16,
+      "mask_score": 1.898981076478958,
+      "mask_score_sd": 0.02718761991895668,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.369406747817993,
+      "mask_score_sd": 0.050456870160161656,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn01_n12": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.072125494480133,
+      "mask_score_sd": 0.0559179544229267,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn01_n16": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.3991543292999267,
+      "mask_score_sd": 0.04824383400419148,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn01_n20": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.2560348987579344,
+      "mask_score_sd": 0.059906168779031904,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn01_n28": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.1761284708976745,
+      "mask_score_sd": 0.04530521018003892,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn01_n32": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.099597764015198,
+      "mask_score_sd": 0.024626938841057155,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn02": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.064805829524994,
+      "mask_score_sd": 0.0383824051903528,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn03": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.381531810760498,
+      "mask_score_sd": 0.03817357568254466,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_cn04": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.331994414329529,
+      "mask_score_sd": 0.03166935874492423,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_gs": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.392260432243347,
+      "mask_score_sd": 0.03441982005016774,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_gs_n12": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.400072681903839,
+      "mask_score_sd": 0.02813936974023667,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_gs_n16": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.396118402481079,
+      "mask_score_sd": 0.031021669746797865,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_gs_n20": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.3610010981559753,
+      "mask_score_sd": 0.028875636518683738,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_gs_n28": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.3513916969299316,
+      "mask_score_sd": 0.04590013874591054,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_gs_n32": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.2799791932106017,
+      "mask_score_sd": 0.0638707679505384,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_scram": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.154088532924652,
+      "mask_score_sd": 0.033705743430354713,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_scram_n12": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.0840502083301544,
+      "mask_score_sd": 0.05414654831295763,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_scram_n16": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.0786202907562257,
+      "mask_score_sd": 0.0373697437668754,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_scram_n20": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.159938561916351,
+      "mask_score_sd": 0.029880005392485243,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_scram_n28": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.1527905821800233,
+      "mask_score_sd": 0.03320898464537923,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_ext4_ctrl_scram_n32": {
+      "mask": "epi_core_ext4",
+      "mask_residues": 20,
+      "mask_score": 2.1792967319488525,
+      "mask_score_sd": 0.059938410061841564,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn01": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.691803014278412,
+      "mask_score_sd": 0.012427337793786825,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn01_n12": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.5686003804206847,
+      "mask_score_sd": 0.016345216282593163,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn01_n16": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.4885053038597107,
+      "mask_score_sd": 0.019996859382806327,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn01_n20": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.6773275256156923,
+      "mask_score_sd": 0.016889814109944907,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn01_n28": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.8952738523483275,
+      "mask_score_sd": 0.020390930914239942,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn01_n32": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.8992252349853516,
+      "mask_score_sd": 0.024955963177832493,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn02": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.674364912509918,
+      "mask_score_sd": 0.013165575559311436,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn03": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.626003634929657,
+      "mask_score_sd": 0.025503423395276056,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_cn04": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.574452745914459,
+      "mask_score_sd": 0.027889746181753817,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_gs": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.685844826698303,
+      "mask_score_sd": 0.02399693509748666,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_gs_n12": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.734772872924805,
+      "mask_score_sd": 0.03374364086766867,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_gs_n16": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.518842315673828,
+      "mask_score_sd": 0.019556821371980945,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_gs_n20": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.763150715827942,
+      "mask_score_sd": 0.033375786893020724,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_gs_n28": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.7085901260375977,
+      "mask_score_sd": 0.018694921774020063,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_gs_n32": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.7134448170661924,
+      "mask_score_sd": 0.020923181966377952,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_scram": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.6110448956489565,
+      "mask_score_sd": 0.03087398909185135,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_scram_n12": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.3458082556724547,
+      "mask_score_sd": 0.025726259519685386,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_scram_n16": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.635263812541962,
+      "mask_score_sd": 0.02035223680405677,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_scram_n20": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.6250208616256714,
+      "mask_score_sd": 0.01910838413665288,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_scram_n28": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.8361296892166137,
+      "mask_score_sd": 0.02546731474365831,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_half_ctrl_scram_n32": {
+      "mask": "epi_core_half",
+      "mask_residues": 6,
+      "mask_score": 2.6803398728370667,
+      "mask_score_sd": 0.026962298875235387,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.5419615626335146,
+      "mask_score_sd": 0.04022502211325943,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn01_n12": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.743835616111755,
+      "mask_score_sd": 0.02093694337362346,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn01_n16": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.3798065304756166,
+      "mask_score_sd": 0.012697323321520858,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn01_n20": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.491733396053314,
+      "mask_score_sd": 0.019554740831414345,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn01_n28": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.1612351179122924,
+      "mask_score_sd": 0.01956422007273471,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn01_n32": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.518250560760498,
+      "mask_score_sd": 0.018667767375399633,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn02": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.4664494514465334,
+      "mask_score_sd": 0.020083417401900745,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn03": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.706378734111786,
+      "mask_score_sd": 0.021429623341527447,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_cn04": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.420983147621155,
+      "mask_score_sd": 0.016818235990456093,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_gs": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.590606355667114,
+      "mask_score_sd": 0.01576521415039019,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_gs_n12": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.5706141710281374,
+      "mask_score_sd": 0.011924500289341364,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_gs_n16": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.623492705821991,
+      "mask_score_sd": 0.017585023102241856,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_gs_n20": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.497655522823334,
+      "mask_score_sd": 0.023320043720079762,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_gs_n28": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.702375817298889,
+      "mask_score_sd": 0.01954330638955986,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_gs_n32": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.5941450715065004,
+      "mask_score_sd": 0.020814554846795834,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_scram": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.385332977771759,
+      "mask_score_sd": 0.028520618227541303,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_scram_n12": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.309744822978973,
+      "mask_score_sd": 0.020399421027360268,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_scram_n16": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.52465683221817,
+      "mask_score_sd": 0.022875377891563988,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_scram_n20": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.505719518661499,
+      "mask_score_sd": 0.013399863798616912,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_scram_n28": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.5783434748649596,
+      "mask_score_sd": 0.025157077203274064,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_noCys_ctrl_scram_n32": {
+      "mask": "epi_core_noCys",
+      "mask_residues": 12,
+      "mask_score": 2.564316463470459,
+      "mask_score_sd": 0.021746823739339595,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn01": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.788659656047821,
+      "mask_score_sd": 0.028358457587648114,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn01_n12": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.9853394508361815,
+      "mask_score_sd": 0.06795805960465061,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn01_n16": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.958157742023468,
+      "mask_score_sd": 0.027396292169292364,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn01_n20": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.9754697918891906,
+      "mask_score_sd": 0.029585360654363978,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn01_n28": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.878891170024872,
+      "mask_score_sd": 0.028839854859290946,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn01_n32": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.7606181025505068,
+      "mask_score_sd": 0.03524415843641103,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn02": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.9044665455818177,
+      "mask_score_sd": 0.02127714125436449,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn03": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 3.0101948857307432,
+      "mask_score_sd": 0.02976903916982656,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_cn04": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.9906360268592835,
+      "mask_score_sd": 0.029789311372971593,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_gs": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.7147900342941282,
+      "mask_score_sd": 0.026128380092636305,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_gs_n12": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.8591074705123902,
+      "mask_score_sd": 0.03219077515695285,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_gs_n16": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.7072091460227967,
+      "mask_score_sd": 0.02476687163020339,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_gs_n20": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.575825881958008,
+      "mask_score_sd": 0.042575586458206915,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_gs_n28": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.7520306587219237,
+      "mask_score_sd": 0.02280240972381016,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_gs_n32": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 3.098905098438263,
+      "mask_score_sd": 0.02584264504914623,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_scram": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.801263165473938,
+      "mask_score_sd": 0.08739290975425486,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_scram_n12": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.901261055469513,
+      "mask_score_sd": 0.027187534118548667,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_scram_n16": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.9137503504753113,
+      "mask_score_sd": 0.02683640037552552,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_scram_n20": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.8846475958824156,
+      "mask_score_sd": 0.037843850171673236,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_scram_n28": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.965628671646118,
+      "mask_score_sd": 0.047633612098940556,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_core_scram_ctrl_scram_n32": {
+      "mask": "epi_core_scram",
+      "mask_residues": 12,
+      "mask_score": 2.8969291925430296,
+      "mask_score_sd": 0.0376157873458423,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn01": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.337208354473114,
+      "mask_score_sd": 0.028528280220384655,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn01_n12": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.221325635910034,
+      "mask_score_sd": 0.03456302977015361,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn01_n16": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.317143404483795,
+      "mask_score_sd": 0.023258172656020253,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn01_n20": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.2737120628356933,
+      "mask_score_sd": 0.03150367316189992,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn01_n28": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.3463199138641357,
+      "mask_score_sd": 0.029928727864706493,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn01_n32": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.380026078224182,
+      "mask_score_sd": 0.034559499650071046,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn02": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.2644595742225646,
+      "mask_score_sd": 0.030134020800249194,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn03": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.3176650762557984,
+      "mask_score_sd": 0.028669401237025747,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_cn04": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.356849789619446,
+      "mask_score_sd": 0.0401531678224764,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_gs": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.3975881338119507,
+      "mask_score_sd": 0.03667728058161585,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_gs_n12": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.4622472286224366,
+      "mask_score_sd": 0.03325498245573435,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_gs_n16": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.4323315024375916,
+      "mask_score_sd": 0.029031749100577407,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_gs_n20": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.51995986700058,
+      "mask_score_sd": 0.029343004931564817,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_gs_n28": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.48929877281189,
+      "mask_score_sd": 0.02914472675925609,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_gs_n32": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.474542224407196,
+      "mask_score_sd": 0.02097643970340792,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_scram": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.3212987065315245,
+      "mask_score_sd": 0.02739220306631901,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_scram_n12": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.356357181072235,
+      "mask_score_sd": 0.030512687271318888,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_scram_n16": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.3067867517471314,
+      "mask_score_sd": 0.03295648623307946,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_scram_n20": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.301871430873871,
+      "mask_score_sd": 0.033348429495934716,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_scram_n28": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.2464963793754578,
+      "mask_score_sd": 0.03274654425169495,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_face2_ctrl_scram_n32": {
+      "mask": "epi_face2",
+      "mask_residues": 9,
+      "mask_score": 3.280565559864044,
+      "mask_score_sd": 0.03243565051774993,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn01": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9987091422080994,
+      "mask_score_sd": 0.017618275766293205,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn01_n12": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 3.091997528076172,
+      "mask_score_sd": 0.02540430049646104,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn01_n16": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 3.02794953584671,
+      "mask_score_sd": 0.022465896902958533,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn01_n20": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9711062908172607,
+      "mask_score_sd": 0.022054726885132537,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn01_n28": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 3.015524387359619,
+      "mask_score_sd": 0.01758373489631237,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn01_n32": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9977048873901366,
+      "mask_score_sd": 0.015691112170870825,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn02": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.8944573402404785,
+      "mask_score_sd": 0.01926185082603175,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn03": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9096160531044006,
+      "mask_score_sd": 0.020428473626093603,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_cn04": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.955821931362152,
+      "mask_score_sd": 0.02266728638024957,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_gs": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 3.010039210319519,
+      "mask_score_sd": 0.028444318972701423,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_gs_n12": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9594646096229553,
+      "mask_score_sd": 0.026331157326276004,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_gs_n16": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.976004123687744,
+      "mask_score_sd": 0.02935935025185853,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_gs_n20": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9899648308753966,
+      "mask_score_sd": 0.02297128878805995,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_gs_n28": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.992715907096863,
+      "mask_score_sd": 0.018584570699087588,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_gs_n32": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9428525805473327,
+      "mask_score_sd": 0.020333626986985893,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_scram": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 3.0338040590286255,
+      "mask_score_sd": 0.017748256322351948,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_scram_n12": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.8882373929023744,
+      "mask_score_sd": 0.018084365656350968,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_scram_n16": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.936265301704407,
+      "mask_score_sd": 0.038354814239748486,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_scram_n20": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.979749619960785,
+      "mask_score_sd": 0.027954566788275008,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_scram_n28": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9882745027542112,
+      "mask_score_sd": 0.024630454543599863,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub01_ctrl_scram_n32": {
+      "mask": "epi_sub01",
+      "mask_residues": 12,
+      "mask_score": 2.9938371181488037,
+      "mask_score_sd": 0.02033205150746179,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn01": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.863404381275177,
+      "mask_score_sd": 0.028482433295303523,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn01_n12": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.960152304172516,
+      "mask_score_sd": 0.027709388368941323,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn01_n16": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.074979841709137,
+      "mask_score_sd": 0.015708101747891785,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn01_n20": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.030295956134796,
+      "mask_score_sd": 0.029806540920890114,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn01_n28": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.7536753535270693,
+      "mask_score_sd": 0.026705437587727872,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn01_n32": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.053133749961853,
+      "mask_score_sd": 0.023239980707542834,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn02": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.913274347782135,
+      "mask_score_sd": 0.014101205067965078,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn03": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.9186978578567504,
+      "mask_score_sd": 0.028839071850384406,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_cn04": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.0278802037239076,
+      "mask_score_sd": 0.024008593124286607,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_gs": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.9427809357643127,
+      "mask_score_sd": 0.020822783829038717,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_gs_n12": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.974293124675751,
+      "mask_score_sd": 0.026957456026928086,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_gs_n16": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.0076748609542845,
+      "mask_score_sd": 0.017821549118373043,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_gs_n20": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.0435836791992186,
+      "mask_score_sd": 0.022477894827558534,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_gs_n28": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.031243348121643,
+      "mask_score_sd": 0.031915668355961206,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_gs_n32": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.0117172956466676,
+      "mask_score_sd": 0.023074487006073764,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_scram": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.8700870990753176,
+      "mask_score_sd": 0.027122779308052347,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_scram_n12": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.966344380378723,
+      "mask_score_sd": 0.02271740103272431,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_scram_n16": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.9609881162643434,
+      "mask_score_sd": 0.042915575047347755,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_scram_n20": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 2.9841086864471436,
+      "mask_score_sd": 0.03138838729102318,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_scram_n28": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.0226001739501953,
+      "mask_score_sd": 0.020473054161355326,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub02_ctrl_scram_n32": {
+      "mask": "epi_sub02",
+      "mask_residues": 12,
+      "mask_score": 3.0444965720176698,
+      "mask_score_sd": 0.02596433575370334,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn01": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.95463764667511,
+      "mask_score_sd": 0.02152995856493852,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn01_n12": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.9813966155052185,
+      "mask_score_sd": 0.034345201869211986,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn01_n16": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.0593570351600645,
+      "mask_score_sd": 0.04177622161934122,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn01_n20": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.0982422709465025,
+      "mask_score_sd": 0.028233222552642205,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn01_n28": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.89986492395401,
+      "mask_score_sd": 0.01969843411429397,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn01_n32": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.0211501359939574,
+      "mask_score_sd": 0.01875323143522807,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn02": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.872632074356079,
+      "mask_score_sd": 0.02377440548518214,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn03": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.9335349678993223,
+      "mask_score_sd": 0.022232127430652303,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_cn04": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.9980143308639526,
+      "mask_score_sd": 0.02346147436619293,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_gs": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.042916810512543,
+      "mask_score_sd": 0.017118890747123073,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_gs_n12": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.072382390499115,
+      "mask_score_sd": 0.02816860320389991,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_gs_n16": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.037403678894043,
+      "mask_score_sd": 0.019085263552250566,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_gs_n20": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.102652132511139,
+      "mask_score_sd": 0.01623341893007148,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_gs_n28": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.149125576019287,
+      "mask_score_sd": 0.018571020089418223,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_gs_n32": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.078072154521942,
+      "mask_score_sd": 0.018820687639760667,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_scram": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.9686015486717223,
+      "mask_score_sd": 0.024173587072236945,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_scram_n12": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.0828662514686584,
+      "mask_score_sd": 0.03297637136572378,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_scram_n16": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.917293608188629,
+      "mask_score_sd": 0.03955584422593367,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_scram_n20": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.0331198811531066,
+      "mask_score_sd": 0.0261520999222453,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_scram_n28": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 2.965770936012268,
+      "mask_score_sd": 0.01531182451592075,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "epi_sub03_ctrl_scram_n32": {
+      "mask": "epi_sub03",
+      "mask_residues": 12,
+      "mask_score": 3.079204249382019,
+      "mask_score_sd": 0.017339648805883828,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "mpnn00_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.7071639835834502,
+      "mask_score_sd": 0.017267851385202874,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.026233023405075,
+      "mask_score_sd": 0.028915956550113985,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 2.1813759088516234,
+      "mask_score_sd": 0.022654593781715603,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.6042601644992829,
+      "mask_score_sd": 0.02693727139894009,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.1910585343837738,
+      "mask_score_sd": 0.025852775971487385,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 0.9898597180843354,
+      "mask_score_sd": 0.015143232579007161,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.5704487442970276,
+      "mask_score_sd": 0.02032433676749824,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.8418784439563751,
+      "mask_score_sd": 0.02802756749937024,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.055314737558365,
+      "mask_score_sd": 0.024146624943819462,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.028133261203766,
+      "mask_score_sd": 0.010432619676264153,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 0.9990689843893051,
+      "mask_score_sd": 0.011541628660479574,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn00_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.76424543261528,
+      "mask_score_sd": 0.04313320488560553,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.8693244755268097,
+      "mask_score_sd": 0.015447180202489169,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.1492541670799254,
+      "mask_score_sd": 0.03143371889237186,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 1.551091331243515,
+      "mask_score_sd": 0.03604238258878346,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.5027108252048493,
+      "mask_score_sd": 0.03060092539228585,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.7068682253360747,
+      "mask_score_sd": 0.04455075562120076,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.0916876375675202,
+      "mask_score_sd": 0.009491632131291065,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.669236606359482,
+      "mask_score_sd": 0.01854359866587673,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.884542977809906,
+      "mask_score_sd": 0.02119371076829721,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.0029432475566864,
+      "mask_score_sd": 0.015170072695153912,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.1789705812931062,
+      "mask_score_sd": 0.012384092423452182,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.161895501613617,
+      "mask_score_sd": 0.012038739984633645,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn01_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.136396074295044,
+      "mask_score_sd": 0.054947620288991306,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.6628697514533997,
+      "mask_score_sd": 0.02212066293108595,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.1064589619636536,
+      "mask_score_sd": 0.027899777772868277,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 2.3151981353759767,
+      "mask_score_sd": 0.03208321408405776,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.2224137723445891,
+      "mask_score_sd": 0.05115626802937924,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.2922659635543823,
+      "mask_score_sd": 0.019913824075691446,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.299554044008255,
+      "mask_score_sd": 0.022099953858408263,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.207322645187378,
+      "mask_score_sd": 0.02401482252468943,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.8216085076332091,
+      "mask_score_sd": 0.026778919531321443,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.425335705280304,
+      "mask_score_sd": 0.02111660459397102,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.6195425808429718,
+      "mask_score_sd": 0.031146243135366233,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.195685076713562,
+      "mask_score_sd": 0.016148714335325626,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn02_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.9368456304073334,
+      "mask_score_sd": 0.05200670380071215,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.7259794235229493,
+      "mask_score_sd": 0.022018677630213503,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.3640828371047973,
+      "mask_score_sd": 0.03595359231113833,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 2.115108847618103,
+      "mask_score_sd": 0.024973582481835576,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.4061481177806854,
+      "mask_score_sd": 0.02040523829811279,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.0593473672866822,
+      "mask_score_sd": 0.019462165959578705,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.3096707582473754,
+      "mask_score_sd": 0.034618405466628054,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.8063875913619996,
+      "mask_score_sd": 0.022478370282695597,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.9353190958499908,
+      "mask_score_sd": 0.04493093306447563,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.0731277167797089,
+      "mask_score_sd": 0.015926952067296173,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.4947316646575928,
+      "mask_score_sd": 0.026318601433553225,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.3024367690086365,
+      "mask_score_sd": 0.020977733502374408,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn03_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.9472069919109345,
+      "mask_score_sd": 0.03576973477479297,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.6691738486289978,
+      "mask_score_sd": 0.01837728143622153,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.1438959360122682,
+      "mask_score_sd": 0.017149307648453557,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 1.9418374061584474,
+      "mask_score_sd": 0.047152127423976495,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.396798974275589,
+      "mask_score_sd": 0.05513972943060219,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.3786676228046417,
+      "mask_score_sd": 0.04502423008546161,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.3435661613941192,
+      "mask_score_sd": 0.02669223541729635,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.2297766089439393,
+      "mask_score_sd": 0.014301924174642796,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.6859761118888854,
+      "mask_score_sd": 0.031058808392731976,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.4373393774032592,
+      "mask_score_sd": 0.01909234979762963,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.4416978299617766,
+      "mask_score_sd": 0.015997150565329746,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.4090886652469634,
+      "mask_score_sd": 0.018134390635310815,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn04_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.0157917380332946,
+      "mask_score_sd": 0.0459809653760093,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.8431501686573029,
+      "mask_score_sd": 0.013786199481017156,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.410642111301422,
+      "mask_score_sd": 0.025215006485426458,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 1.8141313374042511,
+      "mask_score_sd": 0.06407964702461885,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.0791973233222962,
+      "mask_score_sd": 0.024938007173101774,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.4428840577602386,
+      "mask_score_sd": 0.027381842143154617,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.3262633204460144,
+      "mask_score_sd": 0.01627703667993329,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.4653509318828584,
+      "mask_score_sd": 0.022291121864848457,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 2.0531368494033813,
+      "mask_score_sd": 0.02902603263420503,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.1846397280693055,
+      "mask_score_sd": 0.018557392095790444,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.7028318166732788,
+      "mask_score_sd": 0.03342020347282659,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.3549917757511138,
+      "mask_score_sd": 0.013261702618754157,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn05_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.200904929637909,
+      "mask_score_sd": 0.04532490356311873,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 2.064659059047699,
+      "mask_score_sd": 0.013293747074819486,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.3368977665901185,
+      "mask_score_sd": 0.028721324353953928,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 1.9871568083763123,
+      "mask_score_sd": 0.024234625276099507,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.2814144372940064,
+      "mask_score_sd": 0.020416811750122346,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.6663523197174073,
+      "mask_score_sd": 0.036076059616815724,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.071304476261139,
+      "mask_score_sd": 0.015032201080363516,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.6296093881130218,
+      "mask_score_sd": 0.02010364738250588,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.9707382440567016,
+      "mask_score_sd": 0.04050441886136885,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.5211670458316804,
+      "mask_score_sd": 0.025528343623224033,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.4885563492774962,
+      "mask_score_sd": 0.02784380700219308,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.0836638331413269,
+      "mask_score_sd": 0.014433366970234238,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn06_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.9886577427387238,
+      "mask_score_sd": 0.054944902256477815,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_both_cn01": {
+      "mask": "epi_both_cn01",
+      "mask_residues": 24,
+      "mask_score": 1.7582613229751587,
+      "mask_score_sd": 0.023968845500383338,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_core_cn01": {
+      "mask": "epi_core_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.5348650336265566,
+      "mask_score_sd": 0.024207860690300224,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_core_ext2_cn01": {
+      "mask": "epi_core_ext2_cn01",
+      "mask_residues": 16,
+      "mask_score": 2.144776725769043,
+      "mask_score_sd": 0.0242724279243828,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_core_ext4_cn01": {
+      "mask": "epi_core_ext4_cn01",
+      "mask_residues": 20,
+      "mask_score": 1.4888047456741333,
+      "mask_score_sd": 0.04273362855617078,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_core_half_cn01": {
+      "mask": "epi_core_half_cn01",
+      "mask_residues": 6,
+      "mask_score": 1.2921500027179718,
+      "mask_score_sd": 0.03603371319562338,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_core_noCys_cn01": {
+      "mask": "epi_core_noCys_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.2585421085357666,
+      "mask_score_sd": 0.024344542999512005,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_core_scram_cn01": {
+      "mask": "epi_core_scram_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.5517416596412659,
+      "mask_score_sd": 0.01664897334197161,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_face2_cn01": {
+      "mask": "epi_face2_cn01",
+      "mask_residues": 9,
+      "mask_score": 1.7012607336044312,
+      "mask_score_sd": 0.014183773602926185,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_sub01_cn01": {
+      "mask": "epi_sub01_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.1582564055919646,
+      "mask_score_sd": 0.023095583811241018,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_sub02_cn01": {
+      "mask": "epi_sub02_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.5857391476631164,
+      "mask_score_sd": 0.02111100305972444,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_epi_sub03_cn01": {
+      "mask": "epi_sub03_cn01",
+      "mask_residues": 12,
+      "mask_score": 1.42107293009758,
+      "mask_score_sd": 0.020839995948896427,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "mpnn07_polyG_cn01": {
+      "mask": "polyG_cn01",
+      "mask_residues": 12,
+      "mask_score": 2.0737266540527344,
+      "mask_score_sd": 0.04632084497893192,
+      "n_orders": 20,
+      "source": "redesign"
+    },
+    "polyG_cn01": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.181414669752121,
+      "mask_score_sd": 0.05609784521465076,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn01_n12": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.4877121210098267,
+      "mask_score_sd": 0.0646153206643045,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn01_n16": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.3041940450668335,
+      "mask_score_sd": 0.05728328102844092,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn01_n20": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.45339635014534,
+      "mask_score_sd": 0.04968857803698974,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn01_n28": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.627230054140091,
+      "mask_score_sd": 0.058370582109298665,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn01_n32": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.5380409061908722,
+      "mask_score_sd": 0.048359155727009426,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn02": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 0.9518456488847733,
+      "mask_score_sd": 0.059330717896445534,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn03": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.309570038318634,
+      "mask_score_sd": 0.02790433160441774,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_cn04": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.258720201253891,
+      "mask_score_sd": 0.03696768644824001,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_gs": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.0815811932086945,
+      "mask_score_sd": 0.046368352468122494,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_gs_n12": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.8426584899425507,
+      "mask_score_sd": 0.060034365591619676,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_gs_n16": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.9750065684318543,
+      "mask_score_sd": 0.06755782706469451,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_gs_n20": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.065943291783333,
+      "mask_score_sd": 0.0599984230339804,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_gs_n28": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 0.9932380139827728,
+      "mask_score_sd": 0.05013926225050354,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_gs_n32": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.082179179787636,
+      "mask_score_sd": 0.03999897894555669,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_scram": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.3363117039203645,
+      "mask_score_sd": 0.06093208172696799,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_scram_n12": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.5905888259410859,
+      "mask_score_sd": 0.04067562223189189,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_scram_n16": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.4234346926212311,
+      "mask_score_sd": 0.053124376260864956,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_scram_n20": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.4278795719146729,
+      "mask_score_sd": 0.043182802919143,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_scram_n28": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.3836415648460387,
+      "mask_score_sd": 0.04191790912180258,
+      "n_orders": 20,
+      "source": "library"
+    },
+    "polyG_ctrl_scram_n32": {
+      "mask": "polyG",
+      "mask_residues": 12,
+      "mask_score": 1.3126234233379364,
+      "mask_score_sd": 0.04625822595888776,
+      "n_orders": 20,
+      "source": "library"
+    }
+  },
+  "seconds": 457.8
+}

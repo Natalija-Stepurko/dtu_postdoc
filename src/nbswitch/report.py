@@ -6,6 +6,8 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+from .mask_design import (MASK_FAMILIES, MASK_LABELS, MASK_NOTES,
+                          family_of, family_by_construct)
 from .config import (DOCS, FIGURES, STRUCTURES, DATA, PDB_ID, REPO_URL,
                      NOTEBOOK_URL, load_json)
 
@@ -212,6 +214,11 @@ h4.subh{font-size:1.02rem;margin:32px 0 6px;color:var(--ink)}
 h4.subh span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
   text-transform:uppercase;color:var(--chrome);margin-right:11px}
 h5.subh2{font-size:.95rem;margin:30px 0 4px;color:var(--ink);font-weight:600}
+.note{border:1px solid var(--rule);border-left:3px solid var(--chrome);border-radius:3px;
+  background:var(--panel);padding:13px 18px;margin:16px 0;font-size:.92rem;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note.good{border-left-color:#1F6B4A}
+.note.warn{border-left-color:#C06014}
 .refmask{border:1px solid var(--rule);border-left:3px solid var(--chrome);border-radius:3px;
   background:var(--panel);padding:16px 20px;margin:18px 0}
 .refmask .seq{font-family:var(--mono);font-size:1.32rem;letter-spacing:.07em;
@@ -1016,110 +1023,6 @@ inhibitor</b>
 
 
 
-def scale_section() -> str:
-    """How large the campaign has to be, and how the lab makes it smaller.
-
-    Counts are projections from published hit rates; runtimes are measured on
-    this machine. Both are labelled as such on the page.
-    """
-    W, H = 1120, 352
-    rows = [
-        ("Candidate complexes", 6, 2, "geometry screen: is a terminus clear of the paratope?"),
-        ("Mask backbones", 10000, 10000, "RFdiffusion, per surviving complex"),
-        ("Sequences", 80000, 80000, "ProteinMPNN, 8 per backbone"),
-        ("Fold and developability", 80000, 4000, "ESMFold; filters cut cost, not failure rate"),
-        ("Two-state scoring", 4000, 400, "tethered complex: masked and released"),
-        ("Pareto selection", 400, 30, "diverse, not just top-ranked"),
-        ("Ordered", 30, 3, "first cycle"),
-    ]
-    import math
-    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
-         f'role="img" aria-label="Design funnel">',
-         '<style>'
-         '.n-t{font:600 12.5px Inter,system-ui,sans-serif}'
-         '.n-s{font:11px Inter,system-ui,sans-serif}'
-         '.n-v{font:600 12px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
-         '.n-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
-         '</style>',
-         f'<text x="0" y="13" class="n-h" fill="{CHROME}">'
-         'HOW BIG THE CAMPAIGN HAS TO BE, PER COMPLEX</text>']
-    y, maxw = 32, 560
-    for name, a, b, note in rows:
-        wa = max(4, maxw * math.log10(a + 1) / math.log10(80001))
-        wb = max(4, maxw * math.log10(b + 1) / math.log10(80001))
-        s.append(f'<rect x="250" y="{y}" width="{wa:.0f}" height="20" rx="2" '
-                 f'fill="{SEQ_WASH}"/>')
-        s.append(f'<rect x="250" y="{y}" width="{wb:.0f}" height="20" rx="2" fill="{SEQ}"/>')
-        s.append(f'<text x="242" y="{y+14}" class="n-t" fill="{INK}" '
-                 f'text-anchor="end">{name}</text>')
-        s.append(f'<text x="{250+max(wa,wb)+10}" y="{y+14}" class="n-v" fill="{INK}">'
-                 f'{b:,}</text>')
-        s.append(f'<text x="{250+max(wa,wb)+90}" y="{y+14}" class="n-s" fill="{INK3}">'
-                 f'{note}</text>')
-        y += 30
-    s.append(f'<text x="250" y="{y+14}" class="n-s" fill="{INK3}">'
-             'Pale bar: entering the stage. Solid bar: leaving it. Log scale.</text>')
-    s.append(f'<rect x="0" y="{y+30}" width="{W}" height="56" rx="3" fill="#FFFFFF" '
-             f'stroke="{RULE}"/>')
-    s.append(f'<text x="16" y="{y+52}" class="n-t" fill="{INK}">'
-             'About 660 CPU-hours per complex on eight cores, or roughly 33 GPU-hours.</text>')
-    s.append(f'<text x="16" y="{y+72}" class="n-s" fill="{INK2}">'
-             'Scaled from measured runtimes here: 0.4 s a sequence for ProteinMPNN, 22 s a '
-             'construct for ESMFold, 148 s for a tethered three-chain complex.</text>')
-    s.append("</svg>")
-    funnel = "".join(s)
-
-    cm = _confusion_matrix()
-    return f"""
-<section class="sec">
-<div class="stack"><div class="eyebrow">Beyond the pipeline</div>
-<h2>Taking it to the laboratory</h2>
-<p>Everything above is computational. This section is separate from the pipeline because none of it
-has been done, and none of it is part of the design. It sets out how large the campaign would have
-to be and how the first measurements would be used. The counts come from published hit rates for
-binder design, which for conditional binders are far lower than for ordinary binders, and the
-compute is scaled from runtimes measured on this machine.</p></div>
-<div class="chart wide">{funnel}</div>
-<div class="note"><b>Filtering buys time, not success.</b> The RFdiffusion antibody work reports
-that design success was no higher for filtered than for unfiltered designs. The in-silico stages
-here are therefore sized to make the campaign affordable, not to raise the hit rate. What raises
-the hit rate is the next part.</p></div>
-
-<div class="stack"><h3>Three first, and what they are for</h3>
-<p>The first order is three constructs, and its purpose is diagnosis rather than success. Each
-tells you which stage of the pipeline is wrong:</p></div>
-<div class="scroll"><table><thead><tr><th>measurement</th><th>reads out</th>
-<th>if it fails, the problem is</th></tr></thead><tbody>
-<tr><td>Purification — ÄKTA trace, single band on the gel</td><td>can it be made at all</td>
-<td>the feasibility score: fold, aggregation, developability</td></tr>
-<tr><td>Octet, toxin affinity with the protease absent</td><td>is it masked</td>
-<td>the masking half of the unmasking score</td></tr>
-<tr><td>Octet, toxin affinity with the protease present</td><td>does it activate</td>
-<td>the trigger score, or the release half</td></tr>
-</tbody></table></div>
-<div class="note good"><b>Each failure mode points at a different module.</b> That is why three is
-enough to start: a construct that will not express, one that expresses but never masks, and one
-that masks but never releases are three different diagnoses, and each sends the work back to a
-different part of the pipeline. Two or three cycles of this should give a pipeline that reliably
-proposes three producible, toxin-binding, switching variants.</div>
-
-<div class="stack"><h3>Then twenty to thirty, and the pipeline gets scored</h3>
-<p>Once the loop reliably produces working candidates, the point of a larger batch changes. It is
-no longer about finding a molecule; it is about measuring whether the scores predict anything. With
-twenty to thirty measured constructs, each score can be scored in turn.</p></div>
-<div class="chart wide">{cm}</div>
-<div class="note warn"><b>The batch has to include designs the pipeline rejected.</b> If only
-top-ranked candidates are made, every measurement lands in the left-hand column: TP and FP can be
-counted, so precision is computable, but FN cannot, so recall is not. Spending perhaps a quarter of
-the batch on designs the score rejected is what turns a hit list into a validation set.</div>
-<div class="note"><b>Beyond that, the labels become training data.</b> At around a hundred measured
-constructs the measurements stop being only a scorecard and start being a dataset: a binary label —
-does it switch — against the sequence and structure representations already computed for every
-candidate. That is the point at which a learned scorer can replace a hand-built one, and it is the
-reason the representations are stored for designs that were never made.</div>
-</section>"""
-
-
 def _metrics(tp, fn, fp, tn):
     recall = tp / (tp + fn) if tp + fn else 0.0
     precision = tp / (tp + fp) if tp + fp else 0.0
@@ -1137,28 +1040,35 @@ VALIDATION_SCENARIOS = [
 ]
 
 
-def _confusion_matrix() -> str:
+def validation_matrix() -> str:
+    """Three outcomes from one batch of measured constructs.
+
+    The counts are illustrative and the metrics under them are computed, so
+    the arithmetic cannot drift from the cells above it. Its CSS classes are
+    v- rather than c-: an inline <style> is not scoped to its own svg, and
+    the construct schematic already owns c-.
+    """
     W, H = 1120, 360
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
          f'role="img" aria-label="Validation outcomes">',
          '<style>'
-         '.c-t{font:600 13px Inter,system-ui,sans-serif}'
-         '.c-n{font:600 15px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
-         '.c-k{font:9.5px ui-monospace,monospace;letter-spacing:.06em}'
-         '.c-s{font:11px Inter,system-ui,sans-serif}'
-         '.c-m{font:600 11.5px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
-         '.c-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '.v-t{font:600 13px Inter,system-ui,sans-serif}'
+         '.v-n{font:600 15px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.v-k{font:9.5px ui-monospace,monospace;letter-spacing:.06em}'
+         '.v-s{font:11px Inter,system-ui,sans-serif}'
+         '.v-m{font:600 11.5px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.v-h{font:600 10.5px ui-monospace,monospace;letter-spacing:.14em}'
          '</style>',
-         f'<text x="0" y="13" class="c-h" fill="{CHROME}">'
+         f'<text x="0" y="13" class="v-h" fill="{CHROME}">'
          'WHAT 24 MEASURED CONSTRUCTS SAY ABOUT A SCORE</text>']
     for n, (name, tp, fn, fp, tn, note) in enumerate(VALIDATION_SCENARIOS):
         x = n * 380
         recall, precision, f1 = _metrics(tp, fn, fp, tn)
-        s.append(f'<text x="{x}" y="44" class="c-t" fill="{INK}">{name}</text>')
-        s.append(f'<text x="{x}" y="62" class="c-s" fill="{INK3}">{note}</text>')
-        s.append(f'<text x="{x+121}" y="84" class="c-k" fill="{INK3}" '
+        s.append(f'<text x="{x}" y="44" class="v-t" fill="{INK}">{name}</text>')
+        s.append(f'<text x="{x}" y="62" class="v-s" fill="{INK3}">{note}</text>')
+        s.append(f'<text x="{x+121}" y="84" class="v-k" fill="{INK3}" '
                  'text-anchor="middle">score keeps</text>')
-        s.append(f'<text x="{x+211}" y="84" class="c-k" fill="{INK3}" '
+        s.append(f'<text x="{x+211}" y="84" class="v-k" fill="{INK3}" '
                  'text-anchor="middle">score rejects</text>')
         for val, key, colour, col, row in ((tp, "TP", SEQ, 0, 0), (fn, "FN", STR, 1, 0),
                                            (fp, "FP", STR, 0, 1), (tn, "TN", SEQ, 1, 1)):
@@ -1167,11 +1077,11 @@ def _confusion_matrix() -> str:
             good = key in ("TP", "TN")
             s.append(f'<rect x="{cx}" y="{cy}" width="86" height="60" rx="2" '
                      f'fill="{"#F2F7F6" if good else "#FCF4EC"}" stroke="{RULE}"/>')
-            s.append(f'<text x="{cx+10}" y="{cy+19}" class="c-k" fill="{colour}">{key}</text>')
-            s.append(f'<text x="{cx+10}" y="{cy+47}" class="c-n" fill="{INK}">{val}</text>')
-        s.append(f'<text x="{x+72}" y="{126}" class="c-k" fill="{INK3}" '
+            s.append(f'<text x="{cx+10}" y="{cy+19}" class="v-k" fill="{colour}">{key}</text>')
+            s.append(f'<text x="{cx+10}" y="{cy+47}" class="v-n" fill="{INK}">{val}</text>')
+        s.append(f'<text x="{x+72}" y="{126}" class="v-k" fill="{INK3}" '
                  'text-anchor="end">switches</text>')
-        s.append(f'<text x="{x+72}" y="{190}" class="c-k" fill="{INK3}" '
+        s.append(f'<text x="{x+72}" y="{190}" class="v-k" fill="{INK3}" '
                  'text-anchor="end">does not</text>')
         yy = 240
         for label, value in (("recall", recall), ("precision", precision), ("F1", f1)):
@@ -1179,16 +1089,16 @@ def _confusion_matrix() -> str:
             if bold:
                 s.append(f'<line x1="{x+78}" y1="{yy-15}" x2="{x+254}" y2="{yy-15}" '
                          f'stroke="{RULE}"/>')
-            s.append(f'<text x="{x+78}" y="{yy}" class="c-s" '
+            s.append(f'<text x="{x+78}" y="{yy}" class="v-s" '
                      f'fill="{INK if bold else INK2}">{label}</text>')
-            s.append(f'<text x="{x+254}" y="{yy}" class="c-m" '
+            s.append(f'<text x="{x+254}" y="{yy}" class="v-m" '
                      f'fill="{INK if bold else INK2}" text-anchor="end">{value:.2f}</text>')
             yy += 20
     s.append(f'<rect x="0" y="300" width="{W}" height="54" rx="3" fill="#FFFFFF" '
              f'stroke="{RULE}"/>')
-    s.append(f'<text x="16" y="322" class="c-t" fill="{INK}">'
+    s.append(f'<text x="16" y="322" class="v-t" fill="{INK}">'
              'F1 rises only when recall and precision are high together.</text>')
-    s.append(f'<text x="16" y="342" class="c-s" fill="{INK2}">'
+    s.append(f'<text x="16" y="342" class="v-s" fill="{INK2}">'
              'Both imperfect scorers look defensible on one metric and fail on F1. A score '
              'that keeps almost nothing and one that keeps almost everything are both useless, '
              'and a single headline number hides which failure you have.</text>')
@@ -1714,45 +1624,6 @@ def _wrap(text, width):
     return out
 
 
-MASK_FAMILIES = [
-    ("What part of the antigen is sufficient?", ["epi_core"]),
-    ("Does extending the peptide help?", ["epi_core_ext2", "epi_core_ext4"]),
-    ("Can another contact region contribute?", ["epi_face2", "epi_both"]),
-    ("Can the sequence change and the key contacts stay?",
-     ["epi_sub01", "epi_sub02", "epi_sub03"]),
-    ("Is the disulphide doing work?", ["epi_core_noCys"]),
-    ("Do the designed masks beat controls?",
-     ["epi_core_half", "epi_core_scram", "polyG"]),
-]
-
-#: Human-readable names. The ids stay in the code and in the construct
-#: picker, because that is what the files are called.
-MASK_LABELS = {
-    "epi_core": "Main contact loop",
-    "epi_core_ext2": "Extended, 2 residues each side",
-    "epi_core_ext4": "Extended, 4 residues each side",
-    "epi_face2": "Second contact region",
-    "epi_both": "Both regions, joined",
-    "epi_sub01": "Conservative substitutions I",
-    "epi_sub02": "Conservative substitutions II",
-    "epi_sub03": "Conservative substitutions III",
-    "epi_core_noCys": "Disulphide removed",
-    "epi_core_half": "Truncated control",
-    "epi_core_scram": "Scrambled control",
-    "polyG": "Inert control",
-}
-
-MASK_NOTES = {
-    "epi_core_noCys": "both cysteines to serine",
-    "epi_core_half": "first half of the loop",
-    "epi_core_scram": "same residues, no order",
-    "polyG": "no designed interaction",
-    "epi_sub01": "hotspots and cysteines held",
-    "epi_sub02": "hotspots and cysteines held",
-    "epi_sub03": "hotspots and cysteines held",
-}
-
-
 def mask_blocks(name, m, masks, core="epi_core", face="epi_face2"):
     """Where a mask's residues sit on the antigen, as (position, text) blocks.
 
@@ -1770,6 +1641,213 @@ def mask_blocks(name, m, masks, core="epi_core", face="epi_face2"):
         if a["seq"] + spacer + b["seq"] == m["seq"]:
             return [(a["start"], a["seq"]), (None, spacer), (b["start"], b["seq"])]
     return [(masks[core]["start"], m["seq"])]
+
+
+def construct_schematic(c, free_vhh_len=None):
+    """One assembled construct, end to end, drawn to scale.
+
+    The arithmetic above says how many constructs there are; this says what
+    one of them is. Drawn to scale because the proportions are the point: the
+    mask and linker together are a short N-terminal addition to a nanobody
+    that is most of the molecule, and the protease has to find ten residues
+    inside that.
+    """
+    MASKC, FLANKC, CUTC, VHHC = "#C06014", "#9AA6AE", "#2D5BD1", "#337D79"
+    W, bh = 980, 46
+    m_lo, m_hi = c["mask_range"]
+    l_lo, l_hi = c["linker_range"]
+    v_lo, v_hi = c["vhh_range"]
+    total = v_hi
+    px = lambda n: n * (W - 2) / total
+
+    o = [None,
+         '<style>'
+         '.c-h{font:600 13px Inter,system-ui,sans-serif}'
+         '.c-b{font:12px Inter,system-ui,sans-serif}'
+         '.c-m{font:600 11.5px ui-monospace,monospace}'
+         '.c-n{font:10.5px ui-monospace,monospace}'
+         '</style>']
+
+    def label(x, y, text, cls="c-b", fill=INK2, anchor="start"):
+        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+                 f'text-anchor="{anchor}">{text}</text>')
+
+    y = 26
+    label(0, 14, "N", "c-m", INK)
+    label(W, 14, "C", "c-m", INK, "end")
+    o.append(f'<line x1="11" y1="10" x2="{W - 11}" y2="10" stroke="{INK3}" '
+             f'stroke-width="1" stroke-opacity="0.4"/>')
+
+    segs = [("mask", MASKC, m_lo, m_hi, c.get("mask_seq", "")),
+            ("cleavable linker", FLANKC, l_lo, l_hi, c.get("linker_seq", "")),
+            ("nanobody", VHHC, v_lo, v_hi, "")]
+    for name, colour, lo, hi, _seq in segs:
+        x, w = px(lo - 1), px(hi - lo + 1)
+        o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{bh}" rx="3" '
+                 f'fill="{colour}" fill-opacity="0.18" stroke="{colour}" '
+                 f'stroke-width="1.4"/>')
+        if w > 70:
+            label(x + w / 2, y + 22, name, "c-h", colour, "middle")
+            label(x + w / 2, y + 38, f"{lo}\u2013{hi}, {hi - lo + 1} aa",
+                  "c-n", INK3, "middle")
+
+    # the substrate inside the linker: the ten residues the protease reads
+    sub = c.get("linker_substrate") or ""
+    lseq = c.get("linker_seq") or ""
+    if sub and sub in lseq:
+        off = lseq.index(sub)
+        s_lo, s_hi = l_lo + off, l_lo + off + len(sub) - 1
+        x, w = px(s_lo - 1), px(len(sub))
+        o.append(f'<rect x="{x}" y="{y + 6}" width="{w}" height="{bh - 12}" rx="2" '
+                 f'fill="{CUTC}" fill-opacity="0.9"/>')
+        cx = x + w / 2
+        o.append(f'<line x1="{cx}" y1="{y - 12}" x2="{cx}" y2="{y + 4}" '
+                 f'stroke="{CUTC}" stroke-width="1.2" stroke-dasharray="3 2"/>')
+        label(cx, y - 16, f"protease site, {len(sub)} aa", "c-n", CUTC, "middle")
+
+    y += bh + 30
+    rows = [("mask", c.get("mask", ""), c.get("mask_seq", ""), MASKC),
+            ("linker", c.get("linker_id", ""), lseq, FLANKC)]
+    for name, ident, seq, colour in rows:
+        o.append(f'<rect x="0" y="{y - 11}" width="3" height="14" rx="1.5" fill="{colour}"/>')
+        label(12, y, name, "c-b", INK)
+        label(78, y, ident, "c-n", INK3)
+        label(206, y, seq, "c-m", INK)
+        y += 22
+    o.append(f'<rect x="0" y="{y - 11}" width="3" height="14" rx="1.5" fill="{VHHC}"/>')
+    label(12, y, "nanobody", "c-b", INK)
+    label(206, y,
+          f"{v_hi - v_lo + 1} residues, unchanged in every construct", "c-n", INK3)
+    y += 26
+    label(0, y, f'<tspan class="c-m">{c["id"]}</tspan>  '
+                f'\u00b7  {total} residues, folded as one chain', "c-b", INK3)
+    H = int(y + 10)
+    o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
+            'xmlns="http://www.w3.org/2000/svg" role="img" '
+            'aria-label="One assembled construct, drawn to scale">')
+    o.append("</svg>")
+    return "".join(o)
+
+
+def pipeline_funnel(f) -> str:
+    """What the worked example generated, evaluated and selected.
+
+    The same numbers the table carried, as a shape. A table makes the reader
+    reconstruct where 252 came from and why 348 is not 349; the figure shows
+    two inputs meeting, one structure that is a reference rather than a
+    candidate, and three narrowings.
+    """
+    W = 980
+    ACC, OK = "#2D5BD1", "#1F6B4A"
+    o = [None,
+         '<defs><marker id="fn" viewBox="0 0 10 10" refX="9" refY="5" '
+         'markerWidth="7" markerHeight="7" orient="auto">'
+         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{INK3}"/></marker></defs>',
+         '<style>'
+         '.f-p{font:600 10.5px ui-monospace,monospace;letter-spacing:.16em}'
+         '.f-n{font:600 30px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.f-t{font:600 14.5px Inter,system-ui,sans-serif}'
+         '.f-s{font:12px Inter,system-ui,sans-serif}'
+         '.f-k{font:11px Inter,system-ui,sans-serif}'
+         '</style>']
+
+    def label(x, y, text, cls="f-s", fill=INK2, anchor="start"):
+        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+                 f'text-anchor="{anchor}">{text}</text>')
+
+    def card(x, y, w, h, num, title, sub, over="", accent=INK, fill="#FFFFFF"):
+        o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" '
+                 f'fill="{fill}" stroke="{RULE}" stroke-width="1.2"/>')
+        cx, ty = x + w / 2, y + 24
+        if over:
+            label(cx, ty, over, "f-k", INK3, "middle")
+            ty += 32
+        else:
+            ty += 14
+        label(cx, ty, f"{num:,}", "f-n", accent, "middle")
+        label(cx, ty + 23, title, "f-t", INK, "middle")
+        if sub:
+            label(cx, ty + 42, sub, "f-s", INK3, "middle")
+
+    def arrow(x, y0, y1):
+        o.append(f'<line x1="{x}" y1="{y0}" x2="{x}" y2="{y1}" stroke="{INK3}" '
+                 f'stroke-width="1.2" marker-end="url(#fn)"/>')
+
+    def phase(y, h, text):
+        o.append(f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="8" '
+                 f'fill="#FBFBFA" stroke="{RULE}" stroke-width="1.2"/>')
+        label(W / 2, y + 22, text, "f-p", CHROME, "middle")
+
+    # --- 1 generate -------------------------------------------------------
+    p1h = 346
+    phase(0, p1h, "1 \u00b7 GENERATE")
+    cw, gap = (W - 3 * 26) / 2, 26
+    card(26, 40, cw, 118, f["n_masks"], "Mask sequences",
+         "grafts, variants and controls", "antigen interface", ACC)
+    card(26 + cw + gap, 40, cw, 118, f["n_linkers"], "Linker variants",
+         f"{f['n_motifs']} selected motifs and {f['n_linker_controls']} controls, "
+         "at several lengths",
+         f"CleaveNet \u00b7 {f['n_generated']:,} peptides", ACC)
+    for x in (26 + cw / 2, 26 + cw + gap + cw / 2):
+        o.append(f'<line x1="{x}" y1="158" x2="{x}" y2="174" stroke="{INK3}" '
+                 f'stroke-width="1.2"/>')
+    o.append(f'<line x1="{26 + cw / 2}" y1="174" x2="{26 + cw + gap + cw / 2}" '
+             f'y2="174" stroke="{INK3}" stroke-width="1.2"/>')
+    arrow(W / 2, 174, 190)
+    card(26, 192, W - 52, 66, f["n_pairs"], "mask\u2013linker combinations", "",
+         "", INK)
+    label(W / 2, 246, f"{f['n_masks']} masks \u00d7 {f['n_linkers']} linkers",
+          "f-s", INK3, "middle")
+    arrow(W / 2, 258, 274)
+    card(26, 276, W - 52, 54, f["n_structures"], "", "", "", INK)
+    label(W / 2 + 34, 310, "predicted structures", "f-t", INK, "start")
+    label(W / 2 - 34, 310,
+          f"{f['n_pairs']} constructs + 1 free V\u2095H + {f['n_redesigns']} redesigns",
+          "f-s", INK3, "end")
+
+    # --- 2 evaluate -------------------------------------------------------
+    y = p1h + 24
+    p2h = 166
+    phase(y, p2h, "2 \u00b7 EVALUATE")
+    card(26, y + 36, W - 52, 48, f["n_evaluated"], "", "", "", INK)
+    label(W / 2 + 34, y + 68, "candidate constructs", "f-t", INK, "start")
+    label(W / 2 - 34, y + 68, "the free nanobody is a reference, not a candidate",
+          "f-s", INK3, "end")
+    sw = (W - 52 - 2 * 18) / 3
+    # the coverage is on the figure because a three-box row invites the reading
+    # that some candidates are missing a score. None are.
+    for i, name in enumerate(("structural feasibility", "mask binding",
+                              "linker cleavability")):
+        x = 26 + i * (sw + 18)
+        o.append(f'<rect x="{x}" y="{y + 94}" width="{sw}" height="36" rx="4" '
+                 f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1.2"/>')
+        label(x + sw / 2, y + 112, name, "f-t", ACC, "middle")
+        label(x + sw / 2, y + 126, f"{f['n_evaluated']} of {f['n_evaluated']}",
+              "f-k", INK3, "middle")
+
+    # --- 3 select ---------------------------------------------------------
+    y += p2h + 24
+    p3h = 160
+    phase(y, p3h, "3 \u00b7 SELECT")
+    steps = [(f["n_front"], "nondominated designs", "Pareto optimisation", INK),
+             (f["n_shortlist"], "shortlisted constructs",
+              "balanced scores, one per mask", INK),
+             (f["n_worth"], "for experimental testing", "final complex prediction", OK)]
+    sw = (W - 52 - 2 * 34) / 3
+    for i, (num, title, sub, col) in enumerate(steps):
+        x = 26 + i * (sw + 34)
+        card(x, y + 36, sw, 104, num, title, sub, "", col)
+        if i < len(steps) - 1:
+            ax = x + sw + 6
+            o.append(f'<line x1="{ax}" y1="{y + 88}" x2="{ax + 22}" y2="{y + 88}" '
+                     f'stroke="{INK3}" stroke-width="1.2" marker-end="url(#fn)"/>')
+
+    H = int(y + p3h + 4)
+    o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
+            'xmlns="http://www.w3.org/2000/svg" role="img" '
+            'aria-label="What the worked example generated, evaluated and selected">')
+    o.append("</svg>")
+    return "".join(o)
 
 
 def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
