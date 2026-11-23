@@ -1436,25 +1436,15 @@ folded construct.</b></p></div>
    ("max(0, S<sub>selectivity</sub>)", "from Module 02"), "&times;",
    ("S<sub>extension</sub> &middot; S<sub>exposure</sub> &middot; S<sub>clearance</sub>",
     "calculated in Module 05")])}
-<div class="two">
-<div class="stack">
-<h4 class="subh">Horizontal: sequence recognition</h4>
-<p>One number per cleavage motif, carried over from linker design.</p>
-<div class="eq">selectivity = mean target score &minus; mean off-target score</div>
-<p>Higher is a stronger predicted preference for {CLEAVE_TARGETS} over the
-{R.word(LINKER_GEN['n_off'])} off-target MMPs.</p></div>
-<div class="stack">
-<h4 class="subh">Vertical: structural accessibility</h4>
-<p>One number per construct, measured on its own ESMFold model.</p>
-<p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.</p></div>
-</div>
 <div class="two top">
 <div class="stackfig">
-{chart("cleavability_panel", "Sequence selectivity versus structural accessibility. "
-   "CleaveNet selectivity was calculated during linker design; accessibility was assessed "
-   "separately in each predicted fusion structure. A linker with favourable sequence "
-   "selectivity may still be poorly accessible. One point per construct, coloured by mask "
-   "family.")}
+{chart("cleavability_panel", "Sequence selectivity versus structural accessibility. CleaveNet "
+   "selectivity was calculated during linker design (selectivity = mean target score &minus; "
+   f"mean off-target score). Higher is a stronger predicted preference for {CLEAVE_TARGETS} "
+   f"over the {R.word(LINKER_GEN['n_off'])} off-target MMPs.<br>Accessibility was assessed "
+   "separately in each predicted fusion structure.<br>One number per construct, measured on "
+   "its own ESMFold model, coloured by mask family. The product of the three checks above: "
+   "extension, exposure and clearance, each from 0 to 1.")}
 </div>
 <div class="stackfig">
 {chart("cleavability_components", "The three accessibility requirements and the product "
