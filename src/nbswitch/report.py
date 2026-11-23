@@ -1876,6 +1876,81 @@ def construct_schematic(c, free_vhh_len=None):
     o.append("</svg>")
     return "".join(o)
 
+def accessibility_checks(probe_radius, n_directions, offset) -> str:
+    """The three conditions a protease has to find satisfied, in one row.
+
+    The component plot answers this with four traces over 348 constructs,
+    which is the wrong shape for a reader meeting the idea. Three pictures
+    with three questions carry it faster.
+    """
+    W, H = 980, 158
+    CUT, CHAIN, PROBE = "#2D5BD1", "#9AA6AE", "#0E7C7B"
+    o = [f'<svg viewBox="0 0 {W} {H}" width="100%" '
+         'xmlns="http://www.w3.org/2000/svg" role="img" '
+         'aria-label="The three structural checks on a cleavage site">',
+         '<style>'
+         '.a-h{font:600 9.5px ui-monospace,monospace;letter-spacing:.13em}'
+         '.a-q{font:600 13px Inter,system-ui,sans-serif}'
+         '.a-s{font:11px Inter,system-ui,sans-serif}'
+         '</style>']
+
+    def label(x, y, t, cls="a-s", fill=INK2, anchor="middle"):
+        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+                 f'text-anchor="{anchor}">{t}</text>')
+
+    cw, gap = (W - 2 * 26) / 3, 26
+    panels = [
+        ("EXTENSION", "Extended?",
+         "is the backbone straight enough to lie in a catalytic groove"),
+        ("EXPOSURE", "Exposed?",
+         "is it in solvent rather than packed against the mask or nanobody"),
+        ("CLEARANCE", "Room for a protease?",
+         f"does a {probe_radius:g} \u00c5 sphere fit beside the bond, over "
+         f"{n_directions} directions"),
+    ]
+    for i, (tag, question, note) in enumerate(panels):
+        x = i * (cw + gap)
+        o.append(f'<rect x="{x}" y="0" width="{cw}" height="{H - 2}" rx="5" '
+                 f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1.2"/>')
+        label(x + 16, 20, tag, "a-h", CHROME, "start")
+        cx, cy = x + cw / 2, 62
+        if i == 0:
+            o.append(f'<path d="M {cx-76} {cy+12} q 19 -26 38 0 q 19 26 38 0" '
+                     f'fill="none" stroke="{CHAIN}" stroke-width="3.4" '
+                     f'stroke-linecap="round" opacity="0.5"/>')
+            o.append(f'<line x1="{cx-76}" y1="{cy-14}" x2="{cx+76}" y2="{cy-14}" '
+                     f'stroke="{CUT}" stroke-width="3.4" stroke-linecap="round"/>')
+            label(cx + 84, cy - 10, "yes", "a-s", CUT, "start")
+            label(cx + 84, cy + 16, "no", "a-s", INK3, "start")
+        elif i == 1:
+            o.append(f'<circle cx="{cx-34}" cy="{cy}" r="26" fill="{CHAIN}" '
+                     f'fill-opacity="0.3"/>')
+            o.append(f'<line x1="{cx-70}" y1="{cy}" x2="{cx+62}" y2="{cy}" '
+                     f'stroke="{CUT}" stroke-width="3.4" stroke-linecap="round"/>')
+            label(cx + 70, cy + 4, "buried \u2192 exposed", "a-s", INK3, "start")
+        else:
+            o.append(f'<line x1="{cx-74}" y1="{cy+14}" x2="{cx+74}" y2="{cy+14}" '
+                     f'stroke="{CUT}" stroke-width="3.4" stroke-linecap="round"/>')
+            o.append(f'<circle cx="{cx}" cy="{cy-16}" r="30" fill="{PROBE}" '
+                     f'fill-opacity="0.14" stroke="{PROBE}" stroke-width="1.2" '
+                     f'stroke-dasharray="4 3"/>')
+            label(cx, cy - 12, f"{probe_radius:g} \u00c5", "a-s", PROBE)
+        label(x + cw / 2, 108, question, "a-q", INK)
+        words, line, lines = note.split(" "), "", []
+        for w in words:
+            if len(line) + len(w) + 1 > 44:
+                lines.append(line); line = w
+            else:
+                line = f"{line} {w}" if line else w
+        lines.append(line)
+        ly = 126
+        for ln in lines[:2]:
+            label(x + cw / 2, ly, ln, "a-s", INK3)
+            ly += 14
+    o.append("</svg>")
+    return "".join(o)
+
+
 def selection_funnel(f) -> str:
     """How 348 scored designs became one worth making.
 

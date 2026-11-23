@@ -1166,6 +1166,25 @@ VERIFY_ROWS = "".join(
             else f"{r['mask_fraction_on_paratope'] * 100:.0f}%"),
         why=_verdict(r))
     for r in _ordered)
+# ---- module 05: the two requirements, and the constants behind the second
+from nbswitch.cleavage_context import (CATALYTIC_DOMAIN_RADIUS_A as PROBE_R,
+                                       N_PROBE_DIRECTIONS as PROBE_N,
+                                       PROBE_OFFSET_A as PROBE_OFF)
+_GEN = [l for l in _LK["linkers"] if l.get("kind") == "generated"]
+N["sel_gen_lo"] = min(l["selectivity"] for l in _GEN)
+N["sel_gen_hi"] = max(l["selectivity"] for l in _GEN)
+_by_lid = {l["id"]: l for l in _LK["linkers"]}
+N["sel_scram"] = _by_lid["ctrl_scram"]["selectivity"]
+N["cn01_sel"] = _by_lid["cn01"]["selectivity"]
+N["cn01_target"] = _by_lid["cn01"]["target_z"]
+N["cn01_off"] = _by_lid["cn01"]["off_target_z"]
+N["ctrl_target"] = _by_lid["ctrl_gs"]["target_z"]
+N["len_lo"] = min(len(l["sequence"]) for l in _LK["linkers"])
+N["len_hi"] = max(len(l["sequence"]) for l in _LK["linkers"])
+_least_row = min((r for r in (trigger["results"] if trigger else []) if r.get("linker_id")),
+                 key=lambda r: r["cleavability_score"], default=None)
+N["least_clear"] = _least_row["clearance_open_fraction"] if _least_row else 0.0
+
 N["noCys_id"] = next((r["construct"] for r in _VROWS
                       if r["construct"] and "noCys" in r["construct"]), "")
 
@@ -1685,48 +1704,69 @@ and together they ask whether anything about the design is doing work:</p></div>
 </div></details>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
-{mri("Two questions, kept apart. Sequence recognition is verified with CleaveNet's predictor and "
-     "scored as a contrast, since a linker cut by everything would unmask in circulation. Reach is "
-     "then checked in the folded construct against three necessary conditions: the segment lies "
-     "extended enough for a catalytic groove, its backbone is exposed, and a sphere the size of a "
-     "catalytic domain fits beside the scissile bond. Their product is taken, because a "
-     "requirement that can be compensated for is not a requirement.",
-     f"{N['n_linkers']} linkers were carried forward from {N['n_generated']} generated. "
-     f"Selectivity spans {N['sel_min']:+.2f} to {N['sel_max']:+.2f}; the Gly/Ser control scores "
-     f"{N['sel_ctrl']:+.2f}. The two halves are close to independent across the "
-     f"{N['n_cleav']} linkered constructs (r = {N['sel_ctx_r']:+.2f}), so neither substitutes "
-     f"for the other and the most selective sequence is not the most reachable.",
-     "Generation and verification share a model family, so their agreement is weaker evidence "
-     "than two independent models would be. CleaveNet is trained on human MMPs; the protease that "
-     "arrives first at a bite site is a snake venom metalloproteinase, which is not in its "
-     "training set, so the gelatinases stand in for it.")}
-<p>The linkers carried forward, and the controls they are read against. Target is the mean
-predicted cleavage by {N['target_proteases']}; off-target is the mean over the membrane-type and
-constitutive enzymes.</p>
-<details class="tech"><summary>Every linker, with its predicted cleavage profile</summary>
-<div class="techbody">{R.linker_table(LINKERS)}</div></details>
-<div class="two">
-{chart("cleavability_panel", "Recognition against reach. The controls say whether either axis "
-       "discriminates.")}
-{chart("cleavability_components", "The three necessary conditions and their product, by construct.")}
-</div>
+<div class="stack">
+<p>One question runs through this module: <b>will the linker be cleaved by the intended
+proteases, and can those proteases physically reach it?</b> A good cleavage sequence is no use
+buried against the nanobody, and an exposed linker is no use if the protease does not recognise
+its sequence, so the two are scored apart and multiplied.</p></div>
+{mri("Two requirements. <b>Sequence recognition:</b> CleaveNet predicts preferential cleavage "
+     f"by {CLEAVE_TARGETS} against {R.word(LINKER_GEN['n_off'])} off-target MMPs, scored as the "
+     "difference between the two group means. <b>Structural accessibility:</b> the predicted "
+     "linker is assessed for backbone extension, solvent exposure and room for a protease to "
+     "approach. The two are multiplied, so poor recognition or poor accessibility lowers the "
+     "score.",
+     f"{R.word(LINKER_GEN['n_kept']).capitalize()} cleavage motifs were selected from "
+     f"{LINKER_GEN['n_generated']:,} generated sequences and "
+     f"{R.word(LINKER_GEN['n_controls'])} controls added; varying the Gly/Ser flanks produced "
+     f"<b>{N['n_linkers']} linker variants</b>. The designed motifs score "
+     f"{N['sel_gen_lo']:.2f}–{N['sel_gen_hi']:.2f} on selectivity, against {N['sel_ctrl']:.2f} "
+     f"for the Gly/Ser control and {N['sel_scram']:.2f} for the scrambled one. Accessibility "
+     "varies widely between constructs, and the two are moderately negatively correlated, "
+     f"r = {N['sel_ctx_r']:+.2f}.",
+     "Both are necessary and neither predicts a cleavage rate. A favourable sequence does not "
+     "guarantee an accessible site. CleaveNet is trained on human MMPs, not on snake venom "
+     "metalloproteinases, so selectivity at a bite site remains to be tested.")}
+{chart_wide("cleavability_panel", "Predicted cleavage selectivity against structural "
+   "accessibility, one point per construct. The designed motifs sit to the right of the "
+   "controls, but accessibility depends on the folded construct, so a good sequence does not "
+   "carry a construct on its own.")}
+<div class="stack">
+<p><b>Why the points form vertical groups.</b> Every construct sharing a cleavage motif shares
+its CleaveNet score, so selectivity takes one of six values. What spreads a group vertically is
+the mask it carries, the length of its flanks and the fold that results.</p>
+<p><b>Selectivity is a contrast, not a probability.</b> For
+<span class="mono">cn01</span> it is {N['cn01_target']:.2f} − ({N['cn01_off']:.2f}) =
+{N['cn01_sel']:.2f}: the gap between two standardised scores, not a rate or a likelihood of
+being cut. The Gly/Ser control's {N['sel_ctrl']:.2f} is positive without being cleavable &mdash;
+its target score is {N['ctrl_target']:.2f}, so it is predicted to resist both groups about
+equally.</p></div>
+<h5 class="subh2">Can a protease reach the site?</h5>
+<figure class="fig wide"><div class="figbody">{R.accessibility_checks(PROBE_R, PROBE_N, PROBE_OFF)}</div></figure>
+<div class="stack">
+<p>The three are multiplied, each running from 0 to 1, because they are requirements rather than
+contributions. Clearance places a sphere the size of a catalytic domain beside the scissile bond
+and counts how many of {PROBE_N} directions are unobstructed by the rest of the construct. That
+is a geometric approximation, not a docked protease. CleaveNet reads the sequence; this reads
+the predicted structure.</p>
+<div class="note"><b>Both have to hold.</b> The lowest-scoring construct in the library,
+<span class="mono">{N['least_id']}</span>, is reachable enough &mdash; its clearance alone is
+{N['least_clear']:.2f} &mdash; but its linker is a scramble of a good substrate, so recognition
+falls to {N['least_sel']:+.2f} and the product with it:
+{N['least_sel']:.2f} × {N['least_ctx']:.3f} = {N['least_cleav']:.4f}.</div>
+<div class="note warn"><b>Linker length.</b> The polymer model of Module 01 favoured
+{N['linker_best']} residues, but in the predicted constructs the mask needed a longer linker to
+reach the paratope at all, so the reference linker is {N['linker_len']} residues and the library
+spans {N['len_lo']}–{N['len_hi']}. The extra length costs {N['window_cost']:.2f} decades of the
+affinity window. That gap is a limitation of treating the mask as a point at the end of a
+flexible chain.</div></div>
+<details class="tech"><summary>Every linker, its profile, and the component scores</summary>
+<div class="techbody">
+{R.linker_table(LINKERS)}
+{chart_wide("cleavability_components", "The three necessary conditions and their product, by construct.")}
 {R.ensemble_viewer("ens-cleave", "cleavability",
    "The same constructs, coloured by how reachable their linker is in the folded model.",
    R.ramp_legend("least reachable", "most"))}
-<p>Every linker is the same length, so length is held constant and only sequence varies. Reach in
-the construct averages {N['ctx_mean']:.2f} and reaches {N['ctx_max']:.2f} at best; the affinity
-window of Module 01 is widest at {N['linker_best']} residues, and the linkers here are
-{N['linker_len']}. That gap is deliberate and is a result in its own right: the tether model treats
-the mask as a point at the end of the linker, and the mask is a peptide with its own dimensions
-that has to reach across the paratope. Stage 16 measured the difference by holding the substrate
-constant and lengthening only the inert flanks, and the extra length costs
-{N['window_cost']:.2f} decades of the affinity window.</p>
-<p><b>Both axes have to hold at once.</b> The lowest-scoring construct in the library,
-{N['least_id']}, is physically reachable &mdash; its reach score of {N['least_ctx']:.2f} is
-mid-pack &mdash; but its linker is a scramble of a good substrate, so recognition falls to
-{N['least_sel']:+.2f} and the product with it, to {N['least_cleav']:.3f}. Same composition as
-something cleavable, same accessibility, no site. That is the case a single averaged score would
-have hidden.</p>
+</div></details>
 
 <h3 class="mod"><span>Module 06</span>Selection of candidate constructs</h3>
 {mri("Each of the " + f"{N['rank_total']}" + " constructs was assessed for structural "
