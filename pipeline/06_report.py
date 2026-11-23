@@ -858,8 +858,6 @@ N["n_structures"] = FUNNEL["n_structures"]
 _VER = load_json("19_verification.json")
 _VROWS = _VER["results"]
 _CTL = next(r for r in _VROWS if r["construct"] is None)
-_NOALIGN = next(r for r in load_json("09_complexes.json")["results"]
-                if r["case"] == "control_free_vhh")
 # the matched comparison: one antigen-derived mask against the three controls
 # built from it, each over the same linker set
 _CONTROL_Q = {
@@ -885,10 +883,6 @@ OCC_CONTROL_ROWS = "".join(_occ_row(m, w, q) for m, (w, q) in _CONTROL_Q.items()
 
 N["occ_trunc"] = float(_np.mean([r["occlusion"] * 100 for r in fold["results"]
                                  if r["kind"] == "truncated control"])) if fold else 0.0
-N["noalign_hits"] = _NOALIGN["paratope_contacts"]
-N["noalign_total"] = _NOALIGN["total_contacting_residues"]
-N["align_hits"] = _CTL["paratope_contacts"]
-N["align_total"] = _CTL["total_contacting_residues"]
 
 def _verdict(r):
     """Why a construct passed or failed, in the terms the criteria are in."""
@@ -1545,31 +1539,6 @@ superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agr
 <colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
 <thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
 <th>what it means</th></tr></thead><tbody>{VERIFY_ROWS}</tbody></table>
-<details class="tech"><summary>Model setup and limitations</summary><div class="techbody">
-<p><b>Why the setup was checked against a known complex.</b> An experimental
-V<sub>H</sub>H&ndash;antigen structure already exists, so it says whether the method puts the
-antigen in the right place. Without alignments only {N['noalign_hits']} of
-{N['noalign_total']} antigen-contacting nanobody residues
-({N['boltz_ctrl_noalign']:.0f}%) lay in the known paratope; with alignments for the public
-nanobody and antigen sequences, {N['align_hits']} of {N['align_total']}
-({N['boltz_ctrl']:.0f}%) did. That justified the revised setup for further exploration. It did
-not validate its predictions of mask binding.</p>
-<p><b>{N['boltz_ctrl']:.0f}% is not a binding probability.</b> It is the share of nanobody
-residues contacting the antigen in that predicted structure which lie inside the
-experimentally identified paratope.</p>
-<div class="note warn"><b>The control isolates less than it appears to.</b> An alignment over
-the whole fusion would mean sending the designed sequence to a remote server, so the construct
-is modelled as separate chains joined by an explicit bond, with alignments on the public chains
-only. The unmasked reference does isolate the effect of adding alignments, but the masked
-predictions also changed the chain representation, so their behaviour cannot be attributed to
-alignments alone.</div>
-<p>Each case is a single prediction rather than a sampled ensemble, and the mask and antigen are
-supplied together, so the result describes an assembly at equilibrium rather than a competition
-over time.</p>
-<p><b>Masks predicted against the free nanobody, untethered.</b> Worth keeping as a control on
-where an isolated peptide goes, but not as evidence of release: some controls also contact the
-paratope in those predictions, so they do not establish specific binding.</p>
-</div></details>
 </section>
 
 <section class="sec">

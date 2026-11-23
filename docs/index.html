@@ -533,7 +533,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=57c8d3e4" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=7535aa97" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -723,31 +723,6 @@ superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agr
 <colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
 <thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
 <th>what it means</th></tr></thead><tbody><tr><td class='mono'>free nanobody</td><td>81%</td><td>&mdash;</td><td>reference</td></tr><tr class='hl'><td class='mono'>epi_face2_cn02</td><td>16%</td><td>48%</td><td><b>antigen displaced, the mask is bound</b></td></tr><tr><td class='mono'>epi_core_noCys_cn02</td><td>19%</td><td>11%</td><td>antigen displaced, but the mask is off site</td></tr><tr><td class='mono'>epi_core_cn01_n16</td><td>77%</td><td>17%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_half_cn01_n16</td><td>77%</td><td>10%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>polyG_cn01</td><td>78%</td><td>25%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_ext2_cn03</td><td>81%</td><td>20%</td><td>antigen keeps its binding site</td></tr></tbody></table>
-<details class="tech"><summary>Model setup and limitations</summary><div class="techbody">
-<p><b>Why the setup was checked against a known complex.</b> An experimental
-V<sub>H</sub>H&ndash;antigen structure already exists, so it says whether the method puts the
-antigen in the right place. Without alignments only 1 of
-14 antigen-contacting nanobody residues
-(7%) lay in the known paratope; with alignments for the public
-nanobody and antigen sequences, 17 of 21
-(81%) did. That justified the revised setup for further exploration. It did
-not validate its predictions of mask binding.</p>
-<p><b>81% is not a binding probability.</b> It is the share of nanobody
-residues contacting the antigen in that predicted structure which lie inside the
-experimentally identified paratope.</p>
-<div class="note warn"><b>The control isolates less than it appears to.</b> An alignment over
-the whole fusion would mean sending the designed sequence to a remote server, so the construct
-is modelled as separate chains joined by an explicit bond, with alignments on the public chains
-only. The unmasked reference does isolate the effect of adding alignments, but the masked
-predictions also changed the chain representation, so their behaviour cannot be attributed to
-alignments alone.</div>
-<p>Each case is a single prediction rather than a sampled ensemble, and the mask and antigen are
-supplied together, so the result describes an assembly at equilibrium rather than a competition
-over time.</p>
-<p><b>Masks predicted against the free nanobody, untethered.</b> Worth keeping as a control on
-where an isolated peptide goes, but not as evidence of release: some controls also contact the
-paratope in those predictions, so they do not establish specific binding.</p>
-</div></details>
 </div></details>
 </section>
 
