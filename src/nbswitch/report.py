@@ -3,6 +3,7 @@
 Values are read from the stage outputs, so nothing on the page is typed by hand.
 """
 from __future__ import annotations
+import math
 import hashlib
 import shutil
 from pathlib import Path
@@ -1780,76 +1781,171 @@ def construct_schematic(c, free_vhh_len=None):
     o.append("</svg>")
     return "".join(o)
 
-def accessibility_checks(probe_radius, n_directions, offset) -> str:
+def accessibility_checks(probe_radius, n_directions, offset,
+                         cleft_half_width, extended_rise) -> str:
     """The three conditions a protease has to find satisfied, in one row.
 
-    The component plot answers this with four traces over 348 constructs,
-    which is the wrong shape for a reader meeting the idea. Three pictures
-    with three questions carry it faster.
+    Each panel draws its own measurement, numerator against denominator.
+    The version before this drew a straight line marked "yes" beside a wavy
+    one marked "no", a circle with a line through it, and a dashed sphere: a
+    reader could tell which way was better and had no way to see what was
+    being divided by what. The method is written under each panel for the
+    same reason.
     """
-    W, H = 980, 158
+    n_res = 2 * cleft_half_width + 1
+    gaps = 2 * cleft_half_width
+    W, H = 980, 278
     CUT, CHAIN, PROBE = "#2D5BD1", "#9AA6AE", "#0B9488"
-    o = [f'<svg viewBox="0 0 {W} {H}" width="100%" '
+    BODY, BLOCK = "#D4DCE1", "#9AA6AE"
+    o = ['<svg viewBox="0 0 %d %d" width="100%%" ' % (W, H) +
          'xmlns="http://www.w3.org/2000/svg" role="img" '
-         'aria-label="The three structural checks on a cleavage site">',
+         'aria-label="How each of the three accessibility scores is measured">',
          '<style>'
          '.a-h{font:600 9.5px ui-monospace,monospace;letter-spacing:.13em}'
          '.a-q{font:600 13px Inter,system-ui,sans-serif}'
-         '.a-s{font:11px Inter,system-ui,sans-serif}'
+         '.a-t{font:10.5px Inter,system-ui,sans-serif}'
+         '.a-k{font:600 10.5px Inter,system-ui,sans-serif}'
          '</style>']
 
-    def label(x, y, t, cls="a-s", fill=INK2, anchor="middle"):
-        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+    def label(x, y, t, cls="a-t", fill=INK2, anchor="middle"):
+        o.append(f'<text x="{x:.1f}" y="{y:.1f}" class="{cls}" fill="{fill}" '
                  f'text-anchor="{anchor}">{t}</text>')
 
+    def dot(x, y, r=3.1, fill=CUT):
+        o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{fill}"/>')
+
+    def caliper(x1, x2, y, colour, dash=None):
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        o.append(f'<line x1="{x1:.1f}" y1="{y}" x2="{x2:.1f}" y2="{y}" '
+                 f'stroke="{colour}" stroke-width="1.5"{d}/>')
+        for xe in (x1, x2):
+            o.append(f'<line x1="{xe:.1f}" y1="{y - 5}" x2="{xe:.1f}" '
+                     f'y2="{y + 5}" stroke="{colour}" stroke-width="1.5"/>')
+
+    ALPHA = "C&#945;"
+    AA = "&#197;"
     cw, gap = (W - 2 * 26) / 3, 26
     panels = [
-        ("EXTENSION", "Extended?",
-         "is the backbone straight enough to lie in a catalytic groove"),
-        ("EXPOSURE", "Exposed?",
-         "is it in solvent rather than packed against the mask or nanobody"),
-        ("CLEARANCE", "Room for a protease?",
-         f"does a {probe_radius:g} \u00c5 sphere fit beside the bond, over "
-         f"{n_directions} directions"),
+        ("EXTENSION", "Can the groove hold it?",
+         f"{ALPHA} span of the {word(n_res)} residues around the scissile "
+         f"bond, over the length they would have fully extended "
+         f"({gaps} &#215; {extended_rise:g} {AA}). Capped at 1."),
+        ("EXPOSURE", "Is there surface to bind?",
+         "Solvent-accessible surface of those same residues in the folded "
+         "construct, over their surface measured on their own. "
+         "Shrake&#8211;Rupley, same probe radius both times."),
+        ("CLEARANCE", "Is there room for the enzyme?",
+         f"A {probe_radius:g} {AA} sphere standing {offset:g} {AA} clear of "
+         f"the scissile {ALPHA}, in {n_directions} evenly spread directions. "
+         f"A direction counts as open when no atom of the rest of the "
+         f"construct falls inside the sphere."),
     ]
     for i, (tag, question, note) in enumerate(panels):
         x = i * (cw + gap)
         o.append(f'<rect x="{x}" y="0" width="{cw}" height="{H - 2}" rx="5" '
                  f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1.2"/>')
         label(x + 16, 20, tag, "a-h", CHROME, "start")
-        cx, cy = x + cw / 2, 62
+        cx = x + cw / 2
+
         if i == 0:
-            o.append(f'<path d="M {cx-76} {cy+12} q 19 -26 38 0 q 19 26 38 0" '
-                     f'fill="none" stroke="{CHAIN}" stroke-width="3.4" '
-                     f'stroke-linecap="round" opacity="0.5"/>')
-            o.append(f'<line x1="{cx-76}" y1="{cy-14}" x2="{cx+76}" y2="{cy-14}" '
-                     f'stroke="{CUT}" stroke-width="3.4" stroke-linecap="round"/>')
-            label(cx + 84, cy - 10, "yes", "a-s", CUT, "start")
-            label(cx + 84, cy + 16, "no", "a-s", INK3, "start")
+            # the cleft window bowed: the span it has against the span it
+            # would have pulled straight. The ratio of the two is the score.
+            cy, half, bow = 72, 66.0, 26.0
+            pts = [(cx - half + 2 * half * (k / (n_res - 1)),
+                    cy - bow * (1 - (2 * (k / (n_res - 1)) - 1) ** 2))
+                   for k in range(n_res)]
+            o.append('<polyline points="'
+                     + " ".join(f"{px:.1f},{py:.1f}" for px, py in pts)
+                     + f'" fill="none" stroke="{CHAIN}" stroke-width="3" '
+                     'stroke-linejoin="round" stroke-linecap="round"/>')
+            for px, py in pts:
+                dot(px, py)
+            caliper(cx - half, cx + half, cy + 20, CUT)
+            label(cx, cy + 16, "span measured", "a-k", CUT)
+            caliper(cx - half - 24, cx + half + 24, cy + 52, INK3, "5 4")
+            label(cx, cy + 48,
+                  f"{gaps} &#215; {extended_rise:g} {AA} if fully extended",
+                  "a-t", INK3)
+
         elif i == 1:
-            o.append(f'<circle cx="{cx-34}" cy="{cy}" r="26" fill="{CHAIN}" '
-                     f'fill-opacity="0.3"/>')
-            o.append(f'<line x1="{cx-70}" y1="{cy}" x2="{cx+62}" y2="{cy}" '
-                     f'stroke="{CUT}" stroke-width="3.4" stroke-linecap="round"/>')
-            label(cx + 70, cy + 4, "buried \u2192 exposed", "a-s", INK3, "start")
+            # the same residues twice: most of the chain swallowed by the
+            # construct, then the chain on its own. The teal is the surface a
+            # solvent probe can touch, and the score is one over the other.
+            cy = 76
+            for lx, buried in ((cx - 72, True), (cx + 62, False)):
+                arc = f"M {lx - 30} {cy + 4} Q {lx} {cy - 38} {lx + 30} {cy + 4}"
+                o.append(f'<path d="{arc}" fill="none" stroke="{CHAIN}" '
+                         'stroke-width="3.2" stroke-linecap="round"/>')
+                for k in range(5):
+                    t = k / 4
+                    px = lx - 30 + 60 * t
+                    py = (1 - t) ** 2 * (cy + 4) + 2 * (1 - t) * t * (cy - 38) \
+                        + t ** 2 * (cy + 4)
+                    dot(px, py, 2.9)
+                if buried:
+                    o.append(f'<path d="M {lx - 48} {cy + 34} '
+                             f'q 3 -40 48 -40 q 45 0 48 40 z" '
+                             f'fill="{BODY}" fill-opacity="0.9"/>')
+                    o.append(f'<path d="M {lx - 15} {cy - 17} '
+                             f'q 15 -14 30 0" fill="none" stroke="{PROBE}" '
+                             'stroke-width="6" stroke-linecap="round" '
+                             'opacity="0.85"/>')
+                    label(lx, cy + 52, "in the construct", "a-k", INK2)
+                    label(lx, cy + 68, "only this much is reachable",
+                          "a-t", PROBE)
+                else:
+                    o.append(f'<path d="{arc}" fill="none" stroke="{PROBE}" '
+                             'stroke-width="6" stroke-linecap="round" '
+                             'opacity="0.85"/>')
+                    o.append(f'<path d="{arc}" fill="none" stroke="{CHAIN}" '
+                             'stroke-width="3.2" stroke-linecap="round"/>')
+                    label(lx, cy + 52, "on its own", "a-k", INK2)
+                    label(lx, cy + 68, "all of its surface", "a-t", PROBE)
+            label(cx - 5, cy - 4, "&#247;", "a-q", INK)
+
         else:
-            o.append(f'<line x1="{cx-74}" y1="{cy+14}" x2="{cx+74}" y2="{cy+14}" '
-                     f'stroke="{CUT}" stroke-width="3.4" stroke-linecap="round"/>')
-            o.append(f'<circle cx="{cx}" cy="{cy-16}" r="30" fill="{PROBE}" '
-                     f'fill-opacity="0.14" stroke="{PROBE}" stroke-width="1.2" '
-                     f'stroke-dasharray="4 3"/>')
-            label(cx, cy - 12, f"{probe_radius:g} \u00c5", "a-s", PROBE)
-        label(x + cw / 2, 108, question, "a-q", INK)
+            # probe spheres around the scissile bond. Those that land in the
+            # construct are blocked; the score is the fraction that do not.
+            sx, sy, ray, pr = cx + 6, 96, 38.0, 15.0
+            o.append(f'<path d="M {cx - 132} 146 q 30 -56 76 -50 '
+                     f'q 46 6 56 50 z" fill="{BODY}"/>')
+            # the two blocked probes are centred inside the body, not beside
+            # it: a direction fails when the sphere and the construct overlap
+            for ang, is_open in ((-42, True), (-102, True),
+                                 (162, False), (118, False)):
+                rad = math.radians(ang)
+                px, py = sx + ray * math.cos(rad), sy + ray * math.sin(rad)
+                col = PROBE if is_open else BLOCK
+                o.append(f'<line x1="{sx:.1f}" y1="{sy}" x2="{px:.1f}" '
+                         f'y2="{py:.1f}" stroke="{col}" stroke-width="1" '
+                         'stroke-dasharray="3 3"/>')
+                o.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{pr}" '
+                         f'fill="{col}" '
+                         f'fill-opacity="{0.14 if is_open else 0.34}" '
+                         f'stroke="{col}" stroke-width="1.3" '
+                         f'stroke-dasharray="{"0" if is_open else "4 3"}"/>')
+            label(cx + 70, 56, "open", "a-k", PROBE, "start")
+            label(cx - 72, 86, "blocked", "a-k", INK3, "end")
+            dot(sx, sy, 4, CUT)
+            label(sx + 9, sy + 15, f"scissile {ALPHA}", "a-t", CUT, "start")
+            # the sphere's size and the number of directions are stated in
+            # the method line below, so the drawing does not repeat them
+            label(cx - 44, 162, "rest of the construct", "a-t", INK3)
+
+        label(cx, 186, question, "a-q", INK)
+        o.append(f'<line x1="{x + 22}" y1="199" x2="{x + cw - 22}" y2="199" '
+                 f'stroke="{RULE}" stroke-width="1"/>')
         words, line, lines = note.split(" "), "", []
         for w in words:
-            if len(line) + len(w) + 1 > 44:
-                lines.append(line); line = w
+            if len(line) + len(w) + 1 > 46:
+                lines.append(line)
+                line = w
             else:
                 line = f"{line} {w}" if line else w
         lines.append(line)
-        ly = 126
-        for ln in lines[:2]:
-            label(x + cw / 2, ly, ln, "a-s", INK3)
+        ly = 217
+        for ln in lines[:5]:
+            label(cx, ly, ln, "a-t", INK3)
             ly += 14
     o.append("</svg>")
     return "".join(o)

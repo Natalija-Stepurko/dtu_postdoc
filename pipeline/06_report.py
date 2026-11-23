@@ -919,7 +919,9 @@ VERIFY_ROWS = "".join(
 # ---- module 05: the two requirements, and the constants behind the second
 from nbswitch.cleavage_context import (CATALYTIC_DOMAIN_RADIUS_A as PROBE_R,
                                        N_PROBE_DIRECTIONS as PROBE_N,
-                                       PROBE_OFFSET_A as PROBE_OFF)
+                                       PROBE_OFFSET_A as PROBE_OFF,
+                                       CLEFT_HALF_WIDTH as CLEFT_HALF,
+                                       EXTENDED_RISE_A as EXT_RISE)
 N["len_lo"] = min(len(l["sequence"]) for l in _LK["linkers"])
 N["len_hi"] = max(len(l["sequence"]) for l in _LK["linkers"])
 
@@ -1426,6 +1428,9 @@ folded construct.</b></p></div>
      "A suitable cleavage sequence is not necessarily accessible to a protease. The combined "
      "score accounts for both requirements, but does not predict a cleavage rate. CleaveNet is "
      "trained on human MMPs, so cleavage by snake venom metalloproteinases remains untested.")}
+<h5 class="subh2">Can a protease reach the site?</h5>
+<figure class="fig wide"><div class="figbody">{R.accessibility_checks(
+   PROBE_R, PROBE_N, PROBE_OFF, CLEFT_HALF, EXT_RISE)}</div></figure>
 {R.annotated_equation([
    ("S<sub>cleavability</sub>", "Module 05"), "=",
    ("max(0, S<sub>selectivity</sub>)", "from Module 02"), "&times;",
@@ -1446,12 +1451,10 @@ folded construct.</b></p></div>
 <div class="stack">
 <h4 class="subh">Vertical: structural accessibility</h4>
 <p>One number per construct, measured on its own ESMFold model.</p>
-<p>It asks whether the cleavage site has enough backbone extension to lie in a protease groove,
-sits in solvent rather than packed against the mask or the nanobody, and has room beside it for
-a catalytic domain to approach. Higher is more accessible. The three are drawn below, with what
-each one measures.</p></div>
+<p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.
+Higher is more accessible, and because they are multiplied the result can be no larger than the
+smallest of them.</p></div>
 </div>
-<figure class="fig wide"><div class="figbody">{R.accessibility_checks(PROBE_R, PROBE_N, PROBE_OFF)}</div></figure>
 {chart_wide("cleavability_components", "The three accessibility requirements and the product "
    f"they make, for all {N['rank_total']} constructs. Each runs from 0 to 1, and because they "
    "are multiplied the product can be no larger than the smallest of them. Clearance is the "
