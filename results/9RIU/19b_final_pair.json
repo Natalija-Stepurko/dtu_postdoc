@@ -1,0 +1,27 @@
+{
+  "masked": {
+    "antigen_contacts_displaced": 0.652,
+    "case": "epi_face2_cn02_msa",
+    "chains": {
+      "A": 123,
+      "B": 33,
+      "C": 61
+    },
+    "construct": "epi_face2_cn02",
+    "file": "final_masked.pdb",
+    "fraction_of_contacts_on_paratope": 0.158,
+    "mask_fraction_on_paratope": 0.481
+  },
+  "note": "the construct's prediction superposed onto the control's by the nanobody alpha carbons, so the two can be shown in one frame",
+  "reference": {
+    "case": "control_free_vhh_msa",
+    "chains": {
+      "A": 127,
+      "B": 61
+    },
+    "file": "final_reference.pdb",
+    "fraction_of_contacts_on_paratope": 0.81
+  },
+  "superposed_on": "chain A, 123 alpha carbons",
+  "vhh_ca_rmsd_A": 1.0
+}

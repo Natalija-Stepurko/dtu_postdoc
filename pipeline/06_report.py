@@ -1092,6 +1092,32 @@ FUNNEL = {
 }
 N["n_evaluated"] = FUNNEL["n_evaluated"]
 N["n_structures"] = FUNNEL["n_structures"]
+
+# the final screen's two structures, already in one frame by stage 19b
+try:
+    _FP = load_json("19b_final_pair.json")
+except FileNotFoundError:
+    _FP = None
+FINAL_PAIR_JS = None
+if _FP:
+    def _roles(chains, has_mask):
+        """A Boltz prediction names chains in input order: nanobody, then the
+        designed peptide if there is one, then the antigen."""
+        names = sorted(chains)
+        return ({"vhh": names[0], "mask": names[1], "antigen": names[2]}
+                if has_mask and len(names) > 2 else
+                {"vhh": names[0], "mask": None, "antigen": names[-1]})
+    FINAL_PAIR_JS = {
+        "reference": {"file": _FP["reference"]["file"],
+                      **_roles(_FP["reference"]["chains"], False)},
+        "masked": {"file": _FP["masked"]["file"],
+                   **_roles(_FP["masked"]["chains"], True)},
+    }
+FP_ID = _FP["masked"]["construct"] if _FP else ""
+FP_RMSD = _FP["vhh_ca_rmsd_A"] if _FP else float("nan")
+FP_MASK_ON = (_FP["masked"]["mask_fraction_on_paratope"] * 100) if _FP else 0
+FP_ANTIGEN_ON = (_FP["masked"]["fraction_of_contacts_on_paratope"] * 100) if _FP else 0
+FP_REF_ON = (_FP["reference"]["fraction_of_contacts_on_paratope"] * 100) if _FP else 0
 N_PARENTS = len(redesign["parents"]) if redesign else 0
 
 # the contacting antigen residues are reported as runs along the chain, and
@@ -1385,13 +1411,14 @@ others have to beat.</figcaption></figure>
 <p>Every mask was paired with every linker: {N['n_masks']} masks
 &times; {lib['n_linkers']} linkers = {lib['n_pairs']} pairs, and the free nanobody as a reference,
 giving <b>{N['n_constructs']} constructs</b> to fold.</p>
-<p><b>How they were folded.</b> Each construct was folded as a single chain, mask and linker and
-nanobody in one sequence, with ESMFold
-(<span class="mono">{FOLD_MODEL}</span>) from sequence alone and with no multiple-sequence
-alignment. The free nanobody was folded the same way, and it is the reference the rest are
-measured against: the model gives it a pLDDT of {FREE_PLDDT:.1f}, and the {N['n_paratope']}
-paratope residues expose {FREE_SASA:,.0f} Å² of surface between them, which is the denominator
-of every occlusion figure on this page.</p></div>
+<p><b>Structure prediction and paratope occlusion.</b> I used ESMFold to predict the
+structures of the complete mask–linker–nanobody constructs. The free nanobody was
+predicted separately as a reference (pLDDT {FREE_PLDDT:.1f}).</p>
+<p>I then compared the solvent-accessible surface area of the {N['n_paratope']} paratope residues
+in each construct with that of the free nanobody ({FREE_SASA:,.0f} Å&sup2;). The difference gives
+the predicted percentage of paratope occlusion.</p>
+<p>This measures surface coverage in a single predicted structure, not mask affinity or
+functional inhibition.</p></div>
 <figure class="fig wide"><div class="figbody">{R.construct_schematic(REF_CONSTRUCT)}</div>
 <figcaption>One construct, drawn to scale. The mask and the cleavable linker are a short
 N-terminal addition to a nanobody that is most of the molecule, and the ten residues the
@@ -1561,36 +1588,73 @@ mid-pack &mdash; but its linker is a scramble of a good substrate, so recognitio
 something cleavable, same accessibility, no site. That is the case a single averaged score would
 have hidden.</p>
 
-<h3 class="mod"><span>Module 06</span>Multiobjective ranking</h3>
-{mri("Three steps, kept apart because they answer different questions. Hard constraints remove "
-     "constructs that cannot work regardless of their other scores. The nondominated set is then "
-     "taken over the three objectives, with no weights. That set is unordered, so turning it into "
-     "a list needs a rule, and the rule is maximin on the normalised objectives: a construct is "
-     "worth no more than its weakest requirement.",
-     (f"{N['rank_excluded']} of {N['rank_total']} scored constructs fail a hard constraint. "
-      f"Of the {N['rank_feasible']} that remain, {N['rank_front']} are nondominated, and "
-      f"{N['rank_shortlist']} go forward for verification after deduplicating by mask."
-      if N['rank_total'] else
-      "Not yet run on this library; the stage has produced no output."),
-     "The ordering is preliminary. Maximin assumes the three scores are comparable, and the "
-     "normalisation that makes them comparable is within this run rather than against measured "
-     "quantities. The masking objective also does not separate designed masks from controls, so "
-     "a front built on it is not a list of constructs predicted to mask.")}
-
+<h3 class="mod"><span>Module 06</span>Selection of candidate constructs</h3>
+{mri("Each of the " + f"{N['rank_total']}" + " constructs was assessed for structural "
+     "feasibility, predicted linker cleavability and paratope occlusion. I first applied a "
+     "minimum requirement on each score, then used Pareto optimisation to remove designs that "
+     "another candidate beat on all three objectives at once. The rest were ranked by their "
+     "weakest normalised score, and closely related masks were dropped from the shortlist so "
+     "that it holds different designs.",
+     f"Of the {N['rank_total']} constructs, {N['rank_excluded']} failed the initial "
+     f"requirements. Pareto optimisation identified <b>{N['rank_front']} nondominated "
+     f"candidates</b>, of which <b>{N['rank_shortlist']}</b> were taken forward for structural "
+     "analysis.",
+     "The ranking is a way to pick candidates with different predicted properties. The scores "
+     "behind it are preliminary, the occlusion measure most of all, since it does not reliably "
+     "separate designed masks from controls. The shortlist is therefore a set of candidates "
+     "worth investigating, not a set of confirmed functional masks.")}
+<figure class="fig wide"><div class="figbody">{R.selection_funnel(FUNNEL)}</div></figure>
+<details class="tech"><summary>Ranking methods</summary><div class="techbody">
 <p><b>What is removed before anything is compared.</b> A construct failing one of these is not a
-worse candidate but not a candidate: no score on another axis can compensate, which is exactly
-what a Pareto front would otherwise let it do.</p>
+worse candidate but not a candidate, and no score on another axis can make up for it. This is
+where compensation is prevented; non-domination does not prevent it, since a design that is poor
+on one objective stays on the front as long as nothing beats it on all three.</p>
 {R.constraint_table(RANK_CONSTRAINTS, N['rank_excluded_by'])}
-
-<p><b>The ordering rule, stated.</b> The three scores are on unrelated scales, so they are min-max
-normalised within the feasible set and each construct is ranked by its lowest normalised
-objective. That prefers a design that is adequate three times over one that is excellent twice and
-poor once, which is the right preference when all three requirements have to hold at once. An
-uncertainty discount is implemented and set to zero: no calibrated uncertainty exists for any of
-these scores, and inventing one would make the ordering look better founded than it is.</p>
+<p><b>The ordering rule.</b> The three scores are on unrelated scales, so they are min-max
+normalised within the feasible set and each construct takes its lowest normalised objective.
+That prefers a design that is adequate three times over one that is excellent twice and poor
+once, which is the right preference when all three requirements have to hold at once.</p>
 {R.front_table(RANK_FRONT, RANK_OBJECTIVES, RANK_SHORTLIST)}
+{chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
+   "marked.")}
+</div></details>
 
-{chart("pareto_panels", "The three scores plotted pairwise, with the nondominated set marked.")}
+<h3 class="mod"><span>Final screen</span>Further assessment of the shortlisted candidates</h3>
+<div class="stack">
+<p>The {N['rank_shortlist']} shortlisted constructs were modelled with their antigen using
+Boltz-2, to assess whether the mask occupied the known paratope and prevented the antigen from
+binding where it binds in the deposited structure.</p>
+<p><b>One of the {N['rank_shortlist']} candidates, <span class="mono">{FP_ID}</span>, satisfied
+both structural criteria</b> and was therefore prioritised for experimental testing. Its mask
+places {FP_MASK_ON:.0f}% of its contacts on the paratope, and the antigen&rsquo;s contacts there
+fall from {FP_REF_ON:.0f}% in the free-nanobody control to {FP_ANTIGEN_ON:.0f}%.</p>
+<p>This is a structural prediction, not evidence of functional switching. Mask affinity,
+dissociation following cleavage and recovery of antigen binding remain to be established.</p>
+</div>
+<div class="two">
+<div class="viewer">
+<div class="vbar"><span class="eyebrow">Reference &middot; free nanobody with antigen</span>
+<button data-spin="finalref">spin</button></div>
+<div class="vstage" id="stage-final-ref"></div>
+<div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>{R.CDR_KEY}
+<span><i style="background:#C06014"></i>paratope, sticks</span>
+<span><i style="background:#E0C49A"></i>antigen</span></div>
+</div>
+<div class="viewer">
+<div class="vbar"><span class="eyebrow">Selected &middot; <span class="mono">{FP_ID}</span> with
+antigen</span><button data-spin="finalmask">spin</button></div>
+<div class="vstage" id="stage-final-mask"></div>
+<div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>{R.CDR_KEY}
+<span><i style="background:#C06014"></i>paratope, sticks</span>
+<span><i style="background:#8C72AD"></i>mask and linker</span>
+<span><i style="background:#E0C49A"></i>antigen</span></div>
+</div>
+</div>
+<div class="stack">
+<p class="dim">Both predictions are shown in the same frame: the construct&rsquo;s model is
+superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agree to
+{FP_RMSD:.2f} Å. Anything that moves between the two views moves relative to the nanobody.</p>
+</div>
 </section>
 
 <section class="sec">
@@ -1698,7 +1762,7 @@ Data Bank.</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
-<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES))}</script>
+<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES)).replace("__FINALPAIR__", json.dumps(FINAL_PAIR_JS))}</script>
 </body></html>"""
 
 import re

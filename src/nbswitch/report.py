@@ -253,7 +253,8 @@ const CDRS = __CDRS__;
 const TOP_PARATOPE = __TOPPARA__;
 const TOXIN_CONTACT = __TOXCONTACT__;
 const SCORES = __SCORES__;
-let v1 = null, v2 = null;
+const FINAL_PAIR = __FINALPAIR__;
+let v1 = null, v2 = null, vRef = null, vMask = null;
 
 // Sticks are drawn with element colouring on a region-tinted carbon, so
 // nitrogen, oxygen and sulfur read as themselves while the residue still
@@ -296,15 +297,48 @@ function boot() {
     v1.zoomTo(); v1.zoom(1.75); v1.render();
   });
 
+  bootFinalPair();
+
   v2 = $3Dmol.createViewer('stage-designed', {backgroundColor: '#FFFFFF'});
   loadDesigned(document.getElementById('pick').value);
   document.getElementById('pick').addEventListener('change',
     e => loadDesigned(e.target.value));
   document.querySelectorAll('[data-spin]').forEach(b =>
     b.addEventListener('click', () => {
-      const v = b.dataset.spin === 'solved' ? v1 : v2;
+      const named = {solved: v1, designed: v2, finalref: vRef, finalmask: vMask};
+      const v = named[b.dataset.spin] || v2;
       v.spin(v.isSpinning && v.isSpinning() ? false : 'y');
     }));
+}
+
+// The final screen: the same nanobody in two predictions, already
+// superposed by stage 19b, so one camera serves both. Each viewer keeps its
+// own camera object, so the zoom is applied identically rather than linked -
+// linking them would let a drag on one silently reframe the other.
+function bootFinalPair() {
+  if (!FINAL_PAIR || !document.getElementById('stage-final-ref')) return;
+  const paint = function (view, spec) {
+    jQuery.get('structures/' + spec.file, function (data) {
+      view.addModel(data, 'pdb');
+      view.setStyle({chain: spec.vhh}, {cartoon: {colorfunc: function (atom) {
+        return nanobodyColour(atom.resi, 0, '#337D79');
+      }}});
+      view.addStyle({chain: spec.vhh, resi: PARATOPE}, STICK_PARATOPE);
+      view.setStyle({chain: spec.antigen}, {cartoon: {color: '#E0C49A',
+                                                      opacity: 0.95}});
+      if (spec.mask) {
+        view.setStyle({chain: spec.mask}, {cartoon: {color: '#8C72AD'}});
+        view.addStyle({chain: spec.mask}, STICK_MASK);
+      }
+      view.zoomTo({chain: spec.vhh});
+      view.zoom(1.5);
+      view.render();
+    });
+  };
+  vRef = $3Dmol.createViewer('stage-final-ref', {backgroundColor: '#FFFFFF'});
+  vMask = $3Dmol.createViewer('stage-final-mask', {backgroundColor: '#FFFFFF'});
+  paint(vRef, FINAL_PAIR.reference);
+  paint(vMask, FINAL_PAIR.masked);
 }
 
 function loadDesigned(id) {
@@ -462,8 +496,15 @@ def copy_assets(library):
     # docs/ mirrors the current library rather than accumulating. Renaming the
     # constructs left thirty models from an earlier run in place, and the
     # viewer offered them in its picker, where selecting one did nothing.
+    # structures that belong to a stage rather than to the library: the
+    # reference complex, the ensemble, and the final screen's superposed pair
+    keep = {"ensemble", "final_reference", "final_masked"}
+    for extra in ("final_reference.pdb", "final_masked.pdb"):
+        src = STRUCTURES / extra
+        if src.exists():
+            shutil.copy(src, DOCS / "structures" / extra)
     for old in (DOCS / "structures").glob("*.pdb"):
-        if old.name in wanted or old.stem == "ensemble" or old.stem[0].isdigit():
+        if old.name in wanted or old.stem in keep or old.stem[0].isdigit():
             continue
         old.unlink()
     return DOCS
@@ -847,8 +888,8 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 
 def architecture_schematic() -> str:
-    """One estimation, two independent design stages, an assembly, three scores, a ranking."""
-    W, H = 980, 1150
+    """One estimation, two design stages, an assembly, three scores, a selection."""
+    W, H = 980, 1196
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
          f'role="img" aria-label="Computational pipeline">',
          '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
@@ -976,14 +1017,23 @@ def architecture_schematic() -> str:
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    s.append(box(166, 936, 648, 150, CHROME, "06", "Multiobjective ranking",
-                 ["The nondominated set, with no weights applied, so no",
-                  "score can compensate for another."],
-                 ["Pareto non-domination"],
-                 available=["NSGA-II · hypervolume · hard thresholds",
-                            "uncertainty- and diversity-based selection"]))
-    s.append(arrow(490, 1086, 490, 1104))
-    s.append(band(1108, "OUTPUT · CANDIDATES THAT NO OTHER CANDIDATE BEATS ON ALL THREE"))
+    # the alternatives listed here were NSGA-II, hypervolume and
+    # uncertainty-based selection, none of which this pipeline runs, beside
+    # hard thresholds and diversity selection, which it does. The methods line
+    # now names what the stage actually does and the list is gone. The old
+    # summary also said no score can compensate for another; that is what the
+    # hard constraints do, not non-domination, which keeps a design that is
+    # poor on one objective as long as nothing beats it on all three.
+    s.append(box(166, 936, 648, 128, CHROME, "06", "Multiobjective selection",
+                 ["Apply minimum requirements, take the nondominated",
+                  "designs, and shortlist a diverse set of them."],
+                 ["hard constraints · Pareto non-domination",
+                  "maximin · one per distinct mask"]))
+    s.append(arrow(490, 1064, 490, 1082))
+    s.append(band(1086, "FINAL STRUCTURAL SCREEN · BOLTZ-2 ON THE MASKED "
+                        "CONSTRUCT WITH ITS ANTIGEN", 44))
+    s.append(arrow(490, 1130, 490, 1148))
+    s.append(band(1152, "OUTPUT · CANDIDATES PRIORITISED FOR EXPERIMENTAL TESTING"))
     s.append("</svg>")
     return "".join(s)
 
@@ -1739,6 +1789,76 @@ def construct_schematic(c, free_vhh_len=None):
             'aria-label="One assembled construct, drawn to scale">')
     o.append("</svg>")
     return "".join(o)
+
+def selection_funnel(f) -> str:
+    """How 348 scored designs became one worth making.
+
+    The three pairwise score plots showed the front; they did not show the
+    narrowing, which is what the section is about. The final structural screen
+    is drawn apart from the ranking because it answers a different question:
+    the ranking says which designs are worth examining, Boltz-2 says whether
+    the mask actually blocks the antigen.
+    """
+    W = 980
+    ACC, OK = "#2D5BD1", "#1F6B4A"
+    o = [None,
+         '<defs><marker id="sf" viewBox="0 0 10 10" refX="9" refY="5" '
+         'markerWidth="6" markerHeight="6" orient="auto">'
+         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{INK3}"/></marker></defs>',
+         '<style>'
+         '.s-n{font:600 30px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.s-t{font:600 13px Inter,system-ui,sans-serif}'
+         '.s-s{font:11px Inter,system-ui,sans-serif}'
+         '.s-h{font:600 9.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '</style>']
+
+    def label(x, y, text, cls="s-s", fill=INK2, anchor="middle"):
+        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+                 f'text-anchor="{anchor}">{text}</text>')
+
+    def step(x, w, y, num, title, sub, accent=INK, wash="#FFFFFF"):
+        o.append(f'<rect x="{x}" y="{y}" width="{w}" height="104" rx="6" '
+                 f'fill="{wash}" stroke="{RULE}" stroke-width="1.2"/>')
+        cx = x + w / 2
+        label(cx, y + 42, f"{num:,}", "s-n", accent)
+        label(cx, y + 62, title, "s-t", INK)
+        label(cx, y + 80, sub, "s-s", INK3)
+
+    y = 22
+    label(0, 11, "RANKING", "s-h", CHROME, "start")
+    # the screen card carries the longest sub-label, so it gets the width:
+    # at 236 a side the three ranking cards left it 158 px and it overran
+    w, gap = 200.0, 26.0
+    cells = [(f["n_evaluated"], "scored constructs",
+              "all three scores", INK),
+             (f["n_front"], "Pareto candidates",
+              f"{f['n_evaluated'] - f['n_front']} beaten on all three", INK),
+             (f["n_shortlist"], "shortlisted", "maximin, one per mask", INK)]
+    for i, (num, title, sub, col) in enumerate(cells):
+        x = i * (w + gap)
+        step(x, w, y, num, title, sub, col)
+        if i:
+            o.append(f'<line x1="{x - gap + 6}" y1="{y + 52}" x2="{x - 6}" '
+                     f'y2="{y + 52}" stroke="{INK3}" stroke-width="1.2" '
+                     f'marker-end="url(#sf)"/>')
+
+    # the screen is a separate question, so it is drawn across a divider
+    xd = 3 * w + 2 * gap + 44
+    o.append(f'<line x1="{xd - 22}" y1="{y - 14}" x2="{xd - 22}" y2="{y + 118}" '
+             f'stroke="{RULE}" stroke-width="1.2" stroke-dasharray="4 4"/>')
+    label(xd, 11, "FINAL STRUCTURAL SCREEN · BOLTZ-2", "s-h", CHROME, "start")
+    step(xd, W - xd, y, f["n_worth"], "prioritised for testing",
+         "mask on the paratope, antigen displaced", OK, "#F3F8F5")
+    o.append(f'<line x1="{xd - 38}" y1="{y + 52}" x2="{xd - 6}" y2="{y + 52}" '
+             f'stroke="{INK3}" stroke-width="1.2" marker-end="url(#sf)"/>')
+
+    H = int(y + 104 + 6)
+    o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
+            'xmlns="http://www.w3.org/2000/svg" role="img" '
+            'aria-label="From scored constructs to one worth making">')
+    o.append("</svg>")
+    return "".join(o)
+
 
 def pipeline_funnel(f) -> str:
     """What the worked example generated, evaluated and selected.
