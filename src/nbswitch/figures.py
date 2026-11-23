@@ -587,7 +587,7 @@ def affinity_by_length(tether, built_lengths=(12, 16, 20, 24, 28, 32)):
     best = tether["best_per_terminus"]["N"]
     lo_y, hi_y = 1e-9, 1e-1
 
-    fig, ax = plt.subplots(figsize=(8.6, 4.2))
+    fig, ax = plt.subplots(figsize=(5.4, 4.1))
     ax.grid(False)
     ax.set_yscale("log")
     ax.set_xlim(n.min(), n.max())
@@ -601,24 +601,24 @@ def affinity_by_length(tether, built_lengths=(12, 16, 20, 24, 28, 32)):
     ax.plot(n, floor, color=BAD_INK, lw=1.6, zorder=3)
     ax.plot(n[open_], ceil[open_], color=BAD_INK, lw=1.6, zorder=3)
 
-    ax.text(n.max() - 1.0, np.sqrt(lo_y * floor[0]), "too tight\nmask stays bound",
-            ha="right", va="center", color=BAD_INK, fontsize=8.6, zorder=4)
-    ax.text(n.max() - 1.0, 2.2e-2, "too weak\ndoes not mask", ha="right",
-            va="center", color=BAD_INK, fontsize=8.6, zorder=4)
+    ax.text(n.max() - 1.0, np.sqrt(lo_y * floor[0]), "too tight",
+            ha="right", va="center", color=BAD_INK, fontsize=9, zorder=4)
+    ax.text(n.max() - 1.0, 2.6e-2, "too weak", ha="right",
+            va="center", color=BAD_INK, fontsize=9, zorder=4)
     mid = n.searchsorted(26)
     ax.text(n[mid], np.sqrt(floor[mid] * ceil[mid]), "usable range",
             ha="center", va="center", color=OK_INK, fontsize=12,
             fontweight="bold", zorder=4)
     ax.text(n[mid], np.sqrt(floor[mid] * ceil[mid]) / 7.0,
-            "masks while tethered, releases after cleavage", ha="center",
-            va="center", color=OK_INK, fontsize=7.8, zorder=4)
+            "masks, then releases", ha="center",
+            va="center", color=OK_INK, fontsize=8, zorder=4)
 
     b = best["linker_residues"]
     ax.plot([b, b], [floor[0], best["km_max_for_masking_M"]], color=INK2, lw=1.1,
             ls=(0, (4, 3)), zorder=5)
-    ax.annotate(f"widest at {b} residues\n{_si_molar(best['km_min_for_release_M'])}"
+    ax.annotate(f"widest at {b}\n{_si_molar(best['km_min_for_release_M'])}"
                 f" to {_si_molar(best['km_max_for_masking_M'])}",
-                xy=(b, best["km_max_for_masking_M"]), xytext=(b + 2.0, 2.4e-3),
+                xy=(b, best["km_max_for_masking_M"]), xytext=(b + 3.0, 1.6e-3),
                 color=INK, fontsize=8.6, zorder=6,
                 arrowprops=dict(arrowstyle="-", color=INK2, lw=0.9))
 
@@ -626,8 +626,8 @@ def affinity_by_length(tether, built_lengths=(12, 16, 20, 24, 28, 32)):
         ax.plot([x], [lo_y * 1.45], marker="^", ms=5, color=CHROME,
                 clip_on=False, zorder=6)
     ax.text(float(np.mean(built_lengths)), lo_y * 2.6,
-            "lengths built and folded", ha="center", va="bottom", color=CHROME,
-            fontsize=7.6, zorder=6)
+            "lengths built", ha="center", va="bottom", color=CHROME,
+            fontsize=8, zorder=6)
 
     ax.set_xlabel("linker length (residues)", color=INK3, fontsize=8.5)
     ax.set_ylabel("mask dissociation constant K$_D$", color=INK3, fontsize=8.5)
@@ -651,9 +651,9 @@ def usable_affinity(tether):
     best = tether["best_per_terminus"]["N"]
     lo = best["km_min_for_release_M"]
     hi = best["km_max_for_masking_M"]
-    left, right = 1e-9, 1e-2
+    left, right = 1e-9, 1e-1
 
-    fig, ax = plt.subplots(figsize=(8.6, 2.5))
+    fig, ax = plt.subplots(figsize=(5.4, 2.1))
     ax.grid(False)
     ax.set_xscale("log")
     ax.set_xlim(left, right)
@@ -673,10 +673,9 @@ def usable_affinity(tether):
         ax.text(mid, 0.54, sub, ha="center", va="center", color=ink,
                 fontsize=7.4, zorder=4)
 
-    region(left, lo, "Too tight", "mask stays bound", BAD_INK, 10)
-    region(lo, hi, "Usable range",
-           "masks while tethered, releases after cleavage", OK_INK, 11.5)
-    region(hi, right, "Too weak", "does not mask", BAD_INK, 10)
+    region(left, lo, "Too tight", "stays bound", BAD_INK, 9.5)
+    region(lo, hi, "Usable range", "masks, then releases", OK_INK, 11)
+    region(hi, right, "Too weak", "does not mask", BAD_INK, 9.5)
 
     for x in (lo, hi):
         ax.plot([x, x], [bot - 0.09, top], color=INK2, lw=1.1, ls=(0, (4, 3)),
@@ -689,9 +688,9 @@ def usable_affinity(tether):
         ax.spines[side].set_visible(False)
     ax.spines["bottom"].set_position(("data", 0.06))
     ax.spines["bottom"].set_color(INK3)
-    ticks = [1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2]
+    ticks = [10 ** e for e in range(-9, 0)]
     ax.set_xticks(ticks)
-    ax.set_xticklabels([_si_molar(t) if t in (1e-9, 1e-5, 1e-2) else ""
+    ax.set_xticklabels([_si_molar(t) if t in (1e-9, 1e-5, 1e-1) else ""
                         for t in ticks])
     ax.tick_params(axis="x", length=3, pad=3, labelsize=8, colors=INK3)
     ax.set_xlabel("mask dissociation constant K$_D$ (log scale) "

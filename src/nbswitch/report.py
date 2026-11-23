@@ -139,6 +139,8 @@ td.dead{color:var(--chrome);font-weight:600}
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
+.stackfig{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.stackfig figure{margin:0}
 .two .viewer{display:flex;flex-direction:column}
 .two .vstage{flex:1;height:auto;min-height:330px}
 .two figure{display:flex;flex-direction:column;justify-content:center}

@@ -135,6 +135,8 @@ td.dead{color:var(--chrome);font-weight:600}
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
+.stackfig{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.stackfig figure{margin:0}
 .two .viewer{display:flex;flex-direction:column}
 .two .vstage{flex:1;height:auto;min-height:330px}
 .two figure{display:flex;flex-direction:column;justify-content:center}
@@ -342,7 +344,6 @@ contains 19 residues. The N-terminus is 12.4 Å from the nearest
 paratope residue, against 27.4 Å for the C-terminus, so the N-terminus is the
 attachment point used for mask design.</p></div>
 
-<figure class="chart wide"><img src="figures/affinity_by_length.svg" alt="Predicted mask-affinity range against linker length. The release floor is set by competition with the antigen and does not move with the tether; the masking ceiling is what the tether buys. Triangles mark the lengths built and folded."><figcaption>Predicted mask-affinity range against linker length. The release floor is set by competition with the antigen and does not move with the tether; the masking ceiling is what the tether buys. Triangles mark the lengths built and folded.</figcaption></figure>
 <div class="two">
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure · 9RIU</span>
@@ -355,7 +356,10 @@ attachment point used for mask design.</p></div>
 <span><i style="background:#B8541F"></i>antigen face within 3.5 &#8491;</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
+<div class="stackfig">
+<figure class="chart"><img src="figures/affinity_by_length.svg" alt="Predicted mask-affinity range against linker length. The release floor is set by competition with the antigen and does not move with the tether; the masking ceiling is what the tether buys. Triangles mark the lengths built and folded."><figcaption>Predicted mask-affinity range against linker length. The release floor is set by competition with the antigen and does not move with the tether; the masking ceiling is what the tether buys. Triangles mark the lengths built and folded.</figcaption></figure>
 <figure class="chart"><img src="figures/usable_affinity.svg" alt="The same constraint at the widest point, 14 residues."><figcaption>The same constraint at the widest point, 14 residues.</figcaption></figure>
+</div>
 </div>
 
 <div class="stack">

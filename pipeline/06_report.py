@@ -1142,10 +1142,6 @@ contains {N['n_paratope']} residues. The N-terminus is {N['n_term']:.1f} Å from
 paratope residue, against {N['c_term']:.1f} Å for the C-terminus, so the N-terminus is the
 attachment point used for mask design.</p></div>
 
-{chart_wide("affinity_by_length",
-   "Predicted mask-affinity range against linker length. The release floor is set by "
-   "competition with the antigen and does not move with the tether; the masking ceiling "
-   "is what the tether buys. Triangles mark the lengths built and folded.")}
 <div class="two">
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure · {PDB_ID}</span>
@@ -1158,8 +1154,14 @@ attachment point used for mask design.</p></div>
 <span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
+<div class="stackfig">
+{chart("affinity_by_length",
+   "Predicted mask-affinity range against linker length. The release floor is set by "
+   "competition with the antigen and does not move with the tether; the masking ceiling "
+   "is what the tether buys. Triangles mark the lengths built and folded.")}
 {chart("usable_affinity",
    "The same constraint at the widest point, " + str(N["linker_best"]) + " residues.")}
+</div>
 </div>
 
 <div class="stack">
