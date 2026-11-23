@@ -208,6 +208,7 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
   color:var(--chrome);margin-bottom:10px}
 h3.mod{font-size:1.18rem;margin:38px 0 8px}
 h3.mod span{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-right:12px}
+h4.subh{font-size:1.02rem;margin:30px 0 6px;color:var(--ink)}
 .states{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:18px 0 10px}
 .stfig{margin:0;background:var(--panel);border:1px solid var(--rule);border-radius:3px;
   padding:14px;display:flex;flex-direction:column;gap:10px}
@@ -1672,100 +1673,167 @@ def alignment_control(without: float, with_msa: float) -> str:
         f'into separate chains joined by a bond, so the improvement there cannot '
         f'be attributed to the alignment alone.</p>')
 
+_WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven",
+          "eight", "nine", "ten", "eleven", "twelve")
+
+
+def word(n):
+    """Small counts spelled out, so prose reads as prose.
+
+    The count still comes from the data; only its rendering changes, which is
+    the difference between "nine other MMPs" and a literal nine in the text.
+    """
+    return _WORDS[n] if 0 <= n < len(_WORDS) else f"{n:,}"
+
+
+def _mmp_names(names):
+    """['MMP2','MMP9','MMP8'] -> 'MMP-2, -8, -9', in numeric order."""
+    nums = sorted(int(n.replace("MMP", "")) for n in names)
+    return "MMP-" + ", -".join(str(n) for n in nums)
+
+
+def _wrap(text, width):
+    out, line = [], ""
+    for word in text.split(" "):
+        if line and len(line) + 1 + len(word) > width:
+            out.append(line)
+            line = word
+        else:
+            line = f"{line} {word}" if line else word
+    if line:
+        out.append(line)
+    return out
+
 
 def linker_schematic(gen, lengths, substrate_len, reference) -> str:
-    """How a linker was designed, and how its length was varied.
+    """How a protease-cleavable linker was designed, in four steps.
 
-    Two things happen to a linker and they are independent: a generator picks
-    the ten residues the protease has to recognise, and the flanks around
-    those residues are grown or trimmed to change how far the mask can reach.
-    Holding one while varying the other is what makes either attributable.
+    Sequence specificity and linker geometry are separate decisions, and the
+    diagram keeps them apart because the pipeline does. A generator picks the
+    residues the protease has to recognise; the flanks around those residues
+    set how far the mask can reach. Varying one does not confound the other.
     """
-    W, H = 980, 560
-    o = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
-         f'role="img" aria-label="Linker design and length series">',
+    W = 980
+    CUT, FLANKC = "#2D5BD1", "#9AA6AE"
+    GOOD, BAD, NEUT = "#1F6B4A", "#9C3B3B", "#6E7880"
+    o = [None,                               # the svg tag, once H is known
          '<defs><marker id="lk" viewBox="0 0 10 10" refX="9" refY="5" '
-         f'markerWidth="7" markerHeight="7" orient="auto">'
-         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{INK3}"/></marker></defs>',
+         'markerWidth="7" markerHeight="7" orient="auto">'
+         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{INK3}"/></marker>'
+         '<marker id="lk2" viewBox="0 0 10 10" refX="5" refY="5" '
+         'markerWidth="6" markerHeight="6" orient="auto">'
+         f'<path d="M 10 0 L 0 5 L 10 10 z" fill="{INK3}"/></marker></defs>',
          '<style>'
          '.l-h{font:600 15px Inter,system-ui,sans-serif}'
          '.l-b{font:13px Inter,system-ui,sans-serif}'
          '.l-m{font:12.5px ui-monospace,monospace}'
          '.l-s{font:600 11px ui-monospace,monospace;letter-spacing:.11em}'
          '.l-n{font:600 12px ui-monospace,monospace}'
+         '.l-xl{font:600 30px ui-monospace,monospace}'
          '</style>']
-    CUT, FLANK, MASK, VHH = "#2D5BD1", "#9AA6AE", "#C06014", "#337D79"
 
     def label(x, y, text, cls="l-b", fill=INK2, anchor="start"):
         o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
                  f'text-anchor="{anchor}">{text}</text>')
 
-    # --- part one: choosing the ten residues -----------------------------
-    label(0, 18, "A · which ten residues the protease sees", "l-s", INK3)
-    steps = [("target profile", f"MMP-2, -8, -9 up<br>{gen['n_off']} down, "
-                                f"{gen['n_neutral']} at zero"),
-             ("CleaveNet", "conditional<br>generation"),
-             (f"{gen['n_generated']:,} peptides", "ten residues each"),
-             ("selectivity", "mean target z<br>− mean off-target z"),
-             (f"{gen['n_kept']} kept", "+ 2 controls")]
-    bw, gap, y0 = 168, 32, 34
-    for i, (head, sub) in enumerate(steps):
-        x = i * (bw + gap)
-        fill = "#EAEFFB" if i in (1, 4) else "#FFFFFF"
-        o.append(f'<rect x="{x}" y="{y0}" width="{bw}" height="68" rx="4" '
-                 f'fill="{fill}" stroke="{RULE}" stroke-width="1.2"/>')
-        label(x + 14, y0 + 26, head, "l-h", INK)
-        ty = y0 + 46
-        for line in sub.split("<br>"):
-            label(x + 14, ty, line, "l-m", INK3)
+    def head(n, title, y):
+        o.append(f'<rect x="0" y="{y}" width="24" height="24" rx="4" fill="{INK}"/>')
+        label(12, y + 17, str(n), "l-n", "#FFFFFF", "middle")
+        label(36, y + 17, title, "l-h", INK)
+        return y + 24
+
+    def panel(x, y, w, h, colour, opacity="0.05"):
+        o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="5" '
+                 f'fill="{colour}" fill-opacity="{opacity}" stroke="{colour}" '
+                 f'stroke-opacity="0.45" stroke-width="1.2"/>')
+
+    # --- 1 · the profile the generator is asked for ----------------------
+    y = head(1, "Define the desired cleavage profile", 0)
+    cw, gap, cy, ch = (W - 32) / 3, 16, y + 14, 106
+    groups = [(GOOD, gen["n_target"], "High cleavage", gen["target_names"],
+               gen["target_z"]),
+              (BAD, gen["n_off"], "Low cleavage", gen["off_names"],
+               gen["off_z"]),
+              (NEUT, gen["n_neutral"], "Unspecified", gen["neutral_names"], 0.0)]
+    for i, (col, n, want, names, z) in enumerate(groups):
+        x = i * (cw + gap)
+        panel(x, cy, cw, ch, col)
+        o.append(f'<rect x="{x}" y="{cy}" width="4" height="{ch}" rx="2" fill="{col}"/>')
+        label(x + 16, cy + 27, f"{n} MMPs", "l-h", col)
+        label(x + cw - 14, cy + 27,
+              "z = 0" if not z else f"z = {z:+.0f}", "l-n", col, "end")
+        label(x + 16, cy + 48, want, "l-b", INK2)
+        ty = cy + 70
+        for line in _wrap(_mmp_names(names), 32):
+            label(x + 16, ty, line, "l-m", INK3)
             ty += 15
-        if i < len(steps) - 1:
-            o.append(f'<line x1="{x+bw+5}" y1="{y0+34}" x2="{x+bw+gap-7}" '
-                     f'y2="{y0+34}" stroke="{INK3}" stroke-width="1.2" '
-                     f'marker-end="url(#lk)"/>')
+    ny = cy + ch + 22
+    for line in _wrap(
+            f"The {gen['n_neutral']} unspecified proteases are left at zero, which "
+            "asks for no preference rather than for resistance, and they are "
+            "excluded from the score in step 3.", 108):
+        label(0, ny, line, "l-b", INK2)
+        ny += 19
 
-    # --- part two: the construct, and what the flanks do -----------------
-    label(0, 158, "B · where the linker sits in the construct", "l-s", INK3)
-    by, bh = 174, 40
-    parts = [("mask", MASK, 150), ("linker", FLANK, 250), ("nanobody", VHH, 330)]
+    # --- 2 · generation ---------------------------------------------------
+    y = head(2, "CleaveNet \u2014 generate sequences", ny + 8)
+    py, phh = y + 14, 64
+    panel(0, py, W, phh, CUT, "0.06")
+    n_str = f"{gen['n_generated']:,}"
+    label(24, py + 44, n_str, "l-xl", CUT)
+    nx = 24 + len(n_str) * 30 * 0.602 + 26
+    label(nx, py + 32, f"unique {substrate_len}-residue substrates", "l-h", INK)
+    label(nx, py + 51,
+          "drawn in one conditional run against the profile above", "l-m", INK3)
+
+    # --- 3 · scoring and selection ---------------------------------------
+    y = head(3, "Predict cleavage and select candidates", py + phh + 26)
+    ey, ehh = y + 14, 50
+    panel(0, ey, 430, ehh, INK3, "0.04")
+    o.append(f'<text x="24" y="{ey + 32}" class="l-m" fill="{INK}">'
+             f'S  =  \u27e8z\u27e9<tspan dy="4" font-size="10">target</tspan>'
+             f'<tspan dy="-4">  \u2212  \u27e8z\u27e9</tspan>'
+             f'<tspan dy="4" font-size="10">off-target</tspan></text>')
+    label(452, ey + 22,
+          f"Retain the {gen['n_kept']} highest-scoring sequences", "l-h", INK)
+    label(452, ey + 42,
+          f"and add {gen['n_controls']} controls", "l-b", INK2)
+
+    # --- 4 · assembly, and what the flanks are for ------------------------
+    y = head(4, "Assemble linkers", ey + ehh + 26)
+    unit, by, bh = 16.0, y + 20, 42
+    fl = (reference - substrate_len) // 2
+    segs = [("Gly/Ser flank", FLANKC, fl * unit, 0.34),
+            ("cleavage sequence", CUT, substrate_len * unit, 0.85),
+            ("Gly/Ser flank", FLANKC, fl * unit, 0.34)]
     x = 0
-    for name, col, w in parts:
+    for name, col, w, op in segs:
         o.append(f'<rect x="{x}" y="{by}" width="{w}" height="{bh}" rx="3" '
-                 f'fill="{col}" fill-opacity="0.16" stroke="{col}" '
-                 f'stroke-width="1.4"/>')
-        label(x + w / 2, by + 25, name, "l-h", col, "middle")
-        x += w + 6
-    label(x + 12, by + 25, "N → C", "l-m", INK3)
-    o.append(f'<line x1="156" y1="{by+bh+8}" x2="406" y2="{by+bh+8}" '
-             f'stroke="{INK3}" stroke-width="1"/>')
-    label(281, by + bh + 26,
-          "only this part changes length; the mask and the nanobody do not",
+                 f'fill="{col}" fill-opacity="{op}"/>')
+        label(x + w / 2, by + 26, name, "l-m",
+              "#FFFFFF" if col == CUT else INK2, "middle")
+        x += w
+    lo, hi = min(lengths), max(lengths)
+    for sx, sw in ((0, fl * unit), (x - fl * unit, fl * unit)):
+        o.append(f'<line x1="{sx + 4}" y1="{by + bh + 11}" x2="{sx + sw - 4}" '
+                 f'y2="{by + bh + 11}" stroke="{INK3}" stroke-width="1.1" '
+                 f'marker-start="url(#lk2)" marker-end="url(#lk)"/>')
+    label(x + 18, by + 26, f"{reference} residues, shown", "l-m", INK3)
+    label(x / 2, by + bh + 30,
+          f"{(lo - substrate_len) // 2} to {(hi - substrate_len) // 2} residues a side",
           "l-m", INK3, "middle")
+    ly = by + bh + 56
+    for line in _wrap(
+            f"Varying the flanks alone gives linkers of {lo} to {hi} residues. "
+            f"The {substrate_len}-residue substrate is identical in every one, so a "
+            "difference in masking across the series is reach and not cleavability.",
+            108):
+        label(0, ly, line, "l-b", INK2)
+        ly += 19
 
-    # --- part three: the ladder ------------------------------------------
-    label(0, 288, "C · how length was varied", "l-s", INK3)
-    unit, x0, ry = 9.4, 92, 306
-    longest = max(lengths)
-    for i, n in enumerate(sorted(lengths)):
-        flank = (n - substrate_len) // 2
-        y = ry + i * 33
-        label(0, y + 17, f"n = {n}", "l-n", INK if n != reference else CUT)
-        fw, cw = flank * unit, substrate_len * unit
-        o.append(f'<rect x="{x0}" y="{y}" width="{fw}" height="22" rx="2" '
-                 f'fill="{FLANK}" fill-opacity="0.30"/>')
-        o.append(f'<rect x="{x0+fw}" y="{y}" width="{cw}" height="22" rx="2" '
-                 f'fill="{CUT}" fill-opacity="0.85"/>')
-        o.append(f'<rect x="{x0+fw+cw}" y="{y}" width="{fw}" height="22" rx="2" '
-                 f'fill="{FLANK}" fill-opacity="0.30"/>')
-        if i == 0:
-            label(x0 + fw + cw / 2, y - 7, "cleavage site, ten residues, unchanged",
-                  "l-m", CUT, "middle")
-        label(x0 + longest * unit + 18, y + 16,
-              f"{flank} Gly/Ser each side", "l-m", INK3)
-    o.append(f'<line x1="{x0}" y1="{ry - 2}" x2="{x0}" y2="{ry + 6 * 33 - 8}" '
-             f'stroke="{RULE}" stroke-width="1"/>')
-    label(0, H - 10,
-          "The substrate is identical in every row, so a difference in masking "
-          "across the series is reach and not cleavability.", "l-b", INK2)
+    H = int(ly + 4)
+    o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
+            'xmlns="http://www.w3.org/2000/svg" role="img" '
+            'aria-label="Four-step design of a protease-cleavable linker">')
     o.append("</svg>")
     return "".join(o)

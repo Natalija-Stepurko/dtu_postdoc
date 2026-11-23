@@ -1018,13 +1018,33 @@ _LK = load_json("02b_linkers.json")
 #: stage 02b records which proteases it asked for and which it asked against,
 #: but not the full set CleaveNet scores, so the total comes from the module
 #: that built the profile rather than from a literal.
-from nbswitch.linkers import PROTEASES as _PROTEASES
-_N_PROTEASE = len(_PROTEASES)
+from nbswitch.linkers import PROTEASES as _PROTEASES, conditioning_profile
+_TGT, _OFF = _LK["target_proteases"], _LK["off_target_proteases"]
+_NEUTRAL = [p for p in _PROTEASES if p not in _TGT and p not in _OFF]
+_PROFILE = conditioning_profile().iloc[0]
 LINKER_GEN = {"n_generated": _LK["n_generated"], "n_kept": _LK["n_kept"],
-              "n_target": len(_LK["target_proteases"]),
-              "n_off": len(_LK["off_target_proteases"]),
-              "n_neutral": _N_PROTEASE - len(_LK["target_proteases"])
-                           - len(_LK["off_target_proteases"])}
+              "n_controls": _LK["n_controls"],
+              "n_target": len(_TGT), "n_off": len(_OFF),
+              "n_neutral": len(_NEUTRAL),
+              "target_names": _TGT, "off_names": _OFF,
+              "neutral_names": _NEUTRAL,
+              # the z-scores the profile actually carries, not restated here
+              "target_z": float(_PROFILE[_TGT[0]]),
+              "off_z": float(_PROFILE[_OFF[0]])}
+CLEAVE_TARGETS = ", ".join(f"MMP-{p[3:]}" for p in
+                           sorted(_TGT, key=lambda p: int(p[3:])))
+CLEAVE_TARGETS = " and ".join(CLEAVE_TARGETS.rsplit(", ", 1))
+_BY_ID = {l["id"]: l for l in _LK["linkers"]}
+CN_BEST = max(l["selectivity"] for l in _LK["linkers"]
+              if l.get("kind") == "generated")
+CTRL_GS = _BY_ID["ctrl_gs"]["selectivity"]
+CTRL_SCRAM = _BY_ID["ctrl_scram"]["selectivity"]
+# the claim is that the scramble holds composition fixed, so check it rather
+# than describe it: a scramble that is not one would make the control vacuous.
+_BEST_ID = max((l for l in _LK["linkers"] if l.get("kind") == "generated"),
+               key=lambda l: l["selectivity"])["substrate"]
+assert sorted(_BY_ID["ctrl_scram"]["substrate"]) == sorted(_BEST_ID), \
+    "the scrambled control is not a permutation of the best generated substrate"
 # the reference-length linkers are not length variants and carry no
 # total_length, so taking that field alone drops the reference from the series
 LENGTHS = sorted({len(x["sequence"]) for x in _LK["linkers"]})
@@ -1173,10 +1193,7 @@ approximated as a <i>worm-like chain</i>, the model commonly used to describe di
 linkers. Which terminus carries it is set by the structure. The N-terminus sits
 {N['n_term']:.1f} Å from the nearest paratope residue and {N['span_n']:.1f} Å from the paratope
 centroid, against {N['c_term']:.1f} Å and {N['span_c']:.1f} Å for the C-terminus, so the
-N-terminus is closer on both measures and is the attachment point used here. The C-terminus is not
-excluded by the model, only penalised by it: from there the widest window is
-{N['window_c']:.1f} decades at {N['linker_best_c']} residues, against {N['window']:.1f} decades at
-{N['linker_best']} from the N-terminus, and it needs a linker two and a half times as long.
+N-terminus is closer on both measures and is the attachment point used here.
 From the centroid distance of {N['span_n']:.1f} Å I estimated the effective local concentration of
 the mask, C<sub>eff</sub>, at every linker length, taking a contour length of
 {model['rise_per_residue_A']:.1f} Å per residue and a persistence length of
@@ -1233,16 +1250,36 @@ correspondence is established.</p></div>
 
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
+
+<h4 class="subh">Design of protease-cleavable linkers</h4>
 <figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
-<figcaption>How a linker is designed and how its length is varied. The sequence the
-protease has to recognise and the distance the mask has to travel are set independently,
-so either can be changed without confounding the other.</figcaption></figure>
+<figcaption>How a protease-cleavable linker is designed. The sequence the protease has to
+recognise and the distance the mask has to travel are set in separate steps, so either can
+be changed without confounding the other.</figcaption></figure>
+<div class="stack">
+<p>I used CleaveNet to generate {R.word(SUB_LEN)}-residue peptides predicted to be preferentially
+cleaved by {CLEAVE_TARGETS}, while limiting cleavage by {R.word(LINKER_GEN['n_off'])} other MMPs.</p>
+<p>The model generated {LINKER_GEN['n_generated']:,} sequences. I ranked them by the difference
+between their predicted cleavage scores for the target and off-target proteases, retaining
+{R.word(LINKER_GEN['n_kept'])} candidates and adding {R.word(LINKER_GEN['n_controls'])} controls.</p>
+<p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage motif
+and a scrambled version of the highest-scoring sequence. They test whether the predicted
+protease response depends on the designed sequence rather than on linker composition alone.
+It does: the scramble has the same {R.word(SUB_LEN)} amino acids in a different order and scores
+{CTRL_SCRAM:.2f} against {CN_BEST:.2f} for the sequence it was made from, and the Gly/Ser
+control scores {CTRL_GS:.2f}.</p>
+<p>The selected sequences were placed between flexible Gly/Ser segments to form complete
+linkers. By varying the length of these segments I could assess linker geometry separately
+from the predicted protease-recognition sequence.</p>
+<p><b>What this does and does not show.</b> CleaveNet was trained on human MMPs, not on snake
+venom metalloproteinases. These results demonstrate how to design a desired human-MMP cleavage
+profile; they do not establish selectivity at a viper bite site.</p></div>
+
 {mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
-     "poly-glycine controls. Linkers were not fixed sequences but generated: CleaveNet was "
-     "conditioned on a profile that asks for substrates the bite-site proteases cut and the "
-     "circulating ones do not, so cleavability constrains generation rather than filtering it "
-     "afterwards. ProteinMPNN then redesigned the mask positions on each folded construct with "
-     "the nanobody and linker held fixed.",
+     "poly-glycine controls. Linker substrates were generated under the cleavage profile above "
+     "rather than fixed in advance, so cleavability constrains generation instead of filtering "
+     "it afterwards. ProteinMPNN then redesigned the mask positions on each folded construct "
+     "with the nanobody and linker held fixed.",
      f"{N['n_constructs']} constructs in the initial library and {N['n_redesign']} distinct "
      f"redesigned masks. Every redesign scored better than its parent graft by ProteinMPNN's own "
      f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
