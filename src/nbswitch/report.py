@@ -1743,123 +1743,107 @@ def construct_schematic(c, free_vhh_len=None):
 def pipeline_funnel(f) -> str:
     """What the worked example generated, evaluated and selected.
 
-    The same numbers the table carried, as a shape. A table makes the reader
-    reconstruct where 252 came from and why 348 is not 349; the figure shows
-    two inputs meeting, one structure that is a reference rather than a
-    candidate, and three narrowings.
+    Three rows, one per phase, each a line of counts with the phase named in
+    the left gutter. The first version boxed every count and ran to 708 px of
+    height for twelve numbers; this fits the same numbers in a third of that,
+    which is the right size for something read once on the way past.
     """
     W = 980
     ACC, OK = "#2D5BD1", "#1F6B4A"
+    GUT, X0 = 104, 124
+    span = W - X0
+
     o = [None,
          '<defs><marker id="fn" viewBox="0 0 10 10" refX="9" refY="5" '
-         'markerWidth="7" markerHeight="7" orient="auto">'
+         'markerWidth="6" markerHeight="6" orient="auto">'
          f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{INK3}"/></marker></defs>',
          '<style>'
-         '.f-p{font:600 10.5px ui-monospace,monospace;letter-spacing:.16em}'
-         '.f-n{font:600 30px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
-         '.f-t{font:600 14.5px Inter,system-ui,sans-serif}'
-         '.f-s{font:12px Inter,system-ui,sans-serif}'
-         '.f-k{font:11px Inter,system-ui,sans-serif}'
+         '.f-p{font:600 9.5px ui-monospace,monospace;letter-spacing:.14em}'
+         '.f-n{font:600 23px ui-monospace,monospace;font-variant-numeric:tabular-nums}'
+         '.f-t{font:600 11.5px Inter,system-ui,sans-serif}'
+         '.f-s{font:10px Inter,system-ui,sans-serif}'
+         '.f-o{font:9.5px ui-monospace,monospace}'
          '</style>']
 
-    def label(x, y, text, cls="f-s", fill=INK2, anchor="start"):
+    def label(x, y, text, cls="f-s", fill=INK2, anchor="middle"):
         o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
                  f'text-anchor="{anchor}">{text}</text>')
 
-    def card(x, y, w, h, num, title, sub, over="", accent=INK, fill="#FFFFFF"):
-        o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" '
-                 f'fill="{fill}" stroke="{RULE}" stroke-width="1.2"/>')
-        cx, ty = x + w / 2, y + 24
+    def item(cx, y, num, title, sub="", over="", accent=INK):
         if over:
-            label(cx, ty, over, "f-k", INK3, "middle")
-            ty += 32
-        else:
-            ty += 14
-        label(cx, ty, f"{num:,}", "f-n", accent, "middle")
-        label(cx, ty + 23, title, "f-t", INK, "middle")
+            label(cx, y - 12, over, "f-o", INK3)
+        label(cx, y + 18, f"{num:,}", "f-n", accent)
+        label(cx, y + 34, title, "f-t", INK)
         if sub:
-            label(cx, ty + 42, sub, "f-s", INK3, "middle")
+            label(cx, y + 48, sub, "f-s", INK3)
 
-    def arrow(x, y0, y1):
-        o.append(f'<line x1="{x}" y1="{y0}" x2="{x}" y2="{y1}" stroke="{INK3}" '
-                 f'stroke-width="1.2" marker-end="url(#fn)"/>')
+    def link(x0, x1, y, glyph=""):
+        mid = (x0 + x1) / 2
+        if glyph:
+            label(mid, y + 4, glyph, "f-t", INK3)
+        else:
+            o.append(f'<line x1="{x0 + 6}" y1="{y}" x2="{x1 - 6}" y2="{y}" '
+                     f'stroke="{INK3}" stroke-width="1.1" marker-end="url(#fn)"/>')
 
-    def phase(y, h, text):
-        o.append(f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="8" '
-                 f'fill="#FBFBFA" stroke="{RULE}" stroke-width="1.2"/>')
-        label(W / 2, y + 22, text, "f-p", CHROME, "middle")
+    def row(y, h, tag):
+        o.append(f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="5" '
+                 f'fill="#FBFBFA" stroke="{RULE}" stroke-width="1"/>')
+        label(14, y + h / 2 + 3, tag, "f-p", CHROME, "start")
 
-    # --- 1 generate -------------------------------------------------------
-    p1h = 346
-    phase(0, p1h, "1 \u00b7 GENERATE")
-    cw, gap = (W - 3 * 26) / 2, 26
-    card(26, 40, cw, 118, f["n_masks"], "Mask sequences",
-         "grafts, variants and controls", "antigen interface", ACC)
-    card(26 + cw + gap, 40, cw, 118, f["n_linkers"], "Linker variants",
-         f"{f['n_motifs']} selected motifs and {f['n_linker_controls']} controls, "
-         "at several lengths",
-         f"CleaveNet \u00b7 {f['n_generated']:,} peptides", ACC)
-    for x in (26 + cw / 2, 26 + cw + gap + cw / 2):
-        o.append(f'<line x1="{x}" y1="158" x2="{x}" y2="174" stroke="{INK3}" '
-                 f'stroke-width="1.2"/>')
-    o.append(f'<line x1="{26 + cw / 2}" y1="174" x2="{26 + cw + gap + cw / 2}" '
-             f'y2="174" stroke="{INK3}" stroke-width="1.2"/>')
-    arrow(W / 2, 174, 190)
-    card(26, 192, W - 52, 66, f["n_pairs"], "mask\u2013linker combinations", "",
-         "", INK)
-    label(W / 2, 246, f"{f['n_masks']} masks \u00d7 {f['n_linkers']} linkers",
-          "f-s", INK3, "middle")
-    arrow(W / 2, 258, 274)
-    card(26, 276, W - 52, 54, f["n_structures"], "", "", "", INK)
-    label(W / 2 + 34, 310, "predicted structures", "f-t", INK, "start")
-    label(W / 2 - 34, 310,
-          f"{f['n_pairs']} constructs + 1 free V\u2095H + {f['n_redesigns']} redesigns",
-          "f-s", INK3, "end")
+    # --- 1 generate: two inputs, their product, and what was folded --------
+    r1, h1 = 0, 92
+    row(r1, h1, "1 GENERATE")
+    cells = [(f["n_masks"], "mask sequences", "grafts, variants, controls",
+              "antigen interface", ACC),
+             (f["n_linkers"], "linker variants",
+              f"{f['n_motifs']} motifs + {f['n_linker_controls']} controls",
+              f"CleaveNet \u00b7 {f['n_generated']:,} peptides", ACC),
+             (f["n_pairs"], "mask\u2013linker pairs", "every mask, every linker", "", INK),
+             (f["n_structures"], "predicted structures", "+ the free nanobody", "", INK)]
+    cw = span / len(cells)
+    for i, (num, title, sub, over, col) in enumerate(cells):
+        cx = X0 + i * cw + cw / 2
+        item(cx, r1 + 26, num, title, sub, over, col)
+        if i:
+            link(X0 + (i - 1) * cw + cw / 2 + 62, cx - 62, r1 + 44,
+                 "\u00d7" if i == 1 else "")
 
-    # --- 2 evaluate -------------------------------------------------------
-    y = p1h + 24
-    p2h = 166
-    phase(y, p2h, "2 \u00b7 EVALUATE")
-    card(26, y + 36, W - 52, 48, f["n_evaluated"], "", "", "", INK)
-    label(W / 2 + 34, y + 68, "candidate constructs", "f-t", INK, "start")
-    label(W / 2 - 34, y + 68, "the free nanobody is a reference, not a candidate",
-          "f-s", INK3, "end")
-    sw = (W - 52 - 2 * 18) / 3
-    # the coverage is on the figure because a three-box row invites the reading
-    # that some candidates are missing a score. None are.
-    for i, name in enumerate(("structural feasibility", "mask binding",
-                              "linker cleavability")):
-        x = 26 + i * (sw + 18)
-        o.append(f'<rect x="{x}" y="{y + 94}" width="{sw}" height="36" rx="4" '
-                 f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1.2"/>')
-        label(x + sw / 2, y + 112, name, "f-t", ACC, "middle")
-        label(x + sw / 2, y + 126, f"{f['n_evaluated']} of {f['n_evaluated']}",
-              "f-k", INK3, "middle")
+    # --- 2 evaluate: one set, three scores, all of them on all of it -------
+    r2, h2 = h1 + 10, 78
+    row(r2, h2, "2 EVALUATE")
+    item(X0 + cw / 2, r2 + 20, f["n_evaluated"], "candidate constructs",
+         "the free nanobody is the reference")
+    chips = ("structural feasibility", "mask binding", "linker cleavability")
+    cx0 = X0 + cw + 24
+    chw = (W - 16 - cx0) / len(chips)
+    for i, name in enumerate(chips):
+        x = cx0 + i * chw
+        o.append(f'<rect x="{x}" y="{r2 + 18}" width="{chw - 12}" height="42" rx="4" '
+                 f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1"/>')
+        label(x + (chw - 12) / 2, r2 + 36, name, "f-t", ACC)
+        label(x + (chw - 12) / 2, r2 + 51,
+              f"{f['n_evaluated']} of {f['n_evaluated']}", "f-o", INK3)
+    link(X0 + cw / 2 + 62, cx0 - 6, r2 + 38)
 
-    # --- 3 select ---------------------------------------------------------
-    y += p2h + 24
-    p3h = 160
-    phase(y, p3h, "3 \u00b7 SELECT")
-    steps = [(f["n_front"], "nondominated designs", "Pareto optimisation", INK),
-             (f["n_shortlist"], "shortlisted constructs",
-              "balanced scores, one per mask", INK),
-             (f["n_worth"], "for experimental testing", "final complex prediction", OK)]
-    sw = (W - 52 - 2 * 34) / 3
+    # --- 3 select: three narrowings ---------------------------------------
+    r3, h3 = r2 + h2 + 10, 86
+    row(r3, h3, "3 SELECT")
+    steps = [(f["n_front"], "nondominated", "Pareto, no weights", INK),
+             (f["n_shortlist"], "shortlisted", "one per distinct mask", INK),
+             (f["n_worth"], "worth making", "verified against the antigen", OK)]
+    sw = span / len(steps)
     for i, (num, title, sub, col) in enumerate(steps):
-        x = 26 + i * (sw + 34)
-        card(x, y + 36, sw, 104, num, title, sub, "", col)
-        if i < len(steps) - 1:
-            ax = x + sw + 6
-            o.append(f'<line x1="{ax}" y1="{y + 88}" x2="{ax + 22}" y2="{y + 88}" '
-                     f'stroke="{INK3}" stroke-width="1.2" marker-end="url(#fn)"/>')
+        cx = X0 + i * sw + sw / 2
+        item(cx, r3 + 20, num, title, sub, "", col)
+        if i:
+            link(X0 + (i - 1) * sw + sw / 2 + 74, cx - 74, r3 + 38)
 
-    H = int(y + p3h + 4)
+    H = int(r3 + h3 + 2)
     o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
             'xmlns="http://www.w3.org/2000/svg" role="img" '
             'aria-label="What the worked example generated, evaluated and selected">')
     o.append("</svg>")
     return "".join(o)
-
 
 def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
     """Every mask, grouped by the question it was built to answer.
