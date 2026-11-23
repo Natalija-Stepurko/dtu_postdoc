@@ -1109,6 +1109,30 @@ _VROWS = _VER["results"]
 _CTL = next(r for r in _VROWS if r["construct"] is None)
 _NOALIGN = next(r for r in load_json("09_complexes.json")["results"]
                 if r["case"] == "control_free_vhh")
+# what each control group removes, so the figure's four columns are readable
+_GROUP_MEANING = {
+    "epitope graft": "nothing: these are the designs",
+    "scrambled control": "the order of the residues, keeping their composition",
+    "truncated control": "half the loop, keeping the residues that remain",
+    "inert control": "any designed interaction at all",
+}
+_GROUP_LABEL = {"epitope graft": "antigen-derived grafts",
+                "scrambled control": "scrambled control",
+                "truncated control": "truncated control",
+                "inert control": "poly-glycine control"}
+_gmasks = {}
+for _name, _m in lib["masks"].items():
+    _gmasks.setdefault(_m["kind"], []).append(_name)
+_gcount = {}
+for _r in (fold["results"] if fold else []):
+    _gcount[_r["kind"]] = _gcount.get(_r["kind"], 0) + 1
+OCC_GROUP_ROWS = "".join(
+    f"<tr><td>{_GROUP_LABEL.get(_k, _k)}</td><td>{_gcount.get(_k, 0)}</td>"
+    f"<td class='mono' style='font-size:.72rem'>{', '.join(sorted(_v))}</td>"
+    f"<td>{_GROUP_MEANING.get(_k, '')}</td></tr>"
+    for _k, _v in sorted(_gmasks.items(),
+                         key=lambda kv: -_gcount.get(kv[0], 0)))
+
 N["occ_trunc"] = float(_np.mean([r["occlusion"] * 100 for r in fold["results"]
                                  if r["kind"] == "truncated control"])) if fold else 0.0
 N["block_margin"] = _VER["blocking_margin"] * 100
@@ -1628,17 +1652,30 @@ peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the ap
 extension of this module and are not implemented here.</p></div></details>
 
 <h3 class="mod"><span>Module 04</span>Paratope occlusion</h3>
-{mri("I measured how much of the nanobody's antigen-binding surface the mask covers in each "
-     "ESMFold-predicted construct, against the free nanobody folded the same way. This is the "
-     f"masking measure carried into the ranking of all {N['rank_total']} constructs.",
+{mri(f"I measured how much of the nanobody's antigen-binding surface the mask covers in each "
+     f"ESMFold-predicted construct, against the free nanobody folded the same way. The surface "
+     f"compared is that of the {N['n_paratope']} residues the antigen buries in the deposited "
+     f"complex, so the antigen decides which residues are counted while the free nanobody "
+     f"provides the surface they are counted against; the antigen is in neither structure. "
+     f"This is the masking measure carried into the ranking of all {N['rank_total']} "
+     f"constructs.",
      f"Mean occlusion was <b>{N['occ_graft']:.1f}%</b> for antigen-derived masks, against "
      f"{N['occ_scram']:.1f}% for scrambled controls, {N['occ_trunc']:.1f}% for truncated "
      f"controls and {N['occ_inert']:.1f}% for poly-glycine.",
      "Surface occlusion did not distinguish designed masks from controls. It was kept as a "
      "preliminary ranking measure, but it cannot establish specific mask binding.")}
-{chart_wide("occlusion_by_group", "Paratope occlusion by control group, every construct as a "
-   "point with its group mean marked. The designed grafts sit inside the spread of the "
-   "controls, and below two of them, so this measure cannot rank a mask.")}
+<div class="stack">
+<p><b>What the four groups are.</b> Every mask was paired with all
+{lib['n_linkers']} linkers, so each group below holds
+{lib['n_linkers']} constructs per mask in it. The three control groups remove one thing each,
+and together they ask whether anything about the design is doing work:</p></div>
+<table class="tbl">
+<colgroup><col style="width:22%"><col style="width:10%"><col style="width:32%"><col style="width:36%"></colgroup>
+<thead><tr><th>group</th><th>constructs</th><th>masks in it</th>
+<th>what it removes</th></tr></thead><tbody>{OCC_GROUP_ROWS}</tbody></table>
+{chart_wide("occlusion_by_group", "Paratope occlusion by group, every construct as a point with "
+   "its group mean marked. The designed grafts sit inside the spread of the controls, and below "
+   "two of them, so this measure cannot rank a mask.")}
 <details class="tech"><summary>Occlusion across the library</summary><div class="techbody">
 {chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
 {R.ensemble_viewer("ens-mask", "masking",
