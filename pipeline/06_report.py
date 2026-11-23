@@ -1467,7 +1467,7 @@ section is mainly about.</p></div>
 
 <h3 class="mod"><span>Module 03</span>Structural feasibility</h3>
 {mri("Each construct was folded with ESMFold as one chain: mask, linker and nanobody "
-     "together, not the mask alone. Preservation of the nanobody was assessed by "
+     "together. Preservation of the nanobody was assessed by "
      "superimposing its core on the separately folded free nanobody, and sequence-based "
      "descriptors were calculated over the whole construct for exposed hydrophobic "
      "surface and unpaired cysteines.",

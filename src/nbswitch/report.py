@@ -200,6 +200,23 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
   border:1px solid var(--rule);border-radius:3px;padding:3px 9px}
 .modhead b{font-size:1.08rem;display:block;color:var(--ink)}
 .modhead span{font-size:.95rem;color:var(--ink-2);display:block;margin-top:2px}
+.mri-fold{border:1px solid var(--rule);border-radius:3px;margin:16px 0;
+  background:var(--panel)}
+.mri-fold>summary{list-style:none;cursor:pointer;padding:13px 18px;display:flex;gap:14px;
+  align-items:baseline}
+.mri-fold>summary::-webkit-details-marker{display:none}
+.mri-fold>summary::after{content:'show method and interpretation';margin-left:auto;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--chrome);white-space:nowrap;align-self:center}
+.mri-fold[open]>summary::after{content:'hide'}
+.mri-fold>summary .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);flex:none}
+.mri-fold>summary .sum{font-size:.95rem;color:var(--ink);line-height:1.5}
+.mri-fold[open]>summary{border-bottom:1px solid var(--rule-2)}
+.mri-fold[open]>summary .sum{display:none}
+.mri-fold[open]>summary .k::after{content:', method and interpretation'}
+.mri-fold>.mri{border:0;margin:0}
+@media(max-width:700px){.mri-fold>summary::after{display:none}}
 .mri{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;
   border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:16px 0}
 .mri>div{padding:15px 18px;border-right:1px solid var(--rule-2)}
@@ -1274,13 +1291,23 @@ def module_tables() -> str:
     return "".join(out)
 
 
-def mri(method: str, result: str, interpretation: str) -> str:
-    """Method, result, interpretation. The order used throughout the thesis."""
-    return (f'<div class="mri">'
+def mri(method: str, result: str, interpretation: str, open_: bool = False) -> str:
+    """Method, result, interpretation. The order used throughout the thesis.
+
+    Folded shut by default. Three columns of prose under every module heading
+    turned the page into something to read rather than something to look at,
+    and the figures are what carry the argument; the explanation is there for
+    a reader who wants it. The result alone stays on the summary line, because
+    it is the finding rather than the explanation of one.
+    """
+    return (f'<details class="mri-fold"{" open" if open_ else ""}>'
+            f'<summary><span class="k">Result</span>'
+            f'<span class="sum">{result}</span></summary>'
+            f'<div class="mri">'
             f'<div><div class="k">Method</div><div class="v">{method}</div></div>'
             f'<div><div class="k">Result</div><div class="v">{result}</div></div>'
             f'<div><div class="k">Interpretation</div><div class="v">{interpretation}</div></div>'
-            f'</div>')
+            f'</div></details>')
 
 
 #: What each module could use, beyond what was run. Attached to the module and
