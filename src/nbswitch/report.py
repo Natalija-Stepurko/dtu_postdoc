@@ -200,23 +200,6 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
   border:1px solid var(--rule);border-radius:3px;padding:3px 9px}
 .modhead b{font-size:1.08rem;display:block;color:var(--ink)}
 .modhead span{font-size:.95rem;color:var(--ink-2);display:block;margin-top:2px}
-.mri-fold{border:1px solid var(--rule);border-radius:3px;margin:16px 0;
-  background:var(--panel)}
-.mri-fold>summary{list-style:none;cursor:pointer;padding:13px 18px;display:flex;gap:14px;
-  align-items:baseline}
-.mri-fold>summary::-webkit-details-marker{display:none}
-.mri-fold>summary::after{content:'show method and interpretation';margin-left:auto;
-  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--chrome);white-space:nowrap;align-self:center}
-.mri-fold[open]>summary::after{content:'hide'}
-.mri-fold>summary .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ink-3);flex:none}
-.mri-fold>summary .sum{font-size:.95rem;color:var(--ink);line-height:1.5}
-.mri-fold[open]>summary{border-bottom:1px solid var(--rule-2)}
-.mri-fold[open]>summary .sum{display:none}
-.mri-fold[open]>summary .k::after{content:', method and interpretation'}
-.mri-fold>.mri{border:0;margin:0}
-@media(max-width:700px){.mri-fold>summary::after{display:none}}
 .mri{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0;
   border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:16px 0}
 .mri>div{padding:15px 18px;border-right:1px solid var(--rule-2)}
@@ -227,6 +210,16 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
 .modnote{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--chrome);margin-bottom:10px}
 h3.mod{font-size:1.18rem;margin:38px 0 8px}
+.modfold{border-top:1px solid var(--rule);margin-top:30px}
+.modfold>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:14px}
+.modfold>summary::-webkit-details-marker{display:none}
+.modfold>summary h3.mod{margin:18px 0 8px}
+.modfold>summary::after{content:'collapse';margin-left:auto;align-self:center;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--chrome);white-space:nowrap}
+.modfold:not([open])>summary::after{content:'expand'}
+.modfold:not([open])>summary h3.mod{color:var(--ink-2)}
+.modbody{padding-bottom:6px}
 h3.mod span{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-right:12px}
 h4.subh{font-size:1.02rem;margin:32px 0 6px;color:var(--ink)}
 h4.subh span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
@@ -281,6 +274,22 @@ const SCORES = __SCORES__;
 const FINAL_PAIR = __FINALPAIR__;
 let v1 = null, v2 = null, vRef = null, vMask = null;
 
+// A 3Dmol viewer created inside a closed <details> has no size, so it draws
+// nothing and stays blank when the section is opened. Every viewer is
+// registered here and resized when the module holding it opens.
+const VIEWERS = [];
+function makeViewer(hostId, opts) {
+  const view = $3Dmol.createViewer(hostId, opts);
+  VIEWERS.push({id: hostId, view: view});
+  return view;
+}
+function wakeViewers(root) {
+  VIEWERS.forEach(function (entry) {
+    const el = document.getElementById(entry.id);
+    if (el && root.contains(el)) { entry.view.resize(); entry.view.render(); }
+  });
+}
+
 // Sticks are drawn with element colouring on a region-tinted carbon, so
 // nitrogen, oxygen and sulfur read as themselves while the residue still
 // says which part of the construct it belongs to.
@@ -303,7 +312,7 @@ function termini(view, model, sel, labelSuffix) {
 }
 
 function boot() {
-  v1 = $3Dmol.createViewer('stage-solved', {backgroundColor: '#FFFFFF'});
+  v1 = makeViewer('stage-solved', {backgroundColor: '#FFFFFF'});
   jQuery.get(SOLVED_FILE, function (data) {
     const m = v1.addModel(data, 'pdb');
     v1.setStyle({chain: 'A'}, {cartoon: {colorfunc: function (atom) {
@@ -324,7 +333,11 @@ function boot() {
 
   bootFinalPair();
 
-  v2 = $3Dmol.createViewer('stage-designed', {backgroundColor: '#FFFFFF'});
+  document.querySelectorAll('details.modfold').forEach(function (d) {
+    d.addEventListener('toggle', function () { if (d.open) wakeViewers(d); });
+  });
+
+  v2 = makeViewer('stage-designed', {backgroundColor: '#FFFFFF'});
   loadDesigned(document.getElementById('pick').value);
   document.getElementById('pick').addEventListener('change',
     e => loadDesigned(e.target.value));
@@ -360,8 +373,8 @@ function bootFinalPair() {
       view.render();
     });
   };
-  vRef = $3Dmol.createViewer('stage-final-ref', {backgroundColor: '#FFFFFF'});
-  vMask = $3Dmol.createViewer('stage-final-mask', {backgroundColor: '#FFFFFF'});
+  vRef = makeViewer('stage-final-ref', {backgroundColor: '#FFFFFF'});
+  vMask = makeViewer('stage-final-mask', {backgroundColor: '#FFFFFF'});
   paint(vRef, FINAL_PAIR.reference);
   paint(vMask, FINAL_PAIR.masked);
 }
@@ -430,7 +443,7 @@ function nanobodyColour(resi, offset, base) {
 function mountEnsemble(hostId, scoreKey) {
   const host = document.getElementById(hostId);
   if (!host || typeof ENSEMBLE === 'undefined') return;
-  const v = $3Dmol.createViewer(hostId, {backgroundColor: '#FFFFFF'});
+  const v = makeViewer(hostId, {backgroundColor: '#FFFFFF'});
   jQuery.get('structures/ensemble.pdb', function (data) {
     v.addModels(data, 'pdb');
     v.setStyle({model: 0}, {cartoon: {colorfunc: function (atom) {
@@ -1299,23 +1312,47 @@ def module_tables() -> str:
     return "".join(out)
 
 
-def mri(method: str, result: str, interpretation: str, open_: bool = False) -> str:
+def fold_modules(html: str) -> str:
+    """Wrap each module heading and its content in a <details>.
+
+    The modules are siblings inside their section, so a module runs from its
+    own h3 to the next one or to the end of the section, and that span is
+    already balanced. Open by default: folding is for putting a section away
+    once it has been read, not for hiding the page behind its headings.
+    """
+    open_tag = '<h3 class="mod">'
+    out, i = [], 0
+    while True:
+        start = html.find(open_tag, i)
+        if start == -1:
+            out.append(html[i:])
+            break
+        out.append(html[i:start])
+        head_end = html.index("</h3>", start) + len("</h3>")
+        nxt = html.find(open_tag, head_end)
+        end = html.find("</section>", head_end)
+        stop = min(x for x in (nxt, end) if x != -1)
+        out.append('<details class="modfold" open><summary>')
+        out.append(html[start:head_end])
+        out.append("</summary><div class=\"modbody\">")
+        out.append(html[head_end:stop])
+        out.append("</div></details>\n")
+        i = stop
+    return "".join(out)
+
+
+def mri(method: str, result: str, interpretation: str) -> str:
     """Method, result, interpretation. The order used throughout the thesis.
 
-    Folded shut by default. Three columns of prose under every module heading
-    turned the page into something to read rather than something to look at,
-    and the figures are what carry the argument; the explanation is there for
-    a reader who wants it. The result alone stays on the summary line, because
-    it is the finding rather than the explanation of one.
+    Always visible. It was folded shut for a while with the result on the
+    summary line; the whole module folds now instead, so there is no reason
+    to fold the block inside it as well.
     """
-    return (f'<details class="mri-fold"{" open" if open_ else ""}>'
-            f'<summary><span class="k">Result</span>'
-            f'<span class="sum">{result}</span></summary>'
-            f'<div class="mri">'
+    return (f'<div class="mri">'
             f'<div><div class="k">Method</div><div class="v">{method}</div></div>'
             f'<div><div class="k">Result</div><div class="v">{result}</div></div>'
             f'<div><div class="k">Interpretation</div><div class="v">{interpretation}</div></div>'
-            f'</div></details>')
+            f'</div>')
 
 
 #: What each module could use, beyond what was run. Attached to the module and

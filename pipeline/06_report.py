@@ -1860,6 +1860,9 @@ HTML = HTML.replace("</div>\n\n<script src=", _nav + "</div>\n\n<script src=", 1
 
 import re as _re
 
+# Each module becomes a <details>, so a section can be put away once read.
+HTML = R.fold_modules(HTML)
+
 # Build-time guard. Scripts and styles legitimately contain braces, so they are
 # removed before the scan; what is left is markup, where a surviving "{name[" or
 # "{R.fn()" means an f-string was escaped when it should have interpolated.
