@@ -1546,11 +1546,6 @@ antigen</span><button data-spin="finalmask">spin</button></div>
 superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agree to
 {FP_RMSD:.2f} Å. Anything that moves between the two views moves relative to the nanobody.</p>
 </div>
-<div class="stack">
-<p><b>Where the mask and the antigen actually sit.</b> Each shortlisted construct was predicted
-with its antigen, and two things measured: whether the antigen still contacts the known
-paratope, and whether the mask contacts it. Both are percentages of <i>contacting nanobody
-residues</i>, not of affinity or of surface area.</p></div>
 <table class="tbl">
 <colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
 <thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
