@@ -1010,8 +1010,21 @@ masks_rows_compact = "".join(
     for k, m in lib["masks"].items())
 
 _LK = load_json("02b_linkers.json")
+# the key is off_target_proteases. Reading "off_target" found nothing, and the
+# `or 15` behind it then published a number no stage had produced: 15 is every
+# protease that is not a target, but only 9 are pushed down. The other 6 are
+# left at zero, which is a different statement. Indexed, not .get, so a rename
+# raises here instead of substituting a plausible-looking constant.
+#: stage 02b records which proteases it asked for and which it asked against,
+#: but not the full set CleaveNet scores, so the total comes from the module
+#: that built the profile rather than from a literal.
+from nbswitch.linkers import PROTEASES as _PROTEASES
+_N_PROTEASE = len(_PROTEASES)
 LINKER_GEN = {"n_generated": _LK["n_generated"], "n_kept": _LK["n_kept"],
-              "n_off": len(_LK.get("off_target", [])) or 15}
+              "n_target": len(_LK["target_proteases"]),
+              "n_off": len(_LK["off_target_proteases"]),
+              "n_neutral": _N_PROTEASE - len(_LK["target_proteases"])
+                           - len(_LK["off_target_proteases"])}
 # the reference-length linkers are not length variants and carry no
 # total_length, so taking that field alone drops the reference from the series
 LENGTHS = sorted({len(x["sequence"]) for x in _LK["linkers"]})

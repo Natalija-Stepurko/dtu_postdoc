@@ -1702,7 +1702,8 @@ def linker_schematic(gen, lengths, substrate_len, reference) -> str:
 
     # --- part one: choosing the ten residues -----------------------------
     label(0, 18, "A · which ten residues the protease sees", "l-s", INK3)
-    steps = [("target profile", f"MMP-2, -8, -9 up<br>{gen['n_off']} others down"),
+    steps = [("target profile", f"MMP-2, -8, -9 up<br>{gen['n_off']} down, "
+                                f"{gen['n_neutral']} at zero"),
              ("CleaveNet", "conditional<br>generation"),
              (f"{gen['n_generated']:,} peptides", "ten residues each"),
              ("selectivity", "mean target z<br>− mean off-target z"),
