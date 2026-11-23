@@ -63,3 +63,12 @@ def test_an_unbuilt_figure_stage_does_not_wipe_the_published_figures(tmp_path, m
     R.copy_assets([])
 
     assert (docs / "figures" / "published.svg").exists()
+
+
+def test_small_counts_spell_out():
+    """The suite passed while the page build died on a missing _WORDS, so the
+    helper that reads it is checked directly."""
+    assert R.word(2) == "two"
+    assert R.word(12) == "twelve"
+    assert R.word(714) == "714", "past the table it falls back to digits"
+    assert R.word(0) == "zero"

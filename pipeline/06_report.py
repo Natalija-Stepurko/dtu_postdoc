@@ -1093,6 +1093,48 @@ FUNNEL = {
 N["n_evaluated"] = FUNNEL["n_evaluated"]
 N["n_structures"] = FUNNEL["n_structures"]
 
+# ---- module 04: the verification table and the numbers around it
+_VER = load_json("19_verification.json")
+_VROWS = _VER["results"]
+_CTL = next(r for r in _VROWS if r["construct"] is None)
+_NOALIGN = next(r for r in load_json("09_complexes.json")["results"]
+                if r["case"] == "control_free_vhh")
+N["occ_trunc"] = float(_np.mean([r["occlusion"] * 100 for r in fold["results"]
+                                 if r["kind"] == "truncated control"])) if fold else 0.0
+N["block_margin"] = _VER["blocking_margin"] * 100
+N["mask_on_min"] = _VER["mask_on_paratope_min"] * 100
+N["noalign_hits"] = _NOALIGN["paratope_contacts"]
+N["noalign_total"] = _NOALIGN["total_contacting_residues"]
+N["align_hits"] = _CTL["paratope_contacts"]
+N["align_total"] = _CTL["total_contacting_residues"]
+
+def _verdict(r):
+    """Why a construct passed or failed, in the terms the criteria are in."""
+    if r["construct"] is None:
+        return "reference"
+    displaced = r["antigen_contacts_displaced"] >= _VER["blocking_margin"]
+    on_site = r["mask_fraction_on_paratope"] >= _VER["mask_on_paratope_min"]
+    if displaced and on_site:
+        return "<b>passes both checks</b>"
+    if displaced:
+        return "antigen displaced, but the mask is off site"
+    return "antigen keeps its binding site"
+
+_ordered = [_CTL] + sorted((r for r in _VROWS if r["construct"]),
+                           key=lambda r: r["fraction_of_contacts_on_paratope"])
+VERIFY_ROWS = "".join(
+    "<tr{cls}><td class='mono'>{name}</td><td>{ag:.0f}%</td><td>{mk}</td>"
+    "<td>{why}</td></tr>".format(
+        cls=" class='hl'" if r.get("verdict") == "worth testing" else "",
+        name=r["construct"] or "free nanobody",
+        ag=r["fraction_of_contacts_on_paratope"] * 100,
+        mk=("&mdash;" if r["construct"] is None
+            else f"{r['mask_fraction_on_paratope'] * 100:.0f}%"),
+        why=_verdict(r))
+    for r in _ordered)
+N["noCys_id"] = next((r["construct"] for r in _VROWS
+                      if r["construct"] and "noCys" in r["construct"]), "")
+
 # the feasibility stage's own constants and the family it scores worst, so
 # the module text and its method panel cannot drift from the code
 from nbswitch import feasibility as _FEAS
@@ -1561,29 +1603,75 @@ not experimental confirmation of disulphide bonding.</p>
 peptide. Ensemble methods such as BioEmu, or molecular dynamics, would be the appropriate
 extension of this module and are not implemented here.</p></div></details>
 
-<h3 class="mod"><span>Module 04</span>Mask binding and release</h3>
-{R.alignment_control(N['boltz_ctrl_noalign'], N['boltz_ctrl'])}
-{mri("Two approaches were applied. Paratope occlusion was calculated from the folded constructs "
-     "by comparing the accessible surface of the paratope with that of the free nanobody. The "
-     "assembly of nanobody, tethered mask and antigen was then predicted with Boltz-2, with "
-     "alignments supplied for the nanobody and the antigen.",
-     f"Occlusion was {N['occ_graft']:+.1f}% for the grafted masks, {N['occ_scram']:+.1f}% for "
-     f"scrambled controls and {N['occ_inert']:+.1f}% for the poly-glycine control. In the complex "
-     f"predictions the antigen retained {N['boltz_lo']:.0f}–{N['boltz_hi']:.0f}% of its contacts "
-     f"on the paratope in the masked constructs, against {N['boltz_ctrl']:.0f}% for the free "
-     f"nanobody.",
-     "Occlusion does not distinguish designed masks from controls and cannot be used to rank them. "
-     "The complex prediction reproduces the known interface when given alignments, and under that "
-     "measure none of the present masks excludes the antigen.")}
-<div class="two">
+<h3 class="mod"><span>Module 04</span>Mask placement and antigen access</h3>
+<div class="stack">
+<p>One question runs through this module: <b>does the mask occupy the antigen-binding site, or
+is it merely nearby because a linker holds it there?</b> The two measurements answer it
+differently, and the difference is the result.</p></div>
+{mri("I first measured paratope occlusion in the ESMFold structures, to ask whether tethered "
+     "masks cover the antigen-binding surface at all. I then used Boltz-2 to examine where the "
+     "mask sits and whether the antigen can still bind at its original site. The prediction "
+     "setup was checked against the experimental V<sub>H</sub>H&ndash;antigen complex before any "
+     "shortlisted construct was tested.",
+     f"Mean paratope occlusion was <b>{N['occ_graft']:.1f}%</b> for antigen-derived grafts, "
+     f"against {N['occ_scram']:.1f}% for scrambled controls, {N['occ_trunc']:.1f}% for truncated "
+     f"controls and {N['occ_inert']:.1f}% for poly-glycine, so surface coverage alone does not "
+     "distinguish a designed mask from a peptide occupying space. Boltz-2 recovered the known "
+     "interface far better once alignments were supplied for the public nanobody and antigen "
+     f"sequences: {N['boltz_ctrl']:.0f}% of contacting nanobody residues on the known paratope "
+     f"against {N['boltz_ctrl_noalign']:.0f}% without. Of {N['rank_shortlist']} shortlisted "
+     f"constructs, <b>one</b> showed both reduced antigen contact at the paratope and mask "
+     "contact with it.",
+     "Surface occlusion is not evidence of masking. The complex predictions are a more specific "
+     "structural test and they identify one candidate worth investigating, but they establish "
+     "neither mask affinity nor release after cleavage.")}
+{chart_wide("occlusion_by_group", "Paratope occlusion by control group, every construct as a "
+   "point with its group mean marked. The designed grafts sit inside the spread of the "
+   "controls, and below two of them, so this measure cannot rank a mask.")}
+<div class="stack">
+<p><b>Where the mask and the antigen actually sit.</b> Each shortlisted construct was predicted
+with its antigen, and two things measured: whether the antigen still contacts the known
+paratope, and whether the mask contacts it. Both are percentages of <i>contacting nanobody
+residues</i>, not of affinity or of surface area.</p></div>
+<table class="tbl">
+<colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
+<thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
+<th>what it means</th></tr></thead><tbody>{VERIFY_ROWS}</tbody></table>
+<div class="stack">
+<p>The criteria were a fall of at least {N['block_margin']:.0f} percentage points from the
+{N['boltz_ctrl']:.0f}% free-nanobody reference, together with at least
+{N['mask_on_min']:.0f}% of mask-contacting residues lying on the paratope. The comparison that
+makes them worth having is between the first two: <span class="mono">{N['noCys_id']}</span> also
+moves the antigen off the site, but its mask barely touches that surface, so the change cannot
+be attributed to masking. <span class="mono">{FP_ID}</span> shows both.</p></div>
+<details class="tech"><summary>Model setup and limitations</summary><div class="techbody">
+<p><b>Why the setup was checked against a known complex.</b> An experimental
+V<sub>H</sub>H&ndash;antigen structure already exists, so it says whether the method puts the
+antigen in the right place. Without alignments only {N['noalign_hits']} of
+{N['noalign_total']} antigen-contacting nanobody residues
+({N['boltz_ctrl_noalign']:.0f}%) lay in the known paratope; with alignments for the public
+nanobody and antigen sequences, {N['align_hits']} of {N['align_total']}
+({N['boltz_ctrl']:.0f}%) did. That justified the revised setup for further exploration. It did
+not validate its predictions of mask binding.</p>
+<p><b>{N['boltz_ctrl']:.0f}% is not a binding probability.</b> It is the share of nanobody
+residues contacting the antigen in that predicted structure which lie inside the
+experimentally identified paratope.</p>
+<div class="note warn"><b>The control isolates less than it appears to.</b> An alignment over
+the whole fusion would mean sending the designed sequence to a remote server, so the construct
+is modelled as separate chains joined by an explicit bond, with alignments on the public chains
+only. The unmasked reference does isolate the effect of adding alignments, but the masked
+predictions also changed the chain representation, so their behaviour cannot be attributed to
+alignments alone.</div>
+<p>Each case is a single prediction rather than a sampled ensemble, and the mask and antigen are
+supplied together, so the result describes an assembly at equilibrium rather than a competition
+over time.</p>
+<p><b>Masks predicted against the free nanobody, untethered.</b> Worth keeping as a control on
+where an isolated peptide goes, but not as evidence of release: some controls also contact the
+paratope in those predictions, so they do not establish specific binding.</p>
 {chart("occlusion_by_linker", "Paratope occlusion against linker length, by mask.")}
-<div class="scroll"><table class="wrap"><thead><tr><th>construct</th>
-<th>antigen contacts on paratope</th><th>mask contacts on paratope</th></tr></thead>
-<tbody>{N['boltz_rows']}</tbody></table></div>
-</div>
 {R.ensemble_viewer("ens-mask", "masking",
-   "The same constructs, coloured by paratope occlusion. The masks do not concentrate over the "
-   "antigen-binding residues, which is the result reported above.",
+   "Every folded construct, coloured by paratope occlusion. The masks do not concentrate over "
+   "the antigen-binding residues, which is the result reported above.",
    R.ramp_legend("least occluding", "most"))}
 <div class="viewer">
 <div class="vbar"><select id="pick">{options}</select>
@@ -1595,15 +1683,7 @@ extension of this module and are not implemented here.</p></div></details>
 <span><i style="background:#C06014"></i>antigen-binding residues</span></div>
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
-<details class="tech"><summary>Complex prediction without alignments</summary><div class="techbody">
-<p>When every chain was predicted without an alignment the free nanobody control placed only
-{N['boltz_ctrl_noalign']:.0f}% of its antigen contacts on the known paratope. An alignment over the
-whole fusion would require submitting the designed sequence to a remote server, so the construct
-was modelled as three chains joined by an explicit covalent bond, allowing alignments for the
-nanobody and the antigen while the designed peptide takes none.</p>
-<p>Each case is a single prediction rather than a sampled ensemble, and the mask and antigen are
-supplied simultaneously, so the result describes an assembly at equilibrium rather than competition
-over time.</p></div></details>
+</div></details>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
 {mri("Two questions, kept apart. Sequence recognition is verified with CleaveNet's predictor and "
@@ -1696,6 +1776,7 @@ dissociation following cleavage and recovery of antigen binding remain to be est
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Reference &middot; free nanobody with antigen</span>
 <button data-spin="finalref">spin</button></div>
+<div class="pairstat"><b>{FP_REF_ON:.0f}%</b><span>antigen on paratope</span></div>
 <div class="vstage" id="stage-final-ref"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>{R.CDR_KEY}
 <span><i style="background:#C06014"></i>paratope, sticks</span>
@@ -1704,6 +1785,8 @@ dissociation following cleavage and recovery of antigen binding remain to be est
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Selected &middot; <span class="mono">{FP_ID}</span> with
 antigen</span><button data-spin="finalmask">spin</button></div>
+<div class="pairstat"><b>{FP_ANTIGEN_ON:.0f}%</b><span>antigen on paratope</span>
+<b class="ok">{FP_MASK_ON:.0f}%</b><span>mask on paratope</span></div>
 <div class="vstage" id="stage-final-mask"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>{R.CDR_KEY}
 <span><i style="background:#C06014"></i>paratope, sticks</span>

@@ -225,6 +225,11 @@ h4.subh{font-size:1.02rem;margin:32px 0 6px;color:var(--ink)}
 h4.subh span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
   text-transform:uppercase;color:var(--chrome);margin-right:11px}
 h5.subh2{font-size:.95rem;margin:30px 0 4px;color:var(--ink);font-weight:600}
+.pairstat{display:flex;align-items:baseline;gap:8px;padding:9px 13px;
+  border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.pairstat b{font-family:var(--mono);font-size:1.02rem;color:var(--ink)}
+.pairstat b.ok{color:#1F6B4A}
+.pairstat span{font-size:.78rem;color:var(--ink-3);margin-right:6px}
 .quad{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;
   border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:4px 0 18px}
 .quad>div{padding:14px 16px;border-right:1px solid var(--rule-2)}
@@ -1692,34 +1697,6 @@ def front_table(front, objectives, shortlist=(), limit: int = 12) -> str:
                 f'{len(front) - limit} further nondominated designs not shown.</p>')
     return f'<table class="tbl front">{head}{body}</table>{more}'
 
-
-def alignment_control(without: float, with_msa: float) -> str:
-    """The positive control that decided how the complexes are predicted.
-
-    Before asking whether a mask blocks the antigen, the method has to
-    reproduce the interface the crystal structure already shows. It is a
-    positive control, and the first attempt failed it.
-    """
-    if not (without or with_msa):
-        return pending("the alignment control, stages 09 and 19")
-    return (
-        f'<p><b>The method was checked against a known answer first.</b> Before '
-        f'assessing the effect of the mask, I tested whether Boltz-2 could '
-        f'reproduce the experimentally determined V<sub>H</sub>H&ndash;antigen '
-        f'interface. Without evolutionary alignments, only {without:.0f}% of '
-        f'predicted antigen contacts involved the known paratope. Supplying '
-        f'alignments for the V<sub>H</sub>H and the antigen, which are public '
-        f'sequences, raised this to {with_msa:.0f}%, while the designed mask took '
-        f'no alignment and never left this machine.</p>'
-        f'<p>I therefore used the revised setup for the rest of the analysis. Two '
-        f'qualifications. That figure is recovery of the reference interface, not '
-        f'a probability that the proteins bind, and reproducing a known interface '
-        f'does not establish that predicted mask binding or release is accurate. '
-        f'For the control the comparison is clean, since both runs modelled the '
-        f'same two chains and differed only in the alignment; for the masked '
-        f'constructs it is not, because the revised setup also splits the fusion '
-        f'into separate chains joined by a bond, so the improvement there cannot '
-        f'be attributed to the alignment alone.</p>')
 
 _WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven",
           "eight", "nine", "ten", "eleven", "twelve")

@@ -223,6 +223,41 @@ def release_sensitivity(tether):
     return _save(fig, "release_sensitivity")
 
 
+def occlusion_by_group(fold):
+    """Whether covering the paratope distinguishes a designed mask at all.
+
+    Every construct as a point against its own control group, with the group
+    mean marked. A bar of means would make three numbers look like a result;
+    the spread is the result, because the designed grafts sit inside it.
+    """
+    plt = _style()
+    rows = fold["results"]
+    order = [("epitope graft", "antigen-derived grafts", SEQ),
+             ("scrambled control", "scrambled controls", STR),
+             ("truncated control", "truncated controls", "#8A9BA8"),
+             ("inert control", "poly-glycine", NULL)]
+    groups = [(label, colour, [r["occlusion"] * 100 for r in rows if r["kind"] == kind])
+              for kind, label, colour in order]
+    groups = [g for g in groups if g[2]]
+
+    fig, ax = plt.subplots(figsize=(6.4, 3.2))
+    rng = np.random.default_rng(42)
+    for i, (label, colour, vals) in enumerate(groups):
+        jitter = rng.uniform(-0.17, 0.17, len(vals))
+        ax.scatter(np.full(len(vals), i) + jitter, vals, s=16, color=colour,
+                   alpha=0.45, linewidth=0, zorder=2)
+        m = float(np.mean(vals))
+        ax.hlines(m, i - 0.32, i + 0.32, color=colour, linewidth=2.2, zorder=3)
+        ax.annotate(f"{m:.1f}%", (i + 0.36, m), fontsize=8.5, color=colour,
+                    va="center", fontweight="semibold")
+    ax.axhline(0, color=INK3, linewidth=0.8, alpha=0.4, zorder=1)
+    ax.set_xticks(range(len(groups)))
+    ax.set_xticklabels([g[0].replace(" ", "\n", 1) for g in groups], fontsize=8)
+    ax.set_ylabel("paratope occluded  (%)")
+    ax.set_xlim(-0.6, len(groups) - 0.2)
+    return _save(fig, "occlusion_by_group")
+
+
 def occlusion_by_linker(folding):
     plt = _style()
     rows = folding["results"]
@@ -278,7 +313,8 @@ def build_all():
     fold = None
     try:
         fold = load_json("04_folding.json")
-        made += [occlusion_by_linker(fold), occlusion_vs_confidence(fold)]
+        made += [occlusion_by_group(fold), occlusion_by_linker(fold),
+                 occlusion_vs_confidence(fold)]
     except FileNotFoundError:
         pass
     try:
