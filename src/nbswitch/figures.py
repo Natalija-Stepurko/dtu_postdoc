@@ -449,7 +449,13 @@ def build_all():
         pass
     try:
         trig = load_json("10_trigger.json")
-        for fig in (cleavability_panel(trig), cleavability_components(trig)):
+        # the panel colours by mask family, which the trigger stage does not
+        # record: the library names each construct's mask and the two folding
+        # stages name each redesign's parent
+        panel = cleavability_panel(trig, load_json("03_constructs.json"),
+                                   load_json("04_folding.json"),
+                                   load_json("08_redesign_folding.json"))
+        for fig in (panel, cleavability_components(trig)):
             if fig is not None:
                 made.append(fig)
     except FileNotFoundError:
@@ -688,37 +694,99 @@ def feasibility_components(feas, lib=None):
     return _save(fig, "feasibility_components")
 
 
-def cleavability_panel(trigger):
+#: How a linker is drawn on the cleavability panel. The shape is the linker,
+#: because the colour is already spoken for by the mask family.
+LINKER_MARKER = (("generated", "o", "generated motif"),
+                 ("protease-resistant control", "s", "Gly/Ser control"),
+                 ("scrambled control", "^", "scrambled control"))
+
+
+def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
     """Recognition against reach: the two halves of the cleavability score.
 
     A linker has to be both recognised by the protease and physically
     reachable in the folded construct. Plotting them against each other shows
     whether the two agree, and the controls say whether either axis is
     discriminating at all.
+
+    Every construct is drawn, coloured by mask family like the rest of the
+    page. The colour used to be the linker kind, which is the one thing the
+    marker shape already says, so the same six families were six different
+    colours here and three flat ones there.
+
+    The trigger stage records no mask, so the family is resolved through the
+    construct library and the two folding stages, the same route the score
+    figure takes.
     """
+    from .mask_design import (MASK_FAMILY_COLOUR, MASK_FAMILY_SHORT,
+                              MASK_FAMILIES, family_by_construct)
     plt = _style()
     rows = [r for r in trigger["results"] if r.get("selectivity") is not None]
     if not rows:
         return None
-    fig, ax = plt.subplots(figsize=(5.2, 3.6))
 
-    groups = {}
-    for r in rows:
-        groups.setdefault(r.get("linker_kind", "generated"), []).append(r)
-    style = {"generated": (SEQ, "o", "generated"),
-             "protease-resistant control": (NULL, "s", "Gly/Ser control"),
-             "scrambled control": (CHROME, "^", "scrambled control")}
-    for kind, items in groups.items():
-        colour, marker, label = style.get(kind, (STR, "D", kind))
-        ax.scatter([r["selectivity"] for r in items],
-                   [r["context_score"] for r in items],
-                   s=34, c=colour, marker=marker, linewidths=0, alpha=.85,
-                   label=label, zorder=3)
+    mask_of = {c["id"]: c.get("mask") for c in (lib or {}).get("constructs", [])}
+    fam_of = {}
+    for source in (fold, redesign_fold):
+        for r in (source or {}).get("results", []):
+            fam_of[r["id"]] = family_by_construct(r.get("mask"),
+                                                  r.get("parent"), mask_of)
+    unplaced = [r["id"] for r in rows if fam_of.get(r["id"]) is None]
+    if unplaced:
+        raise ValueError(
+            f"{len(unplaced)} constructs have no mask family on the "
+            f"cleavability panel, starting with {unplaced[0]!r}; the folding "
+            "results no longer cover what the trigger stage scored")
+
+    fig, ax = plt.subplots(figsize=(8.6, 3.6))
+    fig.subplots_adjust(right=0.70)
+    # selectivity is a property of the linker, and there are five linkers, so
+    # 348 constructs fall in five vertical lines. Drawn on the exact value the
+    # columns are solid and the colour cannot be read, which is the whole
+    # point of the figure, so the points are spread by a small random offset.
+    # It is smaller than half the gap between the two closest columns, so no
+    # point crosses into a neighbour.
+    rng = np.random.default_rng(7)
+    for kind, marker, _label in LINKER_MARKER:
+        items = [r for r in rows if r.get("linker_kind") == kind]
+        if not items:
+            continue
+        # one call per marker with the colours carried per point, and the
+        # order shuffled, so no family is systematically drawn over another
+        order = rng.permutation(len(items))
+        x = np.array([items[i]["selectivity"] for i in order])
+        y = np.array([items[i]["context_score"] for i in order])
+        c = [MASK_FAMILY_COLOUR[fam_of[items[i]["id"]]] for i in order]
+        ax.scatter(x + rng.uniform(-0.022, 0.022, len(x)), y,
+                   s=26, color=c, marker=marker, edgecolor="white",
+                   linewidth=.6, alpha=.85, zorder=3)
 
     ax.axvline(0, color=RULE, lw=1, zorder=1)
     ax.set_xlabel("sequence recognition  (selectivity, target − off-target)")
     ax.set_ylabel("reach in the construct")
-    ax.legend(fontsize=7, loc="best", frameon=False)
+
+    from matplotlib.lines import Line2D
+    present = [f for f, _ in MASK_FAMILIES
+               if any(fam_of[r["id"]] == f for r in rows)]
+    fams = ax.legend(
+        handles=[Line2D([], [], marker="o", linestyle="none", markersize=5,
+                        color=MASK_FAMILY_COLOUR[f],
+                        label=MASK_FAMILY_SHORT[f]) for f in present],
+        fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+        frameon=False, handlelength=1.3, handletextpad=.6, labelspacing=.7,
+        borderaxespad=0)
+    fams.set_title("mask family", prop={"size": 7.5, "weight": "semibold"})
+    fams._legend_box.align = "left"
+    ax.add_artist(fams)
+
+    kinds = ax.legend(
+        handles=[Line2D([], [], marker=m, linestyle="none", markersize=5,
+                        color=INK3, label=lab) for _, m, lab in LINKER_MARKER],
+        fontsize=7, loc="lower left", bbox_to_anchor=(1.02, 0.0),
+        frameon=False, handlelength=1.3, handletextpad=.6, labelspacing=.7,
+        borderaxespad=0)
+    kinds.set_title("linker", prop={"size": 7.5, "weight": "semibold"})
+    kinds._legend_box.align = "left"
     return _save(fig, "cleavability_panel")
 
 

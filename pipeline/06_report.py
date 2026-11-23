@@ -938,6 +938,11 @@ N["cn01_sel"] = _by_lid["cn01"]["selectivity"]
 N["cn01_target"] = _by_lid["cn01"]["target_z"]
 N["cn01_off"] = _by_lid["cn01"]["off_target_z"]
 N["ctrl_target"] = _by_lid["ctrl_gs"]["target_z"]
+# the number of columns on the cleavability panel. It is not the number of
+# motifs: two of the generated motifs score the same selectivity, so six
+# motifs put the constructs in five vertical groups, not six
+N["n_sel_values"] = len({l["selectivity"] for l in _LK["linkers"]
+                         if l.get("selectivity") is not None})
 N["len_lo"] = min(len(l["sequence"]) for l in _LK["linkers"])
 N["len_hi"] = max(len(l["sequence"]) for l in _LK["linkers"])
 _least_row = min((r for r in (trigger["results"] if trigger else []) if r.get("linker_id")),
@@ -1425,16 +1430,10 @@ the same band.</p>
 </div></details>
 </div>
 </div>
-<div class="stack">
-<p>Linker length decides whether the mask can reach the paratope at all. It does not say whether
-the mask binds, and the controls are why: coverage alone cannot separate a designed interaction
-from a peptide with room to move.</p></div>
-<details class="tech"><summary>Occlusion across the library</summary><div class="techbody">
 {R.ensemble_viewer("ens-mask", "masking",
    "Every folded construct, coloured by paratope occlusion. The masks do not concentrate over "
    "the antigen-binding residues, which is the result reported above.",
    R.ramp_legend("least occluding", "most"))}
-</div></details>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
 <div class="stack">
@@ -1458,13 +1457,17 @@ accessible to those proteases.</b></p></div>
      "guarantee an accessible site. CleaveNet is trained on human MMPs, not on snake venom "
      "metalloproteinases, so selectivity at a bite site remains to be tested.")}
 {chart_wide("cleavability_panel", "Predicted cleavage selectivity against structural "
-   "accessibility, one point per construct. The designed motifs sit to the right of the "
-   "controls, but accessibility depends on the folded construct, so a good sequence does not "
-   "carry a construct on its own.")}
+   "accessibility, one point per construct, coloured by mask family. The designed motifs sit "
+   "to the right of the controls, but accessibility depends on the folded construct, so a good "
+   "sequence does not carry a construct on its own.")}
 <div class="stack">
 <p><b>Why the points form vertical groups.</b> Every construct sharing a cleavage motif shares
-its CleaveNet score, so selectivity takes one of six values. What spreads a group vertically is
-the mask it carries, the length of its flanks and the fold that results.</p>
+its CleaveNet score, so selectivity takes one of {R.word(N['n_sel_values'])} values: the
+{R.word(LINKER_GEN['n_kept'])} designed motifs and the {R.word(LINKER_GEN['n_controls'])}
+controls, with two of the designed motifs scoring the same. What spreads a group vertically is
+the mask it carries, the length of its flanks and the fold that results. Points are spread
+sideways by a small random offset so that the colours can be told apart; the group each belongs
+to is its position on the axis, not the offset.</p>
 <p><b>Selectivity is a contrast, not a probability.</b> For
 <span class="mono">cn01</span> it is {N['cn01_target']:.2f} − ({N['cn01_off']:.2f}) =
 {N['cn01_sel']:.2f}: the gap between two standardised scores, not a rate or a likelihood of
