@@ -113,19 +113,8 @@ table.tbl{table-layout:fixed;width:100%}
 table.tbl th,table.tbl td{white-space:normal;text-align:left;vertical-align:top;font-family:var(--sans);font-size:.88rem;line-height:1.45;padding:11px 13px;overflow-wrap:break-word}
 table.tbl td.mono,table.tbl td:first-child{font-family:var(--mono);font-size:.78rem}
 table.tbl thead th,table.tbl tr:first-child th{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
-table.exp td{overflow-wrap:normal;word-break:normal}
-.register{border:1px solid var(--rule);border-radius:3px;overflow:hidden}
-.modblock+.modblock{border-top:1px solid var(--rule)}
-.modbar{display:flex;gap:18px;align-items:baseline;justify-content:space-between;background:#F4F8F8;padding:11px 14px}
-.modname{font-weight:600;font-size:.95rem;color:var(--ink)}
-.script{display:block;font-family:var(--mono);font-size:.66rem;color:var(--ink-3);font-weight:400;margin-top:3px}
-.register table.exp{border:0}
-.register table.exp tbody tr:last-child td{border-bottom:0}
-.alts{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);font-weight:400;text-align:right;flex:1 1 auto}
 .rebuild{background:#FDF4EC;border:1px solid #C06014;border-left:4px solid #C06014;border-radius:3px;padding:14px 18px;margin:0 0 26px;font-size:.92rem;line-height:1.55;color:var(--ink-2)}
-.pending{color:var(--ink-3);font-style:italic}
 .tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--chrome);border:1px solid var(--chrome);border-radius:2px;padding:0 5px;margin-left:6px;white-space:nowrap}
-table.exp td{vertical-align:top}
 td.dead{color:var(--chrome);font-weight:600}
 .tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase;
      color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:1px 7px}
@@ -1381,85 +1370,6 @@ def mri(method: str, result: str, interpretation: str) -> str:
             f'</div>')
 
 
-#: What each module could use, beyond what was run. Attached to the module and
-#: shown once per group, since it does not vary by experiment.
-MODULE_ALTERNATIVES = {
-    "01": "CALVADOS 2; Martini 3; Rosetta ddG; FoldX 5",
-    "02a": "RFdiffusion; RFantibody; BindCraft; ESM-2 650M; ProGen2; AfDesign",
-    "02b": "MEROPS; PROSPERous; DeepCleave; Procleave; iProt-Sub",
-    "03": "AlphaFold3; Boltz-2; Chai-1; BioEmu-1; Rosetta; FoldX 5; ThermoMPNN",
-    "04": "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA; BioEmu-1",
-    "05": "MEROPS; PROSPERous; DeepCleave; SitePrediction; MD of the cleavage site",
-    "06": "NSGA-II; hypervolume",
-    "F": "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA",
-    "\u2014": "",
-}
-
-MODULE_TITLES = {
-    "01": "Usable mask affinity",
-    "02a": "Mask design",
-    "02b": "Cleavable linker design",
-    "03": "Structural feasibility",
-    "04": "Paratope occlusion",
-    "05": "Linker cleavability",
-    "06": "Multiobjective selection",
-    "F": "Final structural assessment",
-    "\u2014": "Not yet implemented",
-}
-
-
-def pipeline_table(rows) -> str:
-    """Every experiment, under the module it belongs to.
-
-    One table per module with its heading above it. A single table with
-    spanning header rows is the obvious construction and does not survive
-    contact with a fixed column layout: the spanning cell collapses into the
-    first column and the heading wraps one character per line.
-    """
-    label_of = {k: v[0] for k, v in EXP_STATUS.items()}
-    colour_of = {k: v[1] for k, v in EXP_STATUS.items()}
-
-    groups = []
-    for r in rows:
-        mod = r.get("module", "\u2014")
-        if not groups or groups[-1][0] != mod:
-            groups.append((mod, []))
-        groups[-1][1].append(r)
-
-    out = []
-    for mod, items in groups:
-        title = MODULE_TITLES.get(mod, "")
-        alts = MODULE_ALTERNATIVES.get(mod, "")
-        out.append(f'<div class="modblock"><div class="modbar">'
-                   # the final screen is not a numbered module, so it is not
-                   # given a number it does not have
-                   f'<span class="modname">'
-                   f'{mod + ". " if mod[0].isdigit() else ""}{title}</span>'
-                   + (f'<span class="alts">also available: {alts}</span>' if alts else "")
-                   + "</div>")
-        body = ""
-        for r in items:
-            label = label_of.get(r["status"], "proposed")
-            colour = colour_of.get(r["status"], "#6E7880")
-            pending_row = r["status"] in ("not run", "proposed", "running")
-            result = r.get("result") or ""
-            if pending_row and not result:
-                result = '<span class="pending">no data yet</span>'
-            tag = (f'<span class="stat-tag" style="color:{colour};'
-                   f'border-color:{colour}">{label}</span>')
-            cls = ' class="ctrl"' if pending_row else ""
-            script = r.get("script") or ""
-            name_cell = (f'<b>{r["name"]}</b>'
-                         + (f'<span class="script">{script}</span>' if script else ""))
-            body += (f'<tr{cls}><td>{name_cell}</td><td>{r["question"]}</td>'
-                     f'<td class="mono">{r.get("method", "")}</td>'
-                     f'<td>{tag} {result}</td></tr>')
-        out.append('<table class="tbl exp wrap">'
-                   '<colgroup><col style="width:19%"><col style="width:24%">'
-                   '<col style="width:26%"><col style="width:31%"></colgroup>'
-                   f'<tbody>{body}</tbody></table></div>')
-    return '<div class="register">' + "".join(out) + "</div>"
-
 def ensemble_viewer(element_id: str, score_key: str | None, caption: str,
                     legend: str) -> str:
     """A viewer over the aligned ensemble, coloured by one score."""
@@ -1624,18 +1534,6 @@ def affinity_scan_table(scan, used_M, closes_M) -> str:
             f'outcompete the released mask, and no mask affinity satisfies both '
             f'requirements. That is a property of the design, not of any particular mask.'
             f'</div>')
-
-
-#: Status vocabulary for the experiment register. "run" means the output on
-#: this page came from it; "not run" means the code exists and has not been
-#: executed; "proposed" means it has not been written.
-EXP_STATUS = {
-    "run": ("run", "#0E7C7B"),
-    "running": ("running", "#8A6A1F"),
-    "not run": ("not run", "#6E7880"),
-    "proposed": ("proposed", "#6E7880"),
-    "failed": ("ran, did not work", "#C06014"),
-}
 
 
 def rebuild_banner(stale, n_total: int) -> str:

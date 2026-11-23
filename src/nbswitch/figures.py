@@ -226,10 +226,13 @@ def release_sensitivity(tether):
 #: The matched comparison: one antigen-derived mask against the three
 #: controls built from it. Every one of the four was paired with the same 21
 #: linkers, so the only thing that differs along the axis is the mask.
-OCCLUSION_CONTROLS = (("epi_core", "main contact loop", SEQ),
-                      ("epi_core_scram", "scrambled", STR),
-                      ("epi_core_half", "truncated", "#8A9BA8"),
-                      ("polyG", "poly-glycine", NULL))
+#:
+#: The axis carries the library's mask ids, not descriptions of them, so that
+#: a column on the plot and a row in the table beside it are the same name.
+OCCLUSION_CONTROLS = (("epi_core", "epi_core", SEQ),
+                      ("epi_core_scram", "epi_core_scram", STR),
+                      ("epi_core_half", "epi_core_half", "#8A9BA8"),
+                      ("polyG", "polyG", NULL))
 
 
 def occlusion_by_group(fold, masks=OCCLUSION_CONTROLS,
