@@ -1597,25 +1597,7 @@ paratope in those predictions, so they do not establish specific binding.</p>
 </section>
 
 <section class="sec">
-<div class="stack"><div class="eyebrow">06</div><h2>Experimental collaboration and further development</h2>
-<p>I would work with experimental PhD students to establish measurements corresponding to the
-three scoring functions: protein stability and developability, mask interaction and dissociation,
-and protease responsiveness. Purification behaviour and gel analysis address the first,
-biolayer interferometry in the presence and absence of the protease addresses the second and
-third.</p>
-<p>These data would allow the predictive ability of individual computational methods to be
-assessed and would identify which parts of the pipeline require development. As more measurements
-accumulate, I would investigate whether sequence and structural representations of the constructs
-can be used to train more accurate scoring functions and improve the selection of subsequent
-candidates.</p>
-<p>The preliminary implementation shows how structural information can constrain candidate
-generation and how several molecular properties can be combined into a selection framework. The
-principal remaining challenge is predicting masking and release: a tethered mask acts at a high
-local concentration, so a weak isolated interaction may still be functional, and a static complex
-prediction gives neither an affinity nor an off-rate. I would prioritise that component while
-working with the experimental researchers to establish the measurements needed to assess
-structural feasibility, binding and protease responsiveness. The aim is a method that can be
-applied to other nanobody&ndash;antigen pairs without altering their binding interfaces.</p></div>
+<div class="stack"><div class="eyebrow">06</div><h2>Experimental collaboration and further development</h2></div>
 
 <h4 class="subh"><span>First order</span>Three constructs, for diagnosis</h4>
 <div class="stack">
