@@ -1299,9 +1299,7 @@ reproduces only the larger one may or may not be enough.</p></div>
 
 <h5 class="subh2">Designing the protease-cleavable linkers</h5>
 <figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
-<figcaption>How a protease-cleavable linker is designed. The sequence the protease has to
-recognise and the distance the mask has to travel are set in separate steps, so either can
-be changed without confounding the other.</figcaption></figure>
+</figure>
 <div class="stack">
 <p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage
 motif and a scrambled version of the highest-scoring sequence.</p>
