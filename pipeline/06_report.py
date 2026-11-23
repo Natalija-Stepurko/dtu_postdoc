@@ -843,15 +843,34 @@ try:
     _VER = load_json("19_verification.json")
 except FileNotFoundError:
     _VER = {"n_worth_testing": 0}
+# the 21 linkers are six sequences at the reference length plus length
+# variants of three of them, not four motifs and two controls repeated
+_REF_LINKERS = [x for x in _LK["linkers"] if "_n" not in x["id"]]
+_LEN_VARIANTS = [x for x in _LK["linkers"] if "_n" in x["id"]]
+# the library file carries the free nanobody alongside the constructs, so the
+# construct count is one more than the mask x linker product
+_N_REDESIGNS = redesign["n_unique"] if redesign else 0
+_N_PARENTS = len(redesign["parents"]) if redesign else 0
+
 FUNNEL = {
     "n_masks": len(lib["masks"]), "n_linkers": lib["n_linkers"],
     "n_pairs": lib["n_pairs"], "n_motifs": _LK["n_kept"],
     "n_linker_controls": _LK["n_controls"], "n_generated": _LK["n_generated"],
-    "n_redesigns": redesign["n_unique"] if redesign else 0,
-    "n_structures": lib["n_constructs"] + (redesign["n_unique"] if redesign else 0),
+    "n_ref_linkers": len(_REF_LINKERS), "n_len_variants": len(_LEN_VARIANTS),
+    "ref_linker_len": len(_REF_LINKERS[0]["sequence"]) if _REF_LINKERS else 0,
+    "n_redesigns": _N_REDESIGNS, "n_parents": _N_PARENTS,
+    "n_per_parent": _N_REDESIGNS // _N_PARENTS if _N_PARENTS else 0,
+    # every construct folded once, plus the free nanobody reference
+    "n_first_round": lib["n_constructs"],
+    "n_structures": lib["n_constructs"] + _N_REDESIGNS,
     "n_evaluated": _RANK["n_total"], "n_front": _RANK["n_front"],
     "n_shortlist": len(_RANK["shortlist"]), "n_worth": _VER["n_worth_testing"],
 }
+if FUNNEL["n_pairs"] + FUNNEL["n_redesigns"] != FUNNEL["n_evaluated"]:
+    raise SystemExit(
+        f"the funnel does not add up: {FUNNEL['n_pairs']} pairs + "
+        f"{FUNNEL['n_redesigns']} redesigns is not {FUNNEL['n_evaluated']} "
+        "scored candidates")
 N["n_evaluated"] = FUNNEL["n_evaluated"]
 N["n_structures"] = FUNNEL["n_structures"]
 

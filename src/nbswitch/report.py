@@ -953,32 +953,49 @@ def occlusion_schematic(free_sasa: float | None = None) -> str:
 
 
 def architecture_schematic() -> str:
-    """One estimation, two design stages, an assembly, three scores, a selection."""
-    W, H = 980, 1196
-    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
-         f'role="img" aria-label="Computational pipeline">',
+    """Two inputs, one estimation, two design stages, a redesign loop, three
+    scores, a selection, a screen, and a return path from the bench.
+
+    Every module carries two method lines: what was run, in the module's
+    colour, and what the module could use instead, smaller and in grey under
+    a "Further" label. The two used to be the same size and nearly the same
+    weight, so a reader could not tell which half of the diagram produced the
+    numbers on this page.
+    """
+    W, H = 980, 1250
+    s = [f'<svg viewBox="-40 0 1060 {H}" width="100%" '
+         'xmlns="http://www.w3.org/2000/svg" '
+         'role="img" aria-label="Computational pipeline">',
          '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
          f'markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{NULL}"/>'
+         '</marker>'
+         '<marker id="arl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
+         f'markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="{CHROME}"/>'
          '</marker></defs>',
          '<style>'
          '.p-t{font:600 19px Inter,system-ui,sans-serif}'
          '.p-n{font:600 13px ui-monospace,monospace}'
          '.p-b{font:15px Inter,system-ui,sans-serif}'
          '.p-m{font:13.5px ui-monospace,monospace;letter-spacing:.02em}'
+         '.p-f{font:12px ui-monospace,monospace;letter-spacing:.02em}'
          '.p-io{font:600 14px ui-monospace,monospace;letter-spacing:.1em}'
          '.p-s{font:600 12px ui-monospace,monospace;letter-spacing:.09em}'
+         '.p-l{font:600 11px ui-monospace,monospace;letter-spacing:.08em}'
          '</style>']
 
-    def box(x, y, w, h, accent, num, title, lines, methods, tag=None, tagcol=None,
-            available=()):
-        """One module. Methods that produced a number on this page are in the
-        module's colour; methods the module accepts but that were not run are
-        grey, so the difference is visible without a legend."""
+    def box(x, y, w, h, accent, num, title, lines, methods, further=()):
+        """One module: what it asks, what was run, what it could use.
+
+        The further list is smaller and grey under its own label, so the
+        implemented method is never mistaken for a proposal."""
         o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#FFFFFF" '
              f'stroke="{RULE}" stroke-width="1.2"/>',
-             f'<rect x="{x}" y="{y}" width="{w}" height="4" fill="{accent}"/>',
-             f'<text x="{x+20}" y="{y+34}" class="p-n" fill="{accent}">{num}</text>',
-             f'<text x="{x+62}" y="{y+35}" class="p-t" fill="{INK}">{title}</text>']
+             f'<rect x="{x}" y="{y}" width="{w}" height="4" fill="{accent}"/>']
+        if num:
+            o.append(f'<text x="{x+20}" y="{y+34}" class="p-n" fill="{accent}">{num}</text>')
+            o.append(f'<text x="{x+62}" y="{y+35}" class="p-t" fill="{INK}">{title}</text>')
+        else:
+            o.append(f'<text x="{x+20}" y="{y+35}" class="p-t" fill="{INK}">{title}</text>')
         ty = y + 60
         for line in lines:
             o.append(f'<text x="{x+20}" y="{ty}" class="p-b" fill="{INK2}">{line}</text>')
@@ -987,12 +1004,14 @@ def architecture_schematic() -> str:
         for line in methods:
             o.append(f'<text x="{x+20}" y="{ty}" class="p-m" fill="{accent}">{line}</text>')
             ty += 19
-        for line in available:
-            o.append(f'<text x="{x+20}" y="{ty}" class="p-m" fill="{NULL}">{line}</text>')
-            ty += 19
-        if tag:
-            o.append(f'<text x="{x+w-16}" y="{y+h-14}" class="p-s" fill="{tagcol}" '
-                     f'text-anchor="end">{tag}</text>')
+        if further:
+            ty += 2
+            o.append(f'<text x="{x+20}" y="{ty}" class="p-f" fill="{NULL}">'
+                     f'<tspan font-weight="600">Further:</tspan> {further[0]}</text>')
+            ty += 16
+            for line in further[1:]:
+                o.append(f'<text x="{x+20}" y="{ty}" class="p-f" fill="{NULL}">{line}</text>')
+                ty += 16
         return "".join(o)
 
     def band(y, text, h=40):
@@ -1001,106 +1020,139 @@ def architecture_schematic() -> str:
                 f'<text x="{W/2}" y="{y+h/2+6}" class="p-io" fill="{CHROME}" '
                 f'text-anchor="middle">{text}</text>')
 
-    def shared(y, title, note, methods, h=76):
+    def inbox(x, w, y, h, kind, name):
+        return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#F4F8F8" '
+                f'stroke="{CHROME}" stroke-width="1"/>'
+                f'<text x="{x+w/2}" y="{y+22}" class="p-l" fill="{CHROME}" '
+                f'text-anchor="middle">{kind}</text>'
+                f'<text x="{x+w/2}" y="{y+45}" class="p-t" fill="{INK}" '
+                f'text-anchor="middle">{name}</text>')
+
+    def shared(y, h, title, note, methods, further=""):
         """A step every downstream module depends on, drawn across the width."""
-        return (f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="4" fill="#FBF8F3" '
-                f'stroke="{STR}" stroke-width="1.2" stroke-dasharray="5 3"/>'
-                f'<text x="24" y="{y+30}" class="p-t" fill="{INK}">{title}</text>'
-                f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>'
-                f'<text x="{W-24}" y="{y+30}" class="p-m" fill="{STR}" '
-                f'text-anchor="end">{methods}</text>'
-                )
+        o = [f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="4" fill="#FBF8F3" '
+             f'stroke="{STR}" stroke-width="1.2" stroke-dasharray="5 3"/>',
+             f'<text x="24" y="{y+30}" class="p-t" fill="{INK}">{title}</text>',
+             f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>',
+             f'<text x="{W-24}" y="{y+30}" class="p-m" fill="{STR}" '
+             f'text-anchor="end">{methods}</text>']
+        if further:
+            o.append(f'<text x="{W-24}" y="{y+52}" class="p-f" fill="{NULL}" '
+                     f'text-anchor="end"><tspan font-weight="600">Further:</tspan> '
+                     f'{further}</text>')
+        return "".join(o)
 
-    def arrow(x1, y1, x2, y2):
-        return (f'<path d="M {x1} {y1} L {x2} {y2}" stroke="{NULL}" stroke-width="1.6" '
-                f'fill="none" marker-end="url(#ar)"/>')
+    def arrow(x1, y1, x2, y2, col=NULL, mark="ar"):
+        return (f'<path d="M {x1} {y1} L {x2} {y2}" stroke="{col}" stroke-width="1.6" '
+                f'fill="none" marker-end="url(#{mark})"/>')
 
-    s.append(band(0, "INPUT · EXPERIMENTAL OR PREDICTED NANOBODY–ANTIGEN STRUCTURE"))
-    s.append(arrow(W/2, 40, W/2, 56))
+    # a legend, because the diagram now says two different things with the
+    # same kind of line and the difference is the point
+    s.append(f'<circle cx="686" cy="9" r="4" fill="{SEQ}"/>'
+             f'<text x="698" y="13" class="p-l" fill="{INK2}">IMPLEMENTED</text>'
+             f'<circle cx="822" cy="9" r="4" fill="{NULL}"/>'
+             f'<text x="834" y="13" class="p-l" fill="{NULL}">'
+             f'POTENTIAL IMPROVEMENTS</text>')
 
-    # one estimation, which constrains both design stages below it
-    s.append(box(0, 60, W, 150, CHROME, "01", "Usable mask affinity and linker length",
-                 ["Interface geometry sets where to attach, how long the linker must be, and the",
-                  "range of mask affinity that masking and release can both tolerate."],
-                 ["interface analysis · worm-like chain · competition equilibria"],
-                 available=["CALVADOS 2 · Martini 3 · Rosetta ddG · FoldX 5"]))
+    # two inputs: the structure the geometry comes from, and the protease
+    # profile the linker is conditioned on. The second was missing, which
+    # made the CleaveNet conditioning look like it came from nowhere.
+    s.append(inbox(0, 478, 22, 58, "STRUCTURAL INPUT", "Nanobody&ndash;antigen complex"))
+    s.append(inbox(502, 478, 22, 58, "BIOLOGICAL INPUT",
+                   "Target and off-target proteases"))
+    s.append(arrow(239, 80, 239, 100))
+    # the protease profile bypasses the geometry module on the right margin
+    s.append(f'<path d="M 741 80 L 741 88 L 1000 88 L 1000 262 L 741 262" '
+             f'stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(arrow(741, 262, 741, 268))
 
-    # the two design stages are independent: neither constrains the other
-    s.append(arrow(245, 210, 245, 234))
-    s.append(arrow(735, 210, 735, 234))
-    s.append(box(0, 238, 478, 196, SEQ, "02a", "Mask design",
-                 ["What does the antigen present at the", "paratope, and how much of it to carry?"],
-                 ["no model: contact face at 3.5 Å, window variants,",
-                  "substitutions off the hotspots, matched controls",
-                  "then ProteinMPNN v_48_020 on the folded backbone"],
-                 available=["RFdiffusion · RFantibody · BindCraft",
-                            "ESM-2 · ProGen2 · AfDesign"]))
-    s.append(box(502, 238, 478, 196, SEQ, "02b", "Cleavable linker design",
-                 ["Which sequences does the protease cut,",
-                  "and how long must the linker be to reach?"],
-                 ["CleaveNet, conditioned on a target profile",
-                  "measured substrate library · flank length"],
-                 available=["MEROPS · PROSPERous · DeepCleave",
-                            "Procleave · iProt-Sub"]))
+    s.append(box(0, 104, W, 150, CHROME, "01",
+                 "Linker geometry and affinity constraints",
+                 ["Where should the mask attach, and what affinity range could permit",
+                  "switching?"],
+                 ["interface geometry · polymer model · binding equilibria"],
+                 further=["CALVADOS · Martini 3 · OpenMM molecular dynamics"]))
+    s.append(arrow(239, 254, 239, 268))
 
-    # they only meet here
-    s.append(f'<path d="M 239 434 L 239 458 L 490 458" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 741 434 L 741 458 L 490 458" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(arrow(490, 458, 490, 476))
-    s.append(band(480, "ASSEMBLE · MASK + CLEAVABLE LINKER + NANOBODY, AS ONE CHAIN", 44))
-    s.append(arrow(W/2, 524, W/2, 542))
+    s.append(box(0, 272, 478, 150, SEQ, "02a", "Mask design",
+                 ["Antigen-derived masks and matched", "controls"],
+                 ["contact grafting · window variants · substitutions"],
+                 further=["LigandMPNN · BoltzGen · RFdiffusion · BindCraft"]))
+    s.append(box(502, 272, 478, 150, SEQ, "02b", "Cleavable linker design",
+                 ["Protease-selective sequences and", "linker lengths"],
+                 ["CleaveNet, conditioned on the profile · Gly/Ser flanks"],
+                 further=["MEROPS · PROSPERousPlus · Procleave"]))
 
-    s.append(shared(546, "Structure prediction",
-                    "Every construct folded once, as a single chain: mask, linker "
-                    "and nanobody together.",
-                    "ESMFold"))
+    s.append(f'<path d="M 239 422 L 239 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 741 422 L 741 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(arrow(490, 444, 490, 460))
 
-    s.append(f'<path d="M 490 622 L 490 640" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 160 640 L 820 640" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(shared(464, 76, "Assemble and predict structures",
+                    "Mask, linker and nanobody built as one chain and folded once.",
+                    "ESMFold", "AlphaFold 3 · Chai-1"))
+    s.append(arrow(490, 540, 490, 556))
+
+    # ProteinMPNN is a loop off the folding step, not a numbered module: the
+    # redesigned masks are folded again and rejoin the same three scores
+    s.append(f'<rect x="0" y="560" width="{W}" height="70" rx="4" fill="#FFFFFF" '
+             f'stroke="{NULL}" stroke-width="1.2" stroke-dasharray="5 3"/>')
+    s.append(f'<text x="24" y="588" class="p-l" fill="{NULL}">'
+             'ADDITIONAL SEQUENCE EXPLORATION</text>')
+    s.append(f'<text x="24" y="614" class="p-t" fill="{INK2}">ProteinMPNN redesign</text>')
+    s.append(f'<text x="{W-24}" y="614" class="p-b" fill="{INK2}" text-anchor="end">'
+             'redesign the mask residues, then predict the structures again</text>')
+    s.append(f'<path d="M 980 595 L 1000 595 L 1000 502 L 988 502" '
+             f'stroke="{NULL}" stroke-width="1.4" fill="none" stroke-dasharray="4 3" '
+             'marker-end="url(#ar)"/>')
+    s.append(arrow(490, 630, 490, 648))
+
+    s.append(f'<path d="M 160 652 L 820 652" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 490 648 L 490 652" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     for x in (160, 490, 820):
-        s.append(arrow(x, 640, x, 666))
+        s.append(arrow(x, 652, x, 676))
 
-    for n, (num, title, lines, methods, tag, col, avail) in enumerate([
+    for n, (num, title, lines, methods, further) in enumerate([
         ("03", "Structural feasibility",
          ["Is the fold kept, and can", "it be produced?"],
-         ["pLDDT · core RMSD", "surface · measured disulfides"], None, None,
-         ["AlphaFold3 · Boltz-2 · Chai-1", "BioEmu-1 · Rosetta · FoldX 5"]),
-        # Boltz-2 is not one of the three scores: it runs after ranking, on
-        # the shortlist, and is drawn as the final screen further down
+         ["pLDDT · core RMSD", "surface · measured disulfides"],
+         ["AlphaFold 3 · Chai-1", "CamSol · AGGRESCAN3D"]),
         ("04", "Paratope occlusion",
          ["How much of the binding surface", "does the mask cover?"],
-         ["ESMFold · solvent-accessible", "surface area"], None, None,
-         ["AlphaFold3 · Chai-1 · PRODIGY", "Rosetta · MM-GBSA · BioEmu-1"]),
+         ["ESMFold · solvent-accessible", "surface area"],
+         ["Rosetta FlexPepDock · HADDOCK", "ensembles · free-energy methods"]),
         ("05", "Linker cleavability",
          ["Is the linker recognised,", "and can a protease reach it?"],
-         ["CleaveNet · measured library", "extension · clearance"], None, None,
-         ["MEROPS · PROSPERous · DeepCleave", "SitePrediction · MD of the site"]),
+         ["CleaveNet · measured library", "extension · exposure · clearance"],
+         ["protease–substrate docking", "venom-protease substrate data"]),
     ]):
-        s.append(box(n * 330, 670, 320, 196, SEQ, num, title, lines, methods,
-                     tag, col, available=avail))
-        s.append(f'<text x="{n*330+300}" y="{884}" class="p-m" fill="{INK3}" '
-                 f'text-anchor="end">S<tspan dy="4" font-size="11">{n+1}</tspan></text>')
-        s.append(f'<path d="M {n*330+160} 866 L {n*330+160} 900 L 490 900 L 490 930" '
+        s.append(box(n * 330, 680, 320, 196, SEQ, num, title, lines, methods,
+                     further=further))
+        s.append(f'<path d="M {n*330+160} 876 L {n*330+160} 902 L 490 902 L 490 926" '
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    # the alternatives listed here were NSGA-II, hypervolume and
-    # uncertainty-based selection, none of which this pipeline runs, beside
-    # hard thresholds and diversity selection, which it does. The methods line
-    # now names what the stage actually does and the list is gone. The old
-    # summary also said no score can compensate for another; that is what the
-    # hard constraints do, not non-domination, which keeps a design that is
-    # poor on one objective as long as nothing beats it on all three.
-    s.append(box(166, 936, 648, 128, CHROME, "06", "Multiobjective selection",
+    s.append(box(166, 930, 648, 150, CHROME, "06", "Multiobjective selection",
                  ["Apply minimum requirements, take the nondominated",
                   "designs, and shortlist a diverse set of them."],
-                 ["hard constraints · Pareto non-domination",
-                  "maximin · one per distinct mask"]))
-    s.append(arrow(490, 1064, 490, 1082))
-    s.append(band(1086, "FINAL STRUCTURAL SCREEN · BOLTZ-2 ON THE MASKED "
-                        "CONSTRUCT WITH ITS ANTIGEN", 44))
-    s.append(arrow(490, 1130, 490, 1148))
-    s.append(band(1152, "OUTPUT · CANDIDATES PRIORITISED FOR EXPERIMENTAL TESTING"))
+                 ["Pareto non-domination · maximin · one per distinct mask"],
+                 further=["calibrated uncertainty · active learning",
+                          "Bayesian optimisation"]))
+    s.append(arrow(490, 1080, 490, 1096))
+    s.append(shared(1100, 76, "Final structural assessment",
+                    "Mask position and antigen access in the predicted complex.",
+                    "Boltz-2", "AlphaFold 3 · Chai-1 · ensemble comparison"))
+    s.append(arrow(490, 1176, 490, 1192))
+    s.append(band(1196, "CANDIDATES FOR EXPERIMENTAL TESTING &#183; "
+                        "EXPRESSION, MASKING, PROTEOLYTIC ACTIVATION"))
+
+    # the loop the whole proposal is about: measurements come back as better
+    # scoring functions, not as a second guess at the same candidate
+    s.append(f'<path d="M 0 1216 L -22 1216 L -22 778 L -6 778" '
+             f'stroke="{CHROME}" stroke-width="1.4" fill="none" stroke-dasharray="5 3" '
+             'marker-end="url(#arl)"/>')
+    s.append(f'<text transform="rotate(-90 -30 1000)" x="-30" y="1000" '
+             f'class="p-l" fill="{CHROME}" text-anchor="middle">'
+             'MEASUREMENTS IMPROVE THE SCORING FUNCTIONS</text>')
     s.append("</svg>")
     return "".join(s)
 
@@ -2069,9 +2121,13 @@ def pipeline_funnel(f) -> str:
     """What the worked example generated, evaluated and selected.
 
     Three rows, one per phase, each a line of counts with the phase named in
-    the left gutter. The first version boxed every count and ran to 708 px of
-    height for twelve numbers; this fits the same numbers in a third of that,
-    which is the right size for something read once on the way past.
+    the left gutter.
+
+    The generate row used to run mask x linker straight into a structure
+    count, which jumped from 252 combinations to 349 structures with nothing
+    in between: the 96 ProteinMPNN redesigns, the second round of construct
+    generation, were invisible. The row now carries both rounds, so every
+    number downstream follows from the two above it.
     """
     W = 980
     ACC, OK = "#2D5BD1", "#1F6B4A"
@@ -2097,7 +2153,7 @@ def pipeline_funnel(f) -> str:
     def item(cx, y, num, title, sub="", over="", accent=INK):
         if over:
             label(cx, y - 12, over, "f-o", INK3)
-        label(cx, y + 18, f"{num:,}", "f-n", accent)
+        label(cx, y + 18, num if isinstance(num, str) else f"{num:,}", "f-n", accent)
         label(cx, y + 34, title, "f-t", INK)
         if sub:
             label(cx, y + 48, sub, "f-s", INK3)
@@ -2115,53 +2171,67 @@ def pipeline_funnel(f) -> str:
                  f'fill="#FBFBFA" stroke="{RULE}" stroke-width="1"/>')
         label(14, y + h / 2 + 3, tag, "f-p", CHROME, "start")
 
-    # --- 1 generate: two inputs, their product, and what was folded --------
-    r1, h1 = 0, 92
+    # --- 1 generate: two rounds of construct generation -------------------
+    r1, h1 = 0, 158
     row(r1, h1, "1 GENERATE")
     cells = [(f["n_masks"], "mask sequences", "grafts, variants, controls",
               "antigen interface", ACC),
              (f["n_linkers"], "linker variants",
-              f"{f['n_motifs']} motifs + {f['n_linker_controls']} controls",
-              f"CleaveNet \u00b7 {f['n_generated']:,} peptides", ACC),
-             (f["n_pairs"], "mask\u2013linker pairs", "every mask, every linker", "", INK),
-             (f["n_structures"], "predicted structures", "+ the free nanobody", "", INK)]
+              f"{f['n_ref_linkers']} reference + {f['n_len_variants']} length variants",
+              f"CleaveNet · {f['n_generated']:,} peptides", ACC),
+             (f["n_pairs"], "original constructs",
+              f"{f['n_masks']} masks × {f['n_linkers']} linkers", "", INK),
+             (f["n_first_round"], "first-round structures",
+              f"{f['n_pairs']} constructs + the free VᴴH", "ESMFold", INK)]
     cw = span / len(cells)
     for i, (num, title, sub, over, col) in enumerate(cells):
         cx = X0 + i * cw + cw / 2
-        item(cx, r1 + 26, num, title, sub, over, col)
+        item(cx, r1 + 30, num, title, sub, over, col)
         if i:
-            link(X0 + (i - 1) * cw + cw / 2 + 62, cx - 62, r1 + 44,
-                 "\u00d7" if i == 1 else "")
+            link(X0 + (i - 1) * cw + cw / 2 + 68, cx - 68, r1 + 48,
+                 "×" if i == 1 else "")
+
+    # the second round, drawn on its own line because it is a separate pass
+    # over the same pipeline and not another column of the first
+    o.append(f'<line x1="{X0}" y1="{r1 + 104}" x2="{W - 16}" y2="{r1 + 104}" '
+             f'stroke="{RULE}" stroke-width="1"/>')
+    label(X0 + 4, r1 + 134, f"+{f['n_redesigns']}", "f-n", ACC, "start")
+    label(X0 + 72, r1 + 126, "ProteinMPNN redesigns", "f-t", INK, "start")
+    label(X0 + 72, r1 + 140,
+          f"{f['n_parents']} parent constructs × {f['n_per_parent']} designs, "
+          "folded again with ESMFold", "f-s", INK3, "start")
 
     # --- 2 evaluate: one set, three scores, all of them on all of it -------
-    r2, h2 = h1 + 10, 78
+    r2, h2 = h1 + 10, 96
     row(r2, h2, "2 EVALUATE")
-    item(X0 + cw / 2, r2 + 20, f["n_evaluated"], "candidate constructs",
-         "the free nanobody is the reference")
-    chips = ("structural feasibility", "mask binding", "linker cleavability")
+    item(X0 + cw / 2, r2 + 18, f["n_evaluated"], "scored candidates",
+         f"{f['n_pairs']} original + {f['n_redesigns']} redesigned")
+    label(X0 + cw / 2, r2 + 80,
+          f"{f['n_structures']:,} structures with the reference", "f-o", INK3)
+    chips = (("S1", "structural feasibility"), ("S2", "paratope occlusion"),
+             ("S3", "linker cleavability"))
     cx0 = X0 + cw + 24
     chw = (W - 16 - cx0) / len(chips)
-    for i, name in enumerate(chips):
+    for i, (tag, name) in enumerate(chips):
         x = cx0 + i * chw
-        o.append(f'<rect x="{x}" y="{r2 + 18}" width="{chw - 12}" height="42" rx="4" '
+        o.append(f'<rect x="{x}" y="{r2 + 26}" width="{chw - 12}" height="42" rx="4" '
                  f'fill="#FFFFFF" stroke="{RULE}" stroke-width="1"/>')
-        label(x + (chw - 12) / 2, r2 + 36, name, "f-t", ACC)
-        label(x + (chw - 12) / 2, r2 + 51,
-              f"{f['n_evaluated']} of {f['n_evaluated']}", "f-o", INK3)
-    link(X0 + cw / 2 + 62, cx0 - 6, r2 + 38)
+        label(x + 14, r2 + 52, tag, "f-t", ACC, "start")
+        label(x + (chw - 12) / 2 + 12, r2 + 52, name, "f-t", INK)
+    link(X0 + cw / 2 + 76, cx0 - 6, r2 + 46)
 
     # --- 3 select: three narrowings ---------------------------------------
     r3, h3 = r2 + h2 + 10, 86
     row(r3, h3, "3 SELECT")
-    steps = [(f["n_front"], "nondominated", "Pareto, no weights", INK),
-             (f["n_shortlist"], "shortlisted", "one per distinct mask", INK),
-             (f["n_worth"], "worth making", "verified against the antigen", OK)]
+    steps = [(f["n_front"], "Pareto candidates", "nondominated, no weights", INK),
+             (f["n_shortlist"], "shortlisted", "maximin and mask diversity", INK),
+             (f["n_worth"], "prioritised", "Boltz-2 structural assessment", OK)]
     sw = span / len(steps)
     for i, (num, title, sub, col) in enumerate(steps):
         cx = X0 + i * sw + sw / 2
         item(cx, r3 + 20, num, title, sub, "", col)
         if i:
-            link(X0 + (i - 1) * sw + sw / 2 + 74, cx - 74, r3 + 38)
+            link(X0 + (i - 1) * sw + sw / 2 + 80, cx - 80, r3 + 38)
 
     H = int(r3 + h3 + 2)
     o[0] = (f'<svg viewBox="0 0 {W} {H}" width="100%" '
@@ -2169,6 +2239,7 @@ def pipeline_funnel(f) -> str:
             'aria-label="What the worked example generated, evaluated and selected">')
     o.append("</svg>")
     return "".join(o)
+
 
 def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
     """Every mask, grouped by the question it was built to answer.
