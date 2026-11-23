@@ -1406,9 +1406,9 @@ extension of this module and are not implemented here.</p></div></details>
 <p><b>Controls for paratope occlusion.</b> To test whether surface coverage depends on the
 antigen-derived sequence, I compared the main contact-loop mask
 (<span class="mono">{CORE_ID}</span>) with scrambled, truncated and poly-glycine controls, each
-built from it. All four were paired with the same {lib['n_linkers']} linker variants, so a
-column here is {lib['n_linkers']} constructs and the only thing differing between columns is
-the mask.</p></div>
+built from it. All four were paired with the same {lib['n_linkers']} linker variants, so each
+mask below stands for {lib['n_linkers']} constructs, and the mask sequence is the only thing
+that differs between them.</p></div>
 <table class="tbl">
 <colgroup><col style="width:21%"><col style="width:36%"><col style="width:33%"><col style="width:10%"></colgroup>
 <thead><tr><th>mask</th><th>what it is</th><th>the question it asks</th>

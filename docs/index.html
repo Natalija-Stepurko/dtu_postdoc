@@ -521,7 +521,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=5a29cc13" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=e737a0f3" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -587,9 +587,9 @@ extension of this module and are not implemented here.</p></div></details>
 <p><b>Controls for paratope occlusion.</b> To test whether surface coverage depends on the
 antigen-derived sequence, I compared the main contact-loop mask
 (<span class="mono">epi_core</span>) with scrambled, truncated and poly-glycine controls, each
-built from it. All four were paired with the same 21 linker variants, so a
-column here is 21 constructs and the only thing differing between columns is
-the mask.</p></div>
+built from it. All four were paired with the same 21 linker variants, so each
+mask below stands for 21 constructs, and the mask sequence is the only thing
+that differs between them.</p></div>
 <table class="tbl">
 <colgroup><col style="width:21%"><col style="width:36%"><col style="width:33%"><col style="width:10%"></colgroup>
 <thead><tr><th>mask</th><th>what it is</th><th>the question it asks</th>
