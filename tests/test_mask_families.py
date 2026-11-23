@@ -71,3 +71,13 @@ def test_the_figure_draws_a_box_for_every_residue_of_every_mask(md):
     spacer = len(md["masks"]["epi_both"]["seq"]) - (
         len(md["masks"]["epi_face2"]["seq"]) + len(md["masks"]["epi_core"]["seq"]))
     assert drawn == expected - spacer, "the spacer is labelled once, not per residue"
+
+
+def test_the_figure_carries_the_construct_id_beside_the_readable_name(md):
+    """The readable name is only useful if it can be matched to the id the
+    construct picker, the shortlist and the files all use."""
+    import re
+    svg = R.mask_families(md["masks"], {int(l[1:]) for l in md["hotspot_labels"]})
+    for name in md["masks"]:
+        assert f">{name}</text>" in svg, f"{name} has no id on its row"
+        assert f">{R.MASK_LABELS[name]}</text>" in svg

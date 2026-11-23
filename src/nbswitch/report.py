@@ -1853,7 +1853,11 @@ def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
             m = masks[name]
             orph = set(m.get("cysteines_orphaned") or [])
             partners = m.get("orphan_partners") or {}
-            label(0, y + 15, MASK_LABELS.get(name, name), "m-h", INK)
+            # readable name over the id, because the id is what the construct
+            # picker, the shortlist and the files are all called: a reader who
+            # meets "Main contact loop" here has to recognise epi_core there
+            label(0, y + 13, MASK_LABELS.get(name, name), "m-h", INK)
+            label(0, y + 27, name, "m-n", INK3)
             for pos, text in blocks[name]:
                 for i, aa in enumerate(text):
                     p = None if pos is None else pos + i
