@@ -1417,14 +1417,25 @@ folded construct.</b></p></div>
      "A suitable cleavage sequence is not necessarily accessible to a protease. The combined "
      "score accounts for both requirements, but does not predict a cleavage rate. CleaveNet is "
      "trained on human MMPs, so cleavage by snake venom metalloproteinases remains untested.")}
-<h5 class="subh2">Can a protease reach the site?</h5>
+<h5 class="subh2">Can a protease reach the cleavage site?</h5>
 <figure class="fig wide"><div class="figbody">{R.accessibility_checks(
    PROBE_R, PROBE_N, PROBE_OFF, CLEFT_HALF, EXT_RISE)}</div></figure>
+<details class="tech"><summary>How the clearance probe is placed</summary><div class="techbody">
+<p>The sphere stands in for an MMP catalytic domain, which is about 160 residues and so roughly
+{PROBE_R * 2:.0f} Å across: it is given a radius of {PROBE_R:g} Å. Its centre is put
+{PROBE_R + PROBE_OFF:g} Å from the scissile C&#945;, so its surface stands {PROBE_OFF:g} Å clear
+of the bond rather than overlapping it, and the {PROBE_N} directions are spread over the sphere
+on a Fibonacci lattice. A direction counts as open when no heavy atom of the construct lies
+inside the probe; the cleavage segment's own atoms are excluded, since the enzyme is binding
+them rather than being blocked by them.</p></div></details>
 {R.annotated_equation([
-   ("S<sub>cleavability</sub>", "Module 05"), "=",
-   ("max(0, S<sub>selectivity</sub>)", "from Module 02"), "&times;",
+   ("S<sub>cleavability</sub>", "Combined cleavability score", "used in Module 06"), "=",
+   ("max(0, S<sub>selectivity</sub>)", "Sequence selectivity", "from Module 02"), "&times;",
    ("S<sub>extension</sub> &middot; S<sub>exposure</sub> &middot; S<sub>clearance</sub>",
-    "calculated in Module 05")])}
+    "Structural accessibility", "calculated in Module 05")])}
+<div class="stack">
+<p>The three accessibility measures are multiplied, so a cleavage site must be sufficiently
+extended, exposed and accessible to a protease-sized object.</p></div>
 <div class="two top">
 <div class="stackfig">
 {chart("cleavability_panel", "Sequence selectivity versus structural accessibility. CleaveNet "

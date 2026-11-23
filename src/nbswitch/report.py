@@ -132,11 +132,12 @@ td.dead{color:var(--chrome);font-weight:600}
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
 .aeq{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:4px 12px;
      line-height:1.5}
-.agrp{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.agrp{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
 .aexp{white-space:nowrap}
 .abrace{display:block;align-self:stretch;height:7px;border:1px solid var(--chrome);
         border-top:0;border-radius:0 0 5px 5px}
-.anote{font-size:.7rem;color:var(--ink-3);text-align:center;white-space:nowrap}
+.aname{font-size:.74rem;color:var(--ink-2);font-weight:600;text-align:center;white-space:nowrap}
+.anote{font-size:.68rem;color:var(--ink-3);text-align:center;white-space:nowrap}
 .aop{padding-top:1px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
@@ -1370,12 +1371,27 @@ def fold_modules(html: str) -> str:
     return "".join(out)
 
 
+def _wrap(text: str, width: int) -> list[str]:
+    """Greedy word wrap, for SVG text that has no box to flow in."""
+    lines, line = [], ""
+    for w in text.split(" "):
+        if line and len(line) + len(w) + 1 > width:
+            lines.append(line)
+            line = w
+        else:
+            line = f"{line} {w}" if line else w
+    if line:
+        lines.append(line)
+    return lines
+
+
 def annotated_equation(terms) -> str:
     """An equation whose groups say where each of them was computed.
 
-    ``terms`` alternates group and operator: (expression, note), "=",
-    (expression, note), "×", ... A group with no note carries no brace,
-    so an operator-only equation still renders.
+    ``terms`` alternates group and operator: (expression, name, where),
+    "=", (expression, name, where), "×", ... The name says what the group
+    is and ``where`` which module computed it. A group with an empty name
+    carries no brace.
 
     The brace is a bracket drawn in CSS rather than an underbrace glyph,
     because the glyph is missing from several of the monospace faces the page
@@ -1386,9 +1402,10 @@ def annotated_equation(terms) -> str:
         if isinstance(term, str):
             out.append(f'<span class="aop">{term}</span>')
             continue
-        expr, note = term
+        expr, name, where = term
         brace = ('<span class="abrace"></span>'
-                 f'<span class="anote">{note}</span>') if note else ""
+                 f'<span class="aname">{name}</span>'
+                 f'<span class="anote">{where}</span>') if name else ""
         out.append(f'<span class="agrp"><span class="aexp">{expr}</span>'
                    f'{brace}</span>')
     return '<div class="eq aeq">' + "".join(out) + "</div>"
@@ -1799,7 +1816,7 @@ def accessibility_checks(probe_radius, n_directions, offset,
     """
     n_res = 2 * cleft_half_width + 1
     gaps = 2 * cleft_half_width
-    W, H = 980, 278
+    W, H = 980, 286
     CUT, CHAIN, PROBE = "#2D5BD1", "#9AA6AE", "#0B9488"
     BODY, BLOCK = "#D4DCE1", "#9AA6AE"
     o = ['<svg viewBox="0 0 %d %d" width="100%%" ' % (W, H) +
@@ -1830,20 +1847,22 @@ def accessibility_checks(probe_radius, n_directions, offset,
     ALPHA = "C&#945;"
     AA = "&#197;"
     cw, gap = (W - 2 * 26) / 3, 26
+    full = gaps * extended_rise
     panels = [
-        ("EXTENSION", "Can the groove hold it?",
-         f"{ALPHA} span of the {word(n_res)} residues around the scissile "
-         f"bond, over the length they would have fully extended "
-         f"({gaps} &#215; {extended_rise:g} {AA}). Capped at 1."),
-        ("EXPOSURE", "Is there surface to bind?",
-         "Solvent-accessible surface of those same residues in the folded "
-         "construct, over their surface measured on their own. "
-         "Shrake&#8211;Rupley, same probe radius both times."),
-        ("CLEARANCE", "Is there room for the enzyme?",
-         f"A {probe_radius:g} {AA} sphere standing {offset:g} {AA} clear of "
-         f"the scissile {ALPHA}, in {n_directions} evenly spread directions. "
-         f"A direction counts as open when no atom of the rest of the "
-         f"construct falls inside the sphere."),
+        ("1 &#183; EXTENSION",
+         "Is the cleavage segment sufficiently extended?",
+         f"The distance between the ends of the {word(n_res)}-residue "
+         f"cleavage segment, relative to its fully extended length "
+         f"({full:.1f} {AA})."),
+        ("2 &#183; EXPOSURE",
+         "Is the cleavage segment solvent-accessible?",
+         "The exposed surface of the cleavage segment in the complete "
+         "construct, relative to the same segment in isolation."),
+        ("3 &#183; CLEARANCE",
+         "Is there room for a protease to approach?",
+         f"A protease-sized sphere is placed around the cleavage site in "
+         f"{n_directions} directions. The score is the fraction of "
+         f"approaches without steric clashes."),
     ]
     for i, (tag, question, note) in enumerate(panels):
         x = i * (cw + gap)
@@ -1868,9 +1887,7 @@ def accessibility_checks(probe_radius, n_directions, offset,
             caliper(cx - half, cx + half, cy + 20, CUT)
             label(cx, cy + 16, "span measured", "a-k", CUT)
             caliper(cx - half - 24, cx + half + 24, cy + 52, INK3, "5 4")
-            label(cx, cy + 48,
-                  f"{gaps} &#215; {extended_rise:g} {AA} if fully extended",
-                  "a-t", INK3)
+            label(cx, cy + 48, f"{full:.1f} {AA} if fully extended", "a-t", INK3)
 
         elif i == 1:
             # the same residues twice: most of the chain swallowed by the
@@ -1937,19 +1954,14 @@ def accessibility_checks(probe_radius, n_directions, offset,
             # the method line below, so the drawing does not repeat them
             label(cx - 44, 162, "rest of the construct", "a-t", INK3)
 
-        label(cx, 186, question, "a-q", INK)
-        o.append(f'<line x1="{x + 22}" y1="199" x2="{x + cw - 22}" y2="199" '
+        qy = 182
+        for ln in _wrap(question, 34)[:2]:
+            label(cx, qy, ln, "a-q", INK)
+            qy += 17
+        o.append(f'<line x1="{x + 22}" y1="212" x2="{x + cw - 22}" y2="212" '
                  f'stroke="{RULE}" stroke-width="1"/>')
-        words, line, lines = note.split(" "), "", []
-        for w in words:
-            if len(line) + len(w) + 1 > 46:
-                lines.append(line)
-                line = w
-            else:
-                line = f"{line} {w}" if line else w
-        lines.append(line)
-        ly = 217
-        for ln in lines[:5]:
+        ly = 230
+        for ln in _wrap(note, 46)[:4]:
             label(cx, ly, ln, "a-t", INK3)
             ly += 14
     o.append("</svg>")
