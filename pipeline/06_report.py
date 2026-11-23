@@ -885,8 +885,6 @@ OCC_CONTROL_ROWS = "".join(_occ_row(m, w, q) for m, (w, q) in _CONTROL_Q.items()
 
 N["occ_trunc"] = float(_np.mean([r["occlusion"] * 100 for r in fold["results"]
                                  if r["kind"] == "truncated control"])) if fold else 0.0
-N["block_margin"] = _VER["blocking_margin"] * 100
-N["mask_on_min"] = _VER["mask_on_paratope_min"] * 100
 N["noalign_hits"] = _NOALIGN["paratope_contacts"]
 N["noalign_total"] = _NOALIGN["total_contacting_residues"]
 N["align_hits"] = _CTL["paratope_contacts"]
@@ -899,7 +897,7 @@ def _verdict(r):
     displaced = r["antigen_contacts_displaced"] >= _VER["blocking_margin"]
     on_site = r["mask_fraction_on_paratope"] >= _VER["mask_on_paratope_min"]
     if displaced and on_site:
-        return "<b>passes both checks</b>"
+        return "<b>antigen displaced, the mask is bound</b>"
     if displaced:
         return "antigen displaced, but the mask is off site"
     return "antigen keeps its binding site"
@@ -924,9 +922,6 @@ from nbswitch.cleavage_context import (CATALYTIC_DOMAIN_RADIUS_A as PROBE_R,
                                        EXTENDED_RISE_A as EXT_RISE)
 N["len_lo"] = min(len(l["sequence"]) for l in _LK["linkers"])
 N["len_hi"] = max(len(l["sequence"]) for l in _LK["linkers"])
-
-N["noCys_id"] = next((r["construct"] for r in _VROWS
-                      if r["construct"] and "noCys" in r["construct"]), "")
 
 # the feasibility stage's own constants and the family it scores worst, so
 # the module text and its method panel cannot drift from the code
@@ -1550,13 +1545,6 @@ superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agr
 <colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
 <thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
 <th>what it means</th></tr></thead><tbody>{VERIFY_ROWS}</tbody></table>
-<div class="stack">
-<p>The criteria were a fall of at least {N['block_margin']:.0f} percentage points from the
-{N['boltz_ctrl']:.0f}% free-nanobody reference, together with at least
-{N['mask_on_min']:.0f}% of mask-contacting residues lying on the paratope. The comparison that
-makes them worth having is between the first two: <span class="mono">{N['noCys_id']}</span> also
-moves the antigen off the site, but its mask barely touches that surface, so the change cannot
-be attributed to masking. <span class="mono">{FP_ID}</span> shows both.</p></div>
 <details class="tech"><summary>Model setup and limitations</summary><div class="techbody">
 <p><b>Why the setup was checked against a known complex.</b> An experimental
 V<sub>H</sub>H&ndash;antigen structure already exists, so it says whether the method puts the

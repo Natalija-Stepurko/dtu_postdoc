@@ -533,7 +533,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=e2c0faaa" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=57c8d3e4" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -722,14 +722,7 @@ superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agr
 <table class="tbl">
 <colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
 <thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
-<th>what it means</th></tr></thead><tbody><tr><td class='mono'>free nanobody</td><td>81%</td><td>&mdash;</td><td>reference</td></tr><tr class='hl'><td class='mono'>epi_face2_cn02</td><td>16%</td><td>48%</td><td><b>passes both checks</b></td></tr><tr><td class='mono'>epi_core_noCys_cn02</td><td>19%</td><td>11%</td><td>antigen displaced, but the mask is off site</td></tr><tr><td class='mono'>epi_core_cn01_n16</td><td>77%</td><td>17%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_half_cn01_n16</td><td>77%</td><td>10%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>polyG_cn01</td><td>78%</td><td>25%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_ext2_cn03</td><td>81%</td><td>20%</td><td>antigen keeps its binding site</td></tr></tbody></table>
-<div class="stack">
-<p>The criteria were a fall of at least 10 percentage points from the
-81% free-nanobody reference, together with at least
-20% of mask-contacting residues lying on the paratope. The comparison that
-makes them worth having is between the first two: <span class="mono">epi_core_noCys_cn02</span> also
-moves the antigen off the site, but its mask barely touches that surface, so the change cannot
-be attributed to masking. <span class="mono">epi_face2_cn02</span> shows both.</p></div>
+<th>what it means</th></tr></thead><tbody><tr><td class='mono'>free nanobody</td><td>81%</td><td>&mdash;</td><td>reference</td></tr><tr class='hl'><td class='mono'>epi_face2_cn02</td><td>16%</td><td>48%</td><td><b>antigen displaced, the mask is bound</b></td></tr><tr><td class='mono'>epi_core_noCys_cn02</td><td>19%</td><td>11%</td><td>antigen displaced, but the mask is off site</td></tr><tr><td class='mono'>epi_core_cn01_n16</td><td>77%</td><td>17%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_half_cn01_n16</td><td>77%</td><td>10%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>polyG_cn01</td><td>78%</td><td>25%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_ext2_cn03</td><td>81%</td><td>20%</td><td>antigen keeps its binding site</td></tr></tbody></table>
 <details class="tech"><summary>Model setup and limitations</summary><div class="techbody">
 <p><b>Why the setup was checked against a known complex.</b> An experimental
 V<sub>H</sub>H&ndash;antigen structure already exists, so it says whether the method puts the
