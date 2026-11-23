@@ -1618,13 +1618,13 @@ positives can be counted, so precision is computable, but false negatives cannot
 not. Spending perhaps a quarter of the batch on designs the score rejected is what turns a hit
 list into a validation set.</div>
 
-<h4 class="subh"><span>Beyond a hundred</span>The labels become training data</h4>
+<h4 class="subh"><span>Beyond 100 constructs</span>Learning from experimental results</h4>
 <div class="stack">
-<p>At around a hundred measured constructs the measurements stop being only a scorecard and start
-being a dataset: a binary label, does it switch, against the sequence and structure
-representations already computed for every candidate. That is the point at which a learned scorer
-could replace a hand-built one, and it is the reason to store those representations for designs
-that were never made.</p></div>
+<p>With more than 100 experimentally characterised constructs, the measured expression, masking
+and cleavage responses could be combined with the sequence and structural features already
+calculated by the pipeline. This would provide a dataset for training and testing predictive
+models, potentially replacing the current heuristic scores with models informed by experimental
+results.</p></div>
 </section>
 
 <section class="sec">
