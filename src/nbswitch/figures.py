@@ -289,7 +289,8 @@ def build_all():
     except FileNotFoundError:
         pass
     try:
-        made.append(feasibility_components(load_json("12_feasibility.json")))
+        made.append(feasibility_components(load_json("12_feasibility.json"),
+                                            load_json("03_constructs.json")))
     except FileNotFoundError:
         pass
     try:
@@ -440,54 +441,82 @@ def pareto_panels(ranking):
     return _save(fig, "pareto_panels")
 
 
-def feasibility_components(feas):
-    """Where each construct family loses feasibility."""
+def feasibility_components(feas, lib=None):
+    """Where each construct family loses feasibility.
+
+    Grouped and coloured by the same six mask families as the score figure,
+    so a family keeps one colour across the page. It grouped by individual
+    mask before, which gave fourteen bars per component in colours that meant
+    nothing anywhere else.
+    """
+    from .mask_design import (MASK_FAMILY_COLOUR, MASK_FAMILY_SHORT,
+                              family_of, MASK_FAMILIES)
     plt = _style()
     rows = feas["results"]
-    #: the unmasked nanobody carries no mask, so it has no family name. It is
-    #: the baseline the masked constructs are read against, not a design, and
-    #: is drawn as a reference rather than as one more bar.
+    #: the unmasked nanobody carries no mask, so it has no family. It is the
+    #: baseline the masked constructs are read against, not a design.
     REFERENCE = "free nanobody (reference)"
+    mask_of = {c["id"]: c.get("mask") for c in (lib or {}).get("constructs", [])}
+
+    def family(row):
+        name = row["mask"]
+        if name is None:
+            return REFERENCE
+        if str(name).startswith("mpnn_"):
+            # a redesign's mask is named for its parent construct
+            name = mask_of.get(str(name)[5:], name)
+        return family_of(name)
+
     fams = {}
     for r in rows:
-        if r["mask"] is None:
-            key = REFERENCE
-        elif str(r["mask"]).startswith("mpnn"):
-            key = "ProteinMPNN"
-        else:
-            key = str(r["mask"])
+        key = family(r)
+        if key is None:
+            continue
         fams.setdefault(key, []).append(r)
+
     keys = ("f_fold", "f_preserved", "f_surface", "f_cysteine")
-    labels = ("fold\nconfidence", "nanobody\npreserved", "surface\nliability", "cysteine\npairing")
-    designs = [k for k in fams if k != REFERENCE]
-    order = sorted(designs, key=lambda k: -np.mean([x["feasibility_score"] for x in fams[k]]))
-    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    # named for the quantity each one measures rather than for the liability
+    # it stands in for, so a reader can match a bar to the method panel
+    labels = ("ESMFold\npLDDT", "V$_H$H fold\npreservation",
+              "exposed hydrophobic\nresidues", "unpaired\ncysteines")
+    order = [q for q, _ in MASK_FAMILIES if q in fams]
+
+    fig, ax = plt.subplots(figsize=(8.6, 3.4))
+    fig.subplots_adjust(right=0.70)
     x = np.arange(len(keys))
-    width = 0.8 / max(len(order), 1)
-    colours = [SEQ, CHROME, STR, "#8A9BA8", "#7B5EA7", "#2E7D32", NULL]
+    width = 0.82 / max(len(order), 1)
     for i, fam in enumerate(order):
-        vals = [np.mean([r[k] for r in fams[fam]]) for k in keys]
-        pos = x + i * width - 0.4 + width / 2
-        colour = colours[i % len(colours)]
-        ax.bar(pos, vals, width * 0.92, color=colour, linewidth=0, label=fam)
+        vals = [float(np.mean([r[k] for r in fams[fam]])) for k in keys]
+        pos = x + i * width - 0.41 + width / 2
+        colour = MASK_FAMILY_COLOUR[fam]
+        ax.bar(pos, vals, width * 0.9, color=colour, linewidth=0,
+               label=MASK_FAMILY_SHORT[fam])
         # a bar of height zero draws nothing, and zero is the value that
-        # disqualifies a construct, so it has to be visible as a value rather
-        # than read as missing data
+        # disqualifies a construct, so it has to read as a value rather than
+        # as missing data
         for px, v in zip(pos, vals):
             if v < 0.01:
                 ax.plot([px], [0.012], marker="_", markersize=3.2,
                         markeredgewidth=1.6, color=colour, zorder=4)
                 ax.annotate("0", (px, 0.035), ha="center", va="bottom",
                             fontsize=5.6, color=colour)
+
     if REFERENCE in fams:
-        ref = [np.mean([r[k] for r in fams[REFERENCE]]) for k in keys]
+        ref = [float(np.mean([r[k] for r in fams[REFERENCE]])) for k in keys]
         for j, v in enumerate(ref):
-            ax.hlines(v, j - 0.44, j + 0.44, color="#12191F", linewidth=1.4,
+            ax.hlines(v, j - 0.46, j + 0.46, color="#12191F", linewidth=1.4,
                       linestyle=(0, (3, 2)), zorder=5,
-                      label=REFERENCE if j == 0 else None)
-    ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
-    ax.set_ylabel("component score"); ax.set_ylim(0, 1.05)
-    ax.legend(fontsize=7, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.22))
+                      label="free nanobody" if j == 0 else None)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, fontsize=7.5)
+    ax.set_ylabel("component score")
+    ax.set_ylim(0, 1.05)
+    leg = ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+                    frameon=False, handlelength=1.3, handletextpad=.6,
+                    labelspacing=.7, borderaxespad=0)
+    leg.set_title("mask family", prop={"size": 7.5, "weight": "semibold"})
+    leg._legend_box.align = "left"
     return _save(fig, "feasibility_components")
 
 

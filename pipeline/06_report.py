@@ -652,7 +652,7 @@ N["n_epitope_contacts"] = iface.get("n_epitope_contacts", 0)
 N["n_epitope"] = iface.get("n_epitope", 0)
 try:
     _seg = load_json("03a_masks.json")["segments"][0]
-    N["mask_face"] = f"{_seg['start_label']}\u2013{_seg['end_label']}"
+    N["mask_face"] = f"{_seg['start_label']}–{_seg['end_label']}"
 except (FileNotFoundError, KeyError, IndexError):
     N["mask_face"] = "not yet designed"
 N["n_contacts"] = iface["n_paratope_contacts"]
@@ -1070,7 +1070,7 @@ MASKS, HOTSPOTS = _MD["masks"], {int(l[1:]) for l in _MD["hotspot_labels"]}
 CORE_ID = "epi_core"
 _CORE = MASKS[CORE_ID]
 CORE_SEQ, CORE_LEN = _CORE["seq"], len(_CORE["seq"])
-CORE_RANGE = f"{_CORE['seq'][0]}{_CORE['start']}\u2013{_CORE['seq'][-1]}{_CORE['end']}"
+CORE_RANGE = f"{_CORE['seq'][0]}{_CORE['start']}–{_CORE['seq'][-1]}{_CORE['end']}"
 N["n_masks"] = len(lib["masks"])
 # the construct the schematic draws: the reference mask on the first CleaveNet
 # linker, which is the parent every redesign in step 3 came from
@@ -1092,6 +1092,37 @@ FUNNEL = {
 }
 N["n_evaluated"] = FUNNEL["n_evaluated"]
 N["n_structures"] = FUNNEL["n_structures"]
+
+# the feasibility stage's own constants and the family it scores worst, so
+# the module text and its method panel cannot drift from the code
+from nbswitch import feasibility as _FEAS
+import collections as _c
+import statistics as _st
+_FZ = load_json("12_feasibility.json")
+FEAS = {"plddt_ref": 90, "rmsd_ref": 3, "phobic_ref": _FEAS.HYDROPHOBIC_REFERENCE,
+        "cys_penalty": _FEAS.CYS_PENALTY, "cys_floor": _FEAS.CYS_FLOOR,
+        "ss_max": _FEAS.DISULFIDE_MAX_A}
+N["feas_n"] = _FZ["n_scored"]
+# library masks only: a redesign's mask is named for its parent construct,
+# so including them makes the worst "family" a set of eight ProteinMPNN
+# variants rather than one of the twelve designed grafts
+_byfam = _c.defaultdict(list)
+for _r in _FZ["results"]:
+    if _r.get("mask") in lib["masks"]:
+        _byfam[_r["mask"]].append(_r)
+# the sentence is about cysteine liability, so pick the family carrying the
+# most unpaired cysteines, breaking ties on the lower mean score. Picking the
+# lowest mean instead named a family whose score is low for other reasons.
+def _modal_cys(rows):
+    return _c.Counter(r["unpaired_cysteines"] for r in rows).most_common(1)[0][0]
+_worst = max(_byfam.items(),
+             key=lambda kv: (_modal_cys(kv[1]),
+                             -_st.mean(r["feasibility_score"] for r in kv[1])))
+N["feas_worst_mask"] = _worst[0]
+N["feas_worst_score"] = _st.mean(r["feasibility_score"] for r in _worst[1])
+_cys = _c.Counter(r["unpaired_cysteines"] for r in _worst[1])
+N["feas_worst_cys"], N["feas_worst_n"] = _cys.most_common(1)[0]
+N["feas_worst_total"] = len(_worst[1])
 
 # the final screen's two structures, already in one frame by stage 19b
 try:
@@ -1127,7 +1158,7 @@ _SEGS = sorted(_MD["segments"], key=lambda g: -g["n_contact"])
 _big = _SEGS[0]
 _rest = sum(g["n_contact"] for g in _SEGS[1:])
 SEG_SPLIT = (f"{R.word(_big['n_contact']).capitalize()} lie in a single run, "
-             f"{_big['start_label']}\u2013{_big['end_label']}, and "
+             f"{_big['start_label']}–{_big['end_label']}, and "
              + (f"one sits apart at {_SEGS[1]['start_label']}"
                 if _rest == 1 else
                 f"{R.word(_rest)} sit apart in {R.word(len(_SEGS) - 1)} shorter runs")
@@ -1466,27 +1497,59 @@ that they separate designs from matched controls. The third does not, and that i
 section is mainly about.</p></div>
 
 <h3 class="mod"><span>Module 03</span>Structural feasibility</h3>
-{mri("Each construct was folded with ESMFold as one chain: mask, linker and nanobody "
-     "together. Preservation of the nanobody was assessed by "
-     "superimposing its core on the separately folded free nanobody, and sequence-based "
-     "descriptors were calculated over the whole construct for exposed hydrophobic "
-     "surface and unpaired cysteines.",
-     f"{N['n_folded']} constructs were folded and {N['n_ensemble']} superimposed on the nanobody. "
-     f"The mean core RMSD against the free nanobody is {N['rmsd_mean']:.2f} Å. "
-     + (f"The graft taken from the antigen's contact face leaves {N['feas_cys']} cysteine "
-        f"unpaired in the predicted model and scores {N['feas_graft']:.2f} here."
-        if N["has_graft_feas"] else
-        "Per-mask feasibility is not shown: these scores were computed on the previous "
-        "library and carry no row for the current graft."),
-     "The nanobody fold is retained, which is a necessary condition and not evidence of "
-     "expression or thermodynamic stability. Cysteine is the liability this module exists to "
-     "catch, and it is measured from the predicted disulfides: an earlier version counted every "
-     "cysteine past the nanobody's own pair as unpaired, which sent any cysteine-rich graft to "
-     "zero on an assumption.")}
-{chart("feasibility_components", "Feasibility components by construct family. A low score on any "
-       "one component is enough to make a construct unusable. The dashed line is the unmasked "
-       f"nanobody, which scores {N['ref_surface']:.2f} on surface liability itself, so that "
-       "component is read as a change against it rather than on its own.")}
+{mri("I used ESMFold to predict each complete mask–linker–nanobody construct. "
+     "Structural feasibility was assessed on four criteria: prediction confidence, preservation "
+     "of the V<sub>H</sub>H fold, exposed hydrophobic surface and unpaired cysteines. The four "
+     "components were combined into a single heuristic score, with penalties for poor "
+     "performance on any one of them.",
+     f"All <b>{N['feas_n']} predicted structures</b> were scored, the "
+     f"{N['n_redesign']} redesigned masks and the free V<sub>H</sub>H reference included. The "
+     f"mean V<sub>H</sub>H core RMSD was <b>{N['rmsd_mean']:.2f} Å</b>, so the predicted "
+     "nanobody fold changes little. Cysteine-rich masks carry additional liabilities: the "
+     f"<span class='mono'>{N['feas_worst_mask']}</span> graft family has a mean feasibility "
+     f"score of <b>{N['feas_worst_score']:.2f}</b>, with {R.word(N['feas_worst_cys'])} unpaired "
+     f"cysteines in {N['feas_worst_n']} of its {N['feas_worst_total']} predicted variants.",
+     "The predicted V<sub>H</sub>H fold is largely preserved once the mask and linker are "
+     "added. Exposed hydrophobic residues and unpaired cysteines remain potential expression "
+     "and folding liabilities. The feasibility score is a screening measure, not a prediction "
+     "of experimental stability or expression.")}
+<details class="tech"><summary>How is structural feasibility calculated?</summary>
+<div class="techbody">
+<div class="quad">
+<div><div class="k">1 &middot; Fold confidence</div><b>ESMFold pLDDT</b>
+<span>Is the complete fusion confidently predicted?</span></div>
+<div><div class="k">2 &middot; Fold preservation</div><b>V<sub>H</sub>H core RMSD</b>
+<span>Does the nanobody keep its original structure?</span></div>
+<div><div class="k">3 &middot; Surface liability</div><b>Exposed hydrophobic residues</b>
+<span>How much of the exposed surface is hydrophobic?</span></div>
+<div><div class="k">4 &middot; Cysteine liability</div><b>Unpaired cysteines</b>
+<span>Are any cysteines left with no predicted disulphide partner?</span></div>
+</div>
+<div class="eq">S<sub>feasibility</sub> = S<sub>fold</sub> &times; S<sub>preservation</sub>
+&times; S<sub>surface</sub> &times; S<sub>cysteine</sub></div>
+<p>All four components run from 0 to 1, and a higher score means fewer predicted liabilities.
+What each one computes:</p>
+<table class="tbl">
+<colgroup><col style="width:30%"><col style="width:70%"></colgroup>
+<thead><tr><th>component</th><th>calculation</th></tr></thead><tbody>
+<tr><td>fold confidence</td><td>mean pLDDT of the whole construct divided by
+{FEAS['plddt_ref']:g}, capped at 1</td></tr>
+<tr><td>V<sub>H</sub>H preservation</td><td>1 &minus; RMSD / {FEAS['rmsd_ref']:g}, clipped to
+0&ndash;1</td></tr>
+<tr><td>surface liability</td><td>1 &minus; f<sub>hydrophobic</sub> /
+{FEAS['phobic_ref']:g}, clipped to 0&ndash;1</td></tr>
+<tr><td>cysteine liability</td><td>1 &minus; {FEAS['cys_penalty']:g} n<sub>unpaired</sub>,
+with a floor of {FEAS['cys_floor']:g}</td></tr>
+</tbody></table>
+<p>For the cysteine term the code counts cysteine sulfur atoms with no other cysteine sulfur
+within {FEAS['ss_max']:g} Å in the predicted structure. That is an approximate structural check,
+not experimental confirmation of disulphide bonding.</p>
+</div></details>
+{chart_wide("feasibility_components", "The four components by mask family, in the same colours "
+       "the families carry elsewhere on this page. A low score on any one component is enough to "
+       "make a construct unusable, since the four are multiplied. The dashed line is the free "
+       f"nanobody, which already scores {N['ref_surface']:.2f} on exposed hydrophobic residues, "
+       "so that component is read as a change against it rather than on its own.")}
 {R.ensemble_viewer("ens-feas", "feasibility",
    "Each construct is a single chain and was predicted on its own, so each was superimposed on "
    "the nanobody backbone to bring them into a common frame. The mask and linker carry the "
