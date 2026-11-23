@@ -1436,11 +1436,6 @@ folded construct.</b></p></div>
    ("max(0, S<sub>selectivity</sub>)", "from Module 02"), "&times;",
    ("S<sub>extension</sub> &middot; S<sub>exposure</sub> &middot; S<sub>clearance</sub>",
     "calculated in Module 05")])}
-{chart_wide("cleavability_panel", "Sequence selectivity versus structural accessibility. "
-   "CleaveNet selectivity was calculated during linker design; accessibility was assessed "
-   "separately in each predicted fusion structure. A linker with favourable sequence "
-   "selectivity may still be poorly accessible. One point per construct, coloured by mask "
-   "family.")}
 <div class="two">
 <div class="stack">
 <h4 class="subh">Horizontal: sequence recognition</h4>
@@ -1453,11 +1448,22 @@ folded construct.</b></p></div>
 <p>One number per construct, measured on its own ESMFold model.</p>
 <p>The product of the three checks above: extension, exposure and clearance, each from 0 to 1.</p></div>
 </div>
-{chart_wide("cleavability_components", "The three accessibility requirements and the product "
+<div class="two top">
+<div class="stackfig">
+{chart("cleavability_panel", "Sequence selectivity versus structural accessibility. "
+   "CleaveNet selectivity was calculated during linker design; accessibility was assessed "
+   "separately in each predicted fusion structure. A linker with favourable sequence "
+   "selectivity may still be poorly accessible. One point per construct, coloured by mask "
+   "family.")}
+</div>
+<div class="stackfig">
+{chart("cleavability_components", "The three accessibility requirements and the product "
    f"they make, for all {N['rank_total']} constructs. Each runs from 0 to 1, and because they "
    "are multiplied the product can be no larger than the smallest of them. Clearance is the "
    "smallest almost everywhere, so it is the requirement that decides whether a site is "
    "reachable.")}
+</div>
+</div>
 {R.ensemble_viewer("ens-cleave", "cleavability",
    "Every folded construct aligned on the nanobody, with each mask and linker coloured by its "
    "predicted cleavability: sequence recognition multiplied by structural accessibility.",
@@ -1599,7 +1605,7 @@ paratope in those predictions, so they do not establish specific binding.</p>
 
 <h4 class="subh"><span>First order</span>Three constructs, for diagnosis</h4>
 <div class="stack">
-<p>The first order is three constructs, and its purpose is diagnosis rather than success. Each
+<p>The first order is three constructs, and its purpose is diagnosis. Each
 measurement fails against a different part of the pipeline, so three is enough to start.</p></div>
 <table class="tbl">
 <colgroup><col style="width:38%"><col style="width:22%"><col style="width:40%"></colgroup>
@@ -1610,24 +1616,13 @@ measurement fails against a different part of the pipeline, so three is enough t
 <td>the feasibility score: fold, aggregation, developability</td></tr>
 <tr><td>Biolayer interferometry, antigen affinity with the protease absent</td>
 <td>is it masked</td><td>the masking half of the unmasking score</td></tr>
-<tr><td>Biolayer interferometry, antigen affinity with the protease present</td>
+<tr><td>Biolayer interferometry, antigen affinity with the protease present, with a band shift
+on the gel when cleaved</td>
 <td>does it activate</td><td>the trigger score, or the release half</td></tr>
 </tbody></table>
-<div class="note good"><b>Each failure mode points at a different module.</b> A construct that
-will not express, one that expresses but never masks, and one that masks but never releases are
-three different diagnoses, and each sends the work back to a different stage. Two or three cycles
-of this should give a pipeline that reliably proposes three producible, antigen-binding,
-switching variants.</div>
 
 <h4 class="subh"><span>Then twenty to thirty</span>The pipeline itself gets scored</h4>
-<div class="stack">
-<p>Once the loop reliably produces working candidates, the point of a larger batch changes. It is
-no longer about finding a molecule; it is about measuring whether the scores predict anything.
-With twenty to thirty measured constructs, each score can be scored in turn.</p></div>
-<figure class="fig wide"><div class="figbody">{R.validation_matrix()}</div>
-<figcaption>What a batch of measured constructs says about a score. The counts are illustrative;
-the metrics beneath them are computed from the cells above, so the arithmetic cannot drift from
-the example.</figcaption></figure>
+<figure class="fig wide"><div class="figbody">{R.validation_matrix()}</div></figure>
 <div class="note warn"><b>The batch has to include designs the pipeline rejected.</b> If only
 top-ranked candidates are made, every measurement lands in the left-hand column: true and false
 positives can be counted, so precision is computable, but false negatives cannot be, so recall is

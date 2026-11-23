@@ -141,6 +141,10 @@ td.dead{color:var(--chrome);font-weight:600}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
 .stackfig{display:flex;flex-direction:column;gap:14px;justify-content:center}
+/* two figures of unequal height centre themselves in the row, which leaves
+   the shorter one floating in the middle. .two.top starts both at the same
+   line so they can be read against each other. */
+.two.top>.stackfig{justify-content:flex-start}
 .stackfig figure{margin:0}
 .two .viewer{display:flex;flex-direction:column}
 .two .vstage{flex:1;height:auto;min-height:330px}
@@ -1226,12 +1230,13 @@ def validation_matrix() -> str:
             yy += 20
     s.append(f'<rect x="0" y="300" width="{W}" height="54" rx="3" fill="#FFFFFF" '
              f'stroke="{RULE}"/>')
-    s.append(f'<text x="16" y="322" class="v-t" fill="{INK}">'
-             'F1 rises only when recall and precision are high together.</text>')
+    s.append(f'<text x="16" y="322" class="v-m" fill="{INK}">'
+             'recall = TP / (TP + FN)&#160;&#160;&#160;&#160;'
+             'precision = TP / (TP + FP)&#160;&#160;&#160;&#160;'
+             'F1 = 2 &#215; precision &#215; recall / (precision + recall)</text>')
     s.append(f'<text x="16" y="342" class="v-s" fill="{INK2}">'
-             'Both imperfect scorers look defensible on one metric and fail on F1. A score '
-             'that keeps almost nothing and one that keeps almost everything are both useless, '
-             'and a single headline number hides which failure you have.</text>')
+             'Recall is the share of the real switches the score keeps; precision is the '
+             'share of what it keeps that are real switches.</text>')
     s.append("</svg>")
     return "".join(s)
 

@@ -745,8 +745,7 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
             f"cleavability panel, starting with {unplaced[0]!r}; the folding "
             "results no longer cover what the trigger stage scored")
 
-    fig, ax = plt.subplots(figsize=(8.6, 3.6))
-    fig.subplots_adjust(right=0.70)
+    fig, ax = plt.subplots(figsize=(5.6, 4.4))
     # selectivity is a property of the linker, and there are five linkers, so
     # 348 constructs fall in five vertical lines. Drawn on the exact value the
     # columns are solid and the colour cannot be read, which is the whole
@@ -772,6 +771,9 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
     ax.set_xlabel("sequence recognition  (CleaveNet selectivity)")
     ax.set_ylabel("structural accessibility")
 
+    # both legends sit under the axes rather than beside them: the figure is
+    # served into one half of a two-column grid, where a legend column costs
+    # a third of the width and shrinks the type that is left
     from matplotlib.lines import Line2D
     present = [f for f, _ in MASK_FAMILIES
                if any(fam_of[r["id"]] == f for r in rows)]
@@ -779,9 +781,9 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
         handles=[Line2D([], [], marker="o", linestyle="none", markersize=5,
                         color=MASK_FAMILY_COLOUR[f],
                         label=MASK_FAMILY_SHORT[f]) for f in present],
-        fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0),
-        frameon=False, handlelength=1.3, handletextpad=.6, labelspacing=.7,
-        borderaxespad=0)
+        fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=3,
+        frameon=False, handlelength=1.3, handletextpad=.6, labelspacing=.55,
+        columnspacing=1.1, borderaxespad=0)
     fams.set_title("mask family", prop={"size": 7.5, "weight": "semibold"})
     fams._legend_box.align = "left"
     ax.add_artist(fams)
@@ -789,9 +791,9 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
     kinds = ax.legend(
         handles=[Line2D([], [], marker=m, linestyle="none", markersize=5,
                         color=INK3, label=lab) for _, m, lab in LINKER_MARKER],
-        fontsize=7, loc="lower left", bbox_to_anchor=(1.02, 0.0),
-        frameon=False, handlelength=1.3, handletextpad=.6, labelspacing=.7,
-        borderaxespad=0)
+        fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.38), ncol=3,
+        frameon=False, handlelength=1.3, handletextpad=.5, labelspacing=.55,
+        columnspacing=1.0, borderaxespad=0)
     kinds.set_title("linker", prop={"size": 7.5, "weight": "semibold"})
     kinds._legend_box.align = "left"
     return _save(fig, "cleavability_panel")
@@ -821,8 +823,7 @@ def cleavability_components(trigger):
     rows = sorted(trigger["results"], key=lambda r: r["context_score"])
     if not rows:
         return None
-    fig, ax = plt.subplots(figsize=(8.6, 3.4))
-    fig.subplots_adjust(right=0.78)
+    fig, ax = plt.subplots(figsize=(5.6, 4.4))
     x = np.arange(1, len(rows) + 1)
 
     ax.fill_between(x, [r["context_score"] for r in rows], color="#E3E9EC",
@@ -835,9 +836,12 @@ def cleavability_components(trigger):
     ax.set_ylim(0, 1.02)
     ax.set_xlabel(f"all {len(rows)} constructs, ordered by the product")
     ax.set_ylabel("score")
-    leg = ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0),
-                    frameon=False, handlelength=1.3, handletextpad=.6,
-                    labelspacing=.7, borderaxespad=0)
+    # the legend goes under the axes for the same reason as the panel it is
+    # paired with: half a column is too narrow to spend on a legend column
+    leg = ax.legend(fontsize=7.5, loc="upper center",
+                    bbox_to_anchor=(0.5, -0.22), ncol=4, frameon=False,
+                    handlelength=1.4, handletextpad=.5, columnspacing=1.1,
+                    borderaxespad=0)
     leg._legend_box.align = "left"
     return _save(fig, "cleavability_components")
 
