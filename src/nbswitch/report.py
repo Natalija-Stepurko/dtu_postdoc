@@ -3,6 +3,7 @@
 Values are read from the stage outputs, so nothing on the page is typed by hand.
 """
 from __future__ import annotations
+import hashlib
 import shutil
 from pathlib import Path
 
@@ -410,12 +411,29 @@ def _card(value, label, sub="", highlight=False):
             + (f'<div class="sub">{sub}</div>' if sub else "") + "</div>")
 
 
+def asset(path):
+    """A served path with a short content hash on it.
+
+    An <img src> that never changes is cached by the browser for as long as it
+    likes, so a figure redrawn under the same name keeps showing the old
+    picture while the page around it updates. The page looks published and is
+    not, which is the same failure as a stale deploy and harder to see.
+    Hashing the bytes means the URL changes exactly when the content does, and
+    an unchanged figure still comes from cache.
+    """
+    local = DOCS / path
+    if not local.exists():
+        return path
+    digest = hashlib.sha256(local.read_bytes()).hexdigest()[:8]
+    return f"{path}?v={digest}"
+
+
 def _chart(name, caption):
     # alt is empty on purpose. The caption sits next to the image and describes
     # it, so repeating it in alt made a screen reader read every caption twice
     # and put the same sentence twice into any copied selection. It also meant
     # a caption carrying markup or a quote leaked into the attribute.
-    return (f'<figure class="chart"><img src="figures/{name}.svg" alt="">'
+    return (f'<figure class="chart"><img src="{asset(f"figures/{name}.svg")}" alt="">'
             f'<figcaption>{caption}</figcaption></figure>')
 
 
@@ -769,7 +787,7 @@ def states_schematic() -> str:
          "The antigen engages the same surface, as in the deposited complex."),
     ]
     cells = "".join(
-        f'<figure class="stfig"><img src="states/{img}" alt="">'
+        f'<figure class="stfig"><img src="{asset(f"states/{img}")}" alt="">'
         f'<figcaption><b>{tag} · {title}</b><span>{text}</span></figcaption></figure>'
         for tag, img, title, text in panels)
     return (f'<div class="states">{cells}</div>'
@@ -978,7 +996,7 @@ def background_section() -> str:
     designs on purpose - so the link is architectural rather than decorative.
     """
     def f(name, cap, cls=""):
-        return (f'<figure class="tfig {cls}"><img src="thesis/{name}.png" alt="">'
+        return (f'<figure class="tfig {cls}"><img src="{asset(f"thesis/{name}.png")}" alt="">'
                 f'<figcaption>{cap}</figcaption></figure>')
 
     def step(n, title):
@@ -1640,9 +1658,13 @@ def construct_schematic(c, free_vhh_len=None):
     mask and linker together are a short N-terminal addition to a nanobody
     that is most of the molecule, and the protease has to find ten residues
     inside that.
+
+    Every label sits outside the bar. Drawn inside, the substrate band covered
+    the linker's own name and range, because the band is in the middle of the
+    linker and so is its label.
     """
     MASKC, FLANKC, CUTC, VHHC = "#C06014", "#9AA6AE", "#2D5BD1", "#337D79"
-    W, bh = 980, 46
+    W, bh = 980, 40
     m_lo, m_hi = c["mask_range"]
     l_lo, l_hi = c["linker_range"]
     v_lo, v_hi = c["vhh_range"]
@@ -1661,40 +1683,41 @@ def construct_schematic(c, free_vhh_len=None):
         o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
                  f'text-anchor="{anchor}">{text}</text>')
 
-    y = 26
-    label(0, 14, "N", "c-m", INK)
-    label(W, 14, "C", "c-m", INK, "end")
-    o.append(f'<line x1="11" y1="10" x2="{W - 11}" y2="10" stroke="{INK3}" '
-             f'stroke-width="1" stroke-opacity="0.4"/>')
+    label(0, 13, "N", "c-m", INK)
+    label(W, 13, "C", "c-m", INK, "end")
+    o.append(f'<line x1="13" y1="9" x2="{W - 13}" y2="9" stroke="{INK3}" '
+             f'stroke-width="1" stroke-opacity="0.35"/>')
 
-    segs = [("mask", MASKC, m_lo, m_hi, c.get("mask_seq", "")),
-            ("cleavable linker", FLANKC, l_lo, l_hi, c.get("linker_seq", "")),
-            ("nanobody", VHHC, v_lo, v_hi, "")]
-    for name, colour, lo, hi, _seq in segs:
+    by = 42
+    segs = [("mask", MASKC, m_lo, m_hi), ("cleavable linker", FLANKC, l_lo, l_hi),
+            ("nanobody", VHHC, v_lo, v_hi)]
+    for name, colour, lo, hi in segs:
         x, w = px(lo - 1), px(hi - lo + 1)
-        o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{bh}" rx="3" '
+        o.append(f'<rect x="{x}" y="{by}" width="{w}" height="{bh}" rx="3" '
                  f'fill="{colour}" fill-opacity="0.18" stroke="{colour}" '
                  f'stroke-width="1.4"/>')
-        if w > 70:
-            label(x + w / 2, y + 22, name, "c-h", colour, "middle")
-            label(x + w / 2, y + 38, f"{lo}\u2013{hi}, {hi - lo + 1} aa",
-                  "c-n", INK3, "middle")
+        label(x + w / 2, by - 9, name, "c-h", colour, "middle")
+        label(x + w / 2, by + bh + 16, f"{lo}\u2013{hi}, {hi - lo + 1} aa",
+              "c-n", INK3, "middle")
 
-    # the substrate inside the linker: the ten residues the protease reads
+    # the ten residues the protease reads, inside the linker and unlabelled:
+    # its callout hangs below the bar so nothing is drawn over anything
     sub = c.get("linker_substrate") or ""
     lseq = c.get("linker_seq") or ""
     if sub and sub in lseq:
         off = lseq.index(sub)
-        s_lo, s_hi = l_lo + off, l_lo + off + len(sub) - 1
+        s_lo = l_lo + off
         x, w = px(s_lo - 1), px(len(sub))
-        o.append(f'<rect x="{x}" y="{y + 6}" width="{w}" height="{bh - 12}" rx="2" '
-                 f'fill="{CUTC}" fill-opacity="0.9"/>')
+        o.append(f'<rect x="{x}" y="{by + 1.5}" width="{w}" height="{bh - 3}" rx="2" '
+                 f'fill="{CUTC}" fill-opacity="0.85"/>')
         cx = x + w / 2
-        o.append(f'<line x1="{cx}" y1="{y - 12}" x2="{cx}" y2="{y + 4}" '
-                 f'stroke="{CUTC}" stroke-width="1.2" stroke-dasharray="3 2"/>')
-        label(cx, y - 16, f"protease site, {len(sub)} aa", "c-n", CUTC, "middle")
+        o.append(f'<path d="M {cx} {by + bh + 24} L {cx} {by + bh + 34} '
+                 f'L {cx + 26} {by + bh + 34}" fill="none" stroke="{CUTC}" '
+                 f'stroke-width="1.1" stroke-dasharray="3 2"/>')
+        label(cx + 32, by + bh + 38,
+              f"protease site, {len(sub)} residues", "c-n", CUTC)
 
-    y += bh + 30
+    y = by + bh + 70
     rows = [("mask", c.get("mask", ""), c.get("mask_seq", ""), MASKC),
             ("linker", c.get("linker_id", ""), lseq, FLANKC)]
     for name, ident, seq, colour in rows:
@@ -1716,7 +1739,6 @@ def construct_schematic(c, free_vhh_len=None):
             'aria-label="One assembled construct, drawn to scale">')
     o.append("</svg>")
     return "".join(o)
-
 
 def pipeline_funnel(f) -> str:
     """What the worked example generated, evaluated and selected.
