@@ -920,11 +920,7 @@ VERIFY_ROWS = "".join(
 from nbswitch.cleavage_context import (CATALYTIC_DOMAIN_RADIUS_A as PROBE_R,
                                        N_PROBE_DIRECTIONS as PROBE_N,
                                        PROBE_OFFSET_A as PROBE_OFF)
-_GEN = [l for l in _LK["linkers"] if l.get("kind") == "generated"]
-N["sel_gen_lo"] = min(l["selectivity"] for l in _GEN)
-N["sel_gen_hi"] = max(l["selectivity"] for l in _GEN)
 _by_lid = {l["id"]: l for l in _LK["linkers"]}
-N["sel_scram"] = _by_lid["ctrl_scram"]["selectivity"]
 N["cn01_sel"] = _by_lid["cn01"]["selectivity"]
 N["cn01_target"] = _by_lid["cn01"]["target_z"]
 N["cn01_off"] = _by_lid["cn01"]["off_target_z"]
@@ -1425,29 +1421,31 @@ the same band.</p>
 
 <h3 class="mod"><span>Module 05</span>Linker cleavability</h3>
 <div class="stack">
-<p><b>Linker has to be cleaved by the intended proteases and also has to be physically
-accessible to those proteases.</b></p></div>
-{mri("Two requirements. <b>Sequence recognition:</b> CleaveNet predicts preferential cleavage "
-     f"by {CLEAVE_TARGETS} against {R.word(LINKER_GEN['n_off'])} off-target MMPs, scored as the "
-     "difference between the two group means. <b>Structural accessibility:</b> the predicted "
-     "linker is assessed for backbone extension, solvent exposure and room for a protease to "
-     "approach. The two are multiplied, so poor recognition or poor accessibility lowers the "
-     "score.",
-     f"{R.word(LINKER_GEN['n_kept']).capitalize()} cleavage motifs were selected from "
-     f"{LINKER_GEN['n_generated']:,} generated sequences and "
-     f"{R.word(LINKER_GEN['n_controls'])} controls added; varying the Gly/Ser flanks produced "
-     f"<b>{N['n_linkers']} linker variants</b>. The designed motifs score "
-     f"{N['sel_gen_lo']:.2f}–{N['sel_gen_hi']:.2f} on selectivity, against {N['sel_ctrl']:.2f} "
-     f"for the Gly/Ser control and {N['sel_scram']:.2f} for the scrambled one. Accessibility "
-     "varies widely between constructs, and the two are moderately negatively correlated, "
-     f"r = {N['sel_ctx_r']:+.2f}.",
-     "Both are necessary and neither predicts a cleavage rate. A favourable sequence does not "
-     "guarantee an accessible site. CleaveNet is trained on human MMPs, not on snake venom "
-     "metalloproteinases, so selectivity at a bite site remains to be tested.")}
-{chart_wide("cleavability_panel", "Predicted cleavage selectivity against structural "
-   "accessibility, one point per construct, coloured by mask family. The designed motifs sit "
-   "to the right of the controls, but accessibility depends on the folded construct, so a good "
-   "sequence does not carry a construct on its own.")}
+<p><b>A linker must contain a suitable protease cleavage sequence and be accessible in the
+folded construct.</b></p></div>
+{mri("I combined two measures. <b>Sequence selectivity:</b> the CleaveNet score calculated "
+     f"during linker design (Module 02), measuring predicted preference for {CLEAVE_TARGETS} "
+     f"over {R.word(LINKER_GEN['n_off'])} off-target MMPs. <b>Structural accessibility:</b> "
+     "calculated from the ESMFold structure, based on cleavage-site extension, solvent exposure "
+     "and space for a protease to approach. The cleavability score is the product of the "
+     "non-negative selectivity score and the three accessibility measures.",
+     "The designed sequences showed greater predicted selectivity than the controls, but "
+     "accessibility varied substantially between constructs. Sequence selectivity and "
+     "accessibility were moderately negatively correlated "
+     f"(r = {N['sel_ctx_r']:+.2f}).",
+     "A suitable cleavage sequence is not necessarily accessible to a protease. The combined "
+     "score accounts for both requirements, but does not predict a cleavage rate. CleaveNet is "
+     "trained on human MMPs, so cleavage by snake venom metalloproteinases remains untested.")}
+{R.annotated_equation([
+   ("S<sub>cleavability</sub>", "Module 05"), "=",
+   ("max(0, S<sub>selectivity</sub>)", "from Module 02"), "&times;",
+   ("S<sub>extension</sub> &middot; S<sub>exposure</sub> &middot; S<sub>clearance</sub>",
+    "calculated in Module 05")])}
+{chart_wide("cleavability_panel", "Sequence selectivity versus structural accessibility. "
+   "CleaveNet selectivity was calculated during linker design; accessibility was assessed "
+   "separately in each predicted fusion structure. A linker with favourable sequence "
+   "selectivity may still be poorly accessible. One point per construct, coloured by mask "
+   "family.")}
 <div class="stack">
 <p><b>Why the points form vertical groups.</b> Every construct sharing a cleavage motif shares
 its CleaveNet score, so selectivity takes one of {R.word(N['n_sel_values'])} values: the
@@ -1461,7 +1459,10 @@ to is its position on the axis, not the offset.</p>
 {N['cn01_sel']:.2f}: the gap between two standardised scores, not a rate or a likelihood of
 being cut. The Gly/Ser control's {N['sel_ctrl']:.2f} is positive without being cleavable &mdash;
 its target score is {N['ctrl_target']:.2f}, so it is predicted to resist both groups about
-equally.</p></div>
+equally.</p>
+<div class="note"><b>The CleaveNet score is used twice.</b> It selected the linker sequences in
+Module 02 and it is a term in the cleavability score here. It is therefore not an independent
+validation of cleavage specificity.</div></div>
 <h5 class="subh2">Can a protease reach the site?</h5>
 <figure class="fig wide"><div class="figbody">{R.accessibility_checks(PROBE_R, PROBE_N, PROBE_OFF)}</div></figure>
 {chart_wide("cleavability_components", "The three accessibility requirements and the product "

@@ -16,7 +16,7 @@ CSS = """
 :root{
   --ink:#12191F; --ink-2:#3A464F; --ink-3:#6E7880;
   --ground:#FFFFFF; --panel:#FFFFFF; --rule:#DDE4E7; --rule-2:#EBF0F2;
-  --seq:#2D5BD1; --str:#C06014; --null:#6E7880; --chrome:#0E7C7B;
+  --seq:#2D5BD1; --str:#C06014; --null:#6E7880; --chrome:#0B9488;
   --seq-wash:#EAEFFB; --str-wash:#FAEEE5;
   --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -129,6 +129,14 @@ td.dead{color:var(--chrome);font-weight:600}
 .step span{font-size:.87rem;color:var(--ink-2);line-height:1.45}
 .eq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:15px 20px;
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
+.aeq{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:4px 12px;
+     line-height:1.5}
+.agrp{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.aexp{white-space:nowrap}
+.abrace{display:block;align-self:stretch;height:7px;border:1px solid var(--chrome);
+        border-top:0;border-radius:0 0 5px 5px}
+.anote{font-size:.7rem;color:var(--ink-3);text-align:center;white-space:nowrap}
+.aop{padding-top:1px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
 .stackfig{display:flex;flex-direction:column;gap:14px;justify-content:center}
@@ -1354,6 +1362,30 @@ def fold_modules(html: str) -> str:
         out.append("</div></details>\n")
         i = stop
     return "".join(out)
+
+
+def annotated_equation(terms) -> str:
+    """An equation whose groups say where each of them was computed.
+
+    ``terms`` alternates group and operator: (expression, note), "=",
+    (expression, note), "×", ... A group with no note carries no brace,
+    so an operator-only equation still renders.
+
+    The brace is a bracket drawn in CSS rather than an underbrace glyph,
+    because the glyph is missing from several of the monospace faces the page
+    asks for and falls back to a box.
+    """
+    out = []
+    for term in terms:
+        if isinstance(term, str):
+            out.append(f'<span class="aop">{term}</span>')
+            continue
+        expr, note = term
+        brace = ('<span class="abrace"></span>'
+                 f'<span class="anote">{note}</span>') if note else ""
+        out.append(f'<span class="agrp"><span class="aexp">{expr}</span>'
+                   f'{brace}</span>')
+    return '<div class="eq aeq">' + "".join(out) + "</div>"
 
 
 def mri(method: str, result: str, interpretation: str) -> str:

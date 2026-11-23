@@ -9,7 +9,7 @@ binding is restored by proteolysis, with a partial implementation on an experime
 :root{
   --ink:#12191F; --ink-2:#3A464F; --ink-3:#6E7880;
   --ground:#FFFFFF; --panel:#FFFFFF; --rule:#DDE4E7; --rule-2:#EBF0F2;
-  --seq:#2D5BD1; --str:#C06014; --null:#6E7880; --chrome:#0E7C7B;
+  --seq:#2D5BD1; --str:#C06014; --null:#6E7880; --chrome:#0B9488;
   --seq-wash:#EAEFFB; --str-wash:#FAEEE5;
   --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -122,6 +122,14 @@ td.dead{color:var(--chrome);font-weight:600}
 .step span{font-size:.87rem;color:var(--ink-2);line-height:1.45}
 .eq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:15px 20px;
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
+.aeq{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:4px 12px;
+     line-height:1.5}
+.agrp{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+.aexp{white-space:nowrap}
+.abrace{display:block;align-self:stretch;height:7px;border:1px solid var(--chrome);
+        border-top:0;border-radius:0 0 5px 5px}
+.anote{font-size:.7rem;color:var(--ink-3);text-align:center;white-space:nowrap}
+.aop{padding-top:1px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
 .stackfig{display:flex;flex-direction:column;gap:14px;justify-content:center}
@@ -521,7 +529,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=c4bcbec3" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=16012631" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -625,10 +633,11 @@ the same band.</p>
 </div></details>
 <details class="modfold"><summary><h3 class="mod"><span>Module 05</span>Linker cleavability</h3></summary><div class="modbody">
 <div class="stack">
-<p><b>Linker has to be cleaved by the intended proteases and also has to be physically
-accessible to those proteases.</b></p></div>
-<div class="mri"><div><div class="k">Method</div><div class="v">Two requirements. <b>Sequence recognition:</b> CleaveNet predicts preferential cleavage by MMP-2, MMP-8 and MMP-9 against nine off-target MMPs, scored as the difference between the two group means. <b>Structural accessibility:</b> the predicted linker is assessed for backbone extension, solvent exposure and room for a protease to approach. The two are multiplied, so poor recognition or poor accessibility lowers the score.</div></div><div><div class="k">Result</div><div class="v">Four cleavage motifs were selected from 714 generated sequences and two controls added; varying the Gly/Ser flanks produced <b>21 linker variants</b>. The designed motifs score 1.42–1.71 on selectivity, against 0.31 for the Gly/Ser control and 0.05 for the scrambled one. Accessibility varies widely between constructs, and the two are moderately negatively correlated, r = -0.48.</div></div><div><div class="k">Interpretation</div><div class="v">Both are necessary and neither predicts a cleavage rate. A favourable sequence does not guarantee an accessible site. CleaveNet is trained on human MMPs, not on snake venom metalloproteinases, so selectivity at a bite site remains to be tested.</div></div></div>
-<figure class="chart wide"><img src="figures/cleavability_panel.svg?v=b8226348" alt=""><figcaption>Predicted cleavage selectivity against structural accessibility, one point per construct, coloured by mask family. The designed motifs sit to the right of the controls, but accessibility depends on the folded construct, so a good sequence does not carry a construct on its own.</figcaption></figure>
+<p><b>A linker must contain a suitable protease cleavage sequence and be accessible in the
+folded construct.</b></p></div>
+<div class="mri"><div><div class="k">Method</div><div class="v">I combined two measures. <b>Sequence selectivity:</b> the CleaveNet score calculated during linker design (Module 02), measuring predicted preference for MMP-2, MMP-8 and MMP-9 over nine off-target MMPs. <b>Structural accessibility:</b> calculated from the ESMFold structure, based on cleavage-site extension, solvent exposure and space for a protease to approach. The cleavability score is the product of the non-negative selectivity score and the three accessibility measures.</div></div><div><div class="k">Result</div><div class="v">The designed sequences showed greater predicted selectivity than the controls, but accessibility varied substantially between constructs. Sequence selectivity and accessibility were moderately negatively correlated (r = -0.48).</div></div><div><div class="k">Interpretation</div><div class="v">A suitable cleavage sequence is not necessarily accessible to a protease. The combined score accounts for both requirements, but does not predict a cleavage rate. CleaveNet is trained on human MMPs, so cleavage by snake venom metalloproteinases remains untested.</div></div></div>
+<div class="eq aeq"><span class="agrp"><span class="aexp">S<sub>cleavability</sub></span><span class="abrace"></span><span class="anote">Module 05</span></span><span class="aop">=</span><span class="agrp"><span class="aexp">max(0, S<sub>selectivity</sub>)</span><span class="abrace"></span><span class="anote">from Module 02</span></span><span class="aop">&times;</span><span class="agrp"><span class="aexp">S<sub>extension</sub> &middot; S<sub>exposure</sub> &middot; S<sub>clearance</sub></span><span class="abrace"></span><span class="anote">calculated in Module 05</span></span></div>
+<figure class="chart wide"><img src="figures/cleavability_panel.svg?v=b8226348" alt=""><figcaption>Sequence selectivity versus structural accessibility. CleaveNet selectivity was calculated during linker design; accessibility was assessed separately in each predicted fusion structure. A linker with favourable sequence selectivity may still be poorly accessible. One point per construct, coloured by mask family.</figcaption></figure>
 <div class="stack">
 <p><b>Why the points form vertical groups.</b> Every construct sharing a cleavage motif shares
 its CleaveNet score, so selectivity takes one of five values: the
@@ -642,7 +651,10 @@ to is its position on the axis, not the offset.</p>
 1.71: the gap between two standardised scores, not a rate or a likelihood of
 being cut. The Gly/Ser control's 0.31 is positive without being cleavable &mdash;
 its target score is -0.64, so it is predicted to resist both groups about
-equally.</p></div>
+equally.</p>
+<div class="note"><b>The CleaveNet score is used twice.</b> It selected the linker sequences in
+Module 02 and it is a term in the cleavability score here. It is therefore not an independent
+validation of cleavage specificity.</div></div>
 <h5 class="subh2">Can a protease reach the site?</h5>
 <figure class="fig wide"><div class="figbody"><svg viewBox="0 0 980 158" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The three structural checks on a cleavage site"><style>.a-h{font:600 9.5px ui-monospace,monospace;letter-spacing:.13em}.a-q{font:600 13px Inter,system-ui,sans-serif}.a-s{font:11px Inter,system-ui,sans-serif}</style><rect x="0.0" y="0" width="309.3333333333333" height="156" rx="5" fill="#FFFFFF" stroke="#DDE4E7" stroke-width="1.2"/><text x="16.0" y="20" class="a-h" fill="#0E7C7B" text-anchor="start">EXTENSION</text><path d="M 78.66666666666666 74 q 19 -26 38 0 q 19 26 38 0" fill="none" stroke="#9AA6AE" stroke-width="3.4" stroke-linecap="round" opacity="0.5"/><line x1="78.66666666666666" y1="48" x2="230.66666666666666" y2="48" stroke="#2D5BD1" stroke-width="3.4" stroke-linecap="round"/><text x="238.66666666666666" y="52" class="a-s" fill="#2D5BD1" text-anchor="start">yes</text><text x="238.66666666666666" y="78" class="a-s" fill="#6E7880" text-anchor="start">no</text><text x="154.66666666666666" y="108" class="a-q" fill="#12191F" text-anchor="middle">Extended?</text><text x="154.66666666666666" y="126" class="a-s" fill="#6E7880" text-anchor="middle">is the backbone straight enough to lie in a</text><text x="154.66666666666666" y="140" class="a-s" fill="#6E7880" text-anchor="middle">catalytic groove</text><rect x="335.3333333333333" y="0" width="309.3333333333333" height="156" rx="5" fill="#FFFFFF" stroke="#DDE4E7" stroke-width="1.2"/><text x="351.3333333333333" y="20" class="a-h" fill="#0E7C7B" text-anchor="start">EXPOSURE</text><circle cx="456.0" cy="62" r="26" fill="#9AA6AE" fill-opacity="0.3"/><line x1="420.0" y1="62" x2="552.0" y2="62" stroke="#2D5BD1" stroke-width="3.4" stroke-linecap="round"/><text x="560.0" y="66" class="a-s" fill="#6E7880" text-anchor="start">buried → exposed</text><text x="490.0" y="108" class="a-q" fill="#12191F" text-anchor="middle">Exposed?</text><text x="490.0" y="126" class="a-s" fill="#6E7880" text-anchor="middle">is it in solvent rather than packed against</text><text x="490.0" y="140" class="a-s" fill="#6E7880" text-anchor="middle">the mask or nanobody</text><rect x="670.6666666666666" y="0" width="309.3333333333333" height="156" rx="5" fill="#FFFFFF" stroke="#DDE4E7" stroke-width="1.2"/><text x="686.6666666666666" y="20" class="a-h" fill="#0E7C7B" text-anchor="start">CLEARANCE</text><line x1="751.3333333333333" y1="76" x2="899.3333333333333" y2="76" stroke="#2D5BD1" stroke-width="3.4" stroke-linecap="round"/><circle cx="825.3333333333333" cy="46" r="30" fill="#0E7C7B" fill-opacity="0.14" stroke="#0E7C7B" stroke-width="1.2" stroke-dasharray="4 3"/><text x="825.3333333333333" y="50" class="a-s" fill="#0E7C7B" text-anchor="middle">17 Å</text><text x="825.3333333333333" y="108" class="a-q" fill="#12191F" text-anchor="middle">Room for a protease?</text><text x="825.3333333333333" y="126" class="a-s" fill="#6E7880" text-anchor="middle">does a 17 Å sphere fit beside the bond, over</text><text x="825.3333333333333" y="140" class="a-s" fill="#6E7880" text-anchor="middle">64 directions</text></svg></div></figure>
 <figure class="chart wide"><img src="figures/cleavability_components.svg?v=af117240" alt=""><figcaption>The three accessibility requirements and the product they make, for all 348 constructs. Each runs from 0 to 1, and because they are multiplied the product can be no larger than the smallest of them. Clearance is the smallest almost everywhere, so it is the requirement that decides whether a site is reachable.</figcaption></figure>
