@@ -416,8 +416,10 @@ def build_all():
         pass
     try:
         redesign = load_json("08_redesign_folding.json")
-        if fold is not None:
-            made.append(redesign_landscape(redesign, fold))
+        # redesign_landscape and occlusion_vs_confidence are not on the page:
+        # the first was never placed, the second lost its home when the
+        # folding section that held it turned out never to be inserted.
+        # The functions stay; add a call back here if a page needs one.
         try:
             made.append(redesign_score_vs_occlusion(
                 load_json("07b_library_scores.json"), fold, redesign,
