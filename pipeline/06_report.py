@@ -1188,16 +1188,7 @@ correspondence is established.</p></div>
 
 <details class="tech"><summary>Structural analysis and model assumptions</summary>
 <div class="techbody">
-{mri("Solvent-accessible surface was calculated for the nanobody alone and in complex, and "
-     "residues losing more than 1 Å<sup>2</sup> on binding were defined as the paratope. "
-     "Distances from each terminus to that surface were measured.",
-     f"The paratope comprises {N['paratope']} residues burying {N['iface_area']:.0f} Å<sup>2</sup>. "
-     f"The N-terminus lies {N['n_term']} Å from the nearest paratope residue and the C-terminus "
-     f"{N['c_term']} Å. Across the {N['copies']} VHH–antigen pairs in the entry the buried area is "
-     f"{N['bsa_mean']:.0f} ± {N['bsa_sd']:.0f} Å<sup>2</sup>.",
-     "The N-terminus is closer to the antigen-binding surface and is therefore the attachment "
-     "point used throughout. The agreement between the two pairs indicates the interface is "
-     "consistently resolved within this crystal.")}
+
 
 {chart_wide("paratope_footprint",
   f"Surface buried per nanobody residue on complex formation. Markers show the {N['n_near']} "
@@ -1224,49 +1215,11 @@ Module 02a. Wider than the polar core because a mask reproduces a face, not a se
 against in Modules 03 and 04. Van der Waals packing reaches further than a hydrogen bond, so it is
 the largest of the three.</td></tr>
 </tbody></table>
-<p>The {N['contact_cutoff']:g} &#8491; criterion is too strict to define a mask from: on one of the
-comparator complexes below it returns a single residue. The footprint is too permissive to build a
-peptide from, since it is a set of residues and not a contiguous sequence the antigen contains. The
-{N['mask_cutoff']:g} &#8491; face sits between them, and on this antigen it has a property neither
-of the others has: it cuts at C42 and C53, which are bonded to each other, so the excised peptide
-keeps the disulfide that holds its shape and leaves no cysteine without a partner.</p>
-<p>One interface measured on its own says little, so the same quantities were measured on
-independent VHH complexes: two further nanobody&ndash;three-finger-toxin structures from other
-groups, and a nanobody bound to a much larger toxin.</p>
-{R.interface_controls_table(controls, PDB_ID)}
-<p>One of the comparators is biparatopic: the same VHH binds through two surfaces that share a
-single residue, so its row describes one of two sites. That architecture is a poor candidate for
-this pipeline, since a mask would have to cover both surfaces at once, and it is listed here as a
-comparator rather than a target for that reason. The worked example is not biparatopic: its second
-toxin copy in the asymmetric unit buries {N['lattice_area']:.0f} &#8491;&#178; against
-{N['lattice_n']} residues, which is lattice packing next to a {N['iface_area']:.0f} &#8491;&#178;
-interface.</p>
-<p>The worked example sits inside the range on every quantity except one. Interface area and
-paratope size match the other toxin complexes closely, and binding is loop-mediated in all four.
-What is atypical is the CDR3 share: {N['cdr3_share']:.0f}% of the buried surface here against
-{N['cdr3_other']:.0f}% for the comparator with the same antigen class. This nanobody binds
-substantially through framework&nbsp;2 and CDR2 rather than predominantly through CDR3. That is a
-property of this binder, not an artefact, and it widens the surface a mask has to cover.</p>
-<p>Of the {N['n_paratope']} residues that bury surface on binding, {N['n_cdr_para']} lie in the
-CDR loops and {N['n_fw_para']} in framework. Six of those framework residues
-({N['fw2_para']}) sit in framework 2, the face that in a conventional antibody is buried against
-the light chain. A VHH has no light chain, so that face is exposed and available to the antigen.
-The consequence for the design is that a mask has to cover framework 2 as well as the loops, which
-is more surface than a graft taken from the CDR contacts alone would address.</p>
 
 
 
-{mri("I used the experimental nanobody–antigen structure (" + PDB_ID + ") to measure the "
-     "distance between the nanobody termini and the paratope. A worm-like-chain model was then "
-     "used to estimate the effective mask concentration for different linker lengths. Combining "
-     "this estimate with a binding competition model gives the range of mask affinities that "
-     "satisfy both the masking and the release requirement.",
-     f"For an N-terminal attachment with a {N['linker_best']}-residue linker the estimated "
-     f"effective mask concentration is {N['ceff']:.0f} mM, and the usable range spans "
-     f"{N['window']:.2f} decades. A C-terminal attachment produces a narrower range.",
-     "These estimates depend on the nanobody–antigen affinity, the protein concentrations "
-     "and the assumptions of the linker model, so they constrain candidate generation rather "
-     "than define an exact target affinity.")}
+
+
 <div class="two">
 {chart("design_window", "Usable mask affinity against linker length.")}
 {chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the two bounds.")}
