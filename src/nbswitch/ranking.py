@@ -129,6 +129,11 @@ def rank(rows, objectives=None, penalty: float = 0.0, n_shortlist: int = 6) -> d
     scale = normalise(feasible, objectives)
     for r in feasible:
         r["robust_score"] = round(robust_score(r, scale, objectives, penalty), 4)
+        # the normalised values are what the ordering is actually made of, so
+        # they are written out rather than left to be recomputed by whatever
+        # reads this file
+        r["normalised"] = {o: round((float(r[o]) - scale[o][0]) / scale[o][1], 4)
+                           for o in objectives if r.get(o) is not None}
     ordered = sorted(front, key=lambda r: -r["robust_score"])
     shortlist = select_diverse(ordered, n=n_shortlist)
 
@@ -150,6 +155,8 @@ def rank(rows, objectives=None, penalty: float = 0.0, n_shortlist: int = 6) -> d
         "normalisation": "min-max within the feasible set, so the three scales "
                          "are comparable. Not a calibration against measured "
                          "quantities, which do not exist for these scores.",
+        "scale": {o: {"min": round(lo, 6), "span": round(span, 6)}
+                  for o, (lo, span) in scale.items()},
         "uncertainty_penalty": penalty,
         "front": ordered,
         "shortlist": [r["id"] for r in shortlist],

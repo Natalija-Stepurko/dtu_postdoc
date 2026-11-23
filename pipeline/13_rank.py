@@ -40,6 +40,7 @@ save_json("13_ranking.json", {
             "the ordering is a stated rule rather than a property of the front.",
     "constraints": result.get("constraints", []),
     "normalisation": result.get("normalisation", ""),
+    "scale": result.get("scale", {}),
     "front_order": result.get("front_order", ""),
     "uncertainty_penalty": UNCERTAINTY_PENALTY,
     "n_total": result.get("n_total", 0),

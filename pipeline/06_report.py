@@ -768,16 +768,17 @@ COUNTS = _count_rows()
 
 N["rank_total"] = ranking_data["n_total"] if ranking_data else 0
 N["rank_front"] = ranking_data["n_front"] if ranking_data else 0
-N["rank_excluded"] = ranking_data.get("n_excluded", 0) if ranking_data else 0
-N["rank_feasible"] = ranking_data.get("n_feasible", 0) if ranking_data else 0
-N["rank_excluded_by"] = ranking_data.get("excluded_by", {}) if ranking_data else {}
-RANK_CONSTRAINTS = ranking_data.get("constraints", []) if ranking_data else []
 RANK_FRONT = ranking_data.get("front", []) if ranking_data else []
 RANK_OBJECTIVES = ranking_data.get("objectives", []) if ranking_data else []
 RANK_SHORTLIST = set(ranking_data.get("shortlist", [])) if ranking_data else set()
 N["rank_shortlist"] = len(RANK_SHORTLIST)
-N["rank_penalty"] = (ranking_data.get("uncertainty_penalty", 0.0)
-                     if ranking_data else 0.0)
+# the shortlist in front order, and the rest of the front behind it, so the
+# page never reorders what stage 13 decided
+RANK_SHORTLIST_ROWS = [r for r in RANK_FRONT if r["id"] in RANK_SHORTLIST]
+RANK_FRONT_REST = [r for r in RANK_FRONT if r["id"] not in RANK_SHORTLIST]
+if RANK_FRONT and len(RANK_SHORTLIST_ROWS) != len(RANK_SHORTLIST):
+    raise SystemExit("a shortlisted construct is missing from the front; "
+                     "stage 13's output is inconsistent")
 
 _feas = {r["id"]: r for r in (feas_data["results"] if feas_data else [])}
 # the primary graft, whatever it is called: masks are renamed when the
@@ -1458,52 +1459,53 @@ extended, exposed and accessible to a protease-sized object.</p></div>
    "predicted cleavability: sequence recognition multiplied by structural accessibility.",
    R.ramp_legend("least cleavable", "most"))}
 
-<h3 class="mod"><span>Module 06</span>Selection of candidate constructs</h3>
-{mri("Each of the " + f"{N['rank_total']}" + " constructs was assessed for structural "
-     "feasibility, predicted linker cleavability and paratope occlusion. I first applied a "
-     "minimum requirement on each score, then used Pareto optimisation to remove designs that "
-     "another candidate beat on all three objectives at once. The rest were ranked by their "
-     "weakest normalised score, and closely related masks were dropped from the shortlist so "
-     "that it holds different designs.",
-     f"Of the {N['rank_total']} constructs, {N['rank_excluded']} failed the initial "
-     f"requirements. Pareto optimisation identified <b>{N['rank_front']} nondominated "
-     f"candidates</b>, of which <b>{N['rank_shortlist']}</b> were taken forward for structural "
-     "analysis.",
-     "The ranking is a way to pick candidates with different predicted properties. The scores "
-     "behind it are preliminary, the occlusion measure most of all, since it does not reliably "
-     "separate designed masks from controls. The shortlist is therefore a set of candidates "
-     "worth investigating, not a set of confirmed functional masks.")}
+<h3 class="mod"><span>Module 06</span>Candidate selection</h3>
+{mri(f"I ranked {N['rank_total']} constructs using three criteria: structural feasibility, "
+     "paratope occlusion and predicted linker cleavability. Pareto optimisation identified "
+     "designs that were not outperformed across all three criteria. I then ranked these by "
+     "their weakest normalised score and selected different mask sequences to retain "
+     "diversity.",
+     f"Of {N['rank_total']} constructs, <b>{N['rank_front']}</b> were nondominated. "
+     f"<b>{R.word(N['rank_shortlist']).capitalize()}</b> were shortlisted for further "
+     "structural analysis.",
+     "This provides a systematic way to prioritise designs without relying on a weighted "
+     "average of the three scores. The ranking remains preliminary, particularly because "
+     "surface occlusion does not reliably distinguish designed masks from controls.")}
 <figure class="fig wide"><div class="figbody">{R.selection_funnel(FUNNEL)}</div></figure>
 {chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
    "marked.")}
-<details class="tech"><summary>Ranking methods</summary><div class="techbody">
-<p>Each construct carries three scores: structural feasibility, paratope occlusion and predicted
-linker cleavability. The second is a surface measurement, not a predicted affinity, which is
-why it is named for what it measures.</p>
-<div class="eq">S(x) = [ S<sub>feasibility</sub>(x), S<sub>occlusion</sub>(x),
-S<sub>cleavability</sub>(x) ]</div>
-<p><b>1 &middot; Minimum requirements.</b> Constructs failing a threshold on nanobody
-confidence, fold preservation, protease selectivity or linker accessibility are excluded before
-anything is compared. This is the step that stops a strong score making up for a failed
-requirement; non-domination does not, since a design poor on one objective stays on the front
-as long as nothing beats it on all three.</p>
-{R.constraint_table(RANK_CONSTRAINTS, N['rank_excluded_by'])}
-<p><b>2 &middot; Pareto selection.</b> Of what remains, a construct is kept unless another
-matches or beats it on every score and beats it on at least one. No weights are assigned, so no
-objective is declared more important than another.</p>
-<p><b>3 &middot; Shortlisting.</b> The nondominated set is unordered, so ordering it is a
-separate decision. The scores are min-max normalised within the feasible set and each candidate
-takes its weakest normalised objective, which favours balanced designs over ones excellent
-twice and poor once. Different masks are then chosen, so the shortlist does not test one
-hypothesis repeatedly.</p>
-<div class="eq">R(x) = min<sub>i</sub> ŝ<sub>i</sub>(x)</div>
-<p>That is a single value per candidate, but it is computed only after non-domination has
-already removed everything beaten outright, so it orders the front rather than deciding it.</p>
-<p class="dim">The code accepts an uncertainty penalty, R(x) = min<sub>i</sub>
-[ŝ<sub>i</sub>(x) − λσ<sub>i</sub>(x)], and it is disabled: λ = {N['rank_penalty']:g}, because
-none of the three scoring methods has a calibrated uncertainty to put in it.</p>
-{R.front_table(RANK_FRONT, RANK_OBJECTIVES, RANK_SHORTLIST)}
-</div></details>
+<details class="tech"><summary>How candidates were selected</summary><div class="techbody">
+<p>Each construct was assessed for structural feasibility, paratope occlusion and linker
+cleavability. These are three separate objectives; occlusion measures surface coverage, not
+mask-binding affinity.</p>
+<p><b>1 &middot; Basic requirements.</b> Before comparing designs, I checked V<sub>H</sub>H
+confidence, preservation of the nanobody fold, predicted protease selectivity and cleavage-site
+accessibility. These checks prevent candidates with clearly unfavourable properties from being
+promoted by other scores.</p>
+<p><b>2 &middot; Pareto selection.</b> A design was removed if another performed at least as
+well on all three objectives and better on at least one. This left {N['rank_front']}
+nondominated candidates, representing different trade-offs between the three scores.</p>
+<p><b>3 &middot; Shortlisting.</b> I normalised each score to the range observed across the
+library and ranked the {N['rank_front']} candidates by their lowest normalised score (maximin).
+This favours balanced designs over those that perform well in two criteria but poorly in the
+third. I then retained one construct per distinct mask sequence, producing a shortlist of
+{R.word(N['rank_shortlist'])} candidates for further structural assessment.</p>
+<div class="eq">R(x) = min<sub>i</sub> Ŝ<sub>i</sub>(x)</div>
+<p>Here Ŝ<sub>i</sub>(x) is each normalised objective. The lowest of the three determines the
+ranking score.</p></div></details>
+{R.normalised_table(RANK_SHORTLIST_ROWS, RANK_OBJECTIVES)}
+<div class="stack">
+<p class="dim">Scores are min&ndash;max normalised across the {N['rank_total']} candidates.
+These are relative ranking values, not experimental probabilities.</p></div>
+<details class="tech"><summary>The rest of the nondominated set</summary><div class="techbody">
+<p>The other {N['rank_front'] - N['rank_shortlist']} candidates on the front, in the same order.
+Each was dropped from the shortlist because a higher-ranked candidate already carried its
+mask.</p>
+{R.normalised_table(RANK_FRONT_REST, RANK_OBJECTIVES)}</div></details>
+<div class="note warn"><b>A poly-glycine control survives the selection.</b>
+<span class="mono">polyG_cn01</span> is on the shortlist. That is why the shortlist needs the
+Boltz-2 assessment that follows, and why the occlusion score should eventually be replaced or
+improved.</div>
 
 <h3 class="mod"><span>Final screen</span>Structural assessment with Boltz-2</h3>
 <div class="stack">

@@ -35,6 +35,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.4822,
+        "feasibility": 0.6,
+        "surface_occlusion": 0.5493
+      },
       "on_front": true,
       "plddt_vhh": 84.8,
       "robust_score": 0.4822,
@@ -51,6 +56,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.4737,
+        "feasibility": 0.6074,
+        "surface_occlusion": 0.6553
+      },
       "on_front": true,
       "plddt_vhh": 84.6,
       "robust_score": 0.4737,
@@ -67,6 +77,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.5339,
+        "feasibility": 0.6074,
+        "surface_occlusion": 0.4181
+      },
       "on_front": true,
       "plddt_vhh": 86.3,
       "robust_score": 0.4181,
@@ -83,6 +98,11 @@
       "kind": "truncated control",
       "linker_residues": 16,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.505,
+        "feasibility": 0.6296,
+        "surface_occlusion": 0.3894
+      },
       "on_front": true,
       "plddt_vhh": 86.5,
       "robust_score": 0.3894,
@@ -99,6 +119,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.359,
+        "feasibility": 0.7802,
+        "surface_occlusion": 0.3996
+      },
       "on_front": true,
       "plddt_vhh": 84.6,
       "robust_score": 0.359,
@@ -115,6 +140,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.5484,
+        "feasibility": 0.363,
+        "surface_occlusion": 0.3267
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.3267,
@@ -131,6 +161,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.3161,
+        "feasibility": 0.7852,
+        "surface_occlusion": 0.4268
+      },
       "on_front": true,
       "plddt_vhh": 84.2,
       "robust_score": 0.3161,
@@ -147,6 +182,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.3064,
+        "feasibility": 0.8346,
+        "surface_occlusion": 0.5362
+      },
       "on_front": true,
       "plddt_vhh": 84.2,
       "robust_score": 0.3064,
@@ -163,6 +203,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.308,
+        "feasibility": 0.2864,
+        "surface_occlusion": 0.7098
+      },
       "on_front": true,
       "plddt_vhh": 83.4,
       "robust_score": 0.2864,
@@ -179,6 +224,11 @@
       "kind": "truncated control",
       "linker_residues": 32,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.278,
+        "feasibility": 0.6864,
+        "surface_occlusion": 0.8843
+      },
       "on_front": true,
       "plddt_vhh": 84.0,
       "robust_score": 0.278,
@@ -195,6 +245,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.8289,
+        "feasibility": 0.237,
+        "surface_occlusion": 0.5309
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.237,
@@ -211,6 +266,11 @@
       "kind": "inert control",
       "linker_residues": 32,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.233,
+        "feasibility": 0.7877,
+        "surface_occlusion": 0.5853
+      },
       "on_front": true,
       "plddt_vhh": 83.4,
       "robust_score": 0.233,
@@ -227,6 +287,11 @@
       "kind": "inert control",
       "linker_residues": 12,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.2239,
+        "feasibility": 0.9802,
+        "surface_occlusion": 0.3486
+      },
       "on_front": true,
       "plddt_vhh": 85.6,
       "robust_score": 0.2239,
@@ -243,6 +308,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.2144,
+        "feasibility": 0.879,
+        "surface_occlusion": 0.369
+      },
       "on_front": true,
       "plddt_vhh": 83.9,
       "robust_score": 0.2144,
@@ -259,6 +329,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.5585,
+        "feasibility": 0.558,
+        "surface_occlusion": 0.2134
+      },
       "on_front": true,
       "plddt_vhh": 85.4,
       "robust_score": 0.2134,
@@ -275,6 +350,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1955,
+        "feasibility": 0.6296,
+        "surface_occlusion": 1.0
+      },
       "on_front": true,
       "plddt_vhh": 83.6,
       "robust_score": 0.1955,
@@ -291,6 +371,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1913,
+        "feasibility": 0.8864,
+        "surface_occlusion": 0.3865
+      },
       "on_front": true,
       "plddt_vhh": 84.8,
       "robust_score": 0.1913,
@@ -307,6 +392,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.5176,
+        "feasibility": 0.7284,
+        "surface_occlusion": 0.1896
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1896,
@@ -323,6 +413,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1867,
+        "feasibility": 0.9901,
+        "surface_occlusion": 0.3933
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.1867,
@@ -339,6 +434,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1817,
+        "feasibility": 0.8,
+        "surface_occlusion": 0.5532
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1817,
@@ -355,6 +455,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1787,
+        "feasibility": 0.8049,
+        "surface_occlusion": 0.5664
+      },
       "on_front": true,
       "plddt_vhh": 84.3,
       "robust_score": 0.1787,
@@ -371,6 +476,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1787,
+        "feasibility": 0.7309,
+        "surface_occlusion": 0.6441
+      },
       "on_front": true,
       "plddt_vhh": 84.8,
       "robust_score": 0.1787,
@@ -387,6 +497,11 @@
       "kind": "truncated control",
       "linker_residues": 28,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.1666,
+        "feasibility": 0.6963,
+        "surface_occlusion": 0.8085
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1666,
@@ -403,6 +518,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1555,
+        "feasibility": 0.9901,
+        "surface_occlusion": 0.4103
+      },
       "on_front": true,
       "plddt_vhh": 86.0,
       "robust_score": 0.1555,
@@ -419,6 +539,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1542,
+        "feasibility": 0.7975,
+        "surface_occlusion": 0.5805
+      },
       "on_front": true,
       "plddt_vhh": 84.2,
       "robust_score": 0.1542,
@@ -435,6 +560,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1524,
+        "feasibility": 0.9333,
+        "surface_occlusion": 0.4584
+      },
       "on_front": true,
       "plddt_vhh": 86.2,
       "robust_score": 0.1524,
@@ -451,6 +581,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1514,
+        "feasibility": 0.8519,
+        "surface_occlusion": 0.4784
+      },
       "on_front": true,
       "plddt_vhh": 83.9,
       "robust_score": 0.1514,
@@ -467,6 +602,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1433,
+        "feasibility": 0.8025,
+        "surface_occlusion": 0.6232
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1433,
@@ -483,6 +623,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.5834,
+        "feasibility": 0.2444,
+        "surface_occlusion": 0.1327
+      },
       "on_front": true,
       "plddt_vhh": 85.3,
       "robust_score": 0.1327,
@@ -499,6 +644,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.6036,
+        "feasibility": 0.479,
+        "surface_occlusion": 0.1206
+      },
       "on_front": true,
       "plddt_vhh": 85.6,
       "robust_score": 0.1206,
@@ -515,6 +665,11 @@
       "kind": "inert control",
       "linker_residues": 28,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.1519,
+        "feasibility": 1.0,
+        "surface_occlusion": 0.1167
+      },
       "on_front": true,
       "plddt_vhh": 83.4,
       "robust_score": 0.1167,
@@ -531,6 +686,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 1.0,
+        "feasibility": 0.5284,
+        "surface_occlusion": 0.1094
+      },
       "on_front": true,
       "plddt_vhh": 86.4,
       "robust_score": 0.1094,
@@ -547,6 +707,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.0803,
+        "feasibility": 0.8123,
+        "surface_occlusion": 0.5523
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.0803,
@@ -563,6 +728,11 @@
       "kind": "truncated control",
       "linker_residues": 28,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.005,
+        "feasibility": 0.7012,
+        "surface_occlusion": 0.7652
+      },
       "on_front": true,
       "plddt_vhh": 84.7,
       "robust_score": 0.005,
@@ -579,6 +749,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0047,
+        "feasibility": 0.7259,
+        "surface_occlusion": 0.6665
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.0047,
@@ -595,6 +770,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0035,
+        "feasibility": 0.8543,
+        "surface_occlusion": 0.5464
+      },
       "on_front": true,
       "plddt_vhh": 84.9,
       "robust_score": 0.0035,
@@ -611,6 +791,11 @@
       "kind": "truncated control",
       "linker_residues": 20,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0035,
+        "feasibility": 0.7704,
+        "surface_occlusion": 0.6539
+      },
       "on_front": true,
       "plddt_vhh": 85.8,
       "robust_score": 0.0035,
@@ -627,6 +812,11 @@
       "kind": "scrambled control",
       "linker_residues": 32,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0026,
+        "feasibility": 0.758,
+        "surface_occlusion": 0.701
+      },
       "on_front": true,
       "plddt_vhh": 83.6,
       "robust_score": 0.0026,
@@ -643,6 +833,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0024,
+        "feasibility": 0.8494,
+        "surface_occlusion": 0.6923
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.0024,
@@ -659,6 +854,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0019,
+        "feasibility": 0.8272,
+        "surface_occlusion": 0.7958
+      },
       "on_front": true,
       "plddt_vhh": 84.4,
       "robust_score": 0.0019,
@@ -695,6 +895,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.308,
+        "feasibility": 0.2864,
+        "surface_occlusion": 0.7098
+      },
       "on_front": true,
       "plddt_vhh": 83.4,
       "robust_score": 0.2864,
@@ -711,6 +916,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.3453,
+        "feasibility": 0.279,
+        "surface_occlusion": 0.5066
+      },
       "on_front": false,
       "plddt_vhh": 83.6,
       "robust_score": 0.279,
@@ -727,6 +937,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.3841,
+        "feasibility": 0.2617,
+        "surface_occlusion": 0.4507
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.2617,
@@ -743,6 +958,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.2958,
+        "feasibility": 0.1951,
+        "surface_occlusion": 0.086
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.086,
@@ -759,6 +979,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1282,
+        "feasibility": 0.3827,
+        "surface_occlusion": 0.4871
+      },
       "on_front": false,
       "plddt_vhh": 82.7,
       "robust_score": 0.1282,
@@ -775,6 +1000,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.0071,
+        "feasibility": 0.316,
+        "surface_occlusion": 0.5591
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.0071,
@@ -791,6 +1021,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.6365,
+        "feasibility": 0.2346,
+        "surface_occlusion": 0.1381
+      },
       "on_front": false,
       "plddt_vhh": 86.0,
       "robust_score": 0.1381,
@@ -807,6 +1042,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.8289,
+        "feasibility": 0.237,
+        "surface_occlusion": 0.5309
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.237,
@@ -823,6 +1063,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.3785,
+        "feasibility": 0.2494,
+        "surface_occlusion": 0.6388
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.2494,
@@ -839,6 +1084,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1713,
+        "feasibility": 0.2938,
+        "surface_occlusion": 0.5425
+      },
       "on_front": false,
       "plddt_vhh": 82.9,
       "robust_score": 0.1713,
@@ -855,6 +1105,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1061,
+        "feasibility": 0.2765,
+        "surface_occlusion": 0.473
+      },
       "on_front": false,
       "plddt_vhh": 82.5,
       "robust_score": 0.1061,
@@ -871,6 +1126,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1059,
+        "feasibility": 0.4049,
+        "surface_occlusion": 0.4419
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.1059,
@@ -887,6 +1147,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1445,
+        "feasibility": 0.4049,
+        "surface_occlusion": 0.3879
+      },
       "on_front": false,
       "plddt_vhh": 84.0,
       "robust_score": 0.1445,
@@ -903,6 +1168,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1216,
+        "feasibility": 0.3852,
+        "surface_occlusion": 0.4497
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.1216,
@@ -919,6 +1189,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.2036,
+        "feasibility": 0.3827,
+        "surface_occlusion": 0.4852
+      },
       "on_front": false,
       "plddt_vhh": 82.4,
       "robust_score": 0.2036,
@@ -935,6 +1210,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.1884,
+        "feasibility": 0.3802,
+        "surface_occlusion": 0.5673
+      },
       "on_front": false,
       "plddt_vhh": 81.9,
       "robust_score": 0.1884,
@@ -951,6 +1231,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.017,
+        "feasibility": 0.4148,
+        "surface_occlusion": 0.0622
+      },
       "on_front": false,
       "plddt_vhh": 86.3,
       "robust_score": 0.017,
@@ -967,6 +1252,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.0021,
+        "feasibility": 0.5852,
+        "surface_occlusion": 0.2893
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.0021,
@@ -983,6 +1273,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.0021,
+        "feasibility": 0.6963,
+        "surface_occlusion": 0.507
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.0021,
@@ -999,6 +1294,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.0055,
+        "feasibility": 0.3062,
+        "surface_occlusion": 0.6485
+      },
       "on_front": false,
       "plddt_vhh": 83.1,
       "robust_score": 0.0055,
@@ -1015,6 +1315,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_both",
+      "normalised": {
+        "cleavability": 0.0069,
+        "feasibility": 0.3432,
+        "surface_occlusion": 0.5382
+      },
       "on_front": false,
       "plddt_vhh": 82.6,
       "robust_score": 0.0069,
@@ -1031,6 +1336,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1074,
+        "feasibility": 0.4593,
+        "surface_occlusion": 0.4409
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.1074,
@@ -1047,6 +1357,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.359,
+        "feasibility": 0.7802,
+        "surface_occlusion": 0.3996
+      },
       "on_front": true,
       "plddt_vhh": 84.6,
       "robust_score": 0.359,
@@ -1063,6 +1378,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.4689,
+        "feasibility": 0.5728,
+        "surface_occlusion": 0.3432
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.3432,
@@ -1079,6 +1399,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1891,
+        "feasibility": 0.2914,
+        "surface_occlusion": 0.1653
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.1653,
@@ -1095,6 +1420,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1697,
+        "feasibility": 0.5951,
+        "surface_occlusion": 0.4526
+      },
       "on_front": false,
       "plddt_vhh": 83.8,
       "robust_score": 0.1697,
@@ -1111,6 +1441,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0019,
+        "feasibility": 0.8272,
+        "surface_occlusion": 0.7958
+      },
       "on_front": true,
       "plddt_vhh": 84.4,
       "robust_score": 0.0019,
@@ -1127,6 +1462,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.9637,
+        "feasibility": 0.5037,
+        "surface_occlusion": 0.0909
+      },
       "on_front": false,
       "plddt_vhh": 87.1,
       "robust_score": 0.0909,
@@ -1143,6 +1483,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.5339,
+        "feasibility": 0.6074,
+        "surface_occlusion": 0.4181
+      },
       "on_front": true,
       "plddt_vhh": 86.3,
       "robust_score": 0.4181,
@@ -1159,6 +1504,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1834,
+        "feasibility": 0.4222,
+        "surface_occlusion": 0.4701
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.1834,
@@ -1175,6 +1525,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1652,
+        "feasibility": 0.479,
+        "surface_occlusion": 0.6446
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.1652,
@@ -1191,6 +1546,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0576,
+        "feasibility": 0.7654,
+        "surface_occlusion": 0.6043
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.0576,
@@ -1207,6 +1567,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1555,
+        "feasibility": 0.9901,
+        "surface_occlusion": 0.4103
+      },
       "on_front": true,
       "plddt_vhh": 86.0,
       "robust_score": 0.1555,
@@ -1223,6 +1588,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1867,
+        "feasibility": 0.9901,
+        "surface_occlusion": 0.3933
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.1867,
@@ -1239,6 +1609,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1578,
+        "feasibility": 0.9407,
+        "surface_occlusion": 0.3563
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1578,
@@ -1255,6 +1630,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.1751,
+        "feasibility": 0.5753,
+        "surface_occlusion": 0.2902
+      },
       "on_front": false,
       "plddt_vhh": 83.2,
       "robust_score": 0.1751,
@@ -1271,6 +1651,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.2166,
+        "feasibility": 0.5827,
+        "surface_occlusion": 0.2207
+      },
       "on_front": false,
       "plddt_vhh": 82.8,
       "robust_score": 0.2166,
@@ -1287,6 +1672,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0087,
+        "feasibility": 0.5679,
+        "surface_occlusion": 0.069
+      },
       "on_front": false,
       "plddt_vhh": 87.0,
       "robust_score": 0.0087,
@@ -1303,6 +1693,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0031,
+        "feasibility": 0.721,
+        "surface_occlusion": 0.3267
+      },
       "on_front": false,
       "plddt_vhh": 86.3,
       "robust_score": 0.0031,
@@ -1319,6 +1714,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0024,
+        "feasibility": 0.8494,
+        "surface_occlusion": 0.6923
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.0024,
@@ -1335,6 +1735,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0019,
+        "feasibility": 0.8025,
+        "surface_occlusion": 0.5075
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.0019,
@@ -1351,6 +1756,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core",
+      "normalised": {
+        "cleavability": 0.0033,
+        "feasibility": 0.8272,
+        "surface_occlusion": 0.4516
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.0033,
@@ -1367,6 +1777,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0986,
+        "feasibility": 0.4741,
+        "surface_occlusion": 0.6009
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.0986,
@@ -1383,6 +1798,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.3766,
+        "feasibility": 0.4469,
+        "surface_occlusion": 0.1935
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.1935,
@@ -1399,6 +1819,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.5484,
+        "feasibility": 0.363,
+        "surface_occlusion": 0.3267
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.3267,
@@ -1415,6 +1840,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.1808,
+        "feasibility": 0.2889,
+        "surface_occlusion": 0.1706
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1706,
@@ -1431,6 +1861,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.1787,
+        "feasibility": 0.5901,
+        "surface_occlusion": 0.4404
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.1787,
@@ -1447,6 +1882,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0036,
+        "feasibility": 0.5259,
+        "surface_occlusion": 0.6889
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.0036,
@@ -1463,6 +1903,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 1.0,
+        "feasibility": 0.5284,
+        "surface_occlusion": 0.1094
+      },
       "on_front": true,
       "plddt_vhh": 86.4,
       "robust_score": 0.1094,
@@ -1479,6 +1924,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.2304,
+        "feasibility": 0.1012,
+        "surface_occlusion": 0.0963
+      },
       "on_front": false,
       "plddt_vhh": 85.8,
       "robust_score": 0.0963,
@@ -1495,6 +1945,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0652,
+        "feasibility": 0.4815,
+        "surface_occlusion": 0.4818
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.0652,
@@ -1511,6 +1966,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.2003,
+        "feasibility": 0.4864,
+        "surface_occlusion": 0.6169
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.2003,
@@ -1527,6 +1987,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.068,
+        "feasibility": 0.4444,
+        "surface_occlusion": 0.5775
+      },
       "on_front": false,
       "plddt_vhh": 83.4,
       "robust_score": 0.068,
@@ -1543,6 +2008,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.1668,
+        "feasibility": 0.5827,
+        "surface_occlusion": 0.4764
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.1668,
@@ -1559,6 +2029,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.2045,
+        "feasibility": 0.5877,
+        "surface_occlusion": 0.4876
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.2045,
@@ -1575,6 +2050,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.1969,
+        "feasibility": 0.6,
+        "surface_occlusion": 0.4891
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.1969,
@@ -1591,6 +2071,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.1927,
+        "feasibility": 0.5951,
+        "surface_occlusion": 0.3758
+      },
       "on_front": false,
       "plddt_vhh": 83.0,
       "robust_score": 0.1927,
@@ -1607,6 +2092,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.2246,
+        "feasibility": 0.5827,
+        "surface_occlusion": 0.3772
+      },
       "on_front": false,
       "plddt_vhh": 82.5,
       "robust_score": 0.2246,
@@ -1623,6 +2113,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0078,
+        "feasibility": 0.0988,
+        "surface_occlusion": 0.1016
+      },
       "on_front": false,
       "plddt_vhh": 86.5,
       "robust_score": 0.0078,
@@ -1639,6 +2134,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0026,
+        "feasibility": 0.4148,
+        "surface_occlusion": 0.1614
+      },
       "on_front": false,
       "plddt_vhh": 85.7,
       "robust_score": 0.0026,
@@ -1655,6 +2155,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0035,
+        "feasibility": 0.8543,
+        "surface_occlusion": 0.5464
+      },
       "on_front": true,
       "plddt_vhh": 84.9,
       "robust_score": 0.0035,
@@ -1671,6 +2176,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0042,
+        "feasibility": 0.5136,
+        "surface_occlusion": 0.5051
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.0042,
@@ -1687,6 +2197,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_ext2",
+      "normalised": {
+        "cleavability": 0.0022,
+        "feasibility": 0.8074,
+        "surface_occlusion": 0.5002
+      },
       "on_front": false,
       "plddt_vhh": 83.3,
       "robust_score": 0.0022,
@@ -1703,6 +2218,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.1536,
+        "feasibility": 0.5086,
+        "surface_occlusion": 0.5946
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.1536,
@@ -1719,6 +2239,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.3135,
+        "feasibility": 0.1852,
+        "surface_occlusion": 0.3641
+      },
       "on_front": false,
       "plddt_vhh": 83.6,
       "robust_score": 0.1852,
@@ -1735,6 +2260,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.4969,
+        "feasibility": 0.1457,
+        "surface_occlusion": 0.4779
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.1457,
@@ -1751,6 +2281,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.2156,
+        "feasibility": 0.1086,
+        "surface_occlusion": 0.3072
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.1086,
@@ -1767,6 +2302,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.1638,
+        "feasibility": 0.2593,
+        "surface_occlusion": 0.4147
+      },
       "on_front": false,
       "plddt_vhh": 83.1,
       "robust_score": 0.1638,
@@ -1783,6 +2323,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0014,
+        "feasibility": 0.4963,
+        "surface_occlusion": 0.7137
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.0014,
@@ -1799,6 +2344,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.4332,
+        "feasibility": 0.3975,
+        "surface_occlusion": 0.0851
+      },
       "on_front": false,
       "plddt_vhh": 86.0,
       "robust_score": 0.0851,
@@ -1815,6 +2365,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.2585,
+        "feasibility": 0.4691,
+        "surface_occlusion": 0.159
+      },
       "on_front": false,
       "plddt_vhh": 85.5,
       "robust_score": 0.159,
@@ -1831,6 +2386,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.1061,
+        "feasibility": 0.5111,
+        "surface_occlusion": 0.4905
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.1061,
@@ -1847,6 +2407,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.1683,
+        "feasibility": 0.1802,
+        "surface_occlusion": 0.6062
+      },
       "on_front": false,
       "plddt_vhh": 83.3,
       "robust_score": 0.1683,
@@ -1863,6 +2428,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0514,
+        "feasibility": 0.479,
+        "surface_occlusion": 0.4638
+      },
       "on_front": false,
       "plddt_vhh": 83.0,
       "robust_score": 0.0514,
@@ -1879,6 +2449,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.1727,
+        "feasibility": 0.2691,
+        "surface_occlusion": 0.4584
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.1727,
@@ -1895,6 +2470,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.2182,
+        "feasibility": 0.2617,
+        "surface_occlusion": 0.4336
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.2182,
@@ -1911,6 +2491,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.1829,
+        "feasibility": 0.2617,
+        "surface_occlusion": 0.4511
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.1829,
@@ -1927,6 +2512,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.2029,
+        "feasibility": 0.2543,
+        "surface_occlusion": 0.3568
+      },
       "on_front": false,
       "plddt_vhh": 82.6,
       "robust_score": 0.2029,
@@ -1943,6 +2533,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.2017,
+        "feasibility": 0.2568,
+        "surface_occlusion": 0.3758
+      },
       "on_front": false,
       "plddt_vhh": 82.1,
       "robust_score": 0.2017,
@@ -1959,6 +2554,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0017,
+        "feasibility": 0.4222,
+        "surface_occlusion": 0.0564
+      },
       "on_front": false,
       "plddt_vhh": 85.9,
       "robust_score": 0.0017,
@@ -1975,6 +2575,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0003,
+        "feasibility": 0.5309,
+        "surface_occlusion": 0.5839
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.0003,
@@ -1991,6 +2596,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0014,
+        "feasibility": 0.558,
+        "surface_occlusion": 0.6101
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.0014,
@@ -2007,6 +2617,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0036,
+        "feasibility": 0.5235,
+        "surface_occlusion": 0.5902
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.0036,
@@ -2023,6 +2638,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_ext4",
+      "normalised": {
+        "cleavability": 0.0,
+        "feasibility": 0.5136,
+        "surface_occlusion": 0.4662
+      },
       "on_front": false,
       "plddt_vhh": 82.9,
       "robust_score": 0.0,
@@ -2039,6 +2659,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0685,
+        "feasibility": 0.6296,
+        "surface_occlusion": 0.5532
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.0685,
@@ -2055,6 +2680,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.5585,
+        "feasibility": 0.558,
+        "surface_occlusion": 0.2134
+      },
       "on_front": true,
       "plddt_vhh": 85.4,
       "robust_score": 0.2134,
@@ -2071,6 +2701,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.4991,
+        "feasibility": 0.4519,
+        "surface_occlusion": 0.104
+      },
       "on_front": false,
       "plddt_vhh": 85.8,
       "robust_score": 0.104,
@@ -2087,6 +2722,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.2066,
+        "feasibility": 0.3852,
+        "surface_occlusion": 0.1006
+      },
       "on_front": false,
       "plddt_vhh": 85.9,
       "robust_score": 0.1006,
@@ -2103,6 +2743,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.1969,
+        "feasibility": 0.7802,
+        "surface_occlusion": 0.2154
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.1969,
@@ -2119,6 +2764,11 @@
       "kind": "truncated control",
       "linker_residues": 24,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0057,
+        "feasibility": 0.642,
+        "surface_occlusion": 0.7725
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.0057,
@@ -2135,6 +2785,11 @@
       "kind": "truncated control",
       "linker_residues": 12,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.5083,
+        "feasibility": 0.479,
+        "surface_occlusion": 0.0
+      },
       "on_front": false,
       "plddt_vhh": 87.2,
       "robust_score": 0.0,
@@ -2151,6 +2806,11 @@
       "kind": "truncated control",
       "linker_residues": 16,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.505,
+        "feasibility": 0.6296,
+        "surface_occlusion": 0.3894
+      },
       "on_front": true,
       "plddt_vhh": 86.5,
       "robust_score": 0.3894,
@@ -2167,6 +2827,11 @@
       "kind": "truncated control",
       "linker_residues": 20,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.076,
+        "feasibility": 0.5877,
+        "surface_occlusion": 0.4832
+      },
       "on_front": false,
       "plddt_vhh": 85.9,
       "robust_score": 0.076,
@@ -2183,6 +2848,11 @@
       "kind": "truncated control",
       "linker_residues": 28,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.1666,
+        "feasibility": 0.6963,
+        "surface_occlusion": 0.8085
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1666,
@@ -2199,6 +2869,11 @@
       "kind": "truncated control",
       "linker_residues": 32,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.278,
+        "feasibility": 0.6864,
+        "surface_occlusion": 0.8843
+      },
       "on_front": true,
       "plddt_vhh": 84.0,
       "robust_score": 0.278,
@@ -2215,6 +2890,11 @@
       "kind": "truncated control",
       "linker_residues": 12,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.141,
+        "feasibility": 0.837,
+        "surface_occlusion": 0.2018
+      },
       "on_front": false,
       "plddt_vhh": 86.9,
       "robust_score": 0.141,
@@ -2231,6 +2911,11 @@
       "kind": "truncated control",
       "linker_residues": 16,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.1282,
+        "feasibility": 0.8346,
+        "surface_occlusion": 0.4244
+      },
       "on_front": false,
       "plddt_vhh": 86.1,
       "robust_score": 0.1282,
@@ -2247,6 +2932,11 @@
       "kind": "truncated control",
       "linker_residues": 20,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.1618,
+        "feasibility": 0.7877,
+        "surface_occlusion": 0.2086
+      },
       "on_front": false,
       "plddt_vhh": 85.4,
       "robust_score": 0.1618,
@@ -2263,6 +2953,11 @@
       "kind": "truncated control",
       "linker_residues": 28,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0908,
+        "feasibility": 0.7901,
+        "surface_occlusion": 0.0938
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.0908,
@@ -2279,6 +2974,11 @@
       "kind": "truncated control",
       "linker_residues": 32,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.1304,
+        "feasibility": 0.7654,
+        "surface_occlusion": 0.1478
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.1304,
@@ -2295,6 +2995,11 @@
       "kind": "truncated control",
       "linker_residues": 12,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0074,
+        "feasibility": 0.5506,
+        "surface_occlusion": 0.2518
+      },
       "on_front": false,
       "plddt_vhh": 87.3,
       "robust_score": 0.0074,
@@ -2311,6 +3016,11 @@
       "kind": "truncated control",
       "linker_residues": 16,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0045,
+        "feasibility": 0.6247,
+        "surface_occlusion": 0.4696
+      },
       "on_front": false,
       "plddt_vhh": 86.5,
       "robust_score": 0.0045,
@@ -2327,6 +3037,11 @@
       "kind": "truncated control",
       "linker_residues": 20,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0035,
+        "feasibility": 0.7704,
+        "surface_occlusion": 0.6539
+      },
       "on_front": true,
       "plddt_vhh": 85.8,
       "robust_score": 0.0035,
@@ -2343,6 +3058,11 @@
       "kind": "truncated control",
       "linker_residues": 28,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.005,
+        "feasibility": 0.7012,
+        "surface_occlusion": 0.7652
+      },
       "on_front": true,
       "plddt_vhh": 84.7,
       "robust_score": 0.005,
@@ -2359,6 +3079,11 @@
       "kind": "truncated control",
       "linker_residues": 32,
       "mask": "epi_core_half",
+      "normalised": {
+        "cleavability": 0.0066,
+        "feasibility": 0.6963,
+        "surface_occlusion": 0.7701
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.0066,
@@ -2375,6 +3100,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1642,
+        "feasibility": 0.7383,
+        "surface_occlusion": 0.3471
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.1642,
@@ -2391,6 +3121,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.4737,
+        "feasibility": 0.6074,
+        "surface_occlusion": 0.6553
+      },
       "on_front": true,
       "plddt_vhh": 84.6,
       "robust_score": 0.4737,
@@ -2407,6 +3142,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.6036,
+        "feasibility": 0.479,
+        "surface_occlusion": 0.1206
+      },
       "on_front": true,
       "plddt_vhh": 85.6,
       "robust_score": 0.1206,
@@ -2423,6 +3163,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.2749,
+        "feasibility": 0.3778,
+        "surface_occlusion": 0.1094
+      },
       "on_front": false,
       "plddt_vhh": 85.5,
       "robust_score": 0.1094,
@@ -2439,6 +3184,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.2144,
+        "feasibility": 0.879,
+        "surface_occlusion": 0.369
+      },
       "on_front": true,
       "plddt_vhh": 83.9,
       "robust_score": 0.2144,
@@ -2455,6 +3205,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0054,
+        "feasibility": 0.7605,
+        "surface_occlusion": 0.5664
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.0054,
@@ -2471,6 +3226,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.7375,
+        "feasibility": 0.4889,
+        "surface_occlusion": 0.0885
+      },
       "on_front": false,
       "plddt_vhh": 87.3,
       "robust_score": 0.0885,
@@ -2487,6 +3247,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.2526,
+        "feasibility": 0.6346,
+        "surface_occlusion": 0.2727
+      },
       "on_front": false,
       "plddt_vhh": 86.4,
       "robust_score": 0.2526,
@@ -2503,6 +3268,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0824,
+        "feasibility": 0.6148,
+        "surface_occlusion": 0.5236
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.0824,
@@ -2519,6 +3289,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1135,
+        "feasibility": 0.7407,
+        "surface_occlusion": 0.5877
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.1135,
@@ -2535,6 +3310,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1924,
+        "feasibility": 0.6815,
+        "surface_occlusion": 0.4842
+      },
       "on_front": false,
       "plddt_vhh": 83.6,
       "robust_score": 0.1924,
@@ -2551,6 +3331,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1524,
+        "feasibility": 0.9333,
+        "surface_occlusion": 0.4584
+      },
       "on_front": true,
       "plddt_vhh": 86.2,
       "robust_score": 0.1524,
@@ -2567,6 +3352,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.208,
+        "feasibility": 0.9111,
+        "surface_occlusion": 0.3213
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.208,
@@ -2583,6 +3373,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1913,
+        "feasibility": 0.8864,
+        "surface_occlusion": 0.3865
+      },
       "on_front": true,
       "plddt_vhh": 84.8,
       "robust_score": 0.1913,
@@ -2599,6 +3394,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1642,
+        "feasibility": 0.9185,
+        "surface_occlusion": 0.3563
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.1642,
@@ -2615,6 +3415,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.1382,
+        "feasibility": 0.916,
+        "surface_occlusion": 0.3476
+      },
       "on_front": false,
       "plddt_vhh": 83.0,
       "robust_score": 0.1382,
@@ -2631,6 +3436,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0048,
+        "feasibility": 0.4444,
+        "surface_occlusion": 0.1045
+      },
       "on_front": false,
       "plddt_vhh": 87.2,
       "robust_score": 0.0048,
@@ -2647,6 +3457,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0017,
+        "feasibility": 0.6272,
+        "surface_occlusion": 0.3826
+      },
       "on_front": false,
       "plddt_vhh": 86.2,
       "robust_score": 0.0017,
@@ -2663,6 +3478,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0024,
+        "feasibility": 0.8173,
+        "surface_occlusion": 0.4594
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.0024,
@@ -2679,6 +3499,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0017,
+        "feasibility": 0.7778,
+        "surface_occlusion": 0.5362
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.0017,
@@ -2695,6 +3520,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_core_noCys",
+      "normalised": {
+        "cleavability": 0.0026,
+        "feasibility": 0.7926,
+        "surface_occlusion": 0.5236
+      },
       "on_front": false,
       "plddt_vhh": 83.8,
       "robust_score": 0.0026,
@@ -2711,6 +3541,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1074,
+        "feasibility": 0.6519,
+        "surface_occlusion": 0.5391
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1074,
@@ -2727,6 +3562,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.4734,
+        "feasibility": 0.3432,
+        "surface_occlusion": 0.457
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.3432,
@@ -2743,6 +3583,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.5834,
+        "feasibility": 0.2444,
+        "surface_occlusion": 0.1327
+      },
       "on_front": true,
       "plddt_vhh": 85.3,
       "robust_score": 0.1327,
@@ -2759,6 +3604,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.3649,
+        "feasibility": 0.1778,
+        "surface_occlusion": 0.1386
+      },
       "on_front": false,
       "plddt_vhh": 85.5,
       "robust_score": 0.1386,
@@ -2775,6 +3625,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1514,
+        "feasibility": 0.8519,
+        "surface_occlusion": 0.4784
+      },
       "on_front": true,
       "plddt_vhh": 83.9,
       "robust_score": 0.1514,
@@ -2791,6 +3646,11 @@
       "kind": "scrambled control",
       "linker_residues": 24,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0047,
+        "feasibility": 0.7259,
+        "surface_occlusion": 0.6665
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.0047,
@@ -2807,6 +3667,11 @@
       "kind": "scrambled control",
       "linker_residues": 12,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.5355,
+        "feasibility": 0.237,
+        "surface_occlusion": 0.2533
+      },
       "on_front": false,
       "plddt_vhh": 86.6,
       "robust_score": 0.237,
@@ -2823,6 +3688,11 @@
       "kind": "scrambled control",
       "linker_residues": 16,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.4216,
+        "feasibility": 0.2691,
+        "surface_occlusion": 0.3559
+      },
       "on_front": false,
       "plddt_vhh": 86.2,
       "robust_score": 0.2691,
@@ -2839,6 +3709,11 @@
       "kind": "scrambled control",
       "linker_residues": 20,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.367,
+        "feasibility": 0.3407,
+        "surface_occlusion": 0.2061
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.2061,
@@ -2855,6 +3730,11 @@
       "kind": "scrambled control",
       "linker_residues": 28,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0824,
+        "feasibility": 0.3481,
+        "surface_occlusion": 0.7798
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.0824,
@@ -2871,6 +3751,11 @@
       "kind": "scrambled control",
       "linker_residues": 32,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0865,
+        "feasibility": 0.6395,
+        "surface_occlusion": 0.7414
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.0865,
@@ -2887,6 +3772,11 @@
       "kind": "scrambled control",
       "linker_residues": 12,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1718,
+        "feasibility": 0.7951,
+        "surface_occlusion": 0.3106
+      },
       "on_front": false,
       "plddt_vhh": 86.0,
       "robust_score": 0.1718,
@@ -2903,6 +3793,11 @@
       "kind": "scrambled control",
       "linker_residues": 16,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1784,
+        "feasibility": 0.8247,
+        "surface_occlusion": 0.4176
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.1784,
@@ -2919,6 +3814,11 @@
       "kind": "scrambled control",
       "linker_residues": 20,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1429,
+        "feasibility": 0.8173,
+        "surface_occlusion": 0.3962
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1429,
@@ -2935,6 +3835,11 @@
       "kind": "scrambled control",
       "linker_residues": 28,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1642,
+        "feasibility": 0.8716,
+        "surface_occlusion": 0.3525
+      },
       "on_front": false,
       "plddt_vhh": 83.6,
       "robust_score": 0.1642,
@@ -2951,6 +3856,11 @@
       "kind": "scrambled control",
       "linker_residues": 32,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.1855,
+        "feasibility": 0.8741,
+        "surface_occlusion": 0.3836
+      },
       "on_front": false,
       "plddt_vhh": 83.1,
       "robust_score": 0.1855,
@@ -2967,6 +3877,11 @@
       "kind": "scrambled control",
       "linker_residues": 12,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0054,
+        "feasibility": 0.2963,
+        "surface_occlusion": 0.3588
+      },
       "on_front": false,
       "plddt_vhh": 86.4,
       "robust_score": 0.0054,
@@ -2983,6 +3898,11 @@
       "kind": "scrambled control",
       "linker_residues": 16,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0029,
+        "feasibility": 0.3358,
+        "surface_occlusion": 0.4536
+      },
       "on_front": false,
       "plddt_vhh": 86.1,
       "robust_score": 0.0029,
@@ -2999,6 +3919,11 @@
       "kind": "scrambled control",
       "linker_residues": 20,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0017,
+        "feasibility": 0.7432,
+        "surface_occlusion": 0.4565
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.0017,
@@ -3015,6 +3940,11 @@
       "kind": "scrambled control",
       "linker_residues": 28,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0043,
+        "feasibility": 0.4321,
+        "surface_occlusion": 0.6296
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.0043,
@@ -3031,6 +3961,11 @@
       "kind": "scrambled control",
       "linker_residues": 32,
       "mask": "epi_core_scram",
+      "normalised": {
+        "cleavability": 0.0026,
+        "feasibility": 0.758,
+        "surface_occlusion": 0.701
+      },
       "on_front": true,
       "plddt_vhh": 83.6,
       "robust_score": 0.0026,
@@ -3047,6 +3982,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.2642,
+        "feasibility": 0.6025,
+        "surface_occlusion": 0.5109
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.2642,
@@ -3063,6 +4003,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.4822,
+        "feasibility": 0.6,
+        "surface_occlusion": 0.5493
+      },
       "on_front": true,
       "plddt_vhh": 84.8,
       "robust_score": 0.4822,
@@ -3079,6 +4024,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.5497,
+        "feasibility": 0.4617,
+        "surface_occlusion": 0.1512
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.1512,
@@ -3095,6 +4045,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.3223,
+        "feasibility": 0.4123,
+        "surface_occlusion": 0.1274
+      },
       "on_front": false,
       "plddt_vhh": 85.6,
       "robust_score": 0.1274,
@@ -3111,6 +4066,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1526,
+        "feasibility": 0.7506,
+        "surface_occlusion": 0.4229
+      },
       "on_front": false,
       "plddt_vhh": 83.8,
       "robust_score": 0.1526,
@@ -3127,6 +4087,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0066,
+        "feasibility": 0.6346,
+        "surface_occlusion": 0.4774
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.0066,
@@ -3143,6 +4108,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.5085,
+        "feasibility": 0.4963,
+        "surface_occlusion": 0.036
+      },
       "on_front": false,
       "plddt_vhh": 87.2,
       "robust_score": 0.036,
@@ -3159,6 +4129,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.5343,
+        "feasibility": 0.5111,
+        "surface_occlusion": 0.1332
+      },
       "on_front": false,
       "plddt_vhh": 86.5,
       "robust_score": 0.1332,
@@ -3175,6 +4150,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.3903,
+        "feasibility": 0.5432,
+        "surface_occlusion": 0.3257
+      },
       "on_front": false,
       "plddt_vhh": 85.6,
       "robust_score": 0.3257,
@@ -3191,6 +4171,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1628,
+        "feasibility": 0.6543,
+        "surface_occlusion": 0.843
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.1628,
@@ -3207,6 +4192,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1955,
+        "feasibility": 0.6296,
+        "surface_occlusion": 1.0
+      },
       "on_front": true,
       "plddt_vhh": 83.6,
       "robust_score": 0.1955,
@@ -3223,6 +4213,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1834,
+        "feasibility": 0.7901,
+        "surface_occlusion": 0.1983
+      },
       "on_front": false,
       "plddt_vhh": 86.4,
       "robust_score": 0.1834,
@@ -3239,6 +4234,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.2042,
+        "feasibility": 0.7951,
+        "surface_occlusion": 0.211
+      },
       "on_front": false,
       "plddt_vhh": 85.4,
       "robust_score": 0.2042,
@@ -3255,6 +4255,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0948,
+        "feasibility": 0.7481,
+        "surface_occlusion": 0.3413
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.0948,
@@ -3271,6 +4276,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1221,
+        "feasibility": 0.7407,
+        "surface_occlusion": 0.4823
+      },
       "on_front": false,
       "plddt_vhh": 83.1,
       "robust_score": 0.1221,
@@ -3287,6 +4297,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.1457,
+        "feasibility": 0.7309,
+        "surface_occlusion": 0.3583
+      },
       "on_front": false,
       "plddt_vhh": 82.3,
       "robust_score": 0.1457,
@@ -3303,6 +4318,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0128,
+        "feasibility": 0.4346,
+        "surface_occlusion": 0.0875
+      },
       "on_front": false,
       "plddt_vhh": 87.2,
       "robust_score": 0.0128,
@@ -3319,6 +4339,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0057,
+        "feasibility": 0.5136,
+        "surface_occlusion": 0.2086
+      },
       "on_front": false,
       "plddt_vhh": 86.5,
       "robust_score": 0.0057,
@@ -3335,6 +4360,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0019,
+        "feasibility": 0.7778,
+        "surface_occlusion": 0.4988
+      },
       "on_front": false,
       "plddt_vhh": 85.9,
       "robust_score": 0.0019,
@@ -3351,6 +4381,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0021,
+        "feasibility": 0.6494,
+        "surface_occlusion": 0.6767
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.0021,
@@ -3367,6 +4402,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_face2",
+      "normalised": {
+        "cleavability": 0.0043,
+        "feasibility": 0.6914,
+        "surface_occlusion": 0.6398
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.0043,
@@ -3383,6 +4423,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0673,
+        "feasibility": 0.2864,
+        "surface_occlusion": 0.4526
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.0673,
@@ -3399,6 +4444,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.4588,
+        "feasibility": 0.2741,
+        "surface_occlusion": 0.2397
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.2397,
@@ -3415,6 +4465,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.2183,
+        "feasibility": 0.2346,
+        "surface_occlusion": 0.1133
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.1133,
@@ -3431,6 +4486,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.2042,
+        "feasibility": 0.1358,
+        "surface_occlusion": 0.141
+      },
       "on_front": false,
       "plddt_vhh": 85.4,
       "robust_score": 0.1358,
@@ -3447,6 +4507,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.1915,
+        "feasibility": 0.4593,
+        "surface_occlusion": 0.3772
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.1915,
@@ -3463,6 +4528,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0048,
+        "feasibility": 0.3852,
+        "surface_occlusion": 0.4905
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.0048,
@@ -3479,6 +4549,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.7775,
+        "feasibility": 0.1679,
+        "surface_occlusion": 0.088
+      },
       "on_front": false,
       "plddt_vhh": 87.4,
       "robust_score": 0.088,
@@ -3495,6 +4570,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.4069,
+        "feasibility": 0.0,
+        "surface_occlusion": 0.1259
+      },
       "on_front": false,
       "plddt_vhh": 86.1,
       "robust_score": 0.0,
@@ -3511,6 +4591,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.109,
+        "feasibility": 0.2889,
+        "surface_occlusion": 0.4682
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.109,
@@ -3527,6 +4612,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.104,
+        "feasibility": 0.3679,
+        "surface_occlusion": 0.5002
+      },
       "on_front": false,
       "plddt_vhh": 84.0,
       "robust_score": 0.104,
@@ -3543,6 +4633,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0924,
+        "feasibility": 0.3457,
+        "surface_occlusion": 0.5591
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.0924,
@@ -3559,6 +4654,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.1732,
+        "feasibility": 0.4272,
+        "surface_occlusion": 0.1347
+      },
       "on_front": false,
       "plddt_vhh": 86.1,
       "robust_score": 0.1347,
@@ -3575,6 +4675,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.2074,
+        "feasibility": 0.4519,
+        "surface_occlusion": 0.3009
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.2074,
@@ -3591,6 +4696,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.2012,
+        "feasibility": 0.4519,
+        "surface_occlusion": 0.3077
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.2012,
@@ -3607,6 +4717,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.1047,
+        "feasibility": 0.4593,
+        "surface_occlusion": 0.335
+      },
       "on_front": false,
       "plddt_vhh": 82.9,
       "robust_score": 0.1047,
@@ -3623,6 +4738,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.2073,
+        "feasibility": 0.4494,
+        "surface_occlusion": 0.281
+      },
       "on_front": false,
       "plddt_vhh": 82.5,
       "robust_score": 0.2073,
@@ -3639,6 +4759,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0085,
+        "feasibility": 0.2,
+        "surface_occlusion": 0.0856
+      },
       "on_front": false,
       "plddt_vhh": 87.2,
       "robust_score": 0.0085,
@@ -3655,6 +4780,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0047,
+        "feasibility": 0.2272,
+        "surface_occlusion": 0.2499
+      },
       "on_front": false,
       "plddt_vhh": 86.0,
       "robust_score": 0.0047,
@@ -3671,6 +4801,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0024,
+        "feasibility": 0.3654,
+        "surface_occlusion": 0.402
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.0024,
@@ -3687,6 +4822,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0021,
+        "feasibility": 0.3901,
+        "surface_occlusion": 0.3952
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.0021,
@@ -3703,6 +4843,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub01",
+      "normalised": {
+        "cleavability": 0.0026,
+        "feasibility": 0.4148,
+        "surface_occlusion": 0.4832
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.0026,
@@ -3719,6 +4864,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1093,
+        "feasibility": 0.3778,
+        "surface_occlusion": 0.3884
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.1093,
@@ -3735,6 +4885,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.4758,
+        "feasibility": 0.2938,
+        "surface_occlusion": 0.2557
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.2557,
@@ -3751,6 +4906,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.2893,
+        "feasibility": 0.2049,
+        "surface_occlusion": 0.1138
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1138,
@@ -3767,6 +4927,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1659,
+        "feasibility": 0.1877,
+        "surface_occlusion": 0.264
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.1659,
@@ -3783,6 +4948,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.181,
+        "feasibility": 0.4667,
+        "surface_occlusion": 0.3724
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.181,
@@ -3799,6 +4969,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.0061,
+        "feasibility": 0.3951,
+        "surface_occlusion": 0.4361
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.0061,
@@ -3815,6 +4990,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.8161,
+        "feasibility": 0.1877,
+        "surface_occlusion": 0.0622
+      },
       "on_front": false,
       "plddt_vhh": 87.3,
       "robust_score": 0.0622,
@@ -3831,6 +5011,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.4479,
+        "feasibility": 0.2296,
+        "surface_occlusion": 0.1376
+      },
       "on_front": false,
       "plddt_vhh": 86.2,
       "robust_score": 0.1376,
@@ -3847,6 +5032,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1216,
+        "feasibility": 0.3136,
+        "surface_occlusion": 0.4827
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1216,
@@ -3863,6 +5053,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1294,
+        "feasibility": 0.3753,
+        "surface_occlusion": 0.5134
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.1294,
@@ -3879,6 +5074,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1227,
+        "feasibility": 0.358,
+        "surface_occlusion": 0.5527
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.1227,
@@ -3895,6 +5095,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1777,
+        "feasibility": 0.4296,
+        "surface_occlusion": 0.2217
+      },
       "on_front": false,
       "plddt_vhh": 85.8,
       "robust_score": 0.1777,
@@ -3911,6 +5116,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.2038,
+        "feasibility": 0.4494,
+        "surface_occlusion": 0.3252
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.2038,
@@ -3927,6 +5137,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1983,
+        "feasibility": 0.4494,
+        "surface_occlusion": 0.3126
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.1983,
@@ -3943,6 +5158,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.1874,
+        "feasibility": 0.4642,
+        "surface_occlusion": 0.3136
+      },
       "on_front": false,
       "plddt_vhh": 82.8,
       "robust_score": 0.1874,
@@ -3959,6 +5179,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.2239,
+        "feasibility": 0.4444,
+        "surface_occlusion": 0.2304
+      },
       "on_front": false,
       "plddt_vhh": 82.3,
       "robust_score": 0.2239,
@@ -3975,6 +5200,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.0099,
+        "feasibility": 0.0173,
+        "surface_occlusion": 0.0953
+      },
       "on_front": false,
       "plddt_vhh": 87.2,
       "robust_score": 0.0099,
@@ -3991,6 +5221,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.0035,
+        "feasibility": 0.2568,
+        "surface_occlusion": 0.2708
+      },
       "on_front": false,
       "plddt_vhh": 86.2,
       "robust_score": 0.0035,
@@ -4007,6 +5242,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.0019,
+        "feasibility": 0.4049,
+        "surface_occlusion": 0.4463
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.0019,
@@ -4023,6 +5263,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.0007,
+        "feasibility": 0.4049,
+        "surface_occlusion": 0.4886
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.0007,
@@ -4039,6 +5284,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub02",
+      "normalised": {
+        "cleavability": 0.0024,
+        "feasibility": 0.4198,
+        "surface_occlusion": 0.4745
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.0024,
@@ -4055,6 +5305,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.137,
+        "feasibility": 0.4,
+        "surface_occlusion": 0.4925
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.137,
@@ -4071,6 +5326,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.4699,
+        "feasibility": 0.3235,
+        "surface_occlusion": 0.2149
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.2149,
@@ -4087,6 +5347,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.3164,
+        "feasibility": 0.2543,
+        "surface_occlusion": 0.1118
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1118,
@@ -4103,6 +5368,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.118,
+        "feasibility": 0.2247,
+        "surface_occlusion": 0.3559
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.118,
@@ -4119,6 +5389,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1849,
+        "feasibility": 0.5185,
+        "surface_occlusion": 0.3743
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.1849,
@@ -4135,6 +5410,11 @@
       "kind": "epitope graft",
       "linker_residues": 24,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.0057,
+        "feasibility": 0.4222,
+        "surface_occlusion": 0.4584
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.0057,
@@ -4151,6 +5431,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.7981,
+        "feasibility": 0.2222,
+        "surface_occlusion": 0.0719
+      },
       "on_front": false,
       "plddt_vhh": 87.4,
       "robust_score": 0.0719,
@@ -4167,6 +5452,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1471,
+        "feasibility": 0.3037,
+        "surface_occlusion": 0.3544
+      },
       "on_front": false,
       "plddt_vhh": 86.1,
       "robust_score": 0.1471,
@@ -4183,6 +5473,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1265,
+        "feasibility": 0.3185,
+        "surface_occlusion": 0.2581
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.1265,
@@ -4199,6 +5494,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1403,
+        "feasibility": 0.3901,
+        "surface_occlusion": 0.51
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.1403,
@@ -4215,6 +5515,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1085,
+        "feasibility": 0.3951,
+        "surface_occlusion": 0.5177
+      },
       "on_front": false,
       "plddt_vhh": 83.5,
       "robust_score": 0.1085,
@@ -4231,6 +5536,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1704,
+        "feasibility": 0.4543,
+        "surface_occlusion": 0.2285
+      },
       "on_front": false,
       "plddt_vhh": 86.1,
       "robust_score": 0.1704,
@@ -4247,6 +5557,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.2061,
+        "feasibility": 0.4864,
+        "surface_occlusion": 0.2961
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.2061,
@@ -4263,6 +5578,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1799,
+        "feasibility": 0.4914,
+        "surface_occlusion": 0.35
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.1799,
@@ -4279,6 +5599,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.1983,
+        "feasibility": 0.4963,
+        "surface_occlusion": 0.3359
+      },
       "on_front": false,
       "plddt_vhh": 83.0,
       "robust_score": 0.1983,
@@ -4295,6 +5620,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.2036,
+        "feasibility": 0.5012,
+        "surface_occlusion": 0.3471
+      },
       "on_front": false,
       "plddt_vhh": 82.5,
       "robust_score": 0.2036,
@@ -4311,6 +5641,11 @@
       "kind": "epitope graft",
       "linker_residues": 12,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.0123,
+        "feasibility": 0.0296,
+        "surface_occlusion": 0.0831
+      },
       "on_front": false,
       "plddt_vhh": 87.4,
       "robust_score": 0.0123,
@@ -4327,6 +5662,11 @@
       "kind": "epitope graft",
       "linker_residues": 16,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.0048,
+        "feasibility": 0.2741,
+        "surface_occlusion": 0.2474
+      },
       "on_front": false,
       "plddt_vhh": 86.3,
       "robust_score": 0.0048,
@@ -4343,6 +5683,11 @@
       "kind": "epitope graft",
       "linker_residues": 20,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.0019,
+        "feasibility": 0.4198,
+        "surface_occlusion": 0.4225
+      },
       "on_front": false,
       "plddt_vhh": 85.4,
       "robust_score": 0.0019,
@@ -4359,6 +5704,11 @@
       "kind": "epitope graft",
       "linker_residues": 28,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.0052,
+        "feasibility": 0.3901,
+        "surface_occlusion": 0.3977
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.0052,
@@ -4375,6 +5725,11 @@
       "kind": "epitope graft",
       "linker_residues": 32,
       "mask": "epi_sub03",
+      "normalised": {
+        "cleavability": 0.0029,
+        "feasibility": 0.4321,
+        "surface_occlusion": 0.4998
+      },
       "on_front": false,
       "plddt_vhh": 83.7,
       "robust_score": 0.0029,
@@ -4391,6 +5746,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.3161,
+        "feasibility": 0.7852,
+        "surface_occlusion": 0.4268
+      },
       "on_front": true,
       "plddt_vhh": 84.2,
       "robust_score": 0.3161,
@@ -4407,6 +5767,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.5176,
+        "feasibility": 0.7284,
+        "surface_occlusion": 0.1896
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1896,
@@ -4423,6 +5788,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.3431,
+        "feasibility": 0.6593,
+        "surface_occlusion": 0.0287
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.0287,
@@ -4439,6 +5809,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.3066,
+        "feasibility": 0.5556,
+        "surface_occlusion": 0.0929
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.0929,
@@ -4455,6 +5830,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.1393,
+        "feasibility": 0.9531,
+        "surface_occlusion": 0.0778
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.0778,
@@ -4471,6 +5851,11 @@
       "kind": "inert control",
       "linker_residues": 24,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.0061,
+        "feasibility": 0.8173,
+        "surface_occlusion": 0.3082
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.0061,
@@ -4487,6 +5872,11 @@
       "kind": "inert control",
       "linker_residues": 12,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.3277,
+        "feasibility": 0.6617,
+        "surface_occlusion": 0.0676
+      },
       "on_front": false,
       "plddt_vhh": 86.5,
       "robust_score": 0.0676,
@@ -4503,6 +5893,11 @@
       "kind": "inert control",
       "linker_residues": 16,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.308,
+        "feasibility": 0.6617,
+        "surface_occlusion": 0.0549
+      },
       "on_front": false,
       "plddt_vhh": 86.0,
       "robust_score": 0.0549,
@@ -4519,6 +5914,11 @@
       "kind": "inert control",
       "linker_residues": 20,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.2225,
+        "feasibility": 0.7877,
+        "surface_occlusion": 0.4113
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.2225,
@@ -4535,6 +5935,11 @@
       "kind": "inert control",
       "linker_residues": 28,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.1766,
+        "feasibility": 0.7728,
+        "surface_occlusion": 0.4458
+      },
       "on_front": false,
       "plddt_vhh": 83.9,
       "robust_score": 0.1766,
@@ -4551,6 +5956,11 @@
       "kind": "inert control",
       "linker_residues": 32,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.233,
+        "feasibility": 0.7877,
+        "surface_occlusion": 0.5853
+      },
       "on_front": true,
       "plddt_vhh": 83.4,
       "robust_score": 0.233,
@@ -4567,6 +5977,11 @@
       "kind": "inert control",
       "linker_residues": 12,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.2239,
+        "feasibility": 0.9802,
+        "surface_occlusion": 0.3486
+      },
       "on_front": true,
       "plddt_vhh": 85.6,
       "robust_score": 0.2239,
@@ -4583,6 +5998,11 @@
       "kind": "inert control",
       "linker_residues": 16,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.2002,
+        "feasibility": 0.963,
+        "surface_occlusion": 0.3311
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.2002,
@@ -4599,6 +6019,11 @@
       "kind": "inert control",
       "linker_residues": 20,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.0933,
+        "feasibility": 0.9259,
+        "surface_occlusion": 0.0097
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.0097,
@@ -4615,6 +6040,11 @@
       "kind": "inert control",
       "linker_residues": 28,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.1519,
+        "feasibility": 1.0,
+        "surface_occlusion": 0.1167
+      },
       "on_front": true,
       "plddt_vhh": 83.4,
       "robust_score": 0.1167,
@@ -4631,6 +6061,11 @@
       "kind": "inert control",
       "linker_residues": 32,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.1573,
+        "feasibility": 0.9432,
+        "surface_occlusion": 0.0472
+      },
       "on_front": false,
       "plddt_vhh": 82.9,
       "robust_score": 0.0472,
@@ -4647,6 +6082,11 @@
       "kind": "inert control",
       "linker_residues": 12,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.0059,
+        "feasibility": 0.6815,
+        "surface_occlusion": 0.0287
+      },
       "on_front": false,
       "plddt_vhh": 86.2,
       "robust_score": 0.0059,
@@ -4663,6 +6103,11 @@
       "kind": "inert control",
       "linker_residues": 16,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.005,
+        "feasibility": 0.8025,
+        "surface_occlusion": 0.3165
+      },
       "on_front": false,
       "plddt_vhh": 85.9,
       "robust_score": 0.005,
@@ -4679,6 +6124,11 @@
       "kind": "inert control",
       "linker_residues": 20,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.0066,
+        "feasibility": 0.8346,
+        "surface_occlusion": 0.2684
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.0066,
@@ -4695,6 +6145,11 @@
       "kind": "inert control",
       "linker_residues": 28,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.0036,
+        "feasibility": 0.8444,
+        "surface_occlusion": 0.35
+      },
       "on_front": false,
       "plddt_vhh": 84.0,
       "robust_score": 0.0036,
@@ -4711,6 +6166,11 @@
       "kind": "inert control",
       "linker_residues": 32,
       "mask": "polyG",
+      "normalised": {
+        "cleavability": 0.0071,
+        "feasibility": 0.884,
+        "surface_occlusion": 0.351
+      },
       "on_front": false,
       "plddt_vhh": 83.4,
       "robust_score": 0.0071,
@@ -4727,6 +6187,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.117,
+        "feasibility": 0.4494,
+        "surface_occlusion": 0.5105
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.117,
@@ -4743,6 +6208,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.1035,
+        "feasibility": 0.4617,
+        "surface_occlusion": 0.4439
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1035,
@@ -4759,6 +6229,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.0811,
+        "feasibility": 0.4889,
+        "surface_occlusion": 0.4346
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.0811,
@@ -4775,6 +6250,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.1341,
+        "feasibility": 0.5333,
+        "surface_occlusion": 0.4215
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1341,
@@ -4791,6 +6271,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.031,
+        "feasibility": 0.4321,
+        "surface_occlusion": 0.4998
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.031,
@@ -4807,6 +6292,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.1462,
+        "feasibility": 0.516,
+        "surface_occlusion": 0.3865
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1462,
@@ -4823,6 +6313,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.0901,
+        "feasibility": 0.3802,
+        "surface_occlusion": 0.4813
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.0901,
@@ -4839,6 +6334,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_cn01",
+      "normalised": {
+        "cleavability": 0.1578,
+        "feasibility": 0.5111,
+        "surface_occlusion": 0.3865
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1578,
@@ -4855,6 +6355,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0247,
+        "feasibility": 0.1852,
+        "surface_occlusion": 0.4881
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.0247,
@@ -4871,6 +6376,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0803,
+        "feasibility": 0.2074,
+        "surface_occlusion": 0.4507
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.0803,
@@ -4887,6 +6397,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0502,
+        "feasibility": 0.158,
+        "surface_occlusion": 0.5814
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.0502,
@@ -4903,6 +6418,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0272,
+        "feasibility": 0.1531,
+        "surface_occlusion": 0.4477
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.0272,
@@ -4919,6 +6439,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0493,
+        "feasibility": 0.079,
+        "surface_occlusion": 0.5421
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.0493,
@@ -4935,6 +6460,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.1734,
+        "feasibility": 0.3284,
+        "surface_occlusion": 0.4186
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.1734,
@@ -4951,6 +6481,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0334,
+        "feasibility": 0.1704,
+        "surface_occlusion": 0.5357
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.0334,
@@ -4967,6 +6502,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext2_cn01",
+      "normalised": {
+        "cleavability": 0.0142,
+        "feasibility": 0.1531,
+        "surface_occlusion": 0.5644
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.0142,
@@ -4983,6 +6523,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.2426,
+        "feasibility": 0.8198,
+        "surface_occlusion": 0.474
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.2426,
@@ -4999,6 +6544,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1542,
+        "feasibility": 0.7975,
+        "surface_occlusion": 0.5805
+      },
       "on_front": true,
       "plddt_vhh": 84.2,
       "robust_score": 0.1542,
@@ -5015,6 +6565,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1817,
+        "feasibility": 0.8,
+        "surface_occlusion": 0.5532
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1817,
@@ -5031,6 +6586,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.3064,
+        "feasibility": 0.8346,
+        "surface_occlusion": 0.5362
+      },
       "on_front": true,
       "plddt_vhh": 84.2,
       "robust_score": 0.3064,
@@ -5047,6 +6607,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.2683,
+        "feasibility": 0.7605,
+        "surface_occlusion": 0.4628
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.2683,
@@ -5063,6 +6628,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1787,
+        "feasibility": 0.8049,
+        "surface_occlusion": 0.5664
+      },
       "on_front": true,
       "plddt_vhh": 84.3,
       "robust_score": 0.1787,
@@ -5079,6 +6649,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.1433,
+        "feasibility": 0.8025,
+        "surface_occlusion": 0.6232
+      },
       "on_front": true,
       "plddt_vhh": 84.5,
       "robust_score": 0.1433,
@@ -5095,6 +6670,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_polyG_cn01",
+      "normalised": {
+        "cleavability": 0.2317,
+        "feasibility": 0.6963,
+        "surface_occlusion": 0.5241
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.2317,
@@ -5111,6 +6691,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1166,
+        "feasibility": 0.5383,
+        "surface_occlusion": 0.4973
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.1166,
@@ -5127,6 +6712,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.167,
+        "feasibility": 0.684,
+        "surface_occlusion": 0.3121
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.167,
@@ -5143,6 +6733,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1152,
+        "feasibility": 0.7358,
+        "surface_occlusion": 0.3787
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1152,
@@ -5159,6 +6754,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1016,
+        "feasibility": 0.563,
+        "surface_occlusion": 0.4677
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1016,
@@ -5175,6 +6775,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1114,
+        "feasibility": 0.5531,
+        "surface_occlusion": 0.6539
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.1114,
@@ -5191,6 +6796,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1273,
+        "feasibility": 0.7407,
+        "surface_occlusion": 0.5741
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.1273,
@@ -5207,6 +6817,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1533,
+        "feasibility": 0.6074,
+        "surface_occlusion": 0.5207
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1533,
@@ -5223,6 +6838,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_ext4_cn01",
+      "normalised": {
+        "cleavability": 0.1069,
+        "feasibility": 0.5778,
+        "surface_occlusion": 0.5051
+      },
       "on_front": false,
       "plddt_vhh": 84.5,
       "robust_score": 0.1069,
@@ -5239,6 +6859,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.1791,
+        "feasibility": 0.7259,
+        "surface_occlusion": 0.4682
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.1791,
@@ -5255,6 +6880,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.117,
+        "feasibility": 0.6222,
+        "surface_occlusion": 0.526
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.117,
@@ -5271,6 +6901,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.1336,
+        "feasibility": 0.5975,
+        "surface_occlusion": 0.5095
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1336,
@@ -5287,6 +6922,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.0803,
+        "feasibility": 0.6025,
+        "surface_occlusion": 0.4336
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.0803,
@@ -5303,6 +6943,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.1332,
+        "feasibility": 0.5531,
+        "surface_occlusion": 0.3452
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1332,
@@ -5319,6 +6964,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.1495,
+        "feasibility": 0.6716,
+        "surface_occlusion": 0.2718
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1495,
@@ -5335,6 +6985,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.1557,
+        "feasibility": 0.6765,
+        "surface_occlusion": 0.2902
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1557,
@@ -5351,6 +7006,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_noCys_cn01",
+      "normalised": {
+        "cleavability": 0.0765,
+        "feasibility": 0.7037,
+        "surface_occlusion": 0.4633
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.0765,
@@ -5367,6 +7027,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.1791,
+        "feasibility": 0.7259,
+        "surface_occlusion": 0.4682
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.1791,
@@ -5383,6 +7048,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.1294,
+        "feasibility": 0.7802,
+        "surface_occlusion": 0.3826
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1294,
@@ -5399,6 +7069,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.1279,
+        "feasibility": 0.7457,
+        "surface_occlusion": 0.3802
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1279,
@@ -5415,6 +7090,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.1329,
+        "feasibility": 0.6025,
+        "surface_occlusion": 0.5129
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1329,
@@ -5431,6 +7111,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.1637,
+        "feasibility": 0.5457,
+        "surface_occlusion": 0.5109
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.1637,
@@ -5447,6 +7132,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.2372,
+        "feasibility": 0.6173,
+        "surface_occlusion": 0.4147
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.2372,
@@ -5463,6 +7153,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.0844,
+        "feasibility": 0.684,
+        "surface_occlusion": 0.3947
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.0844,
@@ -5479,6 +7174,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub03_cn01",
+      "normalised": {
+        "cleavability": 0.104,
+        "feasibility": 0.6222,
+        "surface_occlusion": 0.4502
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.104,
@@ -5495,6 +7195,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.0263,
+        "feasibility": 0.2593,
+        "surface_occlusion": 0.3447
+      },
       "on_front": false,
       "plddt_vhh": 84.3,
       "robust_score": 0.0263,
@@ -5511,6 +7216,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.1571,
+        "feasibility": 0.2543,
+        "surface_occlusion": 0.4511
+      },
       "on_front": false,
       "plddt_vhh": 84.1,
       "robust_score": 0.1571,
@@ -5527,6 +7237,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.0702,
+        "feasibility": 0.3753,
+        "surface_occlusion": 0.3247
+      },
       "on_front": false,
       "plddt_vhh": 84.4,
       "robust_score": 0.0702,
@@ -5543,6 +7258,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.0893,
+        "feasibility": 0.2667,
+        "surface_occlusion": 0.3549
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.0893,
@@ -5559,6 +7279,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.0626,
+        "feasibility": 0.2025,
+        "surface_occlusion": 0.4988
+      },
       "on_front": false,
       "plddt_vhh": 84.2,
       "robust_score": 0.0626,
@@ -5575,6 +7300,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.2171,
+        "feasibility": 0.2049,
+        "surface_occlusion": 0.4176
+      },
       "on_front": false,
       "plddt_vhh": 83.8,
       "robust_score": 0.2049,
@@ -5591,6 +7321,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.3457,
+        "feasibility": 0.2716,
+        "surface_occlusion": 0.3247
+      },
       "on_front": false,
       "plddt_vhh": 83.8,
       "robust_score": 0.2716,
@@ -5607,6 +7342,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_both_cn01",
+      "normalised": {
+        "cleavability": 0.0142,
+        "feasibility": 0.2568,
+        "surface_occlusion": 0.4132
+      },
       "on_front": false,
       "plddt_vhh": 84.6,
       "robust_score": 0.0142,
@@ -5623,6 +7363,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.0801,
+        "feasibility": 0.684,
+        "surface_occlusion": 0.5036
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.0801,
@@ -5639,6 +7384,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.1528,
+        "feasibility": 0.679,
+        "surface_occlusion": 0.5207
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1528,
@@ -5655,6 +7405,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.0882,
+        "feasibility": 0.7086,
+        "surface_occlusion": 0.4691
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.0882,
@@ -5671,6 +7426,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.1415,
+        "feasibility": 0.6716,
+        "surface_occlusion": 0.4891
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1415,
@@ -5687,6 +7447,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.0803,
+        "feasibility": 0.8123,
+        "surface_occlusion": 0.5523
+      },
       "on_front": true,
       "plddt_vhh": 85.1,
       "robust_score": 0.0803,
@@ -5703,6 +7468,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.0974,
+        "feasibility": 0.6988,
+        "surface_occlusion": 0.4842
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.0974,
@@ -5719,6 +7489,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.1403,
+        "feasibility": 0.5901,
+        "surface_occlusion": 0.5105
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1403,
@@ -5735,6 +7510,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_scram_cn01",
+      "normalised": {
+        "cleavability": 0.0268,
+        "feasibility": 0.5383,
+        "surface_occlusion": 0.4891
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.0268,
@@ -5751,6 +7531,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.1749,
+        "feasibility": 0.7333,
+        "surface_occlusion": 0.421
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1749,
@@ -5767,6 +7552,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.1875,
+        "feasibility": 0.7383,
+        "surface_occlusion": 0.405
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1875,
@@ -5783,6 +7573,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.1197,
+        "feasibility": 0.6,
+        "surface_occlusion": 0.299
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1197,
@@ -5799,6 +7594,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.1465,
+        "feasibility": 0.721,
+        "surface_occlusion": 0.4502
+      },
       "on_front": false,
       "plddt_vhh": 84.7,
       "robust_score": 0.1465,
@@ -5815,6 +7615,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.1156,
+        "feasibility": 0.5852,
+        "surface_occlusion": 0.3306
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1156,
@@ -5831,6 +7636,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.0644,
+        "feasibility": 0.7407,
+        "surface_occlusion": 0.5688
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.0644,
@@ -5847,6 +7657,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.0886,
+        "feasibility": 0.4963,
+        "surface_occlusion": 0.4847
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.0886,
@@ -5863,6 +7678,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub01_cn01",
+      "normalised": {
+        "cleavability": 0.1066,
+        "feasibility": 0.8321,
+        "surface_occlusion": 0.4317
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.1066,
@@ -5879,6 +7699,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.1327,
+        "feasibility": 0.7556,
+        "surface_occlusion": 0.5012
+      },
       "on_front": false,
       "plddt_vhh": 85.6,
       "robust_score": 0.1327,
@@ -5895,6 +7720,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.2137,
+        "feasibility": 0.6148,
+        "surface_occlusion": 0.4628
+      },
       "on_front": false,
       "plddt_vhh": 85.5,
       "robust_score": 0.2137,
@@ -5911,6 +7741,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.0727,
+        "feasibility": 0.7457,
+        "surface_occlusion": 0.5513
+      },
       "on_front": false,
       "plddt_vhh": 85.6,
       "robust_score": 0.0727,
@@ -5927,6 +7762,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.1382,
+        "feasibility": 0.7605,
+        "surface_occlusion": 0.4861
+      },
       "on_front": false,
       "plddt_vhh": 85.5,
       "robust_score": 0.1382,
@@ -5943,6 +7783,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.1427,
+        "feasibility": 0.7728,
+        "surface_occlusion": 0.4648
+      },
       "on_front": false,
       "plddt_vhh": 85.6,
       "robust_score": 0.1427,
@@ -5959,6 +7804,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.0945,
+        "feasibility": 0.6864,
+        "surface_occlusion": 0.5105
+      },
       "on_front": false,
       "plddt_vhh": 85.6,
       "robust_score": 0.0945,
@@ -5975,6 +7825,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.1766,
+        "feasibility": 0.6296,
+        "surface_occlusion": 0.493
+      },
       "on_front": false,
       "plddt_vhh": 85.4,
       "robust_score": 0.1766,
@@ -5991,6 +7846,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_core_half_cn01",
+      "normalised": {
+        "cleavability": 0.0744,
+        "feasibility": 0.7333,
+        "surface_occlusion": 0.4706
+      },
       "on_front": false,
       "plddt_vhh": 85.5,
       "robust_score": 0.0744,
@@ -6007,6 +7867,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1696,
+        "feasibility": 0.7309,
+        "surface_occlusion": 0.4531
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1696,
@@ -6023,6 +7888,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1787,
+        "feasibility": 0.7309,
+        "surface_occlusion": 0.6441
+      },
       "on_front": true,
       "plddt_vhh": 84.8,
       "robust_score": 0.1787,
@@ -6039,6 +7909,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1185,
+        "feasibility": 0.5901,
+        "surface_occlusion": 0.3884
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1185,
@@ -6055,6 +7930,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1215,
+        "feasibility": 0.5704,
+        "surface_occlusion": 0.3009
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1215,
@@ -6071,6 +7951,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1085,
+        "feasibility": 0.5852,
+        "surface_occlusion": 0.3597
+      },
       "on_front": false,
       "plddt_vhh": 85.2,
       "robust_score": 0.1085,
@@ -6087,6 +7972,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.2057,
+        "feasibility": 0.363,
+        "surface_occlusion": 0.5007
+      },
       "on_front": false,
       "plddt_vhh": 85.3,
       "robust_score": 0.2057,
@@ -6103,6 +7993,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1069,
+        "feasibility": 0.3926,
+        "surface_occlusion": 0.3738
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1069,
@@ -6119,6 +8014,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_sub02_cn01",
+      "normalised": {
+        "cleavability": 0.1683,
+        "feasibility": 0.5877,
+        "surface_occlusion": 0.3602
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1683,
@@ -6135,6 +8035,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.1749,
+        "feasibility": 0.5111,
+        "surface_occlusion": 0.5727
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.1749,
@@ -6151,6 +8056,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.2038,
+        "feasibility": 0.5951,
+        "surface_occlusion": 0.6159
+      },
       "on_front": false,
       "plddt_vhh": 84.9,
       "robust_score": 0.2038,
@@ -6167,6 +8077,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.132,
+        "feasibility": 0.4272,
+        "surface_occlusion": 0.4463
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.132,
@@ -6183,6 +8098,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.099,
+        "feasibility": 0.4642,
+        "surface_occlusion": 0.6193
+      },
       "on_front": false,
       "plddt_vhh": 84.8,
       "robust_score": 0.099,
@@ -6199,6 +8119,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.1862,
+        "feasibility": 0.4938,
+        "surface_occlusion": 0.6203
+      },
       "on_front": false,
       "plddt_vhh": 85.1,
       "robust_score": 0.1862,
@@ -6215,6 +8140,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.1382,
+        "feasibility": 0.3481,
+        "surface_occlusion": 0.5343
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1382,
@@ -6231,6 +8161,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.1696,
+        "feasibility": 0.5877,
+        "surface_occlusion": 0.5809
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.1696,
@@ -6247,6 +8182,11 @@
       "kind": "ProteinMPNN redesign",
       "linker_residues": 24,
       "mask": "mpnn_epi_face2_cn01",
+      "normalised": {
+        "cleavability": 0.091,
+        "feasibility": 0.6173,
+        "surface_occlusion": 0.5639
+      },
       "on_front": false,
       "plddt_vhh": 85.0,
       "robust_score": 0.091,
@@ -6256,6 +8196,20 @@
       "vhh_core_rmsd_A": 0.11
     }
   ],
+  "scale": {
+    "cleavability": {
+      "min": 0.0019,
+      "span": 0.578
+    },
+    "feasibility": {
+      "min": 0.091,
+      "span": 0.405
+    },
+    "surface_occlusion": {
+      "min": -0.0027,
+      "span": 0.2057
+    }
+  },
   "shortlist": [
     "epi_face2_cn02",
     "epi_core_noCys_cn02",

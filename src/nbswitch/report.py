@@ -1605,50 +1605,39 @@ def protonation_table(scan) -> str:
     return f'<table class="tbl proton">{head}{body}</table>'
 
 
-def constraint_table(constraints, excluded_by) -> str:
-    """The requirements applied before any comparison, and what each removed."""
-    if not constraints:
-        return pending("the ranking, stage 13")
-    ops = {"ge": "&ge;", "le": "&le;", "gt": "&gt;", "lt": "&lt;"}
-    head = ('<colgroup><col style="width:22%"><col style="width:12%">'
-            '<col style="width:52%"><col style="width:14%"></colgroup>'
-            "<tr><th>quantity</th><th>limit</th><th>why it is a requirement</th>"
-            "<th>removed</th></tr>")
-    body = ""
-    for c in constraints:
-        n = excluded_by.get(c["field"], 0)
-        body += (f'<tr><td class="mono">{c["field"]}</td>'
-                 f'<td class="mono">{ops.get(c["op"], c["op"])} {c["limit"]:g}</td>'
-                 f'<td>{c["why"]}</td>'
-                 f'<td class="mono">{n if n else "&mdash;"}</td></tr>')
-    return f'<table class="tbl cons">{head}{body}</table>'
+#: Column heads for the ranking tables, in the order the objectives are
+#: stored. Occlusion is named for the surface it measures, not for masking.
+OBJECTIVE_LABEL = {"feasibility": "feasibility",
+                   "cleavability": "cleavability",
+                   "surface_occlusion": "occlusion"}
 
 
-def front_table(front, objectives, shortlist=(), limit: int = 12) -> str:
-    """The nondominated set in the stated order, with the shortlist marked."""
-    if not front:
+def normalised_table(rows, objectives, mark=()) -> str:
+    """Candidates with the normalised scores the ordering is made of.
+
+    The raw scores are on three unrelated scales, so a table of them does not
+    show why one candidate outranks another. These are the min-max normalised
+    values stage 13 wrote, beside the weakest of the three, which is the
+    ranking score itself: the reader can see the number being minimised.
+    """
+    if not rows:
         return pending("the ranking, stage 13")
-    label = {"feasibility": "feasibility", "cleavability": "cleavability",
-             "surface_occlusion": "surface occlusion"}
-    cols = "".join(f"<th>{label.get(o, o)}</th>" for o in objectives)
-    head = ('<colgroup><col style="width:30%"><col style="width:14%">'
-            + '<col style="width:18%">' * len(objectives) + "</colgroup>"
-            f"<tr><th>construct</th><th>weakest, normalised</th>{cols}</tr>")
+    cols = "".join(f"<th>{OBJECTIVE_LABEL.get(o, o)}</th>" for o in objectives)
+    head = ('<colgroup><col style="width:34%">'
+            + '<col style="width:16%">' * len(objectives)
+            + '<col style="width:18%"></colgroup>'
+            f"<tr><th>construct</th>{cols}<th>weakest</th></tr>")
     body = ""
-    for r in front[:limit]:
-        picked = r["id"] in shortlist
-        cls = ' class="hl"' if picked else ""
-        mark = ' <span class="tag">verified</span>' if picked else ""
-        cells = "".join(f'<td class="mono">{r.get(o, float("nan")):.3f}</td>'
-                        for o in objectives)
-        body += (f'<tr{cls}><td class="mono">{r["id"]}{mark}</td>'
-                 f'<td class="mono"><b>{r.get("robust_score", float("nan")):.3f}</b></td>'
-                 f"{cells}</tr>")
-    more = ""
-    if len(front) > limit:
-        more = (f'<p class="dim" style="font-size:.85rem">'
-                f'{len(front) - limit} further nondominated designs not shown.</p>')
-    return f'<table class="tbl front">{head}{body}</table>{more}'
+    for r in rows:
+        norm = r.get("normalised") or {}
+        cls = ' class="hl"' if r["id"] in mark else ""
+        cells = "".join(
+            f'<td class="mono">{norm[o]:.3f}</td>' if o in norm
+            else '<td class="mono">&mdash;</td>' for o in objectives)
+        body += (f'<tr{cls}><td class="mono">{r["id"]}</td>{cells}'
+                 f'<td class="mono"><b>{r.get("robust_score", float("nan")):.3f}'
+                 f"</b></td></tr>")
+    return f'<table class="tbl front">{head}{body}</table>'
 
 
 _WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven",
