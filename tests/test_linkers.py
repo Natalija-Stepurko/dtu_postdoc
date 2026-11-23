@@ -63,14 +63,28 @@ def test_the_schematic_counts_match_the_run():
     assert f"{facts['n_controls']} controls" in svg
 
 
-def test_the_schematic_reports_the_real_flank_range():
-    """The flanks shown must be what flank_of_length would build."""
+def test_the_schematic_draws_every_length_that_was_built():
+    """Step 4 carries the series itself, so every row has to be there and the
+    flanks shown have to be what flank_of_length would build."""
     from nbswitch import linkers as L
     svg = _schematic()
+    for n in L.LENGTH_SERIES:
+        assert f"n = {n}" in svg, f"length {n} missing from the diagram"
+        assert f"{(n - 10) // 2} Gly/Ser each side" in svg
     lo, hi = min(L.LENGTH_SERIES), max(L.LENGTH_SERIES)
-    assert f"{(lo - 10) // 2} to {(hi - 10) // 2} residues a side" in svg
     assert f"linkers of {lo} to {hi} residues" in svg
-    assert f"{L.REFERENCE_LENGTH} residues, shown" in svg
+    assert f"{L.REFERENCE_LENGTH} residues" in svg
+
+
+def test_the_substrate_column_is_the_same_width_in_every_row():
+    """The point of the series: only the flanks move. If the substrate column
+    varied, a difference across the series would not be reach alone."""
+    import re
+    from nbswitch import linkers as L
+    svg = _schematic()
+    cut = re.findall(r'width="([\d.]+)" height="20" rx="2" fill="#2D5BD1"', svg)
+    assert len(cut) == len(L.LENGTH_SERIES)
+    assert len(set(cut)) == 1, f"substrate drawn at {len(set(cut))} widths"
 
 
 def test_the_profile_pushes_only_the_two_named_groups():

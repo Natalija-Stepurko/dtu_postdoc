@@ -1347,21 +1347,9 @@ ids stay as the files are named; the figure above gives each mask a readable lab
 recognise and the distance the mask has to travel are set in separate steps, so either can
 be changed without confounding the other.</figcaption></figure>
 <div class="stack">
-<p>I used CleaveNet to generate {R.word(SUB_LEN)}-residue peptides predicted to be preferentially
-cleaved by {CLEAVE_TARGETS}, while limiting cleavage by {R.word(LINKER_GEN['n_off'])} other MMPs.</p>
-<p>The model generated {LINKER_GEN['n_generated']:,} sequences. I ranked them by the difference
-between their predicted cleavage scores for the target and off-target proteases, retaining
-{R.word(LINKER_GEN['n_kept'])} candidates and adding {R.word(LINKER_GEN['n_controls'])} controls.</p>
 <p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage
-motif and a scrambled version of the highest-scoring sequence. They test whether the predicted
-protease response depends on the designed sequence rather than on linker composition alone.
-It does: the scramble has the same {R.word(SUB_LEN)} amino acids in a different order and scores
-{CTRL_SCRAM:.2f} against {CN_BEST:.2f} for the sequence it was made from, and the Gly/Ser
-control scores {CTRL_GS:.2f}.</p>
-<p>The selected sequences were placed between flexible Gly/Ser segments to form complete
-linkers. By varying the length of these segments I could assess linker geometry separately
-from the predicted protease-recognition sequence.</p>
-<p><b>What this does and does not show.</b> CleaveNet was trained on human MMPs, not on snake
+motif and a scrambled version of the highest-scoring sequence.</p>
+<p><b>What this does not show.</b> CleaveNet was trained on human MMPs, not on snake
 venom metalloproteinases. These results demonstrate how to design a desired human-MMP cleavage
 profile; they do not establish selectivity at a viper bite site.</p></div>
 

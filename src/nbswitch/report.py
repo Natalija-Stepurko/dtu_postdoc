@@ -1781,7 +1781,15 @@ def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
     a longer graft is not automatically a better one: past C42-C53 the
     extensions pick up cysteines whose partners stay behind in the antigen.
     """
+    # Kept and orphaned cysteines are a green/red pair, which the palette
+    # validator puts at dE 4.5 under deuteranopia: hue alone cannot carry this
+    # distinction, and it is the one the figure exists to make. So it is drawn
+    # as shape first - a closed bracket where the partner is inside the mask,
+    # an open dangling stub where it is not - with colour only reinforcing it.
+    # The hotspot tick is blue rather than the teal used elsewhere, which sat
+    # at dE 7.9 against the kept-cysteine green even in normal vision.
     KEPT, ORPH, SUBST, PLAIN = "#1F6B4A", "#9C3B3B", "#C06014", "#8C979E"
+    HOT = "#2D5BD1"
     core_seq = masks[core]["seq"]
     core_start, core_end = masks[core]["start"], masks[core]["end"]
     blocks = {n: mask_blocks(n, masks[n], masks, core)
@@ -1851,9 +1859,9 @@ def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
                     p = None if pos is None else pos + i
                     if pos is None:                  # the spacer, drawn in the gap
                         bx = x0 + (col[runs[0][1]] + 1) * cell
-                        o.append(f'<rect x="{bx}" y="{y + 6}" width="{cell - 2}" '
+                        o.append(f'<rect x="{bx}" y="{y + 11}" width="{cell - 2}" '
                                  f'height="9" rx="2" fill="{PLAIN}" fill-opacity="0.2"/>')
-                        label(bx + (cell - 2) / 2, y + 14, text, "m-n", INK3, "middle")
+                        label(bx + (cell - 2) / 2, y + 19, text, "m-n", INK3, "middle")
                         break
                     if aa == "C":
                         fill = ORPH if p in orph else KEPT
@@ -1863,14 +1871,33 @@ def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
                         fill = PLAIN
                     solid = aa == "C" or fill == SUBST
                     bx = x0 + col[p] * cell
-                    o.append(f'<rect x="{bx}" y="{y}" width="{cell - 2}" height="21" '
+                    o.append(f'<rect x="{bx}" y="{y + 5}" width="{cell - 2}" height="21" '
                              f'rx="2" fill="{fill}" '
                              f'fill-opacity="{0.9 if solid else 0.16}"/>')
                     if p in hotspots:
-                        o.append(f'<rect x="{bx}" y="{y + 22}" width="{cell - 2}" '
-                                 f'height="2.5" rx="1" fill="{CHROME}"/>')
-                    label(bx + (cell - 2) / 2, y + 15, aa, "m-t",
+                        o.append(f'<rect x="{bx}" y="{y}" width="{cell - 2}" '
+                                 f'height="2.5" rx="1" fill="{HOT}"/>')
+                    label(bx + (cell - 2) / 2, y + 20, aa, "m-t",
                           "#FFFFFF" if solid else INK2, "middle")
+            # a closed bracket says the partner is inside the mask; an open
+            # stub says it was left behind in the antigen
+            cy = y + 29
+            for lo_c, hi_c in (m.get("disulfides_kept") or []):
+                if lo_c in col and hi_c in col:
+                    xa = x0 + col[lo_c] * cell + (cell - 2) / 2
+                    xb = x0 + col[hi_c] * cell + (cell - 2) / 2
+                    o.append(f'<path d="M {xa} {cy - 4} L {xa} {cy} L {xb} {cy} '
+                             f'L {xb} {cy - 4}" fill="none" stroke="{KEPT}" '
+                             f'stroke-width="1.3"/>')
+            for c in sorted(orph):
+                if c not in col:
+                    continue
+                xa = x0 + col[c] * cell + (cell - 2) / 2
+                out = -1 if c < core_start else 1
+                o.append(f'<path d="M {xa} {cy - 4} L {xa} {cy} '
+                         f'L {xa + out * (cell + 3)} {cy}" fill="none" '
+                         f'stroke="{ORPH}" stroke-width="1.3" '
+                         f'stroke-dasharray="3 2.4"/>')
             if orph:
                 note = ("cysteine cut from C" + ", C".join(str(v) for v in partners.values())
                         if len(orph) == 1 else
@@ -1880,18 +1907,25 @@ def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
                 note = f"C{core_start}\u2013C{core_end} disulphide kept"
             else:
                 note = MASK_NOTES.get(name, "")
-            label(x0 + ncol * cell + 14, y + 15, note, "m-n", INK3)
-            y += 30
+            label(x0 + ncol * cell + 14, y + 20, note, "m-n", INK3)
+            y += 38
 
+    y += 14
+    o.append(f'<path d="M 2 {y - 9} L 2 {y - 4} L 16 {y - 4} L 16 {y - 9}" '
+             f'fill="none" stroke="{KEPT}" stroke-width="1.3"/>')
+    label(24, y, "cysteines bonded to each other inside the mask", "m-b", INK3)
     y += 20
-    for col_, text in ((KEPT, "cysteine, partner inside the mask"),
-                       (ORPH, "cysteine, partner left behind in the antigen"),
-                       (SUBST, "differs from the main loop"),
-                       (CHROME, "buries the most surface")):
-        o.append(f'<rect x="{0 if col_ == KEPT else 0}" y="{y - 9}" width="11" '
-                 f'height="11" rx="2" fill="{col_}"/>')
-        label(17, y, text, "m-b", INK3)
-        y += 19
+    o.append(f'<path d="M 2 {y - 9} L 2 {y - 4} L 16 {y - 4}" fill="none" '
+             f'stroke="{ORPH}" stroke-width="1.3" stroke-dasharray="3 2.4"/>')
+    label(24, y, "cysteine whose partner stays behind in the antigen", "m-b", INK3)
+    y += 20
+    o.append(f'<rect x="2" y="{y - 10}" width="12" height="12" rx="2" '
+             f'fill="{SUBST}" fill-opacity="0.9"/>')
+    label(24, y, "residue differing from the main contact loop", "m-b", INK3)
+    y += 20
+    o.append(f'<rect x="2" y="{y - 6}" width="12" height="2.5" rx="1" fill="{HOT}"/>')
+    label(24, y, "one of the residues burying the most surface", "m-b", INK3)
+    y += 6
     H = int(y - 2)
     o[0] = (f'<svg viewBox="0 0 {int(W)} {H}" width="100%" '
             'xmlns="http://www.w3.org/2000/svg" role="img" '
@@ -1994,9 +2028,9 @@ def linker_schematic(gen, lengths, substrate_len, reference) -> str:
     label(452, ey + 42,
           f"and add {gen['n_controls']} controls", "l-b", INK2)
 
-    # --- 4 · assembly, and what the flanks are for ------------------------
-    y = head(4, "Assemble linkers", ey + ehh + 26)
-    unit, by, bh = 16.0, y + 20, 42
+    # --- 4 · assembly, and the length series cut from it -----------------
+    y = head(4, "Assemble linkers, and vary their length", ey + ehh + 26)
+    unit, by, bh = 16.0, y + 18, 38
     fl = (reference - substrate_len) // 2
     segs = [("Gly/Ser flank", FLANKC, fl * unit, 0.34),
             ("cleavage sequence", CUT, substrate_len * unit, 0.85),
@@ -2005,19 +2039,34 @@ def linker_schematic(gen, lengths, substrate_len, reference) -> str:
     for name, col, w, op in segs:
         o.append(f'<rect x="{x}" y="{by}" width="{w}" height="{bh}" rx="3" '
                  f'fill="{col}" fill-opacity="{op}"/>')
-        label(x + w / 2, by + 26, name, "l-m",
+        label(x + w / 2, by + 24, name, "l-m",
               "#FFFFFF" if col == CUT else INK2, "middle")
         x += w
+    label(x + 18, by + 24, f"{reference} residues", "l-m", INK3)
+
+    # the series itself: only the flanks change, so the substrate column is
+    # the same width in every row and the comparison is reach, not sequence
     lo, hi = min(lengths), max(lengths)
-    for sx, sw in ((0, fl * unit), (x - fl * unit, fl * unit)):
-        o.append(f'<line x1="{sx + 4}" y1="{by + bh + 11}" x2="{sx + sw - 4}" '
-                 f'y2="{by + bh + 11}" stroke="{INK3}" stroke-width="1.1" '
-                 f'marker-start="url(#lk2)" marker-end="url(#lk)"/>')
-    label(x + 18, by + 26, f"{reference} residues, shown", "l-m", INK3)
-    label(x / 2, by + bh + 30,
-          f"{(lo - substrate_len) // 2} to {(hi - substrate_len) // 2} residues a side",
-          "l-m", INK3, "middle")
-    ly = by + bh + 56
+    runit, rx0, ry = 9.4, 92.0, by + bh + 26
+    longest = max(lengths)
+    for i, n in enumerate(sorted(lengths)):
+        flank = (n - substrate_len) // 2
+        ry_i = ry + i * 30
+        label(0, ry_i + 16, f"n = {n}", "l-n", INK if n != reference else CUT)
+        fw, cw = flank * runit, substrate_len * runit
+        o.append(f'<rect x="{rx0}" y="{ry_i}" width="{fw}" height="20" rx="2" '
+                 f'fill="{FLANKC}" fill-opacity="0.30"/>')
+        o.append(f'<rect x="{rx0 + fw}" y="{ry_i}" width="{cw}" height="20" rx="2" '
+                 f'fill="{CUT}" fill-opacity="0.85"/>')
+        o.append(f'<rect x="{rx0 + fw + cw}" y="{ry_i}" width="{fw}" height="20" '
+                 f'rx="2" fill="{FLANKC}" fill-opacity="0.30"/>')
+        label(rx0 + longest * runit + 18, ry_i + 15,
+              f"{flank} Gly/Ser each side", "l-m", INK3)
+    o.append(f'<line x1="{rx0}" y1="{ry - 4}" x2="{rx0}" '
+             f'y2="{ry + (len(lengths) - 1) * 30 + 24}" stroke="{RULE}" '
+             f'stroke-width="1"/>')
+
+    ly = ry + (len(lengths) - 1) * 30 + 48
     for line in _wrap(
             f"Varying the flanks alone gives linkers of {lo} to {hi} residues. "
             f"The {substrate_len}-residue substrate is identical in every one, so a "
