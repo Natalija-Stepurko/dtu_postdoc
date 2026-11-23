@@ -920,16 +920,6 @@ VERIFY_ROWS = "".join(
 from nbswitch.cleavage_context import (CATALYTIC_DOMAIN_RADIUS_A as PROBE_R,
                                        N_PROBE_DIRECTIONS as PROBE_N,
                                        PROBE_OFFSET_A as PROBE_OFF)
-_by_lid = {l["id"]: l for l in _LK["linkers"]}
-N["cn01_sel"] = _by_lid["cn01"]["selectivity"]
-N["cn01_target"] = _by_lid["cn01"]["target_z"]
-N["cn01_off"] = _by_lid["cn01"]["off_target_z"]
-N["ctrl_target"] = _by_lid["ctrl_gs"]["target_z"]
-# the number of columns on the cleavability panel. It is not the number of
-# motifs: two of the generated motifs score the same selectivity, so six
-# motifs put the constructs in five vertical groups, not six
-N["n_sel_values"] = len({l["selectivity"] for l in _LK["linkers"]
-                         if l.get("selectivity") is not None})
 N["len_lo"] = min(len(l["sequence"]) for l in _LK["linkers"])
 N["len_hi"] = max(len(l["sequence"]) for l in _LK["linkers"])
 
@@ -1446,24 +1436,21 @@ folded construct.</b></p></div>
    "separately in each predicted fusion structure. A linker with favourable sequence "
    "selectivity may still be poorly accessible. One point per construct, coloured by mask "
    "family.")}
+<div class="two">
 <div class="stack">
-<p><b>Why the points form vertical groups.</b> Every construct sharing a cleavage motif shares
-its CleaveNet score, so selectivity takes one of {R.word(N['n_sel_values'])} values: the
-{R.word(LINKER_GEN['n_kept'])} designed motifs and the {R.word(LINKER_GEN['n_controls'])}
-controls, with two of the designed motifs scoring the same. What spreads a group vertically is
-the mask it carries, the length of its flanks and the fold that results. Points are spread
-sideways by a small random offset so that the colours can be told apart; the group each belongs
-to is its position on the axis, not the offset.</p>
-<p><b>Selectivity is a contrast, not a probability.</b> For
-<span class="mono">cn01</span> it is {N['cn01_target']:.2f} − ({N['cn01_off']:.2f}) =
-{N['cn01_sel']:.2f}: the gap between two standardised scores, not a rate or a likelihood of
-being cut. The Gly/Ser control's {N['sel_ctrl']:.2f} is positive without being cleavable &mdash;
-its target score is {N['ctrl_target']:.2f}, so it is predicted to resist both groups about
-equally.</p>
-<div class="note"><b>The CleaveNet score is used twice.</b> It selected the linker sequences in
-Module 02 and it is a term in the cleavability score here. It is therefore not an independent
-validation of cleavage specificity.</div></div>
-<h5 class="subh2">Can a protease reach the site?</h5>
+<h4 class="subh">Horizontal: sequence recognition</h4>
+<p>One number per cleavage motif, carried over from linker design.</p>
+<div class="eq">selectivity = mean target score &minus; mean off-target score</div>
+<p>Higher is a stronger predicted preference for {CLEAVE_TARGETS} over the
+{R.word(LINKER_GEN['n_off'])} off-target MMPs.</p></div>
+<div class="stack">
+<h4 class="subh">Vertical: structural accessibility</h4>
+<p>One number per construct, measured on its own ESMFold model.</p>
+<p>It asks whether the cleavage site has enough backbone extension to lie in a protease groove,
+sits in solvent rather than packed against the mask or the nanobody, and has room beside it for
+a catalytic domain to approach. Higher is more accessible. The three are drawn below, with what
+each one measures.</p></div>
+</div>
 <figure class="fig wide"><div class="figbody">{R.accessibility_checks(PROBE_R, PROBE_N, PROBE_OFF)}</div></figure>
 {chart_wide("cleavability_components", "The three accessibility requirements and the product "
    f"they make, for all {N['rank_total']} constructs. Each runs from 0 to 1, and because they "

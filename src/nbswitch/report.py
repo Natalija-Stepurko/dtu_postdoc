@@ -588,7 +588,7 @@ def write_reference_pdb(chains=None):
 
 
 # ---------------------------------------------------------------- schematic
-SEQ, STR, CHROME, NULL = "#2D5BD1", "#C06014", "#0E7C7B", "#6E7880"
+SEQ, STR, CHROME, NULL = "#2D5BD1", "#C06014", "#0B9488", "#6E7880"
 INK, INK2, INK3, RULE = "#12191F", "#3A464F", "#6E7880", "#DDE4E7"
 SEQ_WASH, STR_WASH = "#EAEFFB", "#FAEEE5"
 
@@ -1238,7 +1238,7 @@ def validation_matrix() -> str:
 #: Every claim on the page is one of these. The tag is shown beside the heading
 #: so the reader never has to infer whether something was done or proposed.
 STATUS = {
-    "run": ("I ran this", "#0E7C7B"),
+    "run": ("I ran this", "#0B9488"),
     "failed": ("I ran this and it did not work", "#C06014"),
     "partial": ("I ran this, within a stated limit", "#8A6A1F"),
     "proposed": ("Proposed, not done", "#6E7880"),
@@ -1788,7 +1788,7 @@ def accessibility_checks(probe_radius, n_directions, offset) -> str:
     with three questions carry it faster.
     """
     W, H = 980, 158
-    CUT, CHAIN, PROBE = "#2D5BD1", "#9AA6AE", "#0E7C7B"
+    CUT, CHAIN, PROBE = "#2D5BD1", "#9AA6AE", "#0B9488"
     o = [f'<svg viewBox="0 0 {W} {H}" width="100%" '
          'xmlns="http://www.w3.org/2000/svg" role="img" '
          'aria-label="The three structural checks on a cleavage site">',

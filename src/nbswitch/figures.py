@@ -769,8 +769,8 @@ def cleavability_panel(trigger, lib=None, fold=None, redesign_fold=None):
                    linewidth=.6, alpha=.85, zorder=3)
 
     ax.axvline(0, color=RULE, lw=1, zorder=1)
-    ax.set_xlabel("sequence recognition  (selectivity, target − off-target)")
-    ax.set_ylabel("reach in the construct")
+    ax.set_xlabel("sequence recognition  (CleaveNet selectivity)")
+    ax.set_ylabel("structural accessibility")
 
     from matplotlib.lines import Line2D
     present = [f for f, _ in MASK_FAMILIES
