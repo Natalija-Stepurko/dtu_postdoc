@@ -999,12 +999,6 @@ N["rmsd_mean"] = _np.mean([r["vhh_core_rmsd_A"] for r in _feas.values()
                            if r.get("vhh_core_rmsd_A")]) if _feas else 0
 
 
-masks_rows_full = "".join(
-    f"<tr><td class='mono'>{k}</td><td class='mono'>{m['seq']}</td>"
-    f"<td>{len(m['seq'])}</td><td>{m.get('method', 'graft')}</td>"
-    f"<td>{m['kind']}</td><td class='dim'>{m['note']}</td></tr>"
-    for k, m in lib["masks"].items())
-
 masks_rows_compact = "".join(
     f"<tr><td>{k}</td><td class='mono'>{m['seq']}</td><td>{m['kind']}</td></tr>"
     for k, m in lib["masks"].items())
@@ -1265,7 +1259,17 @@ to describe what a disordered linker buys follows
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
 
-<h4 class="subh"><span>Step 1</span>Identify the antigen residues contacting the nanobody</h4>
+<h4 class="subh"><span>Step 1</span>Design the protease-cleavable linkers</h4>
+<figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
+</figure>
+<div class="stack">
+<p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage
+motif and a scrambled version of the highest-scoring sequence.</p>
+<p><b>What this does not show.</b> CleaveNet was trained on human MMPs, not on snake
+venom metalloproteinases. These results demonstrate how to design a desired human-MMP cleavage
+profile; they do not establish selectivity at a viper bite site.</p></div>
+
+<h4 class="subh"><span>Step 2</span>Identify the interface and design the masks</h4>
 <div class="two">
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure &middot; {PDB_ID}</span>
@@ -1292,20 +1296,8 @@ to describe what a disordered linker buys follows
 </div>
 <div class="stack">
 <p>The {N['n_epitope_near']} contacting antigen residues are not one continuous peptide.
-{SEG_SPLIT} Both regions are carried into step 2, separately and together, because a mask that
+{SEG_SPLIT} Both regions are carried into the mask design below, separately and together, because a mask that
 reproduces only the larger one may or may not be enough.</p></div>
-
-<h4 class="subh"><span>Step 2</span>Generate candidate masks and linkers</h4>
-
-<h5 class="subh2">Designing the protease-cleavable linkers</h5>
-<figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
-</figure>
-<div class="stack">
-<p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage
-motif and a scrambled version of the highest-scoring sequence.</p>
-<p><b>What this does not show.</b> CleaveNet was trained on human MMPs, not on snake
-venom metalloproteinases. These results demonstrate how to design a desired human-MMP cleavage
-profile; they do not establish selectivity at a viper bite site.</p></div>
 
 <h5 class="subh2">Designing the masks</h5>
 <div class="refmask">
@@ -1333,10 +1325,7 @@ giving <b>{N['n_constructs']} constructs</b> to fold.</p>
 antigen-derived mask joined to CleaveNet linker 01, and
 <span class="mono">mpnn00_{CORE_ID}_cn01</span> is a ProteinMPNN redesign of that construct. The
 ids stay as the files are named; the figure above gives each mask a readable label.</p></div>
-<details class="tech"><summary>Mask sequences and design rationale</summary><div class="techbody">
-<div class="scroll"><table class="wrap"><thead><tr><th>mask</th><th>sequence</th><th>length</th>
-<th>method</th><th>kind</th><th>note</th>
-</tr></thead><tbody>{masks_rows_full}</tbody></table></div></div></details>
+
 
 <h4 class="subh"><span>Step 3</span>Redesign the mask sequences</h4>
 <div class="stack">
