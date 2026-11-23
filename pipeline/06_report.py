@@ -1264,23 +1264,6 @@ to describe what a disordered linker buys follows
 
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
-<div class="stack">
-<p>One question runs through this module: <b>how can a known nanobody&ndash;antigen interface be
-used to generate sequences that might mask it?</b> It is taken in three steps &mdash; identify the
-interacting surface, generate mask variants from it, then redesign their sequences.</p></div>
-{mri("I used the experimental V<sub>H</sub>H&ndash;antigen structure to identify the antigen "
-     f"residues within {N['mask_cutoff']:g} Å of the nanobody, which are the starting point for "
-     "mask design. The main contact region carries a disulphide that holds its conformation, so "
-     "variants were generated across length, contact residues and that disulphide, together with "
-     "truncated, scrambled and poly-glycine controls. The masks were then combined with "
-     "protease-cleavable linkers designed with CleaveNet, and after structure prediction "
-     "ProteinMPNN redesigned the mask sequences with the nanobody and linker held fixed.",
-     f"The initial library contained <b>{N['n_constructs']} constructs</b>, the free nanobody "
-     f"included. ProteinMPNN then produced <b>{N['n_redesign']} distinct redesigned masks</b>. "
-     "Every retained redesign scored better than its parent by ProteinMPNN's own measure, but "
-     f"that score barely tracked predicted paratope occlusion, r = {N['mpnn_corr']:+.2f}.",
-     "ProteinMPNN added sequence diversity, but its design score does not predict masking, so "
-     "the redesigned constructs need their interaction with the nanobody assessed separately.")}
 
 <h4 class="subh"><span>Step 1</span>Identify the antigen residues contacting the nanobody</h4>
 <div class="two">
