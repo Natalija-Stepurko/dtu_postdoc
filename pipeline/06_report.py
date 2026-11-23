@@ -1420,9 +1420,7 @@ the predicted percentage of paratope occlusion.</p>
 <p>This measures surface coverage in a single predicted structure, not mask affinity or
 functional inhibition.</p></div>
 <figure class="fig wide"><div class="figbody">{R.construct_schematic(REF_CONSTRUCT)}</div>
-<figcaption>One construct, drawn to scale. The mask and the cleavable linker are a short
-N-terminal addition to a nanobody that is most of the molecule, and the ten residues the
-protease has to find sit inside the linker, between inert Gly/Ser flanks.</figcaption></figure>
+</figure>
 <div class="stack">
 <p><b>Reading a construct name.</b> <span class="mono">{CORE_ID}_cn01</span> is the main
 antigen-derived mask joined to CleaveNet linker 01, and
