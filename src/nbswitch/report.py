@@ -394,7 +394,11 @@ def _card(value, label, sub="", highlight=False):
 
 
 def _chart(name, caption):
-    return (f'<figure class="chart"><img src="figures/{name}.svg" alt="{caption}">'
+    # alt is empty on purpose. The caption sits next to the image and describes
+    # it, so repeating it in alt made a screen reader read every caption twice
+    # and put the same sentence twice into any copied selection. It also meant
+    # a caption carrying markup or a quote leaked into the attribute.
+    return (f'<figure class="chart"><img src="figures/{name}.svg" alt="">'
             f'<figcaption>{caption}</figcaption></figure>')
 
 
@@ -402,8 +406,18 @@ def copy_assets(library):
     """Copy figures and the structures the viewers need into docs/."""
     (DOCS / "figures").mkdir(exist_ok=True)
     (DOCS / "structures").mkdir(exist_ok=True)
+    # docs/figures mirrors the results directory for the same reason docs/
+    # structures mirrors the library: copying without pruning left five figures
+    # published after the page stopped linking to them. Skip the prune if the
+    # figure stage has not run in this checkout, so a page build cannot wipe
+    # figures it did not generate.
+    current = {svg.name for svg in FIGURES.glob("*.svg")}
     for svg in FIGURES.glob("*.svg"):
         shutil.copy(svg, DOCS / "figures" / svg.name)
+    if current:
+        for old in (DOCS / "figures").glob("*.svg"):
+            if old.name not in current:
+                old.unlink()
     wanted = set()
     for item in library:
         src = STRUCTURES / f"{item['id']}.pdb"
@@ -738,7 +752,7 @@ def states_schematic() -> str:
          "The antigen engages the same surface, as in the deposited complex."),
     ]
     cells = "".join(
-        f'<figure class="stfig"><img src="states/{img}" alt="{title}">'
+        f'<figure class="stfig"><img src="states/{img}" alt="">'
         f'<figcaption><b>{tag} · {title}</b><span>{text}</span></figcaption></figure>'
         for tag, img, title, text in panels)
     return (f'<div class="states">{cells}</div>'
@@ -947,7 +961,7 @@ def background_section() -> str:
     designs on purpose - so the link is architectural rather than decorative.
     """
     def f(name, cap, cls=""):
-        return (f'<figure class="tfig {cls}"><img src="thesis/{name}.png" alt="{cap}">'
+        return (f'<figure class="tfig {cls}"><img src="thesis/{name}.png" alt="">'
                 f'<figcaption>{cap}</figcaption></figure>')
 
     def step(n, title):

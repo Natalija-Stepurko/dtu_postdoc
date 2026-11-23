@@ -265,13 +265,13 @@ def occlusion_vs_confidence(folding):
 def build_all():
     ref = load_json("01_reference.json")
     tether = load_json("02_tether.json")
+    # only what the page shows. effective_concentration, design_window,
+    # tradeoff, release_sensitivity and affinity_window all draw the same
+    # constraint that affinity_by_length and usable_affinity now carry, so
+    # building them left five figures published that nothing linked to. The
+    # functions stay; re-add a call here if a page needs one again.
     made = [affinity_by_length(tether), usable_affinity(tether),
-            paratope_footprint(ref, ref["cdrs"]),
-            effective_concentration(tether), design_window(tether),
-            tradeoff(tether), release_sensitivity(tether)]
-    window = affinity_window(tether)
-    if window is not None:
-        made.append(window)
+            paratope_footprint(ref, ref["cdrs"])]
     fold = None
     try:
         fold = load_json("04_folding.json")

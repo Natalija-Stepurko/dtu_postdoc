@@ -81,6 +81,16 @@ model = tether["model"]
 region_summary = ", ".join(
     f"{v['n']} in {k}" for k, v in ref["paratope_by_region"].items() if v["n"])
 _n_in_paratope = geom["n_term_residue"] in set(iface["paratope_labels"])
+_c_in_paratope = geom["c_term_residue"] in set(iface["paratope_labels"])
+#: whether a mask could be hung off either end. 9GCN fails this, which is why
+#: it is a set-aside case, so the claim is derived rather than asserted.
+termini_free = (
+    "neither terminus is part of it, so either could in principle carry a mask. Which one does "
+    "is decided by the distances below"
+    if not (_n_in_paratope or _c_in_paratope) else
+    ("the N-terminal residue is itself part of it, which is why this complex is a set-aside case"
+     if _n_in_paratope else
+     "the C-terminal residue is itself part of it, so only the N-terminus can carry a mask"))
 n_term_verdict = (
     "The N-terminal residue is itself part of the paratope, which makes masking easy and "
     "measuring it impossible — see the set-aside case above."
@@ -503,6 +513,14 @@ N["linker_best"] = bN["linker_residues"]
 N["km_lo"] = bN["km_min_for_release_M"] * 1e9
 N["km_hi"] = bN["km_max_for_masking_M"] * 1e6
 N["ceff"] = bN["c_eff_M"] * 1e3
+#: the tether model spans the paratope centroid, not the nearest paratope atom,
+#: so both distances are reported: the nearest-atom pair says which terminus is
+#: closer, the centroid pair is what C_eff is actually evaluated at.
+N["span_n"] = geom["n_term_to_paratope_centroid_A"]
+N["span_c"] = geom["c_term_to_paratope_centroid_A"]
+N["ree_best"] = bN["mean_end_to_end_A"]
+N["linker_best_c"] = bC["linker_residues"]
+N["window_c"] = bC["window_decades"]
 N["n_constructs"] = lib["n_constructs"]
 N["n_folded"] = fold["n_folded"] if fold else 0
 
@@ -611,41 +629,6 @@ from nbswitch import triggers as _trig
 PH = _trig.switch_window()
 PH_SCAN = _trig.sensitivity()
 
-# every quantity the design window depends on, and whether it was measured or
-# chosen. Values are read from the stage output so the table cannot drift.
-AFF = tether["affinity"]
-_m = tether["model"]
-ASSUMPTIONS = [
-    {"what": "distance, N-terminus to paratope centroid", "kind": "measured",
-     "value": f"{tether['spans_A']['N']:.1f} Å",
-     "source": f"the deposited structure, {PDB_ID}",
-     "effect": "sets where the effective concentration peaks, so it sets the linker length"},
-    {"what": "paratope", "kind": "measured",
-     "value": f"{N['paratope']} residues",
-     "source": "surface lost on binding in the deposited complex",
-     "effect": "defines the surface a mask has to cover"},
-    {"what": "V<sub>H</sub>H–antigen K<sub>D</sub>", "kind": "chosen",
-     "value": f"{AFF['used_M'] * 1e9:.0f} nM",
-     "source": "reported low nanomolar for this nanobody, not measured for this pair",
-     "effect": "sets the release floor; the window closes above "
-               f"{AFF['window_closes_above_M'] * 1e9:.0f} nM"},
-    {"what": "systemic leak allowed", "kind": "chosen",
-     "value": f"{_m['leak_max'] * 100:.0f}%",
-     "source": "a design budget, not a measurement",
-     "effect": "sets the masking ceiling; five times looser buys about 0.7 decades"},
-    {"what": "antigen recovery required", "kind": "chosen",
-     "value": f"{_m['recovery_min'] * 100:.0f}%",
-     "source": "a design budget, not a measurement",
-     "effect": "sets the release floor; demanding 99% closes the window almost entirely"},
-    {"what": "construct and antigen concentrations", "kind": "chosen",
-     "value": f"{_m['mask_conc_M'] * 1e6:.0f} µM / {_m['toxin_conc_M'] * 1e9:.0f} nM",
-     "source": "plausible dosing and bite-site values, not measured here",
-     "effect": "the released mask competes at its own concentration, so both move the floor"},
-    {"what": "persistence length, rise per residue", "kind": "chosen",
-     "value": f"{_m['persistence_length_A']:.1f} Å, {_m['rise_per_residue_A']:.1f} Å",
-     "source": "generic flexible-chain values, not fitted to this linker",
-     "effect": "shifts the peak; the shape of the curve is robust to them"},
-]
 _ref_feas = next((r for r in (feas_data["results"] if feas_data else [])
                   if r["mask"] is None), None)
 N["ref_surface"] = _ref_feas["f_surface"] if _ref_feas else float("nan")
@@ -1138,9 +1121,7 @@ out</summary><div class="techbody">
 <div class="stack">
 <p><b>Reference structure.</b> I used the experimental VHH–toxin complex (PDB {PDB_ID}) to
 identify the antigen-binding residues and the possible linker attachment sites. The paratope
-contains {N['n_paratope']} residues. The N-terminus is {N['n_term']:.1f} Å from the nearest
-paratope residue, against {N['c_term']:.1f} Å for the C-terminus, so the N-terminus is the
-attachment point used for mask design.</p></div>
+contains {N['n_paratope']} residues, and {termini_free}.</p></div>
 
 <div class="two">
 <div class="viewer">
@@ -1156,30 +1137,79 @@ attachment point used for mask design.</p></div>
 </div>
 <div class="stackfig">
 {chart("affinity_by_length",
-   "Predicted mask-affinity range against linker length. The release floor is set by "
-   "competition with the antigen and does not move with the tether; the masking ceiling "
-   "is what the tether buys. Triangles mark the lengths built and folded.")}
+   "<b>Predicted mask-affinity range for different linker lengths.</b> The green region shows "
+   "combinations of linker length and mask affinity that allow at least "
+   f"{100 - model['leak_max'] * 100:.0f}% masking before cleavage and "
+   f"{model['recovery_min'] * 100:.0f}% antigen binding afterwards. The upper curve represents "
+   "the weakest mask affinity that still provides sufficient masking while tethered; the lower "
+   "line represents the strongest affinity that permits antigen binding after cleavage. The "
+   f"widest range occurs at {N['linker_best']} residues. Triangles indicate linker lengths used "
+   "in the computational designs.")}
 {chart("usable_affinity",
    "The same constraint at the widest point, " + str(N["linker_best"]) + " residues.")}
 </div>
 </div>
 
 <div class="stack">
-<p><b>Mask affinity and linker length.</b> The mask must block the paratope while tethered but
-dissociate following cleavage. I used a worm-like-chain model to estimate the effective
-concentration of the tethered mask, and a binding competition model to identify the affinities
-that satisfy both requirements.</p>
-<p>For a {N['linker_best']}-residue N-terminal linker the model predicts a usable mask
-K<sub>D</sub> range of <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b> under the assumed
-conditions. A relatively weak mask could therefore be sufficient, provided the linker holds it
-close to the paratope.</p>
-<p><b>Length is not chosen by this calculation.</b> The window opens at about three residues and
-is almost flat from twelve onwards: {N['linker_best']} residues is the widest point, but the
-range at 32 residues is within a factor of two of it. What the affinity model says is that a
-micromolar mask works at any of these lengths. Which length to build is settled by whether the
-mask can physically reach the paratope, which is measured on the folded constructs in Module 04,
-and there the answer is different.</p>
-<p><b>Which antigen affinity this rests on.</b> The release floor is set by how tightly the
+<p><b>Estimating linker length and mask affinity.</b> I used established models from polymer
+physics and binding equilibrium to estimate which linker lengths and mask affinities could allow
+both masking and release.</p>
+
+<p><b>1 &middot; Effective concentration of the tethered mask.</b> The flexible Gly/Ser linker was
+approximated as a <i>worm-like chain</i>, the model commonly used to describe disordered protein
+linkers. Which terminus carries it is set by the structure. The N-terminus sits
+{N['n_term']:.1f} Å from the nearest paratope residue and {N['span_n']:.1f} Å from the paratope
+centroid, against {N['c_term']:.1f} Å and {N['span_c']:.1f} Å for the C-terminus, so the
+N-terminus is closer on both measures and is the attachment point used here. The C-terminus is not
+excluded by the model, only penalised by it: from there the widest window is
+{N['window_c']:.1f} decades at {N['linker_best_c']} residues, against {N['window']:.1f} decades at
+{N['linker_best']} from the N-terminus, and it needs a linker two and a half times as long.
+From the centroid distance of {N['span_n']:.1f} Å I estimated the effective local concentration of
+the mask, C<sub>eff</sub>, at every linker length, taking a contour length of
+{model['rise_per_residue_A']:.1f} Å per residue and a persistence length of
+{model['persistence_length_A']:.1f} Å.</p>
+<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
+<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
+
+<p><b>2 &middot; Masking before cleavage, the upper curve.</b> The fraction of construct whose
+paratope is occupied by its own tethered mask is</p>
+<div class="eq">P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,mask</sub>)
+<br><br>P<sub>masked</sub> ≥ {100 - model['leak_max'] * 100:.0f}%   requires   K<sub>D,mask</sub> ≤ C<sub>eff</sub> / {(1 - model['leak_max']) / model['leak_max']:.0f}</div>
+<p>Requiring at least {100 - model['leak_max'] * 100:.0f}% masking therefore caps the mask
+K<sub>D</sub> at a nineteenth of C<sub>eff</sub>, which is the upper curved boundary in the figure.
+A short linker cannot reach the paratope, and a long one spreads the mask through a larger volume,
+so C<sub>eff</sub> — and with it the loosest mask that still works — rises to a maximum and falls
+again.</p>
+
+<p><b>3 &middot; Antigen binding after cleavage, the lower line.</b> Once the linker is cut, the
+released mask and the antigen compete for the same site:</p>
+<div class="eq">P<sub>antigen</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,mask</sub>)</div>
+<p>Requiring at least {model['recovery_min'] * 100:.0f}% antigen occupancy sets a minimum
+acceptable mask K<sub>D</sub>. That competition no longer involves the linker that used to hold the
+mask, so the bound is the same at every length: it is the horizontal lower boundary.</p>
+
+<p><b>Result.</b> The green region between the two boundaries is the set of linker lengths and mask
+affinities predicted to satisfy both requirements. A {N['linker_best']}-residue N-terminal linker
+gives the widest range, <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b>. At that length the
+chain's mean end-to-end distance of {N['ree_best']:.1f} Å almost matches the {N['span_n']:.1f} Å it
+has to span, and C<sub>eff</sub> peaks at {N['ceff']:.1f} mM. A relatively weak mask could
+therefore be sufficient, provided the linker holds it close to the paratope.</p>
+<p>These estimates use a V<sub>H</sub>H–antigen K<sub>D</sub> of {N['vhh_toxin_kd_nM']:.1f} nM,
+{model['toxin_conc_M'] * 1e9:.0f} nM antigen and {model['mask_conc_M'] * 1e6:.0f} µM released mask.
+They are initial design constraints, not predictions of binding kinetics or of experimental
+switching behaviour. The worm-like-chain treatment of a flexible linker follows
+<a href="https://doi.org/10.1021/jp011355n">Zhou (2001)</a>; the use of an effective concentration
+to describe what a disordered linker buys follows
+<a href="https://doi.org/10.1073/pnas.1904813116">Sørensen and Kjaergaard (2019)</a> and
+<a href="https://doi.org/10.1016/bs.mie.2020.09.012">Kjaergaard and colleagues (2021)</a>.</p>
+
+<p><b>The window is wide but flat, so it does not pick a length.</b> It opens at about three
+residues and changes little from twelve onwards: the range at 32 residues is within a factor of two
+of the range at {N['linker_best']}. What the affinity model says is that a micromolar mask works at
+any of these lengths. Which length to build is settled by whether the mask can physically reach the
+paratope, which is measured on the folded constructs in Module 04, and there the answer is
+different.</p>
+<p><b>Which antigen affinity the floor rests on.</b> The release floor is set by how tightly the
 nanobody holds its own antigen, so the measured value matters. The paper reports a biolayer
 interferometry K<sub>D</sub> of <b>1.90 nM</b> for V<sub>H</sub>H5 a-sNTx against sNTx-1, and that
 is the value used here. It does not state which of its numbered short-neurotoxin targets sNTx-1
@@ -1188,16 +1218,31 @@ is not confirmed. On the earlier assumed 1 nM the floor would be 99 nM instead o
 {N['km_lo']:.0f} nM; the ceiling is unaffected. The distinction is kept explicit until the
 correspondence is established.</p></div>
 
-<details class="tech"><summary>Structural analysis and model assumptions</summary>
-<div class="techbody">
 
+<h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
+<figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
+<figcaption>How a linker is designed and how its length is varied. The sequence the
+protease has to recognise and the distance the mask has to travel are set independently,
+so either can be changed without confounding the other.</figcaption></figure>
+{mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
+     "poly-glycine controls. Linkers were not fixed sequences but generated: CleaveNet was "
+     "conditioned on a profile that asks for substrates the bite-site proteases cut and the "
+     "circulating ones do not, so cleavability constrains generation rather than filtering it "
+     "afterwards. ProteinMPNN then redesigned the mask positions on each folded construct with "
+     "the nanobody and linker held fixed.",
+     f"{N['n_constructs']} constructs in the initial library and {N['n_redesign']} distinct "
+     f"redesigned masks. Every redesign scored better than its parent graft by ProteinMPNN's own "
+     f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
+     "ProteinMPNN generated sequence diversity, but sequence compatibility with a backbone is not "
+     "a substitute for functional scoring and should not be used as one.")}
 
 {chart_wide("paratope_footprint",
   f"Surface buried per nanobody residue on complex formation. Markers show the {N['n_near']} "
   f"residues with a heavy atom within {N['mask_cutoff']:g} Å of the antigen, which is the "
   f"set the mask is designed from.")}
+<div class="stack">
 <p><b>Three cutoffs, and each one is used for something different.</b> They are not alternative
-answers to one question, so it matters which is which.</p>
+answers to one question, so it matters which is which.</p></div>
 <table class="tbl cuts">
 <colgroup><col style="width:17%"><col style="width:22%"><col style="width:15%"><col style="width:46%"></colgroup>
 <thead><tr><th>criterion</th><th>on the nanobody</th><th>on the antigen</th><th>what it is used for</th></tr></thead><tbody>
@@ -1218,46 +1263,6 @@ against in Modules 03 and 04. Van der Waals packing reaches further than a hydro
 the largest of the three.</td></tr>
 </tbody></table>
 
-
-
-
-
-<div class="two">
-{chart("design_window", "Usable mask affinity against linker length.")}
-{chart("tradeoff", "Masking and antigen recovery against mask affinity, which set the two bounds.")}
-</div>
-{chart_wide("affinity_window", "Usable mask affinity against the nanobody&rsquo;s own antigen "
-   "affinity. Both bounds are mask dissociation constants, so they share one axis and the range "
-   "is the height of the band.")}
-{R.assumptions_table(ASSUMPTIONS)}
-{R.affinity_scan_table(AFF["scan"], AFF["used_M"], AFF["window_closes_above_M"])}
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
-<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup>
-<br><br>P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,M</sub>)
-<br>P<sub>bound</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,M</sub>)</div>
-<p>The bounds correspond to at most {model['leak_max']*100:.0f}% of the construct unmasked before
-cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.</p>
-{chart("release_sensitivity", "Dependence of the lower bound on antigen affinity and concentration.")}
-
-</div></details>
-
-
-<h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
-<figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
-<figcaption>How a linker is designed and how its length is varied. The sequence the
-protease has to recognise and the distance the mask has to travel are set independently,
-so either can be changed without confounding the other.</figcaption></figure>
-{mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
-     "poly-glycine controls. Linkers were not fixed sequences but generated: CleaveNet was "
-     "conditioned on a profile that asks for substrates the bite-site proteases cut and the "
-     "circulating ones do not, so cleavability constrains generation rather than filtering it "
-     "afterwards. ProteinMPNN then redesigned the mask positions on each folded construct with "
-     "the nanobody and linker held fixed.",
-     f"{N['n_constructs']} constructs in the initial library and {N['n_redesign']} distinct "
-     f"redesigned masks. Every redesign scored better than its parent graft by ProteinMPNN's own "
-     f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
-     "ProteinMPNN generated sequence diversity, but sequence compatibility with a backbone is not "
-     "a substitute for functional scoring and should not be used as one.")}
 {chart_wide("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion. "
    "A sequence that fits the backbone better does not occlude the paratope more.")}
 <details class="tech"><summary>Every mask in the design space</summary><div class="techbody">
@@ -1480,7 +1485,14 @@ language model. <i>Science</i> 379:1123–1130 (2023).</li>
 <li>Wohlwend J. <i>et al.</i> Boltz-1 and Boltz-2, open biomolecular interaction models.
 <a href="https://github.com/jwohlwend/boltz">github.com/jwohlwend/boltz</a></li>
 <li>Zhou H.-X. Loops in proteins can be modeled as worm-like chains. <i>Journal of Physical
-Chemistry B</i> 105:6763–6766 (2001).</li>
+Chemistry B</i> 105:6763–6766 (2001).
+<a href="https://doi.org/10.1021/jp011355n">10.1021/jp011355n</a></li>
+<li>Sørensen C.S., Kjaergaard M. Effective concentrations enforced by intrinsically disordered
+linkers are governed by polymer physics. <i>PNAS</i> 116:23124–23131 (2019).
+<a href="https://doi.org/10.1073/pnas.1904813116">10.1073/pnas.1904813116</a></li>
+<li>Kjaergaard M., Glavina J., Chemes L.B. Predicting the effect of disordered linkers on effective
+concentrations and avidity. <i>Methods in Enzymology</i> 647:145–171 (2021).
+<a href="https://doi.org/10.1016/bs.mie.2020.09.012">10.1016/bs.mie.2020.09.012</a></li>
 <li>Shrake A., Rupley J.A. Environment and exposure to solvent of protein atoms. <i>Journal of
 Molecular Biology</i> 79:351–371 (1973).</li>
 <li>Stepurko N. Molecular insights into signalling mechanisms within the TGF-β superfamily.
