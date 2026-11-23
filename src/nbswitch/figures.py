@@ -265,7 +265,8 @@ def occlusion_vs_confidence(folding):
 def build_all():
     ref = load_json("01_reference.json")
     tether = load_json("02_tether.json")
-    made = [usable_affinity(tether), paratope_footprint(ref, ref["cdrs"]),
+    made = [affinity_by_length(tether), usable_affinity(tether),
+            paratope_footprint(ref, ref["cdrs"]),
             effective_concentration(tether), design_window(tether),
             tradeoff(tether), release_sensitivity(tether)]
     window = affinity_window(tether)
@@ -565,6 +566,77 @@ def _si_molar(value):
             return (f"{n:.0f} {unit}" if n >= 10 or abs(n - round(n)) < 0.05
                     else f"{n:.1f} {unit}")
     return f"{value:.1e} M"
+
+
+def affinity_by_length(tether, built_lengths=(12, 16, 20, 24, 28, 32)):
+    """The design constraint across every linker length, in three regions.
+
+    The release floor is set by competition with the antigen and does not
+    depend on the tether, so it is one horizontal line. The masking ceiling
+    is the effective concentration the tether produces, which rises as the
+    linker reaches the paratope and falls again as it grows slack. Between
+    them a mask does both jobs; outside them it does neither.
+    """
+    plt = _style()
+    rows = sorted((r for r in tether["scan"] if r["terminus"] == "N"),
+                  key=lambda r: r["linker_residues"])
+    rows = [r for r in rows if r["linker_residues"] <= 48]
+    n = np.array([r["linker_residues"] for r in rows], float)
+    floor = np.array([r["km_min_for_release_M"] for r in rows], float)
+    ceil = np.array([r["km_max_for_masking_M"] for r in rows], float)
+    best = tether["best_per_terminus"]["N"]
+    lo_y, hi_y = 1e-9, 1e-1
+
+    fig, ax = plt.subplots(figsize=(8.6, 4.2))
+    ax.grid(False)
+    ax.set_yscale("log")
+    ax.set_xlim(n.min(), n.max())
+    ax.set_ylim(lo_y, hi_y)
+
+    open_ = ceil > floor
+    ax.fill_between(n, lo_y, floor, color=BAD_WASH, lw=0, zorder=1)
+    ax.fill_between(n, np.maximum(ceil, floor), hi_y, color=BAD_WASH, lw=0, zorder=1)
+    ax.fill_between(n, floor, ceil, where=open_, color=OK_WASH, lw=0, zorder=1,
+                    interpolate=True)
+    ax.plot(n, floor, color=BAD_INK, lw=1.6, zorder=3)
+    ax.plot(n[open_], ceil[open_], color=BAD_INK, lw=1.6, zorder=3)
+
+    ax.text(n.max() - 1.0, np.sqrt(lo_y * floor[0]), "too tight\nmask stays bound",
+            ha="right", va="center", color=BAD_INK, fontsize=8.6, zorder=4)
+    ax.text(n.max() - 1.0, 2.2e-2, "too weak\ndoes not mask", ha="right",
+            va="center", color=BAD_INK, fontsize=8.6, zorder=4)
+    mid = n.searchsorted(26)
+    ax.text(n[mid], np.sqrt(floor[mid] * ceil[mid]), "usable range",
+            ha="center", va="center", color=OK_INK, fontsize=12,
+            fontweight="bold", zorder=4)
+    ax.text(n[mid], np.sqrt(floor[mid] * ceil[mid]) / 7.0,
+            "masks while tethered, releases after cleavage", ha="center",
+            va="center", color=OK_INK, fontsize=7.8, zorder=4)
+
+    b = best["linker_residues"]
+    ax.plot([b, b], [floor[0], best["km_max_for_masking_M"]], color=INK2, lw=1.1,
+            ls=(0, (4, 3)), zorder=5)
+    ax.annotate(f"widest at {b} residues\n{_si_molar(best['km_min_for_release_M'])}"
+                f" to {_si_molar(best['km_max_for_masking_M'])}",
+                xy=(b, best["km_max_for_masking_M"]), xytext=(b + 2.0, 2.4e-3),
+                color=INK, fontsize=8.6, zorder=6,
+                arrowprops=dict(arrowstyle="-", color=INK2, lw=0.9))
+
+    for x in built_lengths:
+        ax.plot([x], [lo_y * 1.45], marker="^", ms=5, color=CHROME,
+                clip_on=False, zorder=6)
+    ax.text(float(np.mean(built_lengths)), lo_y * 2.6,
+            "lengths built and folded", ha="center", va="bottom", color=CHROME,
+            fontsize=7.6, zorder=6)
+
+    ax.set_xlabel("linker length (residues)", color=INK3, fontsize=8.5)
+    ax.set_ylabel("mask dissociation constant K$_D$", color=INK3, fontsize=8.5)
+    ax.set_yticks([1e-9, 1e-7, 1e-5, 1e-3, 1e-1])
+    ax.set_yticklabels([_si_molar(t) for t in (1e-9, 1e-7, 1e-5, 1e-3, 1e-1)])
+    ax.tick_params(labelsize=8, colors=INK3)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    return _save(fig, "affinity_by_length")
 
 
 def usable_affinity(tether):

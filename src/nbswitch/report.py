@@ -1655,3 +1655,100 @@ def alignment_control(without: float, with_msa: float) -> str:
         f'constructs it is not, because the revised setup also splits the fusion '
         f'into separate chains joined by a bond, so the improvement there cannot '
         f'be attributed to the alignment alone.</p>')
+
+
+def linker_schematic(gen, lengths, substrate_len, reference) -> str:
+    """How a linker was designed, and how its length was varied.
+
+    Two things happen to a linker and they are independent: a generator picks
+    the ten residues the protease has to recognise, and the flanks around
+    those residues are grown or trimmed to change how far the mask can reach.
+    Holding one while varying the other is what makes either attributable.
+    """
+    W, H = 980, 560
+    o = [f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
+         f'role="img" aria-label="Linker design and length series">',
+         '<defs><marker id="lk" viewBox="0 0 10 10" refX="9" refY="5" '
+         f'markerWidth="7" markerHeight="7" orient="auto">'
+         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{INK3}"/></marker></defs>',
+         '<style>'
+         '.l-h{font:600 15px Inter,system-ui,sans-serif}'
+         '.l-b{font:13px Inter,system-ui,sans-serif}'
+         '.l-m{font:12.5px ui-monospace,monospace}'
+         '.l-s{font:600 11px ui-monospace,monospace;letter-spacing:.11em}'
+         '.l-n{font:600 12px ui-monospace,monospace}'
+         '</style>']
+    CUT, FLANK, MASK, VHH = "#2D5BD1", "#9AA6AE", "#C06014", "#337D79"
+
+    def label(x, y, text, cls="l-b", fill=INK2, anchor="start"):
+        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+                 f'text-anchor="{anchor}">{text}</text>')
+
+    # --- part one: choosing the ten residues -----------------------------
+    label(0, 18, "A · which ten residues the protease sees", "l-s", INK3)
+    steps = [("target profile", f"MMP-2, -8, -9 up<br>{gen['n_off']} others down"),
+             ("CleaveNet", "conditional<br>generation"),
+             (f"{gen['n_generated']:,} peptides", "ten residues each"),
+             ("selectivity", "mean target z<br>− mean off-target z"),
+             (f"{gen['n_kept']} kept", "+ 2 controls")]
+    bw, gap, y0 = 168, 32, 34
+    for i, (head, sub) in enumerate(steps):
+        x = i * (bw + gap)
+        fill = "#EAEFFB" if i in (1, 4) else "#FFFFFF"
+        o.append(f'<rect x="{x}" y="{y0}" width="{bw}" height="68" rx="4" '
+                 f'fill="{fill}" stroke="{RULE}" stroke-width="1.2"/>')
+        label(x + 14, y0 + 26, head, "l-h", INK)
+        ty = y0 + 46
+        for line in sub.split("<br>"):
+            label(x + 14, ty, line, "l-m", INK3)
+            ty += 15
+        if i < len(steps) - 1:
+            o.append(f'<line x1="{x+bw+5}" y1="{y0+34}" x2="{x+bw+gap-7}" '
+                     f'y2="{y0+34}" stroke="{INK3}" stroke-width="1.2" '
+                     f'marker-end="url(#lk)"/>')
+
+    # --- part two: the construct, and what the flanks do -----------------
+    label(0, 158, "B · where the linker sits in the construct", "l-s", INK3)
+    by, bh = 174, 40
+    parts = [("mask", MASK, 150), ("linker", FLANK, 250), ("nanobody", VHH, 330)]
+    x = 0
+    for name, col, w in parts:
+        o.append(f'<rect x="{x}" y="{by}" width="{w}" height="{bh}" rx="3" '
+                 f'fill="{col}" fill-opacity="0.16" stroke="{col}" '
+                 f'stroke-width="1.4"/>')
+        label(x + w / 2, by + 25, name, "l-h", col, "middle")
+        x += w + 6
+    label(x + 12, by + 25, "N → C", "l-m", INK3)
+    o.append(f'<line x1="156" y1="{by+bh+8}" x2="406" y2="{by+bh+8}" '
+             f'stroke="{INK3}" stroke-width="1"/>')
+    label(281, by + bh + 26,
+          "only this part changes length; the mask and the nanobody do not",
+          "l-m", INK3, "middle")
+
+    # --- part three: the ladder ------------------------------------------
+    label(0, 288, "C · how length was varied", "l-s", INK3)
+    unit, x0, ry = 9.4, 92, 306
+    longest = max(lengths)
+    for i, n in enumerate(sorted(lengths)):
+        flank = (n - substrate_len) // 2
+        y = ry + i * 33
+        label(0, y + 17, f"n = {n}", "l-n", INK if n != reference else CUT)
+        fw, cw = flank * unit, substrate_len * unit
+        o.append(f'<rect x="{x0}" y="{y}" width="{fw}" height="22" rx="2" '
+                 f'fill="{FLANK}" fill-opacity="0.30"/>')
+        o.append(f'<rect x="{x0+fw}" y="{y}" width="{cw}" height="22" rx="2" '
+                 f'fill="{CUT}" fill-opacity="0.85"/>')
+        o.append(f'<rect x="{x0+fw+cw}" y="{y}" width="{fw}" height="22" rx="2" '
+                 f'fill="{FLANK}" fill-opacity="0.30"/>')
+        if i == 0:
+            label(x0 + fw + cw / 2, y - 7, "cleavage site, ten residues, unchanged",
+                  "l-m", CUT, "middle")
+        label(x0 + longest * unit + 18, y + 16,
+              f"{flank} Gly/Ser each side", "l-m", INK3)
+    o.append(f'<line x1="{x0}" y1="{ry - 2}" x2="{x0}" y2="{ry + 6 * 33 - 8}" '
+             f'stroke="{RULE}" stroke-width="1"/>')
+    label(0, H - 10,
+          "The substrate is identical in every row, so a difference in masking "
+          "across the series is reach and not cleavability.", "l-b", INK2)
+    o.append("</svg>")
+    return "".join(o)

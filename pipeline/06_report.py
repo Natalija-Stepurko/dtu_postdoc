@@ -1026,6 +1026,15 @@ masks_rows_compact = "".join(
     f"<tr><td>{k}</td><td class='mono'>{m['seq']}</td><td>{m['kind']}</td></tr>"
     for k, m in lib["masks"].items())
 
+_LK = load_json("02b_linkers.json")
+LINKER_GEN = {"n_generated": _LK["n_generated"], "n_kept": _LK["n_kept"],
+              "n_off": len(_LK.get("off_target", [])) or 15}
+# the reference-length linkers are not length variants and carry no
+# total_length, so taking that field alone drops the reference from the series
+LENGTHS = sorted({len(x["sequence"]) for x in _LK["linkers"]})
+SUB_LEN = len(_LK["linkers"][0]["substrate"])
+REF_LEN = lib["reference_length"]
+
 HTML = f"""<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Computational design of protease-responsive nanobodies</title>
@@ -1133,6 +1142,10 @@ contains {N['n_paratope']} residues. The N-terminus is {N['n_term']:.1f} Å from
 paratope residue, against {N['c_term']:.1f} Å for the C-terminus, so the N-terminus is the
 attachment point used for mask design.</p></div>
 
+{chart_wide("affinity_by_length",
+   "Predicted mask-affinity range against linker length. The release floor is set by "
+   "competition with the antigen and does not move with the tether; the masking ceiling "
+   "is what the tether buys. Triangles mark the lengths built and folded.")}
 <div class="two">
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Deposited structure · {PDB_ID}</span>
@@ -1146,8 +1159,7 @@ attachment point used for mask design.</p></div>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 {chart("usable_affinity",
-   "Predicted mask-affinity range for a " + str(N["linker_best"]) + "-residue N-terminal "
-   "linker.")}
+   "The same constraint at the widest point, " + str(N["linker_best"]) + " residues.")}
 </div>
 
 <div class="stack">
@@ -1158,8 +1170,13 @@ that satisfy both requirements.</p>
 <p>For a {N['linker_best']}-residue N-terminal linker the model predicts a usable mask
 K<sub>D</sub> range of <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b> under the assumed
 conditions. A relatively weak mask could therefore be sufficient, provided the linker holds it
-close to the paratope. That length gives the widest predicted range, so it is the starting point
-for mask generation.</p>
+close to the paratope.</p>
+<p><b>Length is not chosen by this calculation.</b> The window opens at about three residues and
+is almost flat from twelve onwards: {N['linker_best']} residues is the widest point, but the
+range at 32 residues is within a factor of two of it. What the affinity model says is that a
+micromolar mask works at any of these lengths. Which length to build is settled by whether the
+mask can physically reach the paratope, which is measured on the folded constructs in Module 04,
+and there the answer is different.</p>
 <p><b>Which antigen affinity this rests on.</b> The release floor is set by how tightly the
 nanobody holds its own antigen, so the measured value matters. The paper reports a biolayer
 interferometry K<sub>D</sub> of <b>1.90 nM</b> for V<sub>H</sub>H5 a-sNTx against sNTx-1, and that
@@ -1271,6 +1288,10 @@ cleavage and at least {model['recovery_min']*100:.0f}% antigen-bound afterwards.
 
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
+<figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
+<figcaption>How a linker is designed and how its length is varied. The sequence the
+protease has to recognise and the distance the mask has to travel are set independently,
+so either can be changed without confounding the other.</figcaption></figure>
 {mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
      "poly-glycine controls. Linkers were not fixed sequences but generated: CleaveNet was "
      "conditioned on a profile that asks for substrates the bite-site proteases cut and the "
