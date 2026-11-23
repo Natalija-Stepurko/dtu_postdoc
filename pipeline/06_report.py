@@ -962,6 +962,8 @@ RANK_FRONT = ranking_data.get("front", []) if ranking_data else []
 RANK_OBJECTIVES = ranking_data.get("objectives", []) if ranking_data else []
 RANK_SHORTLIST = set(ranking_data.get("shortlist", [])) if ranking_data else set()
 N["rank_shortlist"] = len(RANK_SHORTLIST)
+N["rank_penalty"] = (ranking_data.get("uncertainty_penalty", 0.0)
+                     if ranking_data else 0.0)
 
 _feas = {r["id"]: r for r in (feas_data["results"] if feas_data else [])}
 # the primary graft, whatever it is called: masks are renamed when the
@@ -1736,15 +1738,31 @@ flexible chain.</div></div>
 {chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
    "marked.")}
 <details class="tech"><summary>Ranking methods</summary><div class="techbody">
-<p><b>What is removed before anything is compared.</b> A construct failing one of these is not a
-worse candidate but not a candidate, and no score on another axis can make up for it. This is
-where compensation is prevented; non-domination does not prevent it, since a design that is poor
-on one objective stays on the front as long as nothing beats it on all three.</p>
+<p>Each construct carries three scores: structural feasibility, paratope occlusion and predicted
+linker cleavability. The second is a surface measurement, not a predicted affinity, which is
+why it is named for what it measures.</p>
+<div class="eq">S(x) = [ S<sub>feasibility</sub>(x), S<sub>occlusion</sub>(x),
+S<sub>cleavability</sub>(x) ]</div>
+<p><b>1 &middot; Minimum requirements.</b> Constructs failing a threshold on nanobody
+confidence, fold preservation, protease selectivity or linker accessibility are excluded before
+anything is compared. This is the step that stops a strong score making up for a failed
+requirement; non-domination does not, since a design poor on one objective stays on the front
+as long as nothing beats it on all three.</p>
 {R.constraint_table(RANK_CONSTRAINTS, N['rank_excluded_by'])}
-<p><b>The ordering rule.</b> The three scores are on unrelated scales, so they are min-max
-normalised within the feasible set and each construct takes its lowest normalised objective.
-That prefers a design that is adequate three times over one that is excellent twice and poor
-once, which is the right preference when all three requirements have to hold at once.</p>
+<p><b>2 &middot; Pareto selection.</b> Of what remains, a construct is kept unless another
+matches or beats it on every score and beats it on at least one. No weights are assigned, so no
+objective is declared more important than another.</p>
+<p><b>3 &middot; Shortlisting.</b> The nondominated set is unordered, so ordering it is a
+separate decision. The scores are min-max normalised within the feasible set and each candidate
+takes its weakest normalised objective, which favours balanced designs over ones excellent
+twice and poor once. Different masks are then chosen, so the shortlist does not test one
+hypothesis repeatedly.</p>
+<div class="eq">R(x) = min<sub>i</sub> ŝ<sub>i</sub>(x)</div>
+<p>That is a single value per candidate, but it is computed only after non-domination has
+already removed everything beaten outright, so it orders the front rather than deciding it.</p>
+<p class="dim">The code accepts an uncertainty penalty, R(x) = min<sub>i</sub>
+[ŝ<sub>i</sub>(x) − λσ<sub>i</sub>(x)], and it is disabled: λ = {N['rank_penalty']:g}, because
+none of the three scoring methods has a calibrated uncertainty to put in it.</p>
 {R.front_table(RANK_FRONT, RANK_OBJECTIVES, RANK_SHORTLIST)}
 </div></details>
 
