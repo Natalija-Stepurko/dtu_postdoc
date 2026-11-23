@@ -1031,6 +1031,39 @@ LINKER_GEN = {"n_generated": _LK["n_generated"], "n_kept": _LK["n_kept"],
               # the z-scores the profile actually carries, not restated here
               "target_z": float(_PROFILE[_TGT[0]]),
               "off_z": float(_PROFILE[_OFF[0]])}
+# ---- the mask side: what step 2 of module 02 is built from
+_MD = load_json("03a_masks.json")
+MASKS, HOTSPOTS = _MD["masks"], {int(l[1:]) for l in _MD["hotspot_labels"]}
+CORE_ID = "epi_core"
+_CORE = MASKS[CORE_ID]
+CORE_SEQ, CORE_LEN = _CORE["seq"], len(_CORE["seq"])
+CORE_RANGE = f"{_CORE['seq'][0]}{_CORE['start']}\u2013{_CORE['seq'][-1]}{_CORE['end']}"
+N["n_masks"] = len(lib["masks"])
+N_PARENTS = len(redesign["parents"]) if redesign else 0
+
+# the contacting antigen residues are reported as runs along the chain, and
+# for this complex they are not one run. Phrase it from the segments rather
+# than describing the shape they happen to have.
+_SEGS = sorted(_MD["segments"], key=lambda g: -g["n_contact"])
+_big = _SEGS[0]
+_rest = sum(g["n_contact"] for g in _SEGS[1:])
+SEG_SPLIT = (f"{R.word(_big['n_contact']).capitalize()} lie in a single run, "
+             f"{_big['start_label']}\u2013{_big['end_label']}, and "
+             + (f"one sits apart at {_SEGS[1]['start_label']}"
+                if _rest == 1 else
+                f"{R.word(_rest)} sit apart in {R.word(len(_SEGS) - 1)} shorter runs")
+             + ".")
+
+# the extensions pick up cysteines bonded to partners outside the graft. Read
+# the partners off the structure-derived report so the claim cannot drift.
+_EXT = MASKS.get("epi_core_ext2", {})
+_ORPH = _EXT.get("cysteines_orphaned") or []
+_PART = sorted({v for v in (_EXT.get("orphan_partners") or {}).values()})
+ORPHAN_TEXT = (f"{R.word(len(_ORPH))} more cysteines whose partners, "
+               + " and ".join(f"C{v}" for v in _PART)
+               + ", stay behind in the antigen"
+               if _ORPH else "no further cysteines")
+
 CLEAVE_TARGETS = ", ".join(f"MMP-{p[3:]}" for p in
                            sorted(_TGT, key=lambda p: int(p[3:])))
 CLEAVE_TARGETS = " and ".join(CLEAVE_TARGETS.rsplit(", ", 1))
@@ -1153,21 +1186,11 @@ out</summary><div class="techbody">
 <h3 class="mod"><span>Module 01</span>Structural and affinity constraints</h3>
 <div class="stack">
 <p><b>Reference structure.</b> I used the experimental VHH–toxin complex (PDB {PDB_ID}) to
-identify the antigen-binding residues and the possible linker attachment sites. The paratope
-contains {N['n_paratope']} residues, and {termini_free}.</p></div>
+locate the paratope and the possible linker attachment sites; which antigen residues face it, and
+what the masks are grafted from, is Module 02. The paratope contains {N['n_paratope']} residues,
+and {termini_free}.</p></div>
 
 <div class="two">
-<div class="viewer">
-<div class="vbar"><span class="eyebrow">Deposited structure · {PDB_ID}</span>
-<button data-spin="solved">spin</button></div>
-<div class="vstage" id="stage-solved"></div>
-<div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
-<span><i style="background:#C99555"></i>short neurotoxin 1</span>
-<span><i style="background:#C06014"></i>buried on binding, sticks</span>
-<span><i style="background:#C06014"></i>within {N['mask_cutoff']:g} &#8491;, sticks</span>
-<span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
-<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
-</div>
 <div class="stackfig">
 {chart("affinity_by_length",
    "<b>Predicted mask-affinity range for different linker lengths.</b> The green region shows "
@@ -1178,6 +1201,8 @@ contains {N['n_paratope']} residues, and {termini_free}.</p></div>
    "line represents the strongest affinity that permits antigen binding after cleavage. The "
    f"widest range occurs at {N['linker_best']} residues. Triangles indicate linker lengths used "
    "in the computational designs.")}
+</div>
+<div class="stackfig">
 {chart("usable_affinity",
    "The same constraint at the widest point, " + str(N["linker_best"]) + " residues.")}
 </div>
@@ -1188,16 +1213,18 @@ contains {N['n_paratope']} residues, and {termini_free}.</p></div>
 physics and binding equilibrium to estimate which linker lengths and mask affinities could allow
 both masking and release.</p>
 
-<p><b>1 &middot; Effective concentration of the tethered mask.</b> The flexible Gly/Ser linker was
-approximated as a <i>worm-like chain</i>, the model commonly used to describe disordered protein
-linkers. Which terminus carries it is set by the structure. The N-terminus sits
-{N['n_term']:.1f} Å from the nearest paratope residue and {N['span_n']:.1f} Å from the paratope
-centroid, against {N['c_term']:.1f} Å and {N['span_c']:.1f} Å for the C-terminus, so the
-N-terminus is closer on both measures and is the attachment point used here.
-From the centroid distance of {N['span_n']:.1f} Å I estimated the effective local concentration of
-the mask, C<sub>eff</sub>, at every linker length, taking a contour length of
-{model['rise_per_residue_A']:.1f} Å per residue and a persistence length of
-{model['persistence_length_A']:.1f} Å.</p>
+<p><b>1 &middot; Effective concentration of the tethered mask.</b> I used the experimental
+structure to identify where to attach the linker. The N-terminus is closer to the paratope than
+the C-terminus, {N['span_n']:.1f} Å against {N['span_c']:.1f} Å to its centre, so I selected
+N-terminal attachment.</p>
+<p>The Gly/Ser linker is flexible and can adopt many conformations. I modelled it as a
+<i>worm-like chain</i>, a standard model for flexible protein linkers. This estimates how likely
+a linker of a given length is to position the mask near the paratope.</p>
+<p>For each linker length I calculated the mask's effective local concentration,
+C<sub>eff</sub>, using the distance of {N['span_n']:.1f} Å measured from the structure. The model
+assumes {model['rise_per_residue_A']:.1f} Å per residue when fully extended and a persistence
+length of {model['persistence_length_A']:.1f} Å to describe flexibility. The resulting
+C<sub>eff</sub> is what sets how strongly the mask needs to bind while tethered.</p>
 <div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
 <br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
 
@@ -1233,25 +1260,88 @@ to describe what a disordered linker buys follows
 <a href="https://doi.org/10.1073/pnas.1904813116">Sørensen and Kjaergaard (2019)</a> and
 <a href="https://doi.org/10.1016/bs.mie.2020.09.012">Kjaergaard and colleagues (2021)</a>.</p>
 
-<p><b>The window is wide but flat, so it does not pick a length.</b> It opens at about three
-residues and changes little from twelve onwards: the range at 32 residues is within a factor of two
-of the range at {N['linker_best']}. What the affinity model says is that a micromolar mask works at
-any of these lengths. Which length to build is settled by whether the mask can physically reach the
-paratope, which is measured on the folded constructs in Module 04, and there the answer is
-different.</p>
-<p><b>Which antigen affinity the floor rests on.</b> The release floor is set by how tightly the
-nanobody holds its own antigen, so the measured value matters. The paper reports a biolayer
-interferometry K<sub>D</sub> of <b>1.90 nM</b> for V<sub>H</sub>H5 a-sNTx against sNTx-1, and that
-is the value used here. It does not state which of its numbered short-neurotoxin targets sNTx-1
-is, and the structure is of the complex with short neurotoxin 1 (P01426), so the correspondence
-is not confirmed. On the earlier assumed 1 nM the floor would be 99 nM instead of
-{N['km_lo']:.0f} nM; the ceiling is unaffected. The distinction is kept explicit until the
-correspondence is established.</p></div>
+</div>
 
 
 <h3 class="mod"><span>Module 02</span>Generation of candidate constructs</h3>
+<div class="stack">
+<p>One question runs through this module: <b>how can a known nanobody&ndash;antigen interface be
+used to generate sequences that might mask it?</b> It is taken in three steps &mdash; identify the
+interacting surface, generate mask variants from it, then redesign their sequences.</p></div>
+{mri("I used the experimental V<sub>H</sub>H&ndash;antigen structure to identify the antigen "
+     f"residues within {N['mask_cutoff']:g} Å of the nanobody, which are the starting point for "
+     "mask design. The main contact region carries a disulphide that holds its conformation, so "
+     "variants were generated across length, contact residues and that disulphide, together with "
+     "truncated, scrambled and poly-glycine controls. The masks were then combined with "
+     "protease-cleavable linkers designed with CleaveNet, and after structure prediction "
+     "ProteinMPNN redesigned the mask sequences with the nanobody and linker held fixed.",
+     f"The initial library contained <b>{N['n_constructs']} constructs</b>, the free nanobody "
+     f"included. ProteinMPNN then produced <b>{N['n_redesign']} distinct redesigned masks</b>. "
+     "Every retained redesign scored better than its parent by ProteinMPNN's own measure, but "
+     f"that score barely tracked predicted paratope occlusion, r = {N['mpnn_corr']:+.2f}.",
+     "ProteinMPNN added sequence diversity, but its design score does not predict masking, so "
+     "the redesigned constructs need their interaction with the nanobody assessed separately.")}
 
-<h4 class="subh">Design of protease-cleavable linkers</h4>
+<h4 class="subh"><span>Step 1</span>Identify the antigen residues contacting the nanobody</h4>
+<div class="two">
+<div class="viewer">
+<div class="vbar"><span class="eyebrow">Deposited structure &middot; {PDB_ID}</span>
+<button data-spin="solved">spin</button></div>
+<div class="vstage" id="stage-solved"></div>
+<div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
+<span><i style="background:#C99555"></i>short neurotoxin 1</span>
+<span><i style="background:#C06014"></i>buried on binding, sticks</span>
+<span><i style="background:#C06014"></i>within {N['mask_cutoff']:g} &#8491;, sticks</span>
+<span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
+<span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
+</div>
+<div class="stackfig">
+{chart("paratope_footprint",
+  f"<b>Nanobody&ndash;antigen interface in PDB {PDB_ID}.</b> Bars show the surface buried by each "
+  f"nanobody residue on antigen binding. The {N['n_near']} marked residues lie within "
+  f"{N['mask_cutoff']:g} Å of the antigen; the same cutoff identifies the "
+  f"{N['n_epitope_near']} antigen residues the masks are grafted from. A closer "
+  f"{N['contact_cutoff']:g} Å cutoff picks out the {N['n_contacts']} residues making polar "
+  f"contacts, reported so this interface can be compared with others. The broader paratope of "
+  f"{N['n_paratope']} residues, each losing more than 1 Å² of surface, is the footprint "
+  f"masking is measured against in Modules 03 and 04.")}
+</div>
+</div>
+<div class="stack">
+<p>The {N['n_epitope_near']} contacting antigen residues are not one continuous peptide.
+{SEG_SPLIT} Both regions are carried into step 2, separately and together, because a mask that
+reproduces only the larger one may or may not be enough.</p></div>
+
+<h4 class="subh"><span>Step 2</span>Generate antigen-derived masks and controls</h4>
+<div class="refmask">
+<div class="eyebrow">Reference mask &middot; <span class="mono">{CORE_ID}</span></div>
+<div class="seq">{CORE_SEQ}</div>
+<div class="sub">{CORE_LEN} amino acids &middot; antigen residues {CORE_RANGE}</div>
+<p>The two terminal cysteines are bonded to each other in the native antigen, so cutting here
+keeps the staple that holds the loop in the shape the nanobody binds. That is also the argument
+against simply taking more sequence: the extensions reach past this pair and pick up
+{ORPHAN_TEXT}. Longer is not automatically better.</p>
+</div>
+<figure class="fig wide"><div class="figbody">{R.mask_families(MASKS, HOTSPOTS)}</div>
+<figcaption>The {N['n_masks']} masks, grouped by the question each was built to answer and drawn
+against the antigen residues they come from. Each group moves one variable: how much of the
+contact region to take, whether the second region helps, whether the sequence can change while
+the buried residues stay, and whether the disulphide matters. The last group is the controls the
+others have to beat.</figcaption></figure>
+<div class="stack">
+<p><b>From masks to constructs.</b> Every mask was paired with every linker: {N['n_masks']} masks
+&times; {lib['n_linkers']} linkers = {lib['n_pairs']} pairs, and the free nanobody as a reference,
+giving <b>{N['n_constructs']} constructs</b> to fold.</p>
+<p><b>Reading a construct name.</b> <span class="mono">{CORE_ID}_cn01</span> is the main
+antigen-derived mask joined to CleaveNet linker 01, and
+<span class="mono">mpnn00_{CORE_ID}_cn01</span> is a ProteinMPNN redesign of that construct. The
+ids stay as the files are named; the figure above gives each mask a readable label.</p></div>
+<details class="tech"><summary>Mask sequences and design rationale</summary><div class="techbody">
+<div class="scroll"><table class="wrap"><thead><tr><th>mask</th><th>sequence</th><th>length</th>
+<th>method</th><th>kind</th><th>note</th>
+</tr></thead><tbody>{masks_rows_full}</tbody></table></div></div></details>
+
+<h5 class="subh2">Designing the protease-cleavable linkers</h5>
 <figure class="fig wide"><div class="figbody">{R.linker_schematic(LINKER_GEN, LENGTHS, SUB_LEN, REF_LEN)}</div>
 <figcaption>How a protease-cleavable linker is designed. The sequence the protease has to
 recognise and the distance the mask has to travel are set in separate steps, so either can
@@ -1262,8 +1352,8 @@ cleaved by {CLEAVE_TARGETS}, while limiting cleavage by {R.word(LINKER_GEN['n_of
 <p>The model generated {LINKER_GEN['n_generated']:,} sequences. I ranked them by the difference
 between their predicted cleavage scores for the target and off-target proteases, retaining
 {R.word(LINKER_GEN['n_kept'])} candidates and adding {R.word(LINKER_GEN['n_controls'])} controls.</p>
-<p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage motif
-and a scrambled version of the highest-scoring sequence. They test whether the predicted
+<p>The {R.word(LINKER_GEN['n_controls'])} controls are a Gly/Ser linker with no designed cleavage
+motif and a scrambled version of the highest-scoring sequence. They test whether the predicted
 protease response depends on the designed sequence rather than on linker composition alone.
 It does: the scramble has the same {R.word(SUB_LEN)} amino acids in a different order and scores
 {CTRL_SCRAM:.2f} against {CN_BEST:.2f} for the sequence it was made from, and the Gly/Ser
@@ -1275,50 +1365,18 @@ from the predicted protease-recognition sequence.</p>
 venom metalloproteinases. These results demonstrate how to design a desired human-MMP cleavage
 profile; they do not establish selectivity at a viper bite site.</p></div>
 
-{mri("Masks were grafted from the antigen's own contact segments, with scrambled, truncated and "
-     "poly-glycine controls. Linker substrates were generated under the cleavage profile above "
-     "rather than fixed in advance, so cleavability constrains generation instead of filtering "
-     "it afterwards. ProteinMPNN then redesigned the mask positions on each folded construct "
-     "with the nanobody and linker held fixed.",
-     f"{N['n_constructs']} constructs in the initial library and {N['n_redesign']} distinct "
-     f"redesigned masks. Every redesign scored better than its parent graft by ProteinMPNN's own "
-     f"measure, but that score correlated with paratope occlusion at r = {N['mpnn_corr']:+.2f}.",
-     "ProteinMPNN generated sequence diversity, but sequence compatibility with a backbone is not "
-     "a substitute for functional scoring and should not be used as one.")}
-
-{chart_wide("paratope_footprint",
-  f"Surface buried per nanobody residue on complex formation. Markers show the {N['n_near']} "
-  f"residues with a heavy atom within {N['mask_cutoff']:g} Å of the antigen, which is the "
-  f"set the mask is designed from.")}
+<h4 class="subh"><span>Step 3</span>Redesign the mask sequences</h4>
 <div class="stack">
-<p><b>Three cutoffs, and each one is used for something different.</b> They are not alternative
-answers to one question, so it matters which is which.</p></div>
-<table class="tbl cuts">
-<colgroup><col style="width:17%"><col style="width:22%"><col style="width:15%"><col style="width:46%"></colgroup>
-<thead><tr><th>criterion</th><th>on the nanobody</th><th>on the antigen</th><th>what it is used for</th></tr></thead><tbody>
-<tr><td class="mono">heavy atoms within {N['contact_cutoff']:g} &#8491;</td>
-<td>{N['n_contacts']} residues &mdash; {N['contact_labels']}</td>
-<td>{N['n_epitope_contacts']}</td>
-<td>hydrogen-bond and salt-bridge range: the chemically interacting core. Reported so this
-interface can be compared with others, and used for nothing else.</td></tr>
-<tr class="hl"><td class="mono">heavy atoms within {N['mask_cutoff']:g} &#8491;</td>
-<td>{N['n_near']} residues, marked on the plot above</td>
-<td>{N['n_epitope_near']} residues, {N['mask_face']}</td>
-<td><b>the contact face.</b> On the antigen side this is the sequence the mask is built from, in
-Module 02a. Wider than the polar core because a mask reproduces a face, not a set of bonds.</td></tr>
-<tr><td class="mono">loses more than 1 &#8491;<sup>2</sup> of surface</td>
-<td>{N['n_paratope']} residues</td><td>{N['n_epitope']}</td>
-<td><b>the footprint.</b> The surface a mask has to cover, so this is what occlusion is measured
-against in Modules 03 and 04. Van der Waals packing reaches further than a hydrogen bond, so it is
-the largest of the three.</td></tr>
-</tbody></table>
-
-{chart_wide("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion. "
-   "A sequence that fits the backbone better does not occlude the paratope more.")}
-<details class="tech"><summary>Every mask in the design space</summary><div class="techbody">
-<div class="scroll"><table class="wrap"><thead><tr><th>mask</th><th>sequence</th><th>length</th>
-<th>method</th><th>kind</th><th>note</th>
-</tr></thead><tbody>{masks_rows_full}</tbody></table></div></div></details>
+<p>Each folded construct was passed to ProteinMPNN with the nanobody and the linker held fixed,
+so only the mask positions could change. That produced <b>{N['n_redesign']} distinct redesigned
+masks</b> across {N_PARENTS} parent constructs.</p>
+<p>Every redesign scored better than the graft it came from on ProteinMPNN's own measure. That
+measure is how well a sequence fits the backbone it was given, which is not the same question as
+whether the mask covers the paratope, and the two barely move together: r = {N['mpnn_corr']:+.2f}
+across all {N['n_redesign']} redesigns.</p></div>
+{chart_wide("redesign_score_vs_occlusion", "ProteinMPNN score against paratope occlusion. A "
+   "sequence that fits the backbone better does not occlude the paratope more, so the design "
+   "model's own score cannot stand in for a functional one.")}
 
 </section>
 

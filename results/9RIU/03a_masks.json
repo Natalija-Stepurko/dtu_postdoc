@@ -23,29 +23,65 @@
       "seq": "PGETNCYKKGSGCPTVKPGIKLNC"
     },
     "epi_core": {
+      "cysteines_orphaned": [],
+      "disulfides_kept": [
+        [
+          42,
+          53
+        ]
+      ],
       "end": 53,
       "extension": 0,
       "kind": "epitope graft",
       "method": "graft",
       "note": "contact face, 2 cysteines",
+      "orphan_partners": {},
       "seq": "CPTVKPGIKLNC",
       "start": 42
     },
     "epi_core_ext2": {
+      "cysteines_orphaned": [
+        40,
+        54
+      ],
+      "disulfides_kept": [
+        [
+          42,
+          53
+        ]
+      ],
       "end": 55,
       "extension": 2,
       "kind": "epitope graft",
       "method": "graft",
       "note": "contact face plus 2 residues of antigen each side, 4 cysteines",
+      "orphan_partners": {
+        "40": 17,
+        "54": 59
+      },
       "seq": "CGCPTVKPGIKLNCCT",
       "start": 40
     },
     "epi_core_ext4": {
+      "cysteines_orphaned": [
+        40,
+        54
+      ],
+      "disulfides_kept": [
+        [
+          42,
+          53
+        ]
+      ],
       "end": 57,
       "extension": 4,
       "kind": "epitope graft",
       "method": "graft",
       "note": "contact face plus 4 residues of antigen each side, 4 cysteines",
+      "orphan_partners": {
+        "40": 17,
+        "54": 59
+      },
       "seq": "RGCGCPTVKPGIKLNCCTTD",
       "start": 38
     },
@@ -71,11 +107,18 @@
       "seq": "IPTKLGCVKCPN"
     },
     "epi_face2": {
+      "cysteines_orphaned": [
+        23
+      ],
+      "disulfides_kept": [],
       "end": 26,
       "extension": 4,
       "kind": "epitope graft",
       "method": "graft",
       "note": "second contact face, around a hotspot burying 43 A2",
+      "orphan_partners": {
+        "23": 3
+      },
       "seq": "PGETNCYKK",
       "start": 18
     },

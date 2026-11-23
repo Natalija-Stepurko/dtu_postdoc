@@ -208,7 +208,16 @@ h2 .stat-tag,h3 .stat-tag{vertical-align:middle;margin-left:12px;font-size:.55re
   color:var(--chrome);margin-bottom:10px}
 h3.mod{font-size:1.18rem;margin:38px 0 8px}
 h3.mod span{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);margin-right:12px}
-h4.subh{font-size:1.02rem;margin:30px 0 6px;color:var(--ink)}
+h4.subh{font-size:1.02rem;margin:32px 0 6px;color:var(--ink)}
+h4.subh span{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--chrome);margin-right:11px}
+h5.subh2{font-size:.95rem;margin:30px 0 4px;color:var(--ink);font-weight:600}
+.refmask{border:1px solid var(--rule);border-left:3px solid var(--chrome);border-radius:3px;
+  background:var(--panel);padding:16px 20px;margin:18px 0}
+.refmask .seq{font-family:var(--mono);font-size:1.32rem;letter-spacing:.07em;
+  color:var(--ink);margin:6px 0 4px;word-break:break-all}
+.refmask .sub{font-family:var(--mono);font-size:.76rem;color:var(--ink-3)}
+.refmask p{margin:10px 0 0;font-size:.92rem;color:var(--ink-2)}
 .states{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:18px 0 10px}
 .stfig{margin:0;background:var(--panel);border:1px solid var(--rule);border-radius:3px;
   padding:14px;display:flex;flex-direction:column;gap:10px}
@@ -1703,6 +1712,192 @@ def _wrap(text, width):
     if line:
         out.append(line)
     return out
+
+
+MASK_FAMILIES = [
+    ("What part of the antigen is sufficient?", ["epi_core"]),
+    ("Does extending the peptide help?", ["epi_core_ext2", "epi_core_ext4"]),
+    ("Can another contact region contribute?", ["epi_face2", "epi_both"]),
+    ("Can the sequence change and the key contacts stay?",
+     ["epi_sub01", "epi_sub02", "epi_sub03"]),
+    ("Is the disulphide doing work?", ["epi_core_noCys"]),
+    ("Do the designed masks beat controls?",
+     ["epi_core_half", "epi_core_scram", "polyG"]),
+]
+
+#: Human-readable names. The ids stay in the code and in the construct
+#: picker, because that is what the files are called.
+MASK_LABELS = {
+    "epi_core": "Main contact loop",
+    "epi_core_ext2": "Extended, 2 residues each side",
+    "epi_core_ext4": "Extended, 4 residues each side",
+    "epi_face2": "Second contact region",
+    "epi_both": "Both regions, joined",
+    "epi_sub01": "Conservative substitutions I",
+    "epi_sub02": "Conservative substitutions II",
+    "epi_sub03": "Conservative substitutions III",
+    "epi_core_noCys": "Disulphide removed",
+    "epi_core_half": "Truncated control",
+    "epi_core_scram": "Scrambled control",
+    "polyG": "Inert control",
+}
+
+MASK_NOTES = {
+    "epi_core_noCys": "both cysteines to serine",
+    "epi_core_half": "first half of the loop",
+    "epi_core_scram": "same residues, no order",
+    "polyG": "no designed interaction",
+    "epi_sub01": "hotspots and cysteines held",
+    "epi_sub02": "hotspots and cysteines held",
+    "epi_sub03": "hotspots and cysteines held",
+}
+
+
+def mask_blocks(name, m, masks, core="epi_core", face="epi_face2"):
+    """Where a mask's residues sit on the antigen, as (position, text) blocks.
+
+    Only the grafts cut straight out of the antigen carry coordinates. The
+    substitutions and controls are variants of the main loop, so they are
+    drawn under it; the mask that joins both regions is drawn as the two
+    regions it joins, with its spacer in the gap, because drawing it as one
+    run would put its second half under the wrong residues.
+    """
+    if m.get("start") is not None:
+        return [(m["start"], m["seq"])]
+    if name == "epi_both":
+        a, b = masks[face], masks[core]
+        spacer = m["seq"][len(a["seq"]):len(m["seq"]) - len(b["seq"])]
+        if a["seq"] + spacer + b["seq"] == m["seq"]:
+            return [(a["start"], a["seq"]), (None, spacer), (b["start"], b["seq"])]
+    return [(masks[core]["start"], m["seq"])]
+
+
+def mask_families(masks, hotspots, core="epi_core", families=MASK_FAMILIES):
+    """Every mask, grouped by the question it was built to answer.
+
+    A list of twelve sequences says what was made, not why. Grouped by
+    question and drawn against the loop they came from, each row says which
+    variable it moves. The cysteines are coloured because they are the reason
+    a longer graft is not automatically a better one: past C42-C53 the
+    extensions pick up cysteines whose partners stay behind in the antigen.
+    """
+    KEPT, ORPH, SUBST, PLAIN = "#1F6B4A", "#9C3B3B", "#C06014", "#8C979E"
+    core_seq = masks[core]["seq"]
+    core_start, core_end = masks[core]["start"], masks[core]["end"]
+    blocks = {n: mask_blocks(n, masks[n], masks, core)
+              for _, names in families for n in names}
+
+    # the two contact regions are far apart on the antigen, so the ruler skips
+    # the stretch between them rather than spending half its width on residues
+    # no mask uses
+    used = sorted({pos + i for bs in blocks.values() for pos, txt in bs
+                   if pos is not None for i in range(len(txt))})
+    runs = []
+    for pos in used:
+        if runs and pos == runs[-1][1] + 1:
+            runs[-1][1] = pos
+        else:
+            runs.append([pos, pos])
+    col, c = {}, 0
+    for i, (lo, hi) in enumerate(runs):
+        if i:
+            c += 1                                   # one column for the break
+        for pos in range(lo, hi + 1):
+            col[pos] = c
+            c += 1
+    ncol = c
+    # x0 clears the longest row label; 'Conservative substitutions III'
+    # ran into the first column at 206
+    cell, x0, notew = 19.0, 228.0, 250.0
+    W = x0 + ncol * cell + notew
+
+    o = [None,
+         '<style>'
+         '.m-h{font:600 13px Inter,system-ui,sans-serif}'
+         '.m-b{font:12px Inter,system-ui,sans-serif}'
+         '.m-q{font:600 11px ui-monospace,monospace;letter-spacing:.09em}'
+         '.m-t{font:600 12px ui-monospace,monospace}'
+         '.m-n{font:10.5px ui-monospace,monospace}'
+         '</style>']
+
+    def label(x, y, text, cls="m-b", fill=INK2, anchor="start"):
+        o.append(f'<text x="{x}" y="{y}" class="{cls}" fill="{fill}" '
+                 f'text-anchor="{anchor}">{text}</text>')
+
+    y = 15
+    for lo, hi in runs:
+        for pos in (lo, hi):
+            label(x0 + col[pos] * cell + cell / 2, y, str(pos), "m-n", INK3, "middle")
+        o.append(f'<rect x="{x0 + col[lo] * cell}" y="{y + 6}" '
+                 f'width="{(hi - lo + 1) * cell - 2}" height="3" rx="1.5" '
+                 f'fill="{INK3}" fill-opacity="0.35"/>')
+    for i in range(len(runs) - 1):
+        bx = x0 + (col[runs[i][1]] + 1) * cell + cell / 2
+        label(bx, y + 10, "//", "m-n", INK3, "middle")
+    label(0, y, "antigen residue", "m-n", INK3)
+    y += 28
+
+    for question, names in families:
+        y += 20
+        label(0, y, question.upper(), "m-q", INK3)
+        y += 8
+        for name in names:
+            m = masks[name]
+            orph = set(m.get("cysteines_orphaned") or [])
+            partners = m.get("orphan_partners") or {}
+            label(0, y + 15, MASK_LABELS.get(name, name), "m-h", INK)
+            for pos, text in blocks[name]:
+                for i, aa in enumerate(text):
+                    p = None if pos is None else pos + i
+                    if pos is None:                  # the spacer, drawn in the gap
+                        bx = x0 + (col[runs[0][1]] + 1) * cell
+                        o.append(f'<rect x="{bx}" y="{y + 6}" width="{cell - 2}" '
+                                 f'height="9" rx="2" fill="{PLAIN}" fill-opacity="0.2"/>')
+                        label(bx + (cell - 2) / 2, y + 14, text, "m-n", INK3, "middle")
+                        break
+                    if aa == "C":
+                        fill = ORPH if p in orph else KEPT
+                    elif core_start <= p <= core_end and core_seq[p - core_start] != aa:
+                        fill = SUBST
+                    else:
+                        fill = PLAIN
+                    solid = aa == "C" or fill == SUBST
+                    bx = x0 + col[p] * cell
+                    o.append(f'<rect x="{bx}" y="{y}" width="{cell - 2}" height="21" '
+                             f'rx="2" fill="{fill}" '
+                             f'fill-opacity="{0.9 if solid else 0.16}"/>')
+                    if p in hotspots:
+                        o.append(f'<rect x="{bx}" y="{y + 22}" width="{cell - 2}" '
+                                 f'height="2.5" rx="1" fill="{CHROME}"/>')
+                    label(bx + (cell - 2) / 2, y + 15, aa, "m-t",
+                          "#FFFFFF" if solid else INK2, "middle")
+            if orph:
+                note = ("cysteine cut from C" + ", C".join(str(v) for v in partners.values())
+                        if len(orph) == 1 else
+                        f"{len(orph)} cysteines cut from C"
+                        + ", C".join(str(v) for v in partners.values()))
+            elif name == core:
+                note = f"C{core_start}\u2013C{core_end} disulphide kept"
+            else:
+                note = MASK_NOTES.get(name, "")
+            label(x0 + ncol * cell + 14, y + 15, note, "m-n", INK3)
+            y += 30
+
+    y += 20
+    for col_, text in ((KEPT, "cysteine, partner inside the mask"),
+                       (ORPH, "cysteine, partner left behind in the antigen"),
+                       (SUBST, "differs from the main loop"),
+                       (CHROME, "buries the most surface")):
+        o.append(f'<rect x="{0 if col_ == KEPT else 0}" y="{y - 9}" width="11" '
+                 f'height="11" rx="2" fill="{col_}"/>')
+        label(17, y, text, "m-b", INK3)
+        y += 19
+    H = int(y - 2)
+    o[0] = (f'<svg viewBox="0 0 {int(W)} {H}" width="100%" '
+            'xmlns="http://www.w3.org/2000/svg" role="img" '
+            'aria-label="Mask families, grouped by the question each answers">')
+    o.append("</svg>")
+    return "".join(o)
 
 
 def linker_schematic(gen, lengths, substrate_len, reference) -> str:

@@ -82,6 +82,26 @@ primary = segments[0]
 internal, orphaned = _disulfide_report(atoms, toxin_chain,
                                        primary["start"], primary["end"])
 
+# the same report for every mask cut from a contiguous span of the antigen.
+# Reported per mask because it is the argument against simply taking more
+# sequence: the extensions reach past C42-C53 and pick up cysteines whose
+# partners stay behind in the antigen, so a longer graft is not a safer one.
+for _name, _m in masks.items():
+    if _m.get("start") is None or _m.get("end") is None:
+        continue
+    _int, _orph = _disulfide_report(atoms, toxin_chain, _m["start"], _m["end"])
+    _partners = {}
+    for _c in _orph:
+        _sg = atoms[(atoms.chain_id == toxin_chain) & (atoms.atom_name == "SG")]
+        _ids = [int(i) for i in _sg.res_id]
+        _i = _ids.index(_c)
+        _partners[_c] = next(
+            (_ids[_j] for _j in range(len(_ids)) if _j != _i and
+             float(np.linalg.norm(_sg.coord[_i] - _sg.coord[_j])) < 2.5), None)
+    _m["disulfides_kept"] = [list(x) for x in _int]
+    _m["cysteines_orphaned"] = _orph
+    _m["orphan_partners"] = {str(k): v for k, v in _partners.items()}
+
 save_json("03a_masks.json", {
     "method": f"antigen residues within {MASK_CONTACT_CUTOFF_A} A of the nanobody, "
               f"runs merged across gaps of up to {MASK_MAX_GAP} residues",

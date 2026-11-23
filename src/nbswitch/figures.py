@@ -71,13 +71,16 @@ def paratope_footprint(ref, cdrs, chain="A"):
     contacts = set(data.get("paratope_near_labels")
                    or data.get("paratope_contact_labels", []))
 
-    fig, ax = plt.subplots(figsize=(8.6, 2.7))
+    # drawn at the width it is displayed at. It now sits in a half-page column
+    # beside the structure viewer, and at the old 8.6 inches the browser scaled
+    # it to about half, taking its 6.5 pt labels down to roughly 4 pt.
+    fig, ax = plt.subplots(figsize=(5.4, 3.4))
     for name in ("CDR1", "CDR2", "CDR3"):
         res = cdrs[name]["residues"]
         a, b = index[res[0]], index[res[-1]]
         ax.axvspan(a - .5, b + .5, color=CDR_COLOUR[name], alpha=0.08, zorder=0,
                    linewidth=0)
-        ax.text((a + b) / 2, top * 1.11, name, ha="center", va="bottom",
+        ax.text((a + b) / 2, top * 1.13, name, ha="center", va="bottom",
                 fontsize=7.5, color=CDR_COLOUR[name])
 
     # one bar colour per region, pale where the residue buries nothing
@@ -105,14 +108,14 @@ def paratope_footprint(ref, cdrs, chain="A"):
     for label, value in sorted(data["paratope_delta_sasa"].items(),
                                key=lambda kv: -kv[1])[:5]:
         ax.annotate(label, (index[label], value), textcoords="offset points",
-                    xytext=(0, 9), ha="center", fontsize=6.5, color=INK)
+                    xytext=(0, 9), ha="center", fontsize=7, color=INK)
 
-    ax.legend(fontsize=6.8, ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.30),
-              frameon=False, handlelength=1.1, columnspacing=1.2)
-    ax.set_xlim(-1, len(delta)); ax.set_ylim(0, top * 1.30)
+    ax.legend(fontsize=7, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.32),
+              frameon=False, handlelength=1.1, columnspacing=1.1)
+    ax.set_xlim(-1, len(delta)); ax.set_ylim(0, top * 1.34)
     ax.set_xlabel("VHH residue, N to C"); ax.set_ylabel("buried on binding  (\u00c5\u00b2)")
     ticks = list(range(0, len(labels), 10))
-    ax.set_xticks(ticks); ax.set_xticklabels([labels[t] for t in ticks], fontsize=6.5)
+    ax.set_xticks(ticks); ax.set_xticklabels([labels[t] for t in ticks], fontsize=7)
     return _save(fig, "paratope_footprint")
 
 
