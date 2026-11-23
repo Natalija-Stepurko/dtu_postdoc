@@ -1062,9 +1062,11 @@ def architecture_schematic() -> str:
          ["Is the fold kept, and can", "it be produced?"],
          ["pLDDT · core RMSD", "surface · measured disulfides"], None, None,
          ["AlphaFold3 · Boltz-2 · Chai-1", "BioEmu-1 · Rosetta · FoldX 5"]),
-        ("04", "Mask binding and release",
-         ["Is the site occupied before", "cleavage, and free after?"],
-         ["Boltz-2, mask alone and tethered", "interface analysis"], None, None,
+        # Boltz-2 is not one of the three scores: it runs after ranking, on
+        # the shortlist, and is drawn as the final screen further down
+        ("04", "Paratope occlusion",
+         ["How much of the binding surface", "does the mask cover?"],
+         ["ESMFold · solvent-accessible", "surface area"], None, None,
          ["AlphaFold3 · Chai-1 · PRODIGY", "Rosetta · MM-GBSA · BioEmu-1"]),
         ("05", "Linker cleavability",
          ["Is the linker recognised,", "and can a protease reach it?"],
@@ -1388,7 +1390,8 @@ MODULE_ALTERNATIVES = {
     "03": "AlphaFold3; Boltz-2; Chai-1; BioEmu-1; Rosetta; FoldX 5; ThermoMPNN",
     "04": "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA; BioEmu-1",
     "05": "MEROPS; PROSPERous; DeepCleave; SitePrediction; MD of the cleavage site",
-    "06": "NSGA-II; hypervolume; hard thresholds; uncertainty- and diversity-based selection",
+    "06": "NSGA-II; hypervolume",
+    "F": "AlphaFold3; Chai-1; Rosetta InterfaceAnalyzer; PRODIGY; MM-GBSA",
     "\u2014": "",
 }
 
@@ -1397,9 +1400,10 @@ MODULE_TITLES = {
     "02a": "Mask design",
     "02b": "Cleavable linker design",
     "03": "Structural feasibility",
-    "04": "Mask binding and release",
+    "04": "Paratope occlusion",
     "05": "Linker cleavability",
-    "06": "Multiobjective ranking",
+    "06": "Multiobjective selection",
+    "F": "Final structural assessment",
     "\u2014": "Not yet implemented",
 }
 
@@ -1427,7 +1431,10 @@ def pipeline_table(rows) -> str:
         title = MODULE_TITLES.get(mod, "")
         alts = MODULE_ALTERNATIVES.get(mod, "")
         out.append(f'<div class="modblock"><div class="modbar">'
-                   f'<span class="modname">{mod}. {title}</span>'
+                   # the final screen is not a numbered module, so it is not
+                   # given a number it does not have
+                   f'<span class="modname">'
+                   f'{mod + ". " if mod[0].isdigit() else ""}{title}</span>'
                    + (f'<span class="alts">also available: {alts}</span>' if alts else "")
                    + "</div>")
         body = ""
