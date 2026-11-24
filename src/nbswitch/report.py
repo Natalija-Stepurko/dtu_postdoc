@@ -133,6 +133,9 @@ td.dead{color:var(--chrome);font-weight:600}
 .eq svg{display:block;margin:3px 0;max-width:none}
 /* a panel holding a statement and the condition that follows from it */
 .eq svg+svg{margin-top:13px}
+/* a result the surrounding text has just derived, boxed as it would be on
+   paper, so the reader can find the conclusions without reading every step */
+.eq.key{border:1.5px solid var(--ink-3);background:var(--ground)}
 /* inside the annotated equation the groups sit in a row, not stacked */
 .aeq svg{margin:0}
 /* the symbols of the equation above, defined one to a line */

@@ -498,13 +498,48 @@ EQ_MASKED = _mf.equation(
     r"{C_{\mathrm{eff}} + K_{D,\mathrm{mask}}}",
     "P masked equals C eff over C eff plus the mask dissociation constant.",
     "pmask")
-EQ_MASKED_REQ = _mf.equation(
-    rf"P_{{\mathrm{{masked}}}} \geq {_leak_pct:.0f}\% \quad "
-    rf"\mathrm{{requires}} \quad K_{{D,\mathrm{{mask}}}} \leq "
-    rf"\frac{{C_{{\mathrm{{eff}}}}}}{{{_leak_frac:.0f}}}",
-    f"P masked of at least {_leak_pct:.0f} per cent requires the mask "
-    f"dissociation constant to be at most C eff over {_leak_frac:.0f}.",
-    "pmaskreq")
+EQ_MASK_BOUND = _mf.equation(
+    rf"K_{{D,\mathrm{{mask}}}} \leq \frac{{C_{{\mathrm{{eff}}}}}}{{{_leak_frac:.0f}}}",
+    f"The mask dissociation constant is at most C eff over {_leak_frac:.0f}.",
+    "mbound")
+EQ_MASK_VALUE = _mf.equation(
+    rf"K_{{D,\mathrm{{mask}}}} \leq "
+    rf"\frac{{{N['ex_ceff']:.1f}\ \mathrm{{mM}}}}{{{_leak_frac:.0f}}} "
+    rf"= {N['km_hi']:.0f}\ \mu\mathrm{{M}}",
+    f"The mask dissociation constant is at most {N['ex_ceff']:.1f} millimolar "
+    f"over {_leak_frac:.0f}, which is {N['km_hi']:.0f} micromolar.",
+    "mvalue")
+
+# the competition after cleavage, worked through in the same order as the text
+from nbswitch.config import VHH_TOXIN_KD_M as _KDA
+_toxin_nM = model["toxin_conc_M"] * 1e9
+_kda_nM = _KDA * 1e9
+_mask_uM = model["mask_conc_M"] * 1e6
+_ratio = model["toxin_conc_M"] / _KDA
+EQ_RATIO = _mf.equation(
+    rf"\frac{{A}}{{K_{{D,A}}}} = "
+    rf"\frac{{{_toxin_nM:.0f}\ \mathrm{{nM}}}}{{{_kda_nM:.1f}\ \mathrm{{nM}}}} "
+    rf"= {_ratio:.1f}",
+    f"A over K D A equals {_toxin_nM:.0f} nanomolar over {_kda_nM:.1f} "
+    f"nanomolar, which is {_ratio:.1f}.",
+    "ratio")
+EQ_ANTI_REQ = _mf.equation(
+    rf"\frac{{{_ratio:.1f}}}"
+    rf"{{1 + {_ratio:.1f} + M/K_{{D,\mathrm{{mask}}}}}} "
+    rf"\geq {model['recovery_min']:.2f}",
+    f"{_ratio:.1f} divided by one plus {_ratio:.1f} plus M over the mask "
+    f"dissociation constant is at least {model['recovery_min']:.2f}.",
+    "antireq")
+EQ_KD_LO = _mf.equation(
+    rf"K_{{D,\mathrm{{mask}}}} \geq {N['km_lo']:.0f}\ \mathrm{{nM}}",
+    f"The mask dissociation constant is at least {N['km_lo']:.0f} nanomolar.",
+    "kdlo")
+EQ_WINDOW = _mf.equation(
+    rf"{N['km_lo']:.0f}\ \mathrm{{nM}} \leq K_{{D,\mathrm{{mask}}}} "
+    rf"\leq {N['km_hi']:.0f}\ \mu\mathrm{{M}}",
+    f"The mask dissociation constant lies between {N['km_lo']:.0f} nanomolar "
+    f"and {N['km_hi']:.0f} micromolar.",
+    "window")
 EQ_ANTIGEN = _mf.equation(
     r"P_{\mathrm{antigen}} = \frac{A/K_{D,A}}"
     r"{1 + A/K_{D,A} + M/K_{D,\mathrm{mask}}}",
@@ -1289,32 +1324,113 @@ freely diffusing peptide.</p>
 <p>The resulting effective concentration is then used to estimate how strongly the mask must bind
 to occupy the paratope before cleavage.</p>
 
-<p><b>2 &middot; Masking before cleavage, the upper curve.</b> The fraction of construct whose
-paratope is occupied by its own tethered mask is</p>
-<div class="eq">{EQ_MASKED}{EQ_MASKED_REQ}</div>
-<p>Requiring at least {100 - model['leak_max'] * 100:.0f}% masking therefore caps the mask
-K<sub>D</sub> at a nineteenth of C<sub>eff</sub>, which is the upper curved boundary in the figure.
-A short linker cannot reach the paratope, and a long one spreads the mask through a larger volume,
-so C<sub>eff</sub> — and with it the loosest mask that still works — rises to a maximum and falls
-again.</p>
+<p><b>2 &middot; Masking before cleavage: how strong must the mask bind?</b></p>
 
-<p><b>3 &middot; Antigen binding after cleavage, the lower line.</b> Once the linker is cut, the
-released mask and the antigen compete for the same site:</p>
+<p><b>The aim.</b> Before cleavage, the mask should occupy the nanobody's antigen-binding site
+(paratope). Because the linker holds the mask nearby, its effective local concentration is much
+higher than that of a freely diffusing peptide. This means that even a relatively weak
+mask&ndash;nanobody interaction could provide effective masking.</p>
+
+<p>The fraction of nanobodies whose paratopes are occupied by their own tethered masks is estimated
+using a simple binding equilibrium:</p>
+<div class="eq">{EQ_MASKED}</div>
+<ul class="where">
+<li><span class="sym">P<sub>masked</sub></span> is the fraction of nanobodies with an occupied
+paratope.</li>
+<li><span class="sym">C<sub>eff</sub></span> is the effective local concentration of the tethered
+mask, calculated in Section 1.</li>
+<li><span class="sym">K<sub>D,mask</sub></span> is the intrinsic dissociation constant of the
+mask&ndash;nanobody interaction. A smaller K<sub>D</sub> means stronger binding.</li>
+</ul>
+
+<p><b>Setting a masking requirement.</b> I chose a target of at least {_leak_pct:.0f}% paratope
+occupancy before cleavage. Rearranging the equilibrium equation gives:</p>
+<div class="eq key">{EQ_MASK_BOUND}</div>
+<p>The factor {_leak_frac:.0f} comes from the required occupancy:
+{1 - model['leak_max']:.2f}/{model['leak_max']:.2f} = {_leak_frac:.0f}.</p>
+
+<p>For the {N['ex_n']}-residue linker, the estimated effective concentration is
+{N['ex_ceff']:.1f} mM:</p>
+<div class="eq key">{EQ_MASK_VALUE}</div>
+
+<p><b>Interpretation.</b> Under these assumptions, a mask with an intrinsic K<sub>D</sub> as weak
+as {N['km_hi']:.0f} &micro;M could still occupy the paratope {_leak_pct:.0f}% of the time because
+tethering keeps it nearby.</p>
+
+<p>This gives the upper curved boundary in the figure. Since effective concentration depends on
+linker length, the weakest acceptable mask affinity also changes with linker length.</p>
+
+<p><b>3 &middot; Antigen binding after cleavage: how weak must the mask bind?</b></p>
+
+<p><b>The aim.</b> After a protease cuts the linker, the mask is no longer held close to the
+paratope. It becomes a freely diffusing peptide, and the venom antigen can compete with it for the
+same binding site.</p>
+
+<p>The fraction of nanobodies occupied by antigen is estimated using a competitive binding
+equilibrium:</p>
 <div class="eq">{EQ_ANTIGEN}</div>
-<p>Requiring at least {model['recovery_min'] * 100:.0f}% antigen occupancy sets a minimum
-acceptable mask K<sub>D</sub>. That competition no longer involves the linker that used to hold the
-mask, so the bound is the same at every length: it is the horizontal lower boundary.</p>
+<ul class="where">
+<li><span class="sym">P<sub>antigen</sub></span> is the fraction of nanobodies bound to
+antigen.</li>
+<li><span class="sym">A</span> is the assumed free antigen concentration, {_toxin_nM:.0f} nM.</li>
+<li><span class="sym">K<sub>D,A</sub></span> is the measured nanobody&ndash;antigen dissociation
+constant, {_kda_nM:.1f} nM.</li>
+<li><span class="sym">M</span> is the assumed concentration of released free mask,
+{_mask_uM:.0f} &micro;M.</li>
+<li><span class="sym">K<sub>D,mask</sub></span> is the intrinsic mask&ndash;nanobody dissociation
+constant, as in Section 2.</li>
+</ul>
 
-<p><b>Result.</b> The green region between the two boundaries is the set of linker lengths and mask
-affinities predicted to satisfy both requirements. A {N['linker_best']}-residue N-terminal linker
-gives the widest range, <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b>. That is the length
-whose characteristic end-to-end distance almost matches the distance the linker has to span, which
-is where C<sub>eff</sub> peaks. A relatively weak mask could therefore be sufficient, provided the
-linker holds it close to the paratope.</p>
-<p>These estimates use a V<sub>H</sub>H–antigen K<sub>D</sub> of {N['vhh_toxin_kd_nM']:.1f} nM,
-{model['toxin_conc_M'] * 1e9:.0f} nM antigen and {model['mask_conc_M'] * 1e6:.0f} µM released mask.
-They are initial design constraints, not predictions of binding kinetics or of experimental
-switching behaviour.</p>
+<p>The linker-dependent effective concentration no longer appears in this equation because the mask
+has been released.</p>
+
+<p><b>Where does the nanobody's antigen affinity matter?</b> The equation compares the
+concentrations of antigen and released mask relative to how tightly each binds. For the
+antigen:</p>
+<div class="eq key">{EQ_RATIO}</div>
+<p>The corresponding contribution from the released mask is M/K<sub>D,mask</sub>. A strongly
+binding released mask would compete with the antigen; a weakly binding mask would interfere
+less.</p>
+
+<p><b>Setting an antigen-binding requirement.</b> I chose a target of at least
+{model['recovery_min'] * 100:.0f}% antigen occupancy after cleavage:</p>
+<div class="eq">{EQ_ANTI_REQ}</div>
+<p>Rearranging and using M = {_mask_uM:.0f} &micro;M gives:</p>
+<div class="eq key">{EQ_KD_LO}</div>
+
+<p><b>Interpretation.</b> The released mask must not bind too tightly. Under the assumed
+concentrations, a mask with a K<sub>D</sub> below approximately {N['km_lo']:.0f} nM would compete
+too strongly with the antigen to satisfy the {model['recovery_min'] * 100:.0f}% occupancy
+requirement.</p>
+
+<p>This gives the lower horizontal boundary in the figure. Unlike the upper boundary, it does not
+depend on linker length because the mask is no longer tethered.</p>
+
+<p><b>4 &middot; Combining the two requirements</b></p>
+
+<p>The mask must satisfy both conditions:</p>
+<ul class="where">
+<li><b>Before cleavage:</b> bind strongly enough to occupy the paratope while tethered.</li>
+<li><b>After cleavage:</b> bind weakly enough to allow the antigen to occupy the paratope once the
+mask is released.</li>
+</ul>
+
+<p>For the {N['ex_n']}-residue linker, combining the two estimates gives:</p>
+<div class="eq key">{EQ_WINDOW}</div>
+
+<p>This is the predicted affinity window shown by the green region in the figure. At
+{N['ex_n']} residues, the linker provides the highest calculated effective concentration, allowing
+a comparatively weak mask to remain effective while tethered.</p>
+
+<p>The central principle is that tethering changes the mask's local availability, not its intrinsic
+binding affinity. The same peptide can therefore behave as an effective blocker before cleavage and
+a weak competitor afterwards.</p>
+
+<p><b>Model assumptions and limitations.</b> These are equilibrium calculations, not predictions of
+protease cleavage, activation speed or mask dissociation kinetics. The pre-cleavage calculation
+assumes that antigen is not competing for the paratope; the post-cleavage calculation assumes free
+concentrations of {_toxin_nM:.0f} nM antigen and {_mask_uM:.0f} &micro;M released mask. The
+resulting affinity window depends on these assumptions and would need experimental validation.</p>
 
 </div>
 
