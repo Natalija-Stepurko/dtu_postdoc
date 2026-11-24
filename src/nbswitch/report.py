@@ -129,6 +129,8 @@ td.dead{color:var(--chrome);font-weight:600}
 .step span{font-size:.87rem;color:var(--ink-2);line-height:1.45}
 .eq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:15px 20px;
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
+/* a typeset equation: glyph outlines that take the colour of the text */
+.eq svg{display:block;margin:3px 0;max-width:none}
 /* the symbols of the equation above, defined one to a line */
 ul.where{margin:0;padding-left:19px;color:var(--ink-2);font-size:.94rem;line-height:1.5}
 ul.where li{margin-bottom:5px}

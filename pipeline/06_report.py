@@ -473,6 +473,25 @@ N["ex_n"] = 14
 N["ex_lc"] = N["ex_n"] * model["rise_per_residue_A"]
 N["ex_ree"] = _math.sqrt(_tether.mean_square_end_to_end(N["ex_n"]))
 N["ex_ceff"] = _tether.effective_concentration(N["ex_n"], N["span_n"]) * 1e3
+
+# the two Module 01 equations, typeset rather than written in running text
+from nbswitch import mathfig as _mf
+EQ_WLC = _mf.equation(
+    r"\langle r^2 \rangle = 2 l_p L_c "
+    r"\left[ 1 - \frac{l_p}{L_c}\left(1 - e^{-L_c/l_p}\right) \right]",
+    "Mean square end-to-end distance equals two l p L c, times one minus "
+    "l p over L c, times one minus e to the minus L c over l p.",
+    "wlc")
+EQ_CEFF = _mf.equation(
+    r"C_{\mathrm{eff}}(d) = \frac{10^{27}}{N_A} "
+    r"\left( \frac{3}{2\pi\langle r^2\rangle} \right)^{3/2} \, "
+    r"e^{-3d^2/(2\langle r^2\rangle)}",
+    "C eff of d equals ten to the twenty-seventh over Avogadro's number, "
+    "times three over two pi mean square end-to-end distance, to the power "
+    "three halves, times e to the minus three d squared over twice the mean "
+    "square end-to-end distance.",
+    "ceff")
+
 N["ree_best"] = bN["mean_end_to_end_A"]
 N["linker_best_c"] = bC["linker_residues"]
 N["window_c"] = bC["window_decades"]
@@ -1185,7 +1204,7 @@ closer to the centre of the paratope than the C-terminus ({N['span_n']:.1f} Å v
 and can adopt many conformations rather than remaining fully extended. I used a
 <i>worm-like-chain</i> model to calculate its characteristic end-to-end distance at different
 linker lengths.</p>
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]</div>
+<div class="eq">{EQ_WLC}</div>
 <ul class="where">
 <li><span class="sym">L<sub>c</sub></span> is the fully extended linker length, calculated as
 {model['rise_per_residue_A']:.1f} Å × number of residues.</li>
@@ -1201,13 +1220,13 @@ characteristic end-to-end distance is only {N['ex_ree']:.1f} Å because the chai
 characteristic size, I used a Gaussian approximation to estimate the probability density of its
 free end at the paratope, {N['span_n']:.1f} Å from the attachment point. This was converted into
 an effective local concentration.</p>
-<div class="eq">C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
+<div class="eq">{EQ_CEFF}</div>
 <ul class="where">
 <li><span class="sym">d</span> is the distance from the attachment point to the paratope centre
 ({N['span_n']:.1f} Å).</li>
 <li><span class="sym">⟨r²⟩</span> comes from the worm-like-chain calculation above.</li>
-<li><span class="sym">1660.54</span> converts probability density from Å⁻³ into molar
-concentration, using Avogadro's constant.</li>
+<li><span class="sym">10²⁷/N<sub>A</sub></span> converts probability density from Å⁻³ into molar
+concentration, using Avogadro's constant. It evaluates to 1660.54.</li>
 <li><span class="sym">C<sub>eff</sub></span> is the estimated effective local concentration of
 the tethered mask, in mol/L.</li>
 </ul>
