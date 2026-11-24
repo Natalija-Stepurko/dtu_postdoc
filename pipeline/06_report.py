@@ -1291,6 +1291,7 @@ to describe what a disordered linker buys follows
 <a href="https://doi.org/10.1073/pnas.1904813116">Sørensen and Kjaergaard (2019)</a> and
 <a href="https://doi.org/10.1016/bs.mie.2020.09.012">Kjaergaard and colleagues (2021)</a>.</p>
 
+<details class="tech"><summary>Extended explanation</summary><div class="techbody">
 <p><b>1 &middot; Effective concentration of the tethered mask</b></p>
 
 <p><b>Choosing the attachment point.</b> The experimental structure shows that the N-terminus is
@@ -1446,6 +1447,7 @@ protease cleavage, activation speed or mask dissociation kinetics. The pre-cleav
 assumes that antigen is not competing for the paratope; the post-cleavage calculation assumes free
 concentrations of {_toxin_nM:.0f} nM antigen and {_mask_uM:.0f} &micro;M released mask. The
 resulting affinity window depends on these assumptions and would need experimental validation.</p>
+</div></details>
 
 </div>
 
