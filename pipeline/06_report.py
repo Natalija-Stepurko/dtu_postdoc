@@ -1273,7 +1273,12 @@ and {termini_free}.</p></div>
    f"<br>N-terminus distance to the paratope {N['span_n']:.1f} Å."
    f"<br>The fully extended {N['ex_n']}-residue linker length is {N['ex_lc']:.1f} Å, but its "
    f"characteristic end-to-end distance is {N['ex_ree']:.1f} Å because the chain bends."
-   f"<br>Estimated local concentration of the mask is {N['ex_ceff']:.1f} mM.")}
+   f"<br>Estimated local concentration of the mask is {N['ex_ceff']:.1f} mM."
+   f"<br>Intrinsic K<sub>D</sub> of {N['km_hi']:.0f} &micro;M could still occupy the paratope "
+   f"{_leak_pct:.0f}% of the time because tethering keeps it nearby."
+   f"<br>The mask must have a K<sub>D</sub> of at least approximately {N['km_lo']:.0f} nM to "
+   f"bind weakly enough for the antigen to occupy at least "
+   f"{model['recovery_min'] * 100:.0f}% of nanobodies after cleavage.")}
 </div>
 </div>
 
