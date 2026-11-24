@@ -1169,7 +1169,11 @@ and {termini_free}.</p></div>
 <div class="stack">
 <p><b>Estimating linker length and mask affinity.</b> I used established models from polymer
 physics and binding equilibrium to estimate which linker lengths and mask affinities could allow
-both masking and release.</p>
+both masking and release. The worm-like-chain treatment of a flexible linker follows
+<a href="https://doi.org/10.1021/jp011355n">Zhou (2001)</a>; the use of an effective concentration
+to describe what a disordered linker buys follows
+<a href="https://doi.org/10.1073/pnas.1904813116">Sørensen and Kjaergaard (2019)</a> and
+<a href="https://doi.org/10.1016/bs.mie.2020.09.012">Kjaergaard and colleagues (2021)</a>.</p>
 
 <p><b>1 &middot; Effective concentration of the tethered mask</b></p>
 
@@ -1240,11 +1244,7 @@ linker holds it close to the paratope.</p>
 <p>These estimates use a V<sub>H</sub>H–antigen K<sub>D</sub> of {N['vhh_toxin_kd_nM']:.1f} nM,
 {model['toxin_conc_M'] * 1e9:.0f} nM antigen and {model['mask_conc_M'] * 1e6:.0f} µM released mask.
 They are initial design constraints, not predictions of binding kinetics or of experimental
-switching behaviour. The worm-like-chain treatment of a flexible linker follows
-<a href="https://doi.org/10.1021/jp011355n">Zhou (2001)</a>; the use of an effective concentration
-to describe what a disordered linker buys follows
-<a href="https://doi.org/10.1073/pnas.1904813116">Sørensen and Kjaergaard (2019)</a> and
-<a href="https://doi.org/10.1016/bs.mie.2020.09.012">Kjaergaard and colleagues (2021)</a>.</p>
+switching behaviour.</p>
 
 </div>
 
