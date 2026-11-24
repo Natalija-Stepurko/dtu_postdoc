@@ -1018,7 +1018,7 @@ REF_LEN = lib["reference_length"]
 
 HTML = f"""<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Computational design of protease-responsive nanobodies</title>
+<title>Computational design of environment-responsive nanobodies</title>
 <meta name="description" content="A computational approach to designing nanobodies whose antigen
 binding is restored by proteolysis, with a partial implementation on an experimental complex.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1027,10 +1027,15 @@ binding is restored by proteolysis, with a partial implementation on an experime
 
 <header>
 <div class="kicker"><span>Natalija Stepurko</span><b>DTU · postdoctoral interview</b></div>
-<h1>Computational design of protease-responsive nanobodies</h1>
-<p class="lede">A proposed pipeline for designing nanobodies that are masked in circulation and
-restored to antigen binding by proteolysis, together with a partial implementation on an
-experimental nanobody–antigen complex.</p>
+<h1>Computational design of environment-responsive nanobodies</h1>
+<div class="banner"><b>Environment-responsive nanobodies</b><br>
+The bite site of a viper envenomation is marked by several local cues absent from systemic
+circulation: acidic pH (~6.0&ndash;6.5), elevated protease activity (tissue-damaged, MMPs/venom
+proteases), and localized hypoxia. Propose a computational pipeline to design a nanobody-based
+&ldquo;conditional switch&rdquo; that stays masked systemically but activates at the bite site
+using one or more of these cues. Consider whether there would be possibilities for making an
+integrated universal switch and/or robust standardized methods. Also consider how you would
+collaborate with wet lab PhD students for experimental testing and validation.</div>
 </header>
 
 <section class="sec">

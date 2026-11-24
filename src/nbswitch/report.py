@@ -70,7 +70,6 @@ header{padding:76px 0 50px;display:flex;flex-direction:column;gap:22px}
 .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
         color:var(--ink-3);display:flex;gap:12px;flex-wrap:wrap}
 .kicker b{color:var(--seq);font-weight:600}
-.lede{font-size:1.2rem;color:var(--ink-2);line-height:1.52;font-weight:400;max-width:none}
 .banner{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--chrome);
         border-radius:3px;padding:16px 20px;font-size:.96rem;color:var(--ink-2);max-width:none}
 .banner b{color:var(--ink)}

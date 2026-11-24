@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Computational design of protease-responsive nanobodies</title>
+<title>Computational design of environment-responsive nanobodies</title>
 <meta name="description" content="A computational approach to designing nanobodies whose antigen
 binding is restored by proteolysis, with a partial implementation on an experimental complex.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +62,6 @@ header{padding:76px 0 50px;display:flex;flex-direction:column;gap:22px}
 .kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
         color:var(--ink-3);display:flex;gap:12px;flex-wrap:wrap}
 .kicker b{color:var(--seq);font-weight:600}
-.lede{font-size:1.2rem;color:var(--ink-2);line-height:1.52;font-weight:400;max-width:none}
 .banner{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--chrome);
         border-radius:3px;padding:16px 20px;font-size:.96rem;color:var(--ink-2);max-width:none}
 .banner b{color:var(--ink)}
@@ -267,10 +266,15 @@ footer{padding:36px 0 72px;color:var(--ink-3);font-size:.85rem}
 
 <header>
 <div class="kicker"><span>Natalija Stepurko</span><b>DTU · postdoctoral interview</b></div>
-<h1>Computational design of protease-responsive nanobodies</h1>
-<p class="lede">A proposed pipeline for designing nanobodies that are masked in circulation and
-restored to antigen binding by proteolysis, together with a partial implementation on an
-experimental nanobody–antigen complex.</p>
+<h1>Computational design of environment-responsive nanobodies</h1>
+<div class="banner"><b>Environment-responsive nanobodies</b><br>
+The bite site of a viper envenomation is marked by several local cues absent from systemic
+circulation: acidic pH (~6.0&ndash;6.5), elevated protease activity (tissue-damaged, MMPs/venom
+proteases), and localized hypoxia. Propose a computational pipeline to design a nanobody-based
+&ldquo;conditional switch&rdquo; that stays masked systemically but activates at the bite site
+using one or more of these cues. Consider whether there would be possibilities for making an
+integrated universal switch and/or robust standardized methods. Also consider how you would
+collaborate with wet lab PhD students for experimental testing and validation.</div>
 </header>
 
 <section class="sec" id="s1" data-slide="01 / 07">
@@ -562,7 +566,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=3e563181" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=118ab1fe" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
