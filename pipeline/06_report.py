@@ -1587,9 +1587,9 @@ measurement fails against a different part of the pipeline, so three is enough t
 <tr><td>Purification &mdash; &Auml;KTA trace, single band on the gel</td>
 <td>can it be made at all</td>
 <td>the feasibility score: fold, aggregation, developability</td></tr>
-<tr><td>Biolayer interferometry, antigen affinity with the protease absent</td>
+<tr><td>Biolayer interferometry with the protease absent</td>
 <td>is it masked</td><td>the masking half of the unmasking score</td></tr>
-<tr><td>Biolayer interferometry, antigen affinity with the protease present, with a band shift
+<tr><td>Biolayer interferometry with the protease present, with a band shift
 on the gel when cleaved</td>
 <td>does it activate</td><td>the trigger score, or the release half</td></tr>
 </tbody></table>
