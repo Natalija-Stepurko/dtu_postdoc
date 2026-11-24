@@ -1760,24 +1760,45 @@ extended, exposed and accessible to a protease-sized object.</p></div>
 {chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
    "marked.")}
 <details class="tech"><summary>How candidates were selected</summary><div class="techbody">
-<p>Each construct was assessed for structural feasibility, paratope occlusion and linker
-cleavability. These are three separate objectives; occlusion measures surface coverage, not
-mask-binding affinity.</p>
-<p><b>1 &middot; Basic requirements.</b> Before comparing designs, I checked V<sub>H</sub>H
-confidence, preservation of the nanobody fold, predicted protease selectivity and cleavage-site
-accessibility. These checks prevent candidates with clearly unfavourable properties from being
-promoted by other scores.</p>
-<p><b>2 &middot; Pareto selection.</b> A design was removed if another performed at least as
-well on all three objectives and better on at least one. This left {N['rank_front']}
-nondominated candidates, representing different trade-offs between the three scores.</p>
-<p><b>3 &middot; Shortlisting.</b> I normalised each score to the range observed across the
-library and ranked the {N['rank_front']} candidates by their lowest normalised score (maximin).
-This favours balanced designs over those that perform well in two criteria but poorly in the
-third. I then retained one construct per distinct mask sequence, producing a shortlist of
-{R.word(N['rank_shortlist'])} candidates for further structural assessment.</p>
+<p>Each of the {N['rank_total']} masked constructs was evaluated against three objectives:
+structural feasibility, paratope occlusion and linker cleavability. Since a construct could
+perform well in one objective but poorly in another, I used Pareto selection followed by maximin
+ranking.</p>
+
+<p><b>Step 1 &mdash; Identifying the best trade-offs (Pareto selection).</b> A construct was
+removed if another performed at least as well on all three objectives and better on at least one.
+For example, a design with better structural feasibility, greater paratope occlusion and higher
+cleavability would make a weaker design unnecessary.</p>
+
+<p>This reduced {N['rank_total']} candidates to {N['rank_front']} nondominated designs. The
+remaining candidates represent different trade-offs: improving one property may mean compromising
+another.</p>
+
+<p><b>Step 2 &mdash; Ranking the remaining candidates (maximin).</b> Pareto selection identifies
+promising trade-offs but does not rank them. I therefore normalised each objective to a scale of
+0&ndash;1 and ranked candidates according to their lowest normalised score:</p>
 <div class="eq">{EQ_RANK}</div>
-<p>Here Ŝ<sub>i</sub>(x) is each normalised objective. The lowest of the three determines the
-ranking score.</p></div></details>
+<ul class="where">
+<li><span class="sym">R(x)</span> is the final ranking score for construct x.</li>
+<li><span class="sym">&#348;<sub>i</sub>(x)</span> is its normalised score for objective i.</li>
+<li><span class="sym">min</span> means taking the lowest of the three scores.</li>
+</ul>
+<p>For example, a construct with normalised scores of 0.60, 0.55 and 0.48 receives a maximin score
+of 0.48.</p>
+<p>The higher this minimum score, the more balanced the construct is across all three
+requirements. This avoids prioritising a design that excels in two properties but performs poorly
+in the third.</p>
+
+<p><b>Step 3 &mdash; Selecting a diverse shortlist.</b> Finally, I retained the highest-ranked
+construct from each distinct original mask design, rather than selecting several closely related
+variants.</p>
+
+<p>This produced {R.word(N['rank_shortlist'])} candidates for further structural assessment with
+Boltz-2.</p>
+
+<p>The ranking identifies promising compromises between predicted properties; it does not
+establish that the masks bind specifically or that the constructs will switch
+experimentally.</p></div></details>
 {R.normalised_table(RANK_SHORTLIST_ROWS, RANK_OBJECTIVES)}
 <div class="stack">
 <p class="dim">Scores are min&ndash;max normalised across the {N['rank_total']} candidates.
