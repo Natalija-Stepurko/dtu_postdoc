@@ -1019,18 +1019,20 @@ def architecture_schematic() -> str:
                 f'<text x="{W/2}" y="{y+h/2+6}" class="p-io" fill="{CHROME}" '
                 f'text-anchor="middle">{text}</text>')
 
-    def inbox(x, w, y, h, kind, name):
+    def inbox(x, w, y, h, kind, name, dashed=False):
+        dash = ' stroke-dasharray="5 3"' if dashed else ""
         return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#F4F8F8" '
-                f'stroke="{CHROME}" stroke-width="1"/>'
+                f'stroke="{CHROME}" stroke-width="1"{dash}/>'
                 f'<text x="{x+w/2}" y="{y+22}" class="p-l" fill="{CHROME}" '
                 f'text-anchor="middle">{kind}</text>'
                 f'<text x="{x+w/2}" y="{y+45}" class="p-t" fill="{INK}" '
                 f'text-anchor="middle">{name}</text>')
 
-    def shared(y, h, title, note, methods, further=""):
+    def shared(y, h, title, note, methods, further="", dashed=True):
         """A step every downstream module depends on, drawn across the width."""
+        dash = ' stroke-dasharray="5 3"' if dashed else ""
         o = [f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="4" fill="#FBF8F3" '
-             f'stroke="{STR}" stroke-width="1.2" stroke-dasharray="5 3"/>',
+             f'stroke="{STR}" stroke-width="1.2"{dash}/>',
              f'<text x="24" y="{y+30}" class="p-t" fill="{INK}">{title}</text>',
              f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>',
              f'<text x="{W-24}" y="{y+30}" class="p-m" fill="{STR}" '
@@ -1057,8 +1059,10 @@ def architecture_schematic() -> str:
     # profile the linker is conditioned on. The second was missing, which
     # made the CleaveNet conditioning look like it came from nowhere.
     s.append(inbox(0, 478, 22, 58, "STRUCTURAL INPUT", "Nanobody&ndash;antigen complex"))
+    # the protease profile is a choice of target, not a structure that was
+    # measured, so its box is drawn open
     s.append(inbox(502, 478, 22, 58, "BIOLOGICAL INPUT",
-                   "Target and off-target proteases"))
+                   "Target and off-target proteases", dashed=True))
     s.append(arrow(239, 80, 239, 100))
     # the protease profile bypasses the geometry module on the right margin
     s.append(f'<path d="M 741 80 L 741 88 L 1000 88 L 1000 262 L 741 262" '
@@ -1088,20 +1092,20 @@ def architecture_schematic() -> str:
 
     s.append(shared(464, 76, "Assemble and predict structures",
                     "Mask, linker and nanobody built as one chain and folded once.",
-                    "ESMFold", "AlphaFold 3 · Chai-1"))
+                    "ESMFold", "AlphaFold 3 · Chai-1", dashed=False))
     s.append(arrow(490, 540, 490, 556))
 
     # ProteinMPNN is a loop off the folding step, not a numbered module: the
     # redesigned masks are folded again and rejoin the same three scores
     s.append(f'<rect x="0" y="560" width="{W}" height="70" rx="4" fill="#FFFFFF" '
-             f'stroke="{NULL}" stroke-width="1.2" stroke-dasharray="5 3"/>')
+             f'stroke="{NULL}" stroke-width="1.2"/>')
     s.append(f'<text x="24" y="588" class="p-l" fill="{NULL}">'
              'ADDITIONAL SEQUENCE EXPLORATION</text>')
     s.append(f'<text x="24" y="614" class="p-t" fill="{INK2}">ProteinMPNN redesign</text>')
     s.append(f'<text x="{W-24}" y="614" class="p-b" fill="{INK2}" text-anchor="end">'
              'redesign the mask residues, then predict the structures again</text>')
     s.append(f'<path d="M 980 595 L 1000 595 L 1000 502 L 988 502" '
-             f'stroke="{NULL}" stroke-width="1.4" fill="none" stroke-dasharray="4 3" '
+             f'stroke="{NULL}" stroke-width="1.4" fill="none" '
              'marker-end="url(#ar)"/>')
     s.append(arrow(490, 630, 490, 648))
 
