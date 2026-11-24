@@ -131,6 +131,10 @@ td.dead{color:var(--chrome);font-weight:600}
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
 /* a typeset equation: glyph outlines that take the colour of the text */
 .eq svg{display:block;margin:3px 0;max-width:none}
+/* a panel holding a statement and the condition that follows from it */
+.eq svg+svg{margin-top:13px}
+/* inside the annotated equation the groups sit in a row, not stacked */
+.aeq svg{margin:0}
 /* the symbols of the equation above, defined one to a line */
 ul.where{margin:0;padding-left:19px;color:var(--ink-2);font-size:.94rem;line-height:1.5}
 ul.where li{margin-bottom:5px}
@@ -149,7 +153,9 @@ ul.where ul b{color:var(--ink);font-weight:600}
         border-top:0;border-radius:0 0 5px 5px}
 .aname{font-size:.74rem;color:var(--ink-2);font-weight:600;text-align:center;white-space:nowrap}
 .anote{font-size:.68rem;color:var(--ink-3);text-align:center;white-space:nowrap}
-.aop{padding-top:1px}
+/* the operator is struck on the same baseline as the groups it joins, so it
+   needs no nudge of its own */
+.aop{padding-top:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;margin:18px 0}
 .two>*{margin:0;min-width:0}
 .stackfig{display:flex;flex-direction:column;gap:14px;justify-content:center}

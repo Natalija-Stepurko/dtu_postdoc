@@ -491,6 +491,49 @@ EQ_CEFF = _mf.equation(
     "three halves, times e to the minus three d squared over twice the mean "
     "square end-to-end distance.",
     "ceff")
+_leak_pct = 100 - model["leak_max"] * 100
+_leak_frac = (1 - model["leak_max"]) / model["leak_max"]
+EQ_MASKED = _mf.equation(
+    r"P_{\mathrm{masked}} = \frac{C_{\mathrm{eff}}}"
+    r"{C_{\mathrm{eff}} + K_{D,\mathrm{mask}}}",
+    "P masked equals C eff over C eff plus the mask dissociation constant.",
+    "pmask")
+EQ_MASKED_REQ = _mf.equation(
+    rf"P_{{\mathrm{{masked}}}} \geq {_leak_pct:.0f}\% \quad "
+    rf"\mathrm{{requires}} \quad K_{{D,\mathrm{{mask}}}} \leq "
+    rf"\frac{{C_{{\mathrm{{eff}}}}}}{{{_leak_frac:.0f}}}",
+    f"P masked of at least {_leak_pct:.0f} per cent requires the mask "
+    f"dissociation constant to be at most C eff over {_leak_frac:.0f}.",
+    "pmaskreq")
+EQ_ANTIGEN = _mf.equation(
+    r"P_{\mathrm{antigen}} = \frac{A/K_{D,A}}"
+    r"{1 + A/K_{D,A} + M/K_{D,\mathrm{mask}}}",
+    "P antigen equals A over K D A, divided by one plus A over K D A plus "
+    "M over the mask dissociation constant.",
+    "pant")
+EQ_FEASIBILITY = _mf.equation(
+    r"S_{\mathrm{feasibility}} = S_{\mathrm{fold}} \times "
+    r"S_{\mathrm{preservation}} \times S_{\mathrm{surface}} \times "
+    r"S_{\mathrm{cysteine}}",
+    "S feasibility equals S fold times S preservation times S surface "
+    "times S cysteine.",
+    "sfeas")
+EQ_RANK = _mf.equation(
+    r"R(x) = \min_i \, \hat{S}_i(x)",
+    "R of x equals the minimum over i of S hat i of x.",
+    "rank")
+# the three groups of the cleavability equation, each braced and labelled
+# below, so they have to share a baseline rather than be cropped to their ink
+EQ_CLV = [_mf.equation(e, a, k, aligned=True) for e, a, k in (
+    (r"S_{\mathrm{cleavability}}", "S cleavability", "clv1"),
+    (r"\max(0,\, S_{\mathrm{selectivity}})", "max of zero and S selectivity",
+     "clv2"),
+    (r"S_{\mathrm{extension}} \cdot S_{\mathrm{exposure}} \cdot "
+     r"S_{\mathrm{clearance}}",
+     "S extension times S exposure times S clearance", "clv3"))]
+# the operators between them, struck on the same baseline as the groups
+EQ_CLV_EQ = _mf.equation("=", "equals", "clvop1", aligned=True)
+EQ_CLV_MUL = _mf.equation(r"\times", "times", "clvop2", aligned=True)
 
 N["ree_best"] = bN["mean_end_to_end_A"]
 N["linker_best_c"] = bC["linker_residues"]
@@ -1248,8 +1291,7 @@ to occupy the paratope before cleavage.</p>
 
 <p><b>2 &middot; Masking before cleavage, the upper curve.</b> The fraction of construct whose
 paratope is occupied by its own tethered mask is</p>
-<div class="eq">P<sub>masked</sub> = C<sub>eff</sub> / (C<sub>eff</sub> + K<sub>D,mask</sub>)
-<br><br>P<sub>masked</sub> ≥ {100 - model['leak_max'] * 100:.0f}%   requires   K<sub>D,mask</sub> ≤ C<sub>eff</sub> / {(1 - model['leak_max']) / model['leak_max']:.0f}</div>
+<div class="eq">{EQ_MASKED}{EQ_MASKED_REQ}</div>
 <p>Requiring at least {100 - model['leak_max'] * 100:.0f}% masking therefore caps the mask
 K<sub>D</sub> at a nineteenth of C<sub>eff</sub>, which is the upper curved boundary in the figure.
 A short linker cannot reach the paratope, and a long one spreads the mask through a larger volume,
@@ -1258,7 +1300,7 @@ again.</p>
 
 <p><b>3 &middot; Antigen binding after cleavage, the lower line.</b> Once the linker is cut, the
 released mask and the antigen compete for the same site:</p>
-<div class="eq">P<sub>antigen</sub> = (A/K<sub>D,A</sub>) / (1 + A/K<sub>D,A</sub> + M/K<sub>D,mask</sub>)</div>
+<div class="eq">{EQ_ANTIGEN}</div>
 <p>Requiring at least {model['recovery_min'] * 100:.0f}% antigen occupancy sets a minimum
 acceptable mask K<sub>D</sub>. That competition no longer involves the linker that used to hold the
 mask, so the bound is the same at every length: it is the horizontal lower boundary.</p>
@@ -1434,8 +1476,7 @@ section is mainly about.</p></div>
 <div><div class="k">4 &middot; Cysteine liability</div><b>Unpaired cysteines</b>
 <span>Are any cysteines left with no predicted disulphide partner?</span></div>
 </div>
-<div class="eq">S<sub>feasibility</sub> = S<sub>fold</sub> &times; S<sub>preservation</sub>
-&times; S<sub>surface</sub> &times; S<sub>cysteine</sub></div>
+<div class="eq">{EQ_FEASIBILITY}</div>
 <p>All four components run from 0 to 1, and a higher score means fewer predicted liabilities.
 What each one computes:</p>
 <table class="tbl">
@@ -1548,10 +1589,9 @@ on a Fibonacci lattice. A direction counts as open when no heavy atom of the con
 inside the probe; the cleavage segment's own atoms are excluded, since the enzyme is binding
 them rather than being blocked by them.</p></div></details>
 {R.annotated_equation([
-   ("S<sub>cleavability</sub>", "Combined cleavability score", "used in Module 06"), "=",
-   ("max(0, S<sub>selectivity</sub>)", "Sequence selectivity", "from Module 02"), "&times;",
-   ("S<sub>extension</sub> &middot; S<sub>exposure</sub> &middot; S<sub>clearance</sub>",
-    "Structural accessibility", "calculated in Module 05")])}
+   (EQ_CLV[0], "Combined cleavability score", "used in Module 06"), EQ_CLV_EQ,
+   (EQ_CLV[1], "Sequence selectivity", "from Module 02"), EQ_CLV_MUL,
+   (EQ_CLV[2], "Structural accessibility", "calculated in Module 05")])}
 <div class="stack">
 <p>The three accessibility measures are multiplied, so a cleavage site must be sufficiently
 extended, exposed and accessible to a protease-sized object.</p></div>
@@ -1608,7 +1648,7 @@ library and ranked the {N['rank_front']} candidates by their lowest normalised s
 This favours balanced designs over those that perform well in two criteria but poorly in the
 third. I then retained one construct per distinct mask sequence, producing a shortlist of
 {R.word(N['rank_shortlist'])} candidates for further structural assessment.</p>
-<div class="eq">R(x) = min<sub>i</sub> Ŝ<sub>i</sub>(x)</div>
+<div class="eq">{EQ_RANK}</div>
 <p>Here Ŝ<sub>i</sub>(x) is each normalised objective. The lowest of the three determines the
 ranking score.</p></div></details>
 {R.normalised_table(RANK_SHORTLIST_ROWS, RANK_OBJECTIVES)}

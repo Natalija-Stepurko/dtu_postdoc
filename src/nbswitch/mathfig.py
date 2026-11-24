@@ -18,6 +18,9 @@ import re
 #: Rendered at this point size, then scaled to the reader's text size.
 _BASE_PT = 10.0
 
+#: Breathing room left around the glyphs, in inches.
+_PAD = 0.015
+
 #: Size of the equation's base glyphs, in rem. Computer Modern has a small
 #: x-height next to the page's sans face, so matching the nominal size would
 #: leave the maths looking shrunken; it is set a little larger instead.
@@ -49,27 +52,56 @@ def _plt():
         "figure.facecolor": "none",
         "savefig.facecolor": "none",
         "savefig.bbox": "tight",
-        "savefig.pad_inches": 0.015,
+        "savefig.pad_inches": _PAD,
     })
     return plt
 
 
-def equation(latex: str, label: str, key: str) -> str:
+#: Room kept above and below the baseline, in multiples of the point size,
+#: when several equations have to line up with one another.
+_ASCENT, _DESCENT = 1.10, 0.60
+
+
+def equation(latex: str, label: str, key: str, aligned: bool = False) -> str:
     """Typeset ``latex`` and return inline SVG markup.
 
     ``latex`` is a mathtext expression without the surrounding ``$``.
     ``label`` is read aloud in place of the image. ``key`` namespaces the
     glyph ids so several equations can share one page.
+
+    Cropping to the ink puts the baseline at a different height in every
+    expression, which is invisible until two of them sit side by side and
+    their baselines disagree. ``aligned`` crops the width but fixes the
+    height, so a row of expressions shares one baseline.
     """
     import io
 
     plt = _plt()
     fig = plt.figure(figsize=(0.01, 0.01))
-    fig.text(0, 0, f"${latex}$", fontsize=_BASE_PT)
+    text = fig.text(0, 0, f"${latex}$", fontsize=_BASE_PT, va="baseline")
+    box = "tight"
+    if aligned:
+        box = _strut(fig, text, latex)
     buf = io.StringIO()
-    fig.savefig(buf, format="svg", transparent=True)
+    fig.savefig(buf, format="svg", transparent=True, bbox_inches=box)
     plt.close(fig)
     return _clean(buf.getvalue(), label, key)
+
+
+def _strut(fig, text, latex):
+    """A bounding box tight in width and fixed in height."""
+    from matplotlib.transforms import Bbox
+
+    fig.canvas.draw()
+    ink = text.get_window_extent(fig.canvas.get_renderer()).transformed(
+        fig.dpi_scale_trans.inverted())
+    up, down = _ASCENT * _BASE_PT / 72, _DESCENT * _BASE_PT / 72
+    if ink.y1 > up or ink.y0 < -down:
+        raise ValueError(
+            f"{latex!r} reaches past the fixed height an aligned row allows; "
+            f"raise _ASCENT/_DESCENT (needs {ink.y1 * 72 / _BASE_PT:.2f} up, "
+            f"{-ink.y0 * 72 / _BASE_PT:.2f} down)")
+    return Bbox([[ink.x0 - _PAD, -down], [ink.x1 + _PAD, up]])
 
 
 def _clean(svg: str, label: str, key: str) -> str:
