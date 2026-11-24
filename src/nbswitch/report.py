@@ -136,6 +136,11 @@ ul.where{margin:0;padding-left:19px;color:var(--ink-2);font-size:.94rem;line-hei
 ul.where li{margin-bottom:5px}
 ul.where li:last-child{margin-bottom:0}
 ul.where .sym{font-family:var(--mono);font-size:.86rem;color:var(--ink)}
+/* a term the line above leans on, defined under it */
+ul.where ul{margin:6px 0 0;padding-left:17px;list-style:circle}
+ul.where ul li{margin-bottom:3px}
+ul.where ul li:last-child{margin-bottom:0}
+ul.where ul b{color:var(--ink);font-weight:600}
 .aeq{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:4px 12px;
      line-height:1.5}
 .agrp{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}

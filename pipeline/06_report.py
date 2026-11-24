@@ -1230,7 +1230,13 @@ an effective local concentration.</p>
 ({N['span_n']:.1f} Å).</li>
 <li><span class="sym">⟨r²⟩</span> comes from the worm-like-chain calculation above.</li>
 <li><span class="sym">10²⁷/N<sub>A</sub></span> converts probability density from Å⁻³ into molar
-concentration, using Avogadro's constant. It evaluates to 1660.54.</li>
+concentration, using Avogadro's constant. It evaluates to 1660.54.
+<ul>
+<li><b>Probability density:</b> How likely is the linker's free end to occupy a small volume?
+Measured in Å⁻³.</li>
+<li><b>Molar concentration:</b> How many molecules would occupy that volume at an equivalent
+concentration? Measured in mol/L (M).</li>
+</ul></li>
 <li><span class="sym">C<sub>eff</sub></span> is the estimated effective local concentration of
 the tethered mask, in mol/L.</li>
 </ul>
