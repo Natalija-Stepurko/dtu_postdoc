@@ -1759,7 +1759,8 @@ extended, exposed and accessible to a protease-sized object.</p></div>
 <figure class="fig wide"><div class="figbody">{R.selection_funnel(FUNNEL)}</div></figure>
 {chart_wide("pareto_panels", "The three scores plotted pairwise, with the nondominated set "
    "marked.")}
-<details class="tech"><summary>How candidates were selected</summary><div class="techbody">
+<details class="tech"><summary>Extended explanation</summary><div class="techbody">
+<p><b>How candidates were selected</b></p>
 <p>Each of the {N['rank_total']} masked constructs was evaluated against three objectives:
 structural feasibility, paratope occlusion and linker cleavability. Since a construct could
 perform well in one objective but poorly in another, I used Pareto selection followed by maximin
