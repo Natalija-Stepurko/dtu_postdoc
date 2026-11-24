@@ -1234,10 +1234,9 @@ concentration, using Avogadro's constant. It evaluates to 1660.54.</li>
 <li><span class="sym">C<sub>eff</sub></span> is the estimated effective local concentration of
 the tethered mask, in mol/L.</li>
 </ul>
-<p>For the {N['ex_n']}-residue linker, this gives C<sub>eff</sub> = {N['ex_ceff']:.1f} mM.</p>
-
-<p>This is not the actual concentration of mask in solution. It describes how tethering increases
-the mask's local availability near the paratope compared with a freely diffusing peptide.</p>
+<p>For the {N['ex_n']}-residue linker, this gives C<sub>eff</sub> = {N['ex_ceff']:.1f} mM. It
+describes how tethering increases the mask's local availability near the paratope compared with a
+freely diffusing peptide.</p>
 <p>The resulting effective concentration is then used to estimate how strongly the mask must bind
 to occupy the paratope before cleavage.</p>
 
