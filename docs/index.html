@@ -339,6 +339,11 @@ secreted protein.</td><td>Not selected</td></tr>
 
 
 <div class="chart wide"><div class="states"><figure class="stfig"><img src="states/a.png?v=8c474030" alt=""><figcaption><b>A · Intact construct</b><span>The mask and linker are attached at the N-terminus of the nanobody.</span></figcaption></figure><figure class="stfig"><img src="states/b.png?v=79b7bf80" alt=""><figcaption><b>B · After cleavage</b><span>Proteolysis separates the mask, which then diffuses away.</span></figcaption></figure><figure class="stfig"><img src="states/c.png?v=3c8bf915" alt=""><figcaption><b>C · Antigen bound</b><span>The antigen engages the same surface, as in the deposited complex.</span></figcaption></figure></div><div class="stkey"><span><i style="background:#337D79"></i>nanobody</span><span><i style="background:#8C72AD"></i>mask</span><span><i style="background:#9AA7B1"></i>linker</span><span><i style="background:#C06014"></i>antigen-binding residues</span><span><i style="background:#C99555"></i>antigen</span></div></div>
+<p class="dim" style="font-size:.9rem">The nanobody&ndash;toxin complex this work builds on is
+<a href="https://www.rcsb.org/structure/9RIU">PDB 9RIU</a>, deposited with: Ahmadi S.,
+Burlet N.J., Benard-Valle M. <i>et al.</i> Nanobody-based recombinant antivenom for cobra, mamba
+and rinkhals bites. <i>Nature</i> 647:716&ndash;725 (2025).
+<a href="https://doi.org/10.1038/s41586-025-09661-0">10.1038/s41586-025-09661-0</a></p>
 </section>
 
 
@@ -534,7 +539,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=5d7b2ccf" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=7862bd69" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
