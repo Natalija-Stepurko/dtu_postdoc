@@ -1104,7 +1104,9 @@ access to a functional protein surface.</p></div>
 
 <div class="chart wide">{R.states_schematic()}</div>
 <p class="dim" style="font-size:.9rem">The nanobody&ndash;toxin complex this work builds on is
-<a href="https://www.rcsb.org/structure/{PDB_ID}">PDB {PDB_ID}</a>, deposited with: Ahmadi S.,
+<a href="https://www.rcsb.org/structure/{PDB_ID}">PDB {PDB_ID}</a>: the broadly neutralising
+nanobody VHH5 a-sNTx bound to short neurotoxin 1 (UniProt P01426) from the red spitting cobra
+<i>Naja pallida</i>. Deposited with: Ahmadi S.,
 Burlet N.J., Benard-Valle M. <i>et al.</i> Nanobody-based recombinant antivenom for cobra, mamba
 and rinkhals bites. <i>Nature</i> 647:716&ndash;725 (2025).
 <a href="https://doi.org/10.1038/s41586-025-09661-0">10.1038/s41586-025-09661-0</a></p>
