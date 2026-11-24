@@ -210,6 +210,11 @@ details.fold>summary:hover b{color:var(--str)}
 .tgrid{display:grid;gap:14px;margin:4px 0}
 .tgrid.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .tgrid.c3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+/* a wide panel beside a squarer one. The 2:1 split is what makes the two
+   stand the same height: the wide figure is about twice the aspect ratio of
+   the one next to it, so twice the width leaves them level */
+.tgrid.c21{grid-template-columns:2fr 1fr}
+@media(max-width:720px){.tgrid.c21{grid-template-columns:1fr}}
 .tstep{display:flex;gap:12px;align-items:baseline;margin:26px 0 2px}
 .tstep b{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--chrome)}
 .tstep span{font-size:1rem;color:var(--ink);font-weight:600}
@@ -1242,16 +1247,16 @@ inhibitor</b>
 {f("fst_topology", "Topology of the full-length molecule, from the N-terminus to the tail.", "wide")}
 
 {step("02", "The tail binds back, and the strength can be measured")}
-{f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding each isoform.", "full")}
+<div class="tgrid c21">
+{f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding each isoform.")}
+{f("fig4_1_4_e", "Isoform binding to heparan sulphate, the ligand the tail displaces from that "
+   "same surface.")}
+</div>
 {f("fig4_1_8_d", "Fluorescence polarisation, tail against FS12 at three ionic strengths. "
    "K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM and 34.6 µM at 300 mM, indicating a "
    "largely electrostatic interaction.", "full")}
 
-{step("03", "What the tail competes with")}
-{f("fig4_1_4_e", "Isoform binding to heparan sulphate, the ligand the tail displaces from that "
-   "same surface.", "wide")}
-
-{step("04", "Two states, resolved experimentally rather than predicted")}
+{step("03", "Two states")}
 {f("fst_saxs_abc", "From crystal structure to solution ensemble. (a) FST288 in the "
    "activin A complex, fitted to the SAXS envelope. (b) A model of FST315 adding the tails. "
    "(c) The solution structure is not one conformation but two — 65% open and 35% closed, "

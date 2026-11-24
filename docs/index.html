@@ -202,6 +202,11 @@ details.fold>summary:hover b{color:var(--str)}
 .tgrid{display:grid;gap:14px;margin:4px 0}
 .tgrid.c2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .tgrid.c3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+/* a wide panel beside a squarer one. The 2:1 split is what makes the two
+   stand the same height: the wide figure is about twice the aspect ratio of
+   the one next to it, so twice the width leaves them level */
+.tgrid.c21{grid-template-columns:2fr 1fr}
+@media(max-width:720px){.tgrid.c21{grid-template-columns:1fr}}
 .tstep{display:flex;gap:12px;align-items:baseline;margin:26px 0 2px}
 .tstep b{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--chrome)}
 .tstep span{font-size:1rem;color:var(--ink);font-weight:600}
@@ -323,13 +328,13 @@ inhibitor</b>
 <figure class="tfig wide"><img src="thesis/fst_topology.png?v=b1cc9d7c" alt=""><figcaption>Topology of the full-length molecule, from the N-terminus to the tail.</figcaption></figure>
 
 <div class="tstep"><b>02</b><span>The tail binds back, and the strength can be measured</span></div>
-<figure class="tfig full"><img src="thesis/fig4_1_3_a_isoforms.png?v=8a2ae837" alt=""><figcaption>Biolayer interferometry: tail peptides binding each isoform.</figcaption></figure>
+<div class="tgrid c21">
+<figure class="tfig "><img src="thesis/fig4_1_3_a_isoforms.png?v=8a2ae837" alt=""><figcaption>Biolayer interferometry: tail peptides binding each isoform.</figcaption></figure>
+<figure class="tfig "><img src="thesis/fig4_1_4_e.png?v=d0933bfa" alt=""><figcaption>Isoform binding to heparan sulphate, the ligand the tail displaces from that same surface.</figcaption></figure>
+</div>
 <figure class="tfig full"><img src="thesis/fig4_1_8_d.png?v=1bbacbe1" alt=""><figcaption>Fluorescence polarisation, tail against FS12 at three ionic strengths. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM and 34.6 µM at 300 mM, indicating a largely electrostatic interaction.</figcaption></figure>
 
-<div class="tstep"><b>03</b><span>What the tail competes with</span></div>
-<figure class="tfig wide"><img src="thesis/fig4_1_4_e.png?v=d0933bfa" alt=""><figcaption>Isoform binding to heparan sulphate, the ligand the tail displaces from that same surface.</figcaption></figure>
-
-<div class="tstep"><b>04</b><span>Two states, resolved experimentally rather than predicted</span></div>
+<div class="tstep"><b>03</b><span>Two states</span></div>
 <figure class="tfig portrait"><img src="thesis/fst_saxs_abc.png?v=d1159645" alt=""><figcaption>From crystal structure to solution ensemble. (a) FST288 in the activin A complex, fitted to the SAXS envelope. (b) A model of FST315 adding the tails. (c) The solution structure is not one conformation but two — 65% open and 35% closed, interconverting, with the tail engaged in the closed state.</figcaption></figure>
 <figure class="tfig medium"><img src="thesis/fig4_1_14_f.png?v=d13d7b5d" alt=""><figcaption>SEC-SAXS scattering with fits from each model. The two-state model gives the lowest chi-squared, 1.058, beating either single structure.</figcaption></figure>
 <figure class="tfig full"><img src="thesis/fig4_1_23_a_isoforms.png?v=2856da9a" alt=""><figcaption>Conformational space explored for each isoform, radius of gyration against maximum dimension. The longer the tail, the more closed states appear.</figcaption></figure>
@@ -7313,7 +7318,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=5b4da7e4" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=be6d700c" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
