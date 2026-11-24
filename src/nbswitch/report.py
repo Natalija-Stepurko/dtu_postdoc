@@ -301,6 +301,7 @@ const ENSEMBLE = __ENSEMBLE__;
 const CDRS = __CDRS__;
 const TOP_PARATOPE = __TOPPARA__;
 const TOXIN_CONTACT = __TOXCONTACT__;
+const DISULPHIDES = __DISULPHIDES__;
 const SCORES = __SCORES__;
 const FINAL_PAIR = __FINALPAIR__;
 let v1 = null, v2 = null, vRef = null, vMask = null;
@@ -335,6 +336,13 @@ function wakeViewers(root) {
 // says which part of the construct it belongs to.
 const STICK_PARATOPE = {stick: {colorscheme: 'orangeCarbon', radius: 0.22}};
 const STICK_MASK = {stick: {colorscheme: 'purpleCarbon', radius: 0.19}};
+// only the atoms the bridge runs through, so the bond reads as a bond rather
+// than as two whole side chains
+const SS_ATOMS = ['CB', 'SG'];
+// sulphur yellow, the usual convention. Kept well clear of CDR2's goldenrod,
+// which sits two entries away in the same legend
+const SS_COLOUR = '#FFD300';
+const STICK_DISULPHIDE = {stick: {color: SS_COLOUR, radius: 0.18}};
 
 function termini(view, model, sel, labelSuffix) {
   const cas = model.selectedAtoms(Object.assign({atom: 'CA'}, sel));
@@ -366,6 +374,22 @@ function boot() {
       return toxContact.indexOf(atom.resi) >= 0 ? '#B8541F' : '#E0C49A';
     }}});
     v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
+    // the disulphides the deposited structure actually contains, found by
+    // measuring SG to SG rather than by drawing every cysteine: a free
+    // cysteine drawn the same way would read as half a bond that is not there
+    DISULPHIDES.forEach(function (ss) {
+      v1.addStyle({chain: ss.chain_a, resi: ss.res_a, atom: SS_ATOMS},
+                  STICK_DISULPHIDE);
+      v1.addStyle({chain: ss.chain_b, resi: ss.res_b, atom: SS_ATOMS},
+                  STICK_DISULPHIDE);
+      // 3Dmol bonds atoms by distance within a residue, so the two sulphurs
+      // of a bridge are never joined; the bond itself is drawn by hand
+      const a = m.selectedAtoms({chain: ss.chain_a, resi: ss.res_a, atom: 'SG'})[0];
+      const b = m.selectedAtoms({chain: ss.chain_b, resi: ss.res_b, atom: 'SG'})[0];
+      if (a && b) v1.addCylinder({
+        start: {x: a.x, y: a.y, z: a.z}, end: {x: b.x, y: b.y, z: b.z},
+        radius: 0.18, color: SS_COLOUR, fromCap: 2, toCap: 2});
+    });
     termini(v1, m, {chain: 'A'}, '');
     termini(v1, m, {chain: 'X'}, '\u2032');
     const fit1 = function () { v1.zoomTo(); v1.zoom(1.75); };

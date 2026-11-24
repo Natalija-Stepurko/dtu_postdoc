@@ -673,6 +673,16 @@ top_paratope = [
     for lbl in iface.get("paratope_near_labels", iface["paratope_contact_labels"])]
 toxin_contact = sorted(int("".join(c for c in lbl[1:] if c.isdigit()))
                        for lbl in iface.get("epitope_near_labels", []))
+
+# the disulphides of the deposited complex, measured from the file the viewer
+# itself loads so the bonds drawn are the ones in the structure on screen
+import biotite.structure.io.pdb as _pdb
+import biotite.structure as _struc
+from nbswitch.structure import disulphides as _disulphides
+_solved = DOCS / "structures" / f"{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb"
+_sol_atoms = _pdb.PDBFile.read(_solved).get_structure(model=1)
+disulphide_bonds = _disulphides(_sol_atoms[_struc.filter_amino_acids(_sol_atoms)])
+
 N["mask_cutoff"] = iface.get("mask_contact_cutoff_A", 3.5)
 N["n_near"] = len(top_paratope)
 N["n_epitope_near"] = len(iface.get("epitope_near_labels", []))
@@ -1458,6 +1468,7 @@ profile; they do not establish selectivity at a viper bite site.</p></div>
 <span><i style="background:#C06014"></i>buried on binding, sticks</span>
 <span><i style="background:#C06014"></i>within {N['mask_cutoff']:g} &#8491;, sticks</span>
 <span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
+<span><i style="background:#FFD300"></i>disulphide bonds</span>
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 <div class="stackfig">
@@ -1904,7 +1915,7 @@ Data Bank.</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
-<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES)).replace("__FINALPAIR__", json.dumps(FINAL_PAIR_JS))}</script>
+<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__DISULPHIDES__", json.dumps(disulphide_bonds)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES)).replace("__FINALPAIR__", json.dumps(FINAL_PAIR_JS))}</script>
 </body></html>"""
 
 import re

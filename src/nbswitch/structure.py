@@ -310,3 +310,29 @@ def terminal_geometry(atoms, vhh_chain: str, paratope_labels) -> dict:
             np.max(np.linalg.norm(patch[:, None] - patch[None], axis=-1))), 2),
         "radius_of_gyration_A": round(float(struc.gyration_radius(chain)), 2),
     }
+
+
+#: Longest S-S separation still counted as a bond. A disulphide sits near
+#: 2.05 A; the next-nearest sulphur pairs in these structures are past 4 A, so
+#: the cut is wide of the bonded distances and well clear of the unbonded ones.
+DISULPHIDE_MAX_A = 2.5
+
+
+def disulphides(atoms, max_distance: float = DISULPHIDE_MAX_A) -> list[dict]:
+    """Cysteine pairs joined by a disulphide, measured SG to SG.
+
+    Returned sorted, each as the two chains and author residue numbers and the
+    distance between the sulphurs, so the viewer draws the bonds the structure
+    actually contains rather than every cysteine it happens to hold.
+    """
+    sg = atoms[(atoms.res_name == "CYS") & (atoms.atom_name == "SG")]
+    found = []
+    for i in range(sg.array_length()):
+        for j in range(i + 1, sg.array_length()):
+            d = float(np.linalg.norm(sg.coord[i] - sg.coord[j]))
+            if d <= max_distance:
+                found.append({
+                    "chain_a": str(sg.chain_id[i]), "res_a": int(sg.res_id[i]),
+                    "chain_b": str(sg.chain_id[j]), "res_b": int(sg.res_id[j]),
+                    "distance_A": round(d, 2)})
+    return sorted(found, key=lambda b: (b["chain_a"], b["res_a"]))
