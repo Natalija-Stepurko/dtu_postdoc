@@ -336,10 +336,10 @@ function wakeViewers(root) {
 // says which part of the construct it belongs to.
 const STICK_PARATOPE = {stick: {colorscheme: 'orangeCarbon', radius: 0.22}};
 const STICK_MASK = {stick: {colorscheme: 'purpleCarbon', radius: 0.19}};
-// the whole cysteine. CA lies on the path the cartoon ribbon is drawn
-// through, so including it joins the bridge to the backbone; starting at CB
-// leaves the bond floating beside the ribbon with nothing holding it there
-const SS_ATOMS = ['CA', 'CB', 'SG'];
+// the whole of each cysteine the bridge joins. CA lies on the path the
+// cartoon ribbon is drawn through, so the bond meets the backbone instead of
+// floating beside it, and the rest of the residue shows which two it joins
+const SS_ATOMS = ['N', 'CA', 'C', 'O', 'CB', 'SG'];
 // sulphur yellow, the usual convention. Kept well clear of CDR2's goldenrod,
 // which sits two entries away in the same legend
 const SS_COLOUR = '#FFD300';
