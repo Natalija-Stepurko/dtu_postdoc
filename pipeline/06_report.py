@@ -1056,22 +1056,45 @@ circulation and become active at the site of a bite, where the local environment
 plasma. Three environmental cues were proposed: acidic pH, raised protease activity and local
 hypoxia.</p></div>
 
+<h4 class="subh">Choosing an environmental trigger</h4>
 <div class="scroll"><table class="wrap">
-<colgroup><col style="width:22%"><col style="width:52%"><col style="width:26%"></colgroup>
-<thead><tr><th>environmental cue</th><th>consideration</th><th>decision</th></tr></thead><tbody>
-<tr><td>Acidic pH</td><td>Blood is pH {PH['blood_ph'][0]}&ndash;{PH['blood_ph'][1]}; the brief
-gives roughly {PH['site_ph'][0]}&ndash;{PH['site_ph'][1]} at a bite site. The only side chain that
-changes state across that range is histidine, so a pH switch is a histidine switch. At a pKa of
-{PH['pka']:.1f} it is <b>{PH['blood_worst']:.1%}</b> protonated in blood and
-<b>{PH['site_worst']:.1%}</b> at pH {PH['site_ph'][1]} &mdash; a {PH['fold_change']:.1f}-fold
-change, but {PH['unprotonated_at_site']:.0%} of the residue is still neutral where it has to
-act.</td><td>Not selected</td></tr>
-<tr class="good"><td>Protease activity</td><td>Proteolysis is irreversible, which makes activation a
-single committed event rather than an equilibrium, and venom metalloproteinases are themselves part
-of the pathology being treated.</td><td>Selected</td></tr>
-<tr><td>Hypoxia</td><td>Would require an oxygen-sensitive molecular mechanism suitable for a small
-secreted protein.</td><td>Not selected</td></tr>
+<colgroup><col style="width:13%"><col style="width:30%"><col style="width:44%">
+<col style="width:13%"></colgroup>
+<thead><tr><th>environmental cue</th><th>possible switching mechanism</th>
+<th>advantages and limitations</th><th>decision</th></tr></thead><tbody>
+<tr><td>Acidic pH</td>
+<td>Design a mask whose affinity for the nanobody decreases at pH
+{PH['site_ph'][0]:g}&ndash;{PH['site_ph'][1]:g}. Histidine substitutions and other ionisable
+residues could be used to engineer a pH-dependent interface.</td>
+<td>A fully protein-based, reversible switch. However, the pH difference from blood
+({PH['blood_ph'][0]}&ndash;{PH['blood_ph'][1]}) is relatively small. For a histidine with pKa
+{PH['pka']:.1f}, protonation increases from approximately {PH['blood_worst']:.0%} in blood to
+{PH['site_worst']:.0%} at pH {PH['site_ph'][1]:g}; achieving a large change in binding may require
+several coordinated interactions.</td>
+<td><b>Alternative</b></td></tr>
+<tr><td>Protease activity</td>
+<td>Attach the mask through a cleavable peptide linker. Local host proteases or snake venom
+metalloproteinases (SVMPs) release the mask, allowing the nanobody to bind its toxin.</td>
+<td>Cleavage provides an irreversible activation mechanism using a genetically encoded linker.
+Sequence specificity and structural accessibility can be designed separately. The challenge is
+avoiding cleavage in circulation while ensuring activation by the relevant venom and host
+proteases.</td>
+<td><b>Selected</b></td></tr>
+<tr><td>Hypoxia</td>
+<td>Attach the mask through an oxygen-sensitive chemical trigger, such as a
+<b>4-nitrobenzyl-based self-immolative linker</b>. Enzymatic reduction of the nitro group under
+suitable low-oxygen conditions can initiate linker breakdown and release the mask.</td>
+<td>Could provide irreversible activation without proteolysis. However, the chemistry requires
+reduction by enzymes and cofactors that are often intracellular. Reliable activation around an
+extracellular nanobody at a bite site is therefore uncertain and would require chemical
+conjugation and experimental validation.</td>
+<td><b>Alternative</b></td></tr>
 </tbody></table></div>
+
+<div class="stack"><p><b>Why proteolysis?</b> All three approaches are plausible, but proteolysis
+offers a relatively direct route to a modular, extracellular switch. It also builds on the
+principle of intramolecular regulation I investigated during my PhD: a tethered segment controls
+access to a functional protein surface.</p></div>
 
 
 <div class="chart wide">{R.states_schematic()}</div>
