@@ -1181,7 +1181,11 @@ and {termini_free}.</p></div>
 </div>
 <div class="stackfig">
 {chart("usable_affinity",
-   "The same constraint at the widest point, " + str(N["linker_best"]) + " residues.")}
+   f"The same constraint at the widest point, {N['linker_best']} residues."
+   f"<br>N-terminus distance to the paratope {N['span_n']:.1f} Å."
+   f"<br>The fully extended {N['ex_n']}-residue linker length is {N['ex_lc']:.1f} Å, but its "
+   f"characteristic end-to-end distance is {N['ex_ree']:.1f} Å because the chain bends."
+   f"<br>Estimated local concentration of the mask is {N['ex_ceff']:.1f} mM.")}
 </div>
 </div>
 

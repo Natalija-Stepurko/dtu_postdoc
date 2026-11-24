@@ -415,7 +415,7 @@ and neither terminus is part of it, so either could in principle carry a mask. W
 <figure class="chart"><img src="figures/affinity_by_length.svg?v=164d661a" alt=""><figcaption><b>Predicted mask-affinity range for different linker lengths.</b> The green region shows combinations of linker length and mask affinity that allow at least 95% masking before cleavage and 90% antigen binding afterwards. The upper curve represents the weakest mask affinity that still provides sufficient masking while tethered; the lower line represents the strongest affinity that permits antigen binding after cleavage. The widest range occurs at 14 residues. Triangles indicate linker lengths used in the computational designs.</figcaption></figure>
 </div>
 <div class="stackfig">
-<figure class="chart"><img src="figures/usable_affinity.svg?v=efbc801c" alt=""><figcaption>The same constraint at the widest point, 14 residues.</figcaption></figure>
+<figure class="chart"><img src="figures/usable_affinity.svg?v=efbc801c" alt=""><figcaption>The same constraint at the widest point, 14 residues.<br>N-terminus distance to the paratope 21.2 Å.<br>The fully extended 14-residue linker length is 53.2 Å, but its characteristic end-to-end distance is 20.9 Å because the chain bends.<br>Estimated local concentration of the mask is 12.8 mM.</figcaption></figure>
 </div>
 </div>
 
@@ -1887,7 +1887,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=69f88b5d" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=466b2134" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
