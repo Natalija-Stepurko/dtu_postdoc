@@ -962,7 +962,7 @@ def architecture_schematic() -> str:
     numbers on this page.
     """
     W, H = 980, 1250
-    s = [f'<svg viewBox="-40 0 1060 {H}" width="100%" '
+    s = [f'<svg viewBox="-78 0 1098 {H}" width="100%" '
          'xmlns="http://www.w3.org/2000/svg" '
          'role="img" aria-label="Computational pipeline">',
          '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" '
@@ -1028,11 +1028,10 @@ def architecture_schematic() -> str:
                 f'<text x="{x+w/2}" y="{y+45}" class="p-t" fill="{INK}" '
                 f'text-anchor="middle">{name}</text>')
 
-    def shared(y, h, title, note, methods, further="", dashed=True):
+    def shared(y, h, title, note, methods, further=""):
         """A step every downstream module depends on, drawn across the width."""
-        dash = ' stroke-dasharray="5 3"' if dashed else ""
         o = [f'<rect x="0" y="{y}" width="{W}" height="{h}" rx="4" fill="#FBF8F3" '
-             f'stroke="{STR}" stroke-width="1.2"{dash}/>',
+             f'stroke="{STR}" stroke-width="1.2"/>',
              f'<text x="24" y="{y+30}" class="p-t" fill="{INK}">{title}</text>',
              f'<text x="24" y="{y+54}" class="p-b" fill="{INK2}">{note}</text>',
              f'<text x="{W-24}" y="{y+30}" class="p-m" fill="{STR}" '
@@ -1092,7 +1091,7 @@ def architecture_schematic() -> str:
 
     s.append(shared(464, 76, "Assemble and predict structures",
                     "Mask, linker and nanobody built as one chain and folded once.",
-                    "ESMFold", "AlphaFold 3 · Chai-1", dashed=False))
+                    "ESMFold", "AlphaFold 3 · Chai-1"))
     s.append(arrow(490, 540, 490, 556))
 
     # ProteinMPNN is a loop off the folding step, not a numbered module: the
@@ -1156,6 +1155,14 @@ def architecture_schematic() -> str:
     s.append(f'<text transform="rotate(-90 -30 1000)" x="-30" y="1000" '
              f'class="p-l" fill="{CHROME}" text-anchor="middle">'
              'MEASUREMENTS IMPROVE THE SCORING FUNCTIONS</text>')
+    # the second thing a measurement tells you: not only how well the scores
+    # rank, but which of the two designed parts was the one that failed
+    s.append(f'<path d="M 0 1226 L -54 1226 L -54 347 L -6 347" '
+             f'stroke="{CHROME}" stroke-width="1.4" fill="none" stroke-dasharray="5 3" '
+             'marker-end="url(#arl)"/>')
+    s.append(f'<text transform="rotate(-90 -62 760)" x="-62" y="760" '
+             f'class="p-l" fill="{CHROME}" text-anchor="middle">'
+             'MEASUREMENTS INDICATE WHICH PART OF THE DESIGN NEEDS IMPROVEMENT</text>')
     s.append("</svg>")
     return "".join(s)
 
