@@ -465,6 +465,14 @@ N["ceff"] = bN["c_eff_M"] * 1e3
 #: closer, the centroid pair is what C_eff is actually evaluated at.
 N["span_n"] = geom["n_term_to_paratope_centroid_A"]
 N["span_c"] = geom["c_term_to_paratope_centroid_A"]
+# one linker length worked through in the prose, computed from the same model
+# the figure uses so the worked example cannot drift from the curve
+import math as _math
+from nbswitch import tether as _tether
+N["ex_n"] = 14
+N["ex_lc"] = N["ex_n"] * model["rise_per_residue_A"]
+N["ex_ree"] = _math.sqrt(_tether.mean_square_end_to_end(N["ex_n"]))
+N["ex_ceff"] = _tether.effective_concentration(N["ex_n"], N["span_n"]) * 1e3
 N["ree_best"] = bN["mean_end_to_end_A"]
 N["linker_best_c"] = bC["linker_residues"]
 N["window_c"] = bC["window_decades"]
@@ -1163,20 +1171,48 @@ and {termini_free}.</p></div>
 physics and binding equilibrium to estimate which linker lengths and mask affinities could allow
 both masking and release.</p>
 
-<p><b>1 &middot; Effective concentration of the tethered mask.</b> I used the experimental
-structure to identify where to attach the linker. The N-terminus is closer to the paratope than
-the C-terminus, {N['span_n']:.1f} Å against {N['span_c']:.1f} Å to its centre, so I selected
-N-terminal attachment.</p>
-<p>The Gly/Ser linker is flexible and can adopt many conformations. I modelled it as a
-<i>worm-like chain</i>, a standard model for flexible protein linkers. This estimates how likely
-a linker of a given length is to position the mask near the paratope.</p>
-<p>For each linker length I calculated the mask's effective local concentration,
-C<sub>eff</sub>, using the distance of {N['span_n']:.1f} Å measured from the structure. The model
-assumes {model['rise_per_residue_A']:.1f} Å per residue when fully extended and a persistence
-length of {model['persistence_length_A']:.1f} Å to describe flexibility. The resulting
-C<sub>eff</sub> is what sets how strongly the mask needs to bind while tethered.</p>
-<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]
-<br>C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
+<p><b>1 &middot; Effective concentration of the tethered mask</b></p>
+
+<p><b>Choosing the attachment point.</b> The experimental structure shows that the N-terminus is
+closer to the centre of the paratope than the C-terminus ({N['span_n']:.1f} Å versus
+{N['span_c']:.1f} Å). I therefore selected N-terminal attachment.</p>
+
+<p><b>Step 1 &mdash; Estimating how far the linker can reach.</b> The Gly/Ser linker is flexible
+and can adopt many conformations rather than remaining fully extended. I used a
+<i>worm-like-chain</i> model to calculate its characteristic end-to-end distance at different
+linker lengths.</p>
+<div class="eq">⟨r²⟩ = 2·l<sub>p</sub>·L<sub>c</sub>·[1 − (l<sub>p</sub>/L<sub>c</sub>)(1 − e<sup>−L<sub>c</sub>/l<sub>p</sub></sup>)]</div>
+<ul class="where">
+<li><span class="sym">L<sub>c</sub></span> is the fully extended linker length, calculated as
+{model['rise_per_residue_A']:.1f} Å × number of residues.</li>
+<li><span class="sym">l<sub>p</sub></span> is the persistence length, set to
+{model['persistence_length_A']:.1f} Å, which describes how readily the chain bends.</li>
+<li><span class="sym">√⟨r²⟩</span> is the root-mean-square end-to-end distance, describing the
+linker's characteristic size.</li>
+</ul>
+<p>For a {N['ex_n']}-residue linker, the fully extended length is {N['ex_lc']:.1f} Å, but its
+characteristic end-to-end distance is only {N['ex_ree']:.1f} Å because the chain bends.</p>
+
+<p><b>Step 2 &mdash; Estimating the local concentration of the mask.</b> Knowing the linker's
+characteristic size, I used a Gaussian approximation to estimate the probability density of its
+free end at the paratope, {N['span_n']:.1f} Å from the attachment point. This was converted into
+an effective local concentration.</p>
+<div class="eq">C<sub>eff</sub>(d) = 1660.54 · (3 / 2π⟨r²⟩)<sup>3/2</sup> · e<sup>−3d²/2⟨r²⟩</sup></div>
+<ul class="where">
+<li><span class="sym">d</span> is the distance from the attachment point to the paratope centre
+({N['span_n']:.1f} Å).</li>
+<li><span class="sym">⟨r²⟩</span> comes from the worm-like-chain calculation above.</li>
+<li><span class="sym">1660.54</span> converts probability density from Å⁻³ into molar
+concentration, using Avogadro's constant.</li>
+<li><span class="sym">C<sub>eff</sub></span> is the estimated effective local concentration of
+the tethered mask, in mol/L.</li>
+</ul>
+<p>For the {N['ex_n']}-residue linker, this gives C<sub>eff</sub> = {N['ex_ceff']:.1f} mM.</p>
+
+<p>This is not the actual concentration of mask in solution. It describes how tethering increases
+the mask's local availability near the paratope compared with a freely diffusing peptide.</p>
+<p>The resulting effective concentration is then used to estimate how strongly the mask must bind
+to occupy the paratope before cleavage.</p>
 
 <p><b>2 &middot; Masking before cleavage, the upper curve.</b> The fraction of construct whose
 paratope is occupied by its own tethered mask is</p>
@@ -1197,10 +1233,10 @@ mask, so the bound is the same at every length: it is the horizontal lower bound
 
 <p><b>Result.</b> The green region between the two boundaries is the set of linker lengths and mask
 affinities predicted to satisfy both requirements. A {N['linker_best']}-residue N-terminal linker
-gives the widest range, <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b>. At that length the
-chain's mean end-to-end distance of {N['ree_best']:.1f} Å almost matches the {N['span_n']:.1f} Å it
-has to span, and C<sub>eff</sub> peaks at {N['ceff']:.1f} mM. A relatively weak mask could
-therefore be sufficient, provided the linker holds it close to the paratope.</p>
+gives the widest range, <b>{N['km_lo']:.0f} nM to {N['km_hi']:.0f} µM</b>. That is the length
+whose characteristic end-to-end distance almost matches the distance the linker has to span, which
+is where C<sub>eff</sub> peaks. A relatively weak mask could therefore be sufficient, provided the
+linker holds it close to the paratope.</p>
 <p>These estimates use a V<sub>H</sub>H–antigen K<sub>D</sub> of {N['vhh_toxin_kd_nM']:.1f} nM,
 {model['toxin_conc_M'] * 1e9:.0f} nM antigen and {model['mask_conc_M'] * 1e6:.0f} µM released mask.
 They are initial design constraints, not predictions of binding kinetics or of experimental

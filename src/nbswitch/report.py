@@ -129,6 +129,11 @@ td.dead{color:var(--chrome);font-weight:600}
 .step span{font-size:.87rem;color:var(--ink-2);line-height:1.45}
 .eq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:15px 20px;
     font-family:var(--mono);font-size:.82rem;color:var(--ink);overflow-x:auto;line-height:1.9}
+/* the symbols of the equation above, defined one to a line */
+ul.where{margin:0;padding-left:19px;color:var(--ink-2);font-size:.94rem;line-height:1.5}
+ul.where li{margin-bottom:5px}
+ul.where li:last-child{margin-bottom:0}
+ul.where .sym{font-family:var(--mono);font-size:.86rem;color:var(--ink)}
 .aeq{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:4px 12px;
      line-height:1.5}
 .agrp{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
