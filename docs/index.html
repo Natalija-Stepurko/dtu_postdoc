@@ -299,7 +299,6 @@ inhibitor</b>
 
 <div class="tstep"><b>02</b><span>The tail binds back, and the strength can be measured</span></div>
 <figure class="tfig full"><img src="thesis/fig4_1_3_a_isoforms.png?v=8a2ae837" alt=""><figcaption>Biolayer interferometry: tail peptides binding each isoform.</figcaption></figure>
-<table class="tbl"><colgroup><col style="width:22%"><col style="width:26%"><col style="width:26%"><col style="width:26%"></colgroup><tr><th>immobilised tail</th><th>FST288</th><th>FST303</th><th>FST315</th></tr><tr><td class="mono">GB1&#8209;Tail315</td><td class="mono">80.19 nM<span class="dim" style="font-size:.78rem"> &middot; R&sup2; 0.9932</span></td><td class="mono">406 µM<span class="dim" style="font-size:.78rem"> &middot; ambiguous</span></td><td class="mono">258.8 nM<span class="dim" style="font-size:.78rem"> &middot; R&sup2; 0.9510</span></td></tr><tr><td class="mono">GB1&#8209;Tail303</td><td class="mono">67.33 nM<span class="dim" style="font-size:.78rem"> &middot; R&sup2; 0.9956</span></td><td class="mono">248.4 nM<span class="dim" style="font-size:.78rem"> &middot; R&sup2; 0.9522</span></td><td class="mono">8.40 µM<span class="dim" style="font-size:.78rem"> &middot; ambiguous</span></td></tr></table><p class="dim" style="font-size:.85rem">Equilibrium dissociation constants fitted to the sensorgrams above, from panel b of the same figure. An ambiguous fit is one where many parameter combinations describe the curve equally well, so that value is not reliable.</p>
 <figure class="tfig full"><img src="thesis/fig4_1_8_d.png?v=1bbacbe1" alt=""><figcaption>Fluorescence polarisation, tail against FS12 at three ionic strengths. K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM and 34.6 µM at 300 mM, indicating a largely electrostatic interaction.</figcaption></figure>
 
 <div class="tstep"><b>03</b><span>What the tail competes with</span></div>
@@ -535,7 +534,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=55c57205" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=5d7b2ccf" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -757,9 +756,9 @@ measurement fails against a different part of the pipeline, so three is enough t
 <tr><td>Purification &mdash; &Auml;KTA trace, single band on the gel</td>
 <td>can it be made at all</td>
 <td>the feasibility score: fold, aggregation, developability</td></tr>
-<tr><td>Biolayer interferometry with the protease absent</td>
+<tr><td>Biolayer interferometry, antigen affinity with the protease absent</td>
 <td>is it masked</td><td>the masking half of the unmasking score</td></tr>
-<tr><td>Biolayer interferometry with the protease present, with a band shift
+<tr><td>Biolayer interferometry, antigen affinity with the protease present, with a band shift
 on the gel when cleaved</td>
 <td>does it activate</td><td>the trigger score, or the release half</td></tr>
 </tbody></table>

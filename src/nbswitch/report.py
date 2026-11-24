@@ -1157,41 +1157,6 @@ def architecture_schematic() -> str:
     return "".join(s)
 
 
-#: Fitted dissociation constants for the three isoform panels, from panel b
-#: of the same thesis figure the sensorgrams come from. The sensorgram panel
-#: carries no numbers, so they are written under it in the panel order.
-#: "ambiguous" is the thesis's own flag: several parameter combinations fit
-#: the curve equally well, so the value is not reliable.
-BLI_KD_ROWS = (
-    ("GB1&#8209;Tail315", (("80.19 nM", "0.9932"), ("406 \u00b5M", "ambiguous"),
-                           ("258.8 nM", "0.9510"))),
-    ("GB1&#8209;Tail303", (("67.33 nM", "0.9956"), ("248.4 nM", "0.9522"),
-                           ("8.40 \u00b5M", "ambiguous"))),
-)
-
-
-def bli_kd_table() -> str:
-    """The fitted K_D under the sensorgrams, one column per isoform panel."""
-    head = ('<colgroup><col style="width:22%"><col style="width:26%">'
-            '<col style="width:26%"><col style="width:26%"></colgroup>'
-            "<tr><th>immobilised tail</th><th>FST288</th><th>FST303</th>"
-            "<th>FST315</th></tr>")
-    body = ""
-    for name, cells in BLI_KD_ROWS:
-        tds = ""
-        for value, fit in cells:
-            note = (f'<span class="dim" style="font-size:.78rem"> &middot; {fit}</span>'
-                    if fit == "ambiguous"
-                    else f'<span class="dim" style="font-size:.78rem"> &middot; R&sup2; {fit}</span>')
-            tds += f'<td class="mono">{value}{note}</td>'
-        body += f'<tr><td class="mono">{name}</td>{tds}</tr>'
-    return (f'<table class="tbl">{head}{body}</table>'
-            '<p class="dim" style="font-size:.85rem">Equilibrium dissociation '
-            'constants fitted to the sensorgrams above, from panel b of the same '
-            'figure. An ambiguous fit is one where many parameter combinations '
-            'describe the curve equally well, so that value is not reliable.</p>')
-
-
 def background_section() -> str:
     """Prior work, told as a sequence rather than a gallery.
 
@@ -1199,7 +1164,6 @@ def background_section() -> str:
     same domain that binds heparan sulphate - the arrangement this pipeline
     designs on purpose - so the link is architectural rather than decorative.
     """
-    BLI_KD = bli_kd_table()
 
     def f(name, cap, cls=""):
         return (f'<figure class="tfig {cls}"><img src="{asset(f"thesis/{name}.png")}" alt="">'
@@ -1223,7 +1187,6 @@ inhibitor</b>
 
 {step("02", "The tail binds back, and the strength can be measured")}
 {f("fig4_1_3_a_isoforms", "Biolayer interferometry: tail peptides binding each isoform.", "full")}
-{BLI_KD}
 {f("fig4_1_8_d", "Fluorescence polarisation, tail against FS12 at three ionic strengths. "
    "K<sub>D</sub> = 145 nM at 50 mM NaCl, 8.2 µM at 150 mM and 34.6 µM at 300 mM, indicating a "
    "largely electrostatic interaction.", "full")}
