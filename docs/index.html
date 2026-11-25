@@ -266,6 +266,24 @@ h5.subh2{font-size:.95rem;margin:30px 0 4px;color:var(--ink);font-weight:600}
 .note b{color:var(--ink)}
 .note.good{border-left-color:#1F6B4A}
 .note.warn{border-left-color:#C06014}
+/* the designed chain of one construct, spelled out under the viewer pair that
+   draws it. It sits below the pair rather than inside one panel: .vstage
+   shrinks to fit a stretched grid row, so content added to one viewer makes
+   that viewer's picture smaller than the one it is meant to be compared with.
+   The sequence wraps on character boundaries, because a residue is not a word
+   and a break between any two of them is as good as any other */
+.pseq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+  padding:14px 18px;margin:0 0 18px}
+.pseq .s{font-family:var(--mono);font-size:.95rem;letter-spacing:.06em;
+  line-height:1.5;margin:5px 0 8px;word-break:break-all}
+.pseq .s b{font-weight:600}
+/* the protease site, inside the linker: underlined where it sits rather than
+   split out, so the linker still reads as one run of sequence */
+.pseq .s b.cut{text-decoration:underline;text-underline-offset:3px;
+  text-decoration-thickness:1.5px}
+.pseq .k{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--ink-3)}
+.pseq .k i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;
+  vertical-align:-1px}
 .refmask{border:1px solid var(--rule);border-left:3px solid var(--chrome);border-radius:3px;
   background:var(--panel);padding:16px 20px;margin:18px 0}
 .refmask .seq{font-family:var(--mono);font-size:1.32rem;letter-spacing:.07em;
@@ -7318,7 +7336,7 @@ any backbone, so there is nothing there to improve on.</p>
 <p>That measure is how well a sequence fits the backbone it was given, which is not the same
 question as whether the mask covers the paratope, and the two barely move together:
 r = +0.08 across all 96 redesigns.</p></div>
-<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=92c29b54" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
+<figure class="chart wide"><img src="figures/redesign_score_vs_occlusion.svg?v=db24f4d9" alt=""><figcaption>ProteinMPNN score against paratope occlusion for all 348 constructs carrying a mask, coloured by the family the mask belongs to and shaped by whether it is a library construct or a redesign. Across the whole library the two are unrelated, r = -0.08: a sequence that fits the backbone better does not occlude the paratope more, so the design model's own score cannot stand in for a functional one. Each score is the mean over 20 decoding orders, which carry a spread of ±0.03.</figcaption></figure>
 <div class="stack">
 <p><b>Horizontal axis &mdash; ProteinMPNN score.</b> How compatible ProteinMPNN considers the
 sequence with the backbone it was given. Lower is better, so constructs further left have the
@@ -10391,15 +10409,18 @@ antigen</span><button data-spin="finalmask">spin</button></div>
 <span><i style="background:#E0C49A"></i>antigen</span><span><i style="background:#FFD300"></i>disulphide bonds</span></div>
 </div>
 </div>
+<div class="pseq"><div class="eyebrow">Designed chain of epi_face2_cn02, drawn in purple above &middot; 33 residues</div><div class="s"><b style="color:#8C72AD">PGETNCYKK</b><b style="color:#7E8A93">GGSGGSG</b><b class='cut' style="color:#2D5BD1">VMPSGFTASG</b><b style="color:#7E8A93">GGSGGSG</b></div><div class="k"><span><i style="background:#8C72AD"></i>mask <span class="mono">epi_face2</span>, 9 aa &middot; antigen residues 18&ndash;26</span><span><i style="background:#7E8A93"></i>linker <span class="mono">cn02</span>, 24 aa</span><span><i style="background:#2D5BD1"></i>protease site, 10 aa, underlined</span></div></div>
 <div class="stack">
 <p class="dim">Both predictions are shown in the same frame: the construct&rsquo;s model is
 superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agree to
 1.00 Å. Anything that moves between the two views moves relative to the nanobody.</p>
 </div>
 <table class="tbl">
-<colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
-<thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
-<th>what it means</th></tr></thead><tbody><tr><td class='mono'>free nanobody</td><td>81%</td><td>&mdash;</td><td>reference</td></tr><tr class='hl'><td class='mono'>epi_face2_cn02</td><td>16%</td><td>48%</td><td><b>antigen displaced, the mask is bound</b></td></tr><tr><td class='mono'>epi_core_noCys_cn02</td><td>19%</td><td>11%</td><td>antigen displaced, but the mask is off site</td></tr><tr><td class='mono'>epi_core_cn01_n16</td><td>77%</td><td>17%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_half_cn01_n16</td><td>77%</td><td>10%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>polyG_cn01</td><td>78%</td><td>25%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_ext2_cn03</td><td>81%</td><td>20%</td><td>antigen keeps its binding site</td></tr></tbody></table>
+<colgroup><col style="width:20%"><col style="width:19%"><col style="width:13%">
+<col style="width:12%"><col style="width:36%"></colgroup>
+<thead><tr><th>construct</th><th>mask sequence</th><th>antigen on paratope</th>
+<th>mask on paratope</th><th>what it means</th></tr></thead>
+<tbody><tr><td class='mono'>free nanobody</td><td class='mono'>&mdash;</td><td>81%</td><td>&mdash;</td><td>reference</td></tr><tr class='hl'><td class='mono'>epi_face2_cn02</td><td class='mono'>PGETNCYKK</td><td>16%</td><td>48%</td><td><b>antigen displaced, the mask is bound</b></td></tr><tr><td class='mono'>epi_core_noCys_cn02</td><td class='mono'>SPTVKPGIKLNS</td><td>19%</td><td>11%</td><td>antigen displaced, but the mask is off site</td></tr><tr><td class='mono'>epi_core_cn01_n16</td><td class='mono'>CPTVKPGIKLNC</td><td>77%</td><td>17%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_half_cn01_n16</td><td class='mono'>CPTVKP</td><td>77%</td><td>10%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>polyG_cn01</td><td class='mono'>GGGGGGGGGGGG</td><td>78%</td><td>25%</td><td>antigen keeps its binding site</td></tr><tr><td class='mono'>epi_core_ext2_cn03</td><td class='mono'>CGCPTVKPGIKLNCCT</td><td>81%</td><td>20%</td><td>antigen keeps its binding site</td></tr></tbody></table>
 </div></details>
 </section>
 

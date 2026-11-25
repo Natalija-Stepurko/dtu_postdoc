@@ -274,6 +274,24 @@ h5.subh2{font-size:.95rem;margin:30px 0 4px;color:var(--ink);font-weight:600}
 .note b{color:var(--ink)}
 .note.good{border-left-color:#1F6B4A}
 .note.warn{border-left-color:#C06014}
+/* the designed chain of one construct, spelled out under the viewer pair that
+   draws it. It sits below the pair rather than inside one panel: .vstage
+   shrinks to fit a stretched grid row, so content added to one viewer makes
+   that viewer's picture smaller than the one it is meant to be compared with.
+   The sequence wraps on character boundaries, because a residue is not a word
+   and a break between any two of them is as good as any other */
+.pseq{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+  padding:14px 18px;margin:0 0 18px}
+.pseq .s{font-family:var(--mono);font-size:.95rem;letter-spacing:.06em;
+  line-height:1.5;margin:5px 0 8px;word-break:break-all}
+.pseq .s b{font-weight:600}
+/* the protease site, inside the linker: underlined where it sits rather than
+   split out, so the linker still reads as one run of sequence */
+.pseq .s b.cut{text-decoration:underline;text-underline-offset:3px;
+  text-decoration-thickness:1.5px}
+.pseq .k{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--ink-3)}
+.pseq .k i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;
+  vertical-align:-1px}
 .refmask{border:1px solid var(--rule);border-left:3px solid var(--chrome);border-radius:3px;
   background:var(--panel);padding:16px 20px;margin:18px 0}
 .refmask .seq{font-family:var(--mono);font-size:1.32rem;letter-spacing:.07em;
@@ -1581,6 +1599,48 @@ CDR_KEY = ('<span><i style="background:#2E7DBE"></i>CDR1</span>'
 
 #: One wording for the bridges, in every viewer that draws them.
 SS_KEY = '<span><i style="background:#FFD300"></i>disulphide bonds</span>'
+
+#: The designed chain's parts, in the colours the viewers give them. The mask
+#: and linker are one purple chain on screen; spelled out they separate.
+SEQ_MASK, SEQ_LINKER, SEQ_CUT = "#8C72AD", "#7E8A93", "#2D5BD1"
+
+
+def designed_sequence(c, mask_start=None, note="") -> str:
+    """The designed half of one construct, spelled out.
+
+    The nanobody is the same chain in every construct, so it is named rather
+    than spelled; what differs, and what the viewer above draws as one chain
+    beside it, is the mask and the linker carrying the protease site. The
+    parts take the colours the viewer gives them, and the protease site is
+    underlined where it sits inside the linker rather than cut out of it, so
+    the linker still reads as one run of sequence.
+    """
+    mask = c.get("mask_seq", "")
+    link = c.get("linker_seq", "")
+    sub = c.get("linker_substrate") or ""
+    at = link.index(sub) if sub and sub in link else -1
+    run = lambda text, colour, cls="": (
+        f'<b{f" class={cls!r}" if cls else ""} style="color:{colour}">{text}</b>'
+        if text else "")
+    body = [run(mask, SEQ_MASK)]
+    if at < 0:
+        body.append(run(link, SEQ_LINKER))
+    else:
+        body += [run(link[:at], SEQ_LINKER),
+                 run(sub, SEQ_CUT, "cut"),
+                 run(link[at + len(sub):], SEQ_LINKER)]
+    where = (f' &middot; antigen residues {mask_start}&ndash;'
+             f'{mask_start + len(mask) - 1}' if mask_start else "")
+    key = [f'<span><i style="background:{SEQ_MASK}"></i>mask '
+           f'<span class="mono">{c.get("mask", "")}</span>, {len(mask)} aa{where}</span>',
+           f'<span><i style="background:{SEQ_LINKER}"></i>linker '
+           f'<span class="mono">{c.get("linker_id", "")}</span>, {len(link)} aa</span>']
+    if at >= 0:
+        key.append(f'<span><i style="background:{SEQ_CUT}"></i>protease site, '
+                   f'{len(sub)} aa, underlined</span>')
+    return (f'<div class="pseq"><div class="eyebrow">{note}</div>'
+            f'<div class="s">{"".join(body)}</div>'
+            f'<div class="k">{"".join(key)}</div></div>')
 
 
 def ramp_legend(low: str, high: str) -> str:

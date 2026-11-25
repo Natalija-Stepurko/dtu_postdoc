@@ -1047,11 +1047,15 @@ def _verdict(r):
 
 _ordered = [_CTL] + sorted((r for r in _VROWS if r["construct"]),
                            key=lambda r: r["fraction_of_contacts_on_paratope"])
+# the mask sequence beside the two numbers it explains: the rows differ by
+# which mask was grafted, and the id alone does not say what that mask is
+_BY_ID = {c["id"]: c for c in lib["constructs"]}
 VERIFY_ROWS = "".join(
-    "<tr{cls}><td class='mono'>{name}</td><td>{ag:.0f}%</td><td>{mk}</td>"
-    "<td>{why}</td></tr>".format(
+    "<tr{cls}><td class='mono'>{name}</td><td class='mono'>{seq}</td>"
+    "<td>{ag:.0f}%</td><td>{mk}</td><td>{why}</td></tr>".format(
         cls=" class='hl'" if r.get("verdict") == "worth testing" else "",
         name=r["construct"] or "free nanobody",
+        seq=(_BY_ID.get(r["construct"], {}).get("mask_seq") or "&mdash;"),
         ag=r["fraction_of_contacts_on_paratope"] * 100,
         mk=("&mdash;" if r["construct"] is None
             else f"{r['mask_fraction_on_paratope'] * 100:.0f}%"),
@@ -1137,6 +1141,24 @@ FP_RMSD = _FP["vhh_ca_rmsd_A"] if _FP else float("nan")
 FP_MASK_ON = (_FP["masked"]["mask_fraction_on_paratope"] * 100) if _FP else 0
 FP_ANTIGEN_ON = (_FP["masked"]["fraction_of_contacts_on_paratope"] * 100) if _FP else 0
 FP_REF_ON = (_FP["reference"]["fraction_of_contacts_on_paratope"] * 100) if _FP else 0
+# the selected construct's designed chain, under the viewer that draws it. The
+# prediction models it as its own chain beside the nanobody, so the sequence
+# below is the chain on screen and not an excerpt of a longer one.
+FP_SEQUENCE = ""
+_FP_C = next((c for c in lib["constructs"] if c["id"] == FP_ID), None) if _FP else None
+if _FP_C:
+    _fp_len = len(_FP_C["mask_seq"]) + len(_FP_C["linker_seq"])
+    _fp_chain = FINAL_PAIR_JS["masked"]["mask"]
+    _fp_pdb = DOCS / "structures" / FINAL_PAIR_JS["masked"]["file"]
+    _fp_atoms = _ss_atoms(_fp_pdb)
+    _fp_drawn = len(set(_fp_atoms[_fp_atoms.chain_id == _fp_chain].res_id))
+    if _fp_drawn != _fp_len:
+        raise SystemExit(f"the sequence under the viewer is {_fp_len} residues "
+                         f"but chain {_fp_chain} of {_fp_pdb.name} has {_fp_drawn}")
+    FP_SEQUENCE = R.designed_sequence(
+        _FP_C, lib["masks"].get(_FP_C.get("mask"), {}).get("start"),
+        f"Designed chain of {FP_ID}, drawn in purple above "
+        f"&middot; {_fp_len} residues")
 N_PARENTS = len(redesign["parents"]) if redesign else 0
 
 # the contacting antigen residues are reported as runs along the chain, and
@@ -1908,15 +1930,18 @@ antigen</span><button data-spin="finalmask">spin</button></div>
 <span><i style="background:#E0C49A"></i>antigen</span>{R.SS_KEY}</div>
 </div>
 </div>
+{FP_SEQUENCE}
 <div class="stack">
 <p class="dim">Both predictions are shown in the same frame: the construct&rsquo;s model is
 superposed on the control&rsquo;s by the nanobody alpha carbons alone, which agree to
 {FP_RMSD:.2f} Å. Anything that moves between the two views moves relative to the nanobody.</p>
 </div>
 <table class="tbl">
-<colgroup><col style="width:26%"><col style="width:17%"><col style="width:16%"><col style="width:41%"></colgroup>
-<thead><tr><th>construct</th><th>antigen on paratope</th><th>mask on paratope</th>
-<th>what it means</th></tr></thead><tbody>{VERIFY_ROWS}</tbody></table>
+<colgroup><col style="width:20%"><col style="width:19%"><col style="width:13%">
+<col style="width:12%"><col style="width:36%"></colgroup>
+<thead><tr><th>construct</th><th>mask sequence</th><th>antigen on paratope</th>
+<th>mask on paratope</th><th>what it means</th></tr></thead>
+<tbody>{VERIFY_ROWS}</tbody></table>
 </section>
 
 <section class="sec">
