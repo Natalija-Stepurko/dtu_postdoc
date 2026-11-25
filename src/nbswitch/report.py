@@ -1054,7 +1054,7 @@ def architecture_schematic() -> str:
     weight, so a reader could not tell which half of the diagram produced the
     numbers on this page.
     """
-    W, H = 980, 1250
+    W, H = 980, 1288
     s = [f'<svg viewBox="-78 0 1098 {H}" width="100%" '
          'xmlns="http://www.w3.org/2000/svg" '
          'role="img" aria-label="Computational pipeline">',
@@ -1165,46 +1165,50 @@ def architecture_schematic() -> str:
                  "Linker geometry and affinity constraints",
                  ["Where should the mask attach, and what affinity range could permit "
                   "switching?"],
-                 ["interface geometry · polymer model · binding equilibria"],
+                 ["interface geometry · worm-like-chain model · Gaussian approximation · "
+                  "binding equilibrium"],
                  further=["CALVADOS · Martini 3 · OpenMM molecular dynamics"]))
     s.append(arrow(239, 244, 239, 268))
 
-    s.append(box(0, 272, 478, 140, SEQ, "02a", "Mask design",
+    s.append(box(0, 272, 478, 178, SEQ, "02a", "Mask design",
                  ["Antigen-derived masks and matched controls"],
-                 ["contact grafting · window variants · substitutions"],
+                 ["interface contact analysis · fragment extraction",
+                  "extensions and truncations · targeted substitutions",
+                  "scrambled controls · ProteinMPNN redesign"],
                  further=["LigandMPNN · BoltzGen · RFdiffusion · BindCraft"]))
-    s.append(box(502, 272, 478, 140, SEQ, "02b", "Cleavable linker design",
+    s.append(box(502, 272, 478, 178, SEQ, "02b", "Cleavable linker design",
                  ["Protease-selective sequences and linker lengths"],
-                 ["CleaveNet, conditioned on the profile · Gly/Ser flanks"],
-                 further=["MEROPS · PROSPERousPlus · Procleave"]))
+                 ["CleaveNet-guided sequence generation",
+                  "target/off-target protease profile · Gly/Ser flanks"],
+                 further=["DeepCleave · PROSPERousPlus · Procleave"]))
 
-    s.append(f'<path d="M 239 412 L 239 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 741 412 L 741 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(arrow(490, 444, 490, 460))
+    s.append(f'<path d="M 239 450 L 239 482 L 490 482" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 741 450 L 741 482 L 490 482" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(arrow(490, 482, 490, 498))
 
-    s.append(shared(464, 76, "Assemble and predict structures",
+    s.append(shared(502, 76, "Assemble and predict structures",
                     "Mask, linker and nanobody built as one chain and folded once.",
-                    "ESMFold", "AlphaFold 3 · Chai-1"))
-    s.append(arrow(490, 540, 490, 556))
+                    "ESMFold", "AlphaFold 3 · Chai-1 · Boltz-2 · BioEmu"))
+    s.append(arrow(490, 578, 490, 594))
 
     # ProteinMPNN is a loop off the folding step, not a numbered module: the
     # redesigned masks are folded again and rejoin the same three scores
-    s.append(f'<rect x="0" y="560" width="{W}" height="70" rx="4" fill="#FFFFFF" '
+    s.append(f'<rect x="0" y="598" width="{W}" height="70" rx="4" fill="#FFFFFF" '
              f'stroke="{NULL}" stroke-width="1.2"/>')
-    s.append(f'<text x="24" y="588" class="p-l" fill="{NULL}">'
+    s.append(f'<text x="24" y="626" class="p-l" fill="{NULL}">'
              'ADDITIONAL SEQUENCE EXPLORATION</text>')
-    s.append(f'<text x="24" y="614" class="p-t" fill="{INK2}">ProteinMPNN redesign</text>')
-    s.append(f'<text x="{W-24}" y="614" class="p-b" fill="{INK2}" text-anchor="end">'
+    s.append(f'<text x="24" y="652" class="p-t" fill="{INK2}">ProteinMPNN redesign</text>')
+    s.append(f'<text x="{W-24}" y="652" class="p-b" fill="{INK2}" text-anchor="end">'
              'redesign the mask residues, then predict the structures again</text>')
-    s.append(f'<path d="M 980 595 L 1000 595 L 1000 502 L 988 502" '
+    s.append(f'<path d="M 980 633 L 1000 633 L 1000 540 L 988 540" '
              f'stroke="{NULL}" stroke-width="1.4" fill="none" '
              'marker-end="url(#ar)"/>')
-    s.append(arrow(490, 630, 490, 648))
+    s.append(arrow(490, 668, 490, 686))
 
-    s.append(f'<path d="M 160 652 L 820 652" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 490 648 L 490 652" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 160 690 L 820 690" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 490 686 L 490 690" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     for x in (160, 490, 820):
-        s.append(arrow(x, 652, x, 676))
+        s.append(arrow(x, 690, x, 714))
 
     for n, (num, title, lines, methods, further) in enumerate([
         ("03", "Structural feasibility",
@@ -1220,40 +1224,40 @@ def architecture_schematic() -> str:
          ["CleaveNet · measured library", "extension · exposure · clearance"],
          ["protease–substrate docking", "venom-protease substrate data"]),
     ]):
-        s.append(box(n * 330, 680, 320, 196, SEQ, num, title, lines, methods,
+        s.append(box(n * 330, 718, 320, 196, SEQ, num, title, lines, methods,
                      further=further))
-        s.append(f'<path d="M {n*330+160} 876 L {n*330+160} 902 L 490 902 L 490 926" '
+        s.append(f'<path d="M {n*330+160} 914 L {n*330+160} 940 L 490 940 L 490 964" '
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    s.append(box(166, 930, 648, 150, CHROME, "06", "Multiobjective selection",
+    s.append(box(166, 968, 648, 150, CHROME, "06", "Multiobjective selection",
                  ["Apply minimum requirements, take the nondominated",
                   "designs, and shortlist a diverse set of them."],
                  ["Pareto non-domination · maximin · one per distinct mask"],
                  further=["calibrated uncertainty · active learning · "
                           "Bayesian optimisation"]))
-    s.append(arrow(490, 1080, 490, 1096))
-    s.append(shared(1100, 76, "Final structural assessment",
+    s.append(arrow(490, 1118, 490, 1134))
+    s.append(shared(1138, 76, "Final structural assessment",
                     "Mask position and antigen access in the predicted complex.",
                     "Boltz-2", "AlphaFold 3 · Chai-1 · ensemble comparison"))
-    s.append(arrow(490, 1176, 490, 1192))
-    s.append(band(1196, "CANDIDATES FOR EXPERIMENTAL TESTING &#183; "
+    s.append(arrow(490, 1214, 490, 1230))
+    s.append(band(1234, "CANDIDATES FOR EXPERIMENTAL TESTING &#183; "
                         "EXPRESSION, MASKING, PROTEOLYTIC ACTIVATION"))
 
     # the loop the whole proposal is about: measurements come back as better
     # scoring functions, not as a second guess at the same candidate
-    s.append(f'<path d="M 0 1216 L -22 1216 L -22 778 L -6 778" '
+    s.append(f'<path d="M 0 1254 L -22 1254 L -22 816 L -6 816" '
              f'stroke="{CHROME}" stroke-width="1.4" fill="none" stroke-dasharray="5 3" '
              'marker-end="url(#arl)"/>')
-    s.append(f'<text transform="rotate(-90 -30 1000)" x="-30" y="1000" '
+    s.append(f'<text transform="rotate(-90 -30 1038)" x="-30" y="1038" '
              f'class="p-l" fill="{CHROME}" text-anchor="middle">'
              'MEASUREMENTS IMPROVE THE SCORING FUNCTIONS</text>')
     # the second thing a measurement tells you: not only how well the scores
     # rank, but which of the two designed parts was the one that failed
-    s.append(f'<path d="M 0 1226 L -54 1226 L -54 347 L -6 347" '
+    s.append(f'<path d="M 0 1264 L -54 1264 L -54 385 L -6 385" '
              f'stroke="{CHROME}" stroke-width="1.4" fill="none" stroke-dasharray="5 3" '
              'marker-end="url(#arl)"/>')
-    s.append(f'<text transform="rotate(-90 -62 760)" x="-62" y="760" '
+    s.append(f'<text transform="rotate(-90 -62 798)" x="-62" y="798" '
              f'class="p-l" fill="{CHROME}" text-anchor="middle">'
              'MEASUREMENTS INDICATE WHICH PART OF THE DESIGN NEEDS IMPROVEMENT</text>')
     s.append("</svg>")
