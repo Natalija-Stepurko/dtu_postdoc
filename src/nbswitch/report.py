@@ -1161,25 +1161,25 @@ def architecture_schematic() -> str:
              f'stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     s.append(arrow(741, 262, 741, 268))
 
-    s.append(box(0, 104, W, 150, CHROME, "01",
+    s.append(box(0, 104, W, 140, CHROME, "01",
                  "Linker geometry and affinity constraints",
-                 ["Where should the mask attach, and what affinity range could permit",
+                 ["Where should the mask attach, and what affinity range could permit "
                   "switching?"],
                  ["interface geometry · polymer model · binding equilibria"],
                  further=["CALVADOS · Martini 3 · OpenMM molecular dynamics"]))
-    s.append(arrow(239, 254, 239, 268))
+    s.append(arrow(239, 244, 239, 268))
 
-    s.append(box(0, 272, 478, 150, SEQ, "02a", "Mask design",
-                 ["Antigen-derived masks and matched", "controls"],
+    s.append(box(0, 272, 478, 140, SEQ, "02a", "Mask design",
+                 ["Antigen-derived masks and matched controls"],
                  ["contact grafting · window variants · substitutions"],
                  further=["LigandMPNN · BoltzGen · RFdiffusion · BindCraft"]))
-    s.append(box(502, 272, 478, 150, SEQ, "02b", "Cleavable linker design",
-                 ["Protease-selective sequences and", "linker lengths"],
+    s.append(box(502, 272, 478, 140, SEQ, "02b", "Cleavable linker design",
+                 ["Protease-selective sequences and linker lengths"],
                  ["CleaveNet, conditioned on the profile · Gly/Ser flanks"],
                  further=["MEROPS · PROSPERousPlus · Procleave"]))
 
-    s.append(f'<path d="M 239 422 L 239 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
-    s.append(f'<path d="M 741 422 L 741 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 239 412 L 239 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
+    s.append(f'<path d="M 741 412 L 741 444 L 490 444" stroke="{NULL}" stroke-width="1.6" fill="none"/>')
     s.append(arrow(490, 444, 490, 460))
 
     s.append(shared(464, 76, "Assemble and predict structures",
@@ -1230,7 +1230,7 @@ def architecture_schematic() -> str:
                  ["Apply minimum requirements, take the nondominated",
                   "designs, and shortlist a diverse set of them."],
                  ["Pareto non-domination · maximin · one per distinct mask"],
-                 further=["calibrated uncertainty · active learning",
+                 further=["calibrated uncertainty · active learning · "
                           "Bayesian optimisation"]))
     s.append(arrow(490, 1080, 490, 1096))
     s.append(shared(1100, 76, "Final structural assessment",
