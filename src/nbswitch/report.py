@@ -1054,7 +1054,7 @@ def architecture_schematic() -> str:
     weight, so a reader could not tell which half of the diagram produced the
     numbers on this page.
     """
-    W, H = 980, 1288
+    W, H = 980, 1386
     s = [f'<svg viewBox="-78 0 1098 {H}" width="100%" '
          'xmlns="http://www.w3.org/2000/svg" '
          'role="img" aria-label="Computational pipeline">',
@@ -1213,51 +1213,60 @@ def architecture_schematic() -> str:
     for n, (num, title, lines, methods, further) in enumerate([
         ("03", "Structural feasibility",
          ["Is the fold kept, and can", "it be produced?"],
-         ["pLDDT · core RMSD", "surface · measured disulfides"],
+         ["pLDDT · VHH fold preservation RMSD",
+          "hydrophobic residue exposure",
+          "unpaired cysteines"],
          ["AlphaFold 3 · Chai-1", "CamSol · AGGRESCAN3D"]),
         ("04", "Paratope occlusion",
          ["How much of the binding surface", "does the mask cover?"],
          ["ESMFold · solvent-accessible", "surface area"],
-         ["Rosetta FlexPepDock · HADDOCK", "ensembles · free-energy methods"]),
+         ["Rosetta FlexPepDock · PRODIGY",
+          "PPI-Affinity · MD + MM-GBSA"]),
         ("05", "Linker cleavability",
          ["Is the linker recognised,", "and can a protease reach it?"],
-         ["CleaveNet · measured library", "extension · exposure · clearance"],
-         ["protease–substrate docking", "venom-protease substrate data"]),
+         ["CleaveNet predictor, for sequence",
+          "recognition and selectivity",
+          "linker backbone geometry, solvent",
+          "accessibility and steric geometry,",
+          "for protease accessibility"],
+         ["DeepCleave · PROSPERousPlus",
+          "SitePrediction · position-weight",
+          "matrix from known venom substrates"]),
     ]):
-        s.append(box(n * 330, 718, 320, 196, SEQ, num, title, lines, methods,
+        s.append(box(n * 330, 718, 320, 269, SEQ, num, title, lines, methods,
                      further=further))
-        s.append(f'<path d="M {n*330+160} 914 L {n*330+160} 940 L 490 940 L 490 964" '
+        s.append(f'<path d="M {n*330+160} 987 L {n*330+160} 1013 L 490 1013 L 490 1037" '
                  f'stroke="{NULL}" stroke-width="1.6" fill="none"'
                  + (' marker-end="url(#ar)"/>' if n == 1 else '/>'))
 
-    s.append(box(166, 968, 648, 150, CHROME, "06", "Multiobjective selection",
-                 ["Apply minimum requirements, take the nondominated",
-                  "designs, and shortlist a diverse set of them."],
-                 ["Pareto non-domination · maximin · one per distinct mask"],
-                 further=["calibrated uncertainty · active learning · "
-                          "Bayesian optimisation"]))
-    s.append(arrow(490, 1118, 490, 1134))
-    s.append(shared(1138, 76, "Final structural assessment",
+    s.append(box(166, 1041, 648, 175, CHROME, "06", "Multiobjective selection",
+                 ["Balance the three scores · create a ranked list · select diverse candidates"],
+                 ["Pareto filtering · score normalisation · maximin ranking",
+                  "one per original mask"],
+                 further=["sensitivity analysis · uncertainty-aware ranking",
+                          "active learning · Bayesian optimisation"]))
+    s.append(arrow(490, 1216, 490, 1232))
+    s.append(shared(1236, 76, "Final structural assessment",
                     "Mask position and antigen access in the predicted complex.",
                     "Boltz-2", "AlphaFold 3 · Chai-1 · ensemble comparison"))
-    s.append(arrow(490, 1214, 490, 1230))
-    s.append(band(1234, "CANDIDATES FOR EXPERIMENTAL TESTING &#183; "
+    s.append(arrow(490, 1312, 490, 1328))
+    s.append(band(1332, "CANDIDATES FOR EXPERIMENTAL TESTING &#183; "
                         "EXPRESSION, MASKING, PROTEOLYTIC ACTIVATION"))
 
     # the loop the whole proposal is about: measurements come back as better
     # scoring functions, not as a second guess at the same candidate
-    s.append(f'<path d="M 0 1254 L -22 1254 L -22 816 L -6 816" '
+    s.append(f'<path d="M 0 1352 L -22 1352 L -22 816 L -6 816" '
              f'stroke="{CHROME}" stroke-width="1.4" fill="none" stroke-dasharray="5 3" '
              'marker-end="url(#arl)"/>')
-    s.append(f'<text transform="rotate(-90 -30 1038)" x="-30" y="1038" '
+    s.append(f'<text transform="rotate(-90 -30 1084)" x="-30" y="1084" '
              f'class="p-l" fill="{CHROME}" text-anchor="middle">'
              'MEASUREMENTS IMPROVE THE SCORING FUNCTIONS</text>')
     # the second thing a measurement tells you: not only how well the scores
     # rank, but which of the two designed parts was the one that failed
-    s.append(f'<path d="M 0 1264 L -54 1264 L -54 385 L -6 385" '
+    s.append(f'<path d="M 0 1362 L -54 1362 L -54 385 L -6 385" '
              f'stroke="{CHROME}" stroke-width="1.4" fill="none" stroke-dasharray="5 3" '
              'marker-end="url(#arl)"/>')
-    s.append(f'<text transform="rotate(-90 -62 798)" x="-62" y="798" '
+    s.append(f'<text transform="rotate(-90 -62 873)" x="-62" y="873" '
              f'class="p-l" fill="{CHROME}" text-anchor="middle">'
              'MEASUREMENTS INDICATE WHICH PART OF THE DESIGN NEEDS IMPROVEMENT</text>')
     s.append("</svg>")
