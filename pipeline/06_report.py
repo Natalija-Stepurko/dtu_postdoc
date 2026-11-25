@@ -678,10 +678,24 @@ toxin_contact = sorted(int("".join(c for c in lbl[1:] if c.isdigit()))
 # itself loads so the bonds drawn are the ones in the structure on screen
 import biotite.structure.io.pdb as _pdb
 import biotite.structure as _struc
-from nbswitch.structure import disulphides as _disulphides
-_solved = DOCS / "structures" / f"{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb"
-_sol_atoms = _pdb.PDBFile.read(_solved).get_structure(model=1)
-disulphide_bonds = _disulphides(_sol_atoms[_struc.filter_amino_acids(_sol_atoms)])
+from nbswitch.structure import disulphides as _disulphides, map_disulphides as _map_ss
+_solved_name = f"{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb"
+_solved = DOCS / "structures" / _solved_name
+
+
+def _ss_atoms(path, model=1):
+    a = _pdb.PDBFile.read(path).get_structure(model=model)
+    return a[_struc.filter_amino_acids(a)]
+
+
+_sol_atoms = _ss_atoms(_solved)
+disulphide_bonds = _disulphides(_sol_atoms)
+# the deposited structure's bridges, split by the molecule that holds them: the
+# nanobody's single conserved one, and the antigen's, which are what makes a
+# three-finger toxin the shape it is. Every predicted structure below inherits
+# this topology, so the two groups are mapped onto it separately.
+_SS_VHH = [b for b in disulphide_bonds if b["chain_a"] == REFERENCE_VHH_CHAIN]
+_SS_TOXIN = [b for b in disulphide_bonds if b["chain_a"] == iface["toxin_chain"]]
 
 N["mask_cutoff"] = iface.get("mask_contact_cutoff_A", 3.5)
 N["n_near"] = len(top_paratope)
@@ -1081,6 +1095,43 @@ if _FP:
         "masked": {"file": _FP["masked"]["file"],
                    **_roles(_FP["masked"]["chains"], True)},
     }
+# Every structure the viewers load, with the bridges it holds, keyed by the
+# file the viewer asks for. The deposited complex is measured; each predicted
+# structure takes which cysteine pairs are bridged from it and is then measured
+# to confirm the prediction closed them. Built here because it needs both the
+# construct numbering in MODELS and the chain roles of the final pair.
+disulphide_map = {_solved_name: disulphide_bonds}
+for _cid, _spec in models.items():
+    _path = DOCS / "structures" / f"{_cid}.pdb"
+    if not _path.exists():
+        continue
+    # a construct is one chain, the nanobody preceded by mask and linker, so
+    # the whole reference numbering shifts by whatever comes before it
+    _off = int(str(_spec["vhh"]).split("-")[0]) - 1
+    _atoms = _ss_atoms(_path)
+    disulphide_map[f"{_cid}.pdb"] = _map_ss(
+        _atoms, _SS_VHH, {REFERENCE_VHH_CHAIN: str(_atoms.chain_id[0])}, _off)
+for _role in ("reference", "masked") if FINAL_PAIR_JS else ():
+    _spec = FINAL_PAIR_JS[_role]
+    _atoms = _ss_atoms(DOCS / "structures" / _spec["file"])
+    disulphide_map[_spec["file"]] = (
+        _map_ss(_atoms, _SS_VHH, {REFERENCE_VHH_CHAIN: _spec["vhh"]})
+        + _map_ss(_atoms, _SS_TOXIN, {iface["toxin_chain"]: _spec["antigen"]}))
+# the ensemble's first model is the free nanobody every construct is aligned
+# on, and the rest are superposed onto it, so one bridge drawn on that model
+# sits where all of theirs do
+_ens = DOCS / "structures" / "ensemble.pdb"
+if _ens.exists():
+    _ens_atoms = _ss_atoms(_ens)
+    disulphide_map["ensemble.pdb"] = _map_ss(
+        _ens_atoms, _SS_VHH, {REFERENCE_VHH_CHAIN: str(_ens_atoms.chain_id[0])})
+# the measurement stays in the build, where it can be read; the page carries
+# only what the viewer draws with, which is the pair, not the distance
+_SS_MEASURED = [b["distance_A"] for v in disulphide_map.values() for b in v]
+_SS_OPEN = sorted(k for k, v in disulphide_map.items() if not v)
+disulphide_map = {k: [{n: b[n] for n in ("chain_a", "res_a", "chain_b", "res_b")}
+                      for b in v] for k, v in disulphide_map.items()}
+
 FP_ID = _FP["masked"]["construct"] if _FP else ""
 FP_RMSD = _FP["vhh_ca_rmsd_A"] if _FP else float("nan")
 FP_MASK_ON = (_FP["masked"]["mask_fraction_on_paratope"] * 100) if _FP else 0
@@ -1475,7 +1526,7 @@ profile; they do not establish selectivity at a viper bite site.</p></div>
 <span><i style="background:#C06014"></i>buried on binding, sticks</span>
 <span><i style="background:#C06014"></i>within {N['mask_cutoff']:g} &#8491;, sticks</span>
 <span><i style="background:#B8541F"></i>antigen face within {N['mask_cutoff']:g} &#8491;</span>
-<span><i style="background:#FFD300"></i>disulphide bonds</span>
+{R.SS_KEY}
 <span><b style="color:#12191F">N</b> / <b style="color:#6E7880">C</b> termini</span></div>
 </div>
 <div class="stackfig">
@@ -1542,7 +1593,7 @@ ids stay as the files are named; the figure above gives each mask a readable lab
 <div class="vkey"><span><i style="background:#337D79"></i>framework</span>{R.CDR_KEY}
 <span><i style="background:#8C72AD"></i>mask</span>
 <span><i style="background:#9AA7B1"></i>linker</span>
-<span><i style="background:#C06014"></i>antigen-binding residues</span></div>
+<span><i style="background:#C06014"></i>antigen-binding residues</span>{R.SS_KEY}</div>
 <p class="dim" id="dcap" style="font-size:.85rem"></p>
 </div>
 </div></details>
@@ -1843,7 +1894,7 @@ improved.</div>
 <div class="vstage" id="stage-final-ref"></div>
 <div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>{R.CDR_KEY}
 <span><i style="background:#C06014"></i>paratope, sticks</span>
-<span><i style="background:#E0C49A"></i>antigen</span></div>
+<span><i style="background:#E0C49A"></i>antigen</span>{R.SS_KEY}</div>
 </div>
 <div class="viewer">
 <div class="vbar"><span class="eyebrow">Selected &middot; <span class="mono">{FP_ID}</span> with
@@ -1854,7 +1905,7 @@ antigen</span><button data-spin="finalmask">spin</button></div>
 <div class="vkey"><span><i style="background:#337D79"></i>nanobody</span>{R.CDR_KEY}
 <span><i style="background:#C06014"></i>paratope, sticks</span>
 <span><i style="background:#8C72AD"></i>mask and linker</span>
-<span><i style="background:#E0C49A"></i>antigen</span></div>
+<span><i style="background:#E0C49A"></i>antigen</span>{R.SS_KEY}</div>
 </div>
 </div>
 <div class="stack">
@@ -1944,7 +1995,7 @@ Data Bank.</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.1.0/3Dmol-min.js"></script>
-<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__DISULPHIDES__", json.dumps(disulphide_bonds)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES)).replace("__FINALPAIR__", json.dumps(FINAL_PAIR_JS))}</script>
+<script>{R.VIEWER_JS.replace("__MODELS__", json.dumps(models)).replace("__PARATOPE__", json.dumps(para_resi)).replace("__SOLVED__", json.dumps(f"structures/{PDB_ID}_{REFERENCE_VHH_CHAIN}{iface['toxin_chain']}.pdb")).replace("__ENSEMBLE__", json.dumps(ENSEMBLE_IDS)).replace("__TOPPARA__", json.dumps(top_paratope)).replace("__TOXCONTACT__", json.dumps(toxin_contact)).replace("__DISULPHIDES__", json.dumps(disulphide_map)).replace("__CDRS__", json.dumps(cdr_resi)).replace("__SCORES__", json.dumps(SCORES)).replace("__FINALPAIR__", json.dumps(FINAL_PAIR_JS))}</script>
 </body></html>"""
 
 import re
@@ -2002,3 +2053,6 @@ print(f"docs/index.html  {len(HTML)//1024} KB")
 print(f"  {len(list((DOCS/'figures').glob('*.svg')))} figures, "
       f"{len(list((DOCS/'structures').glob('*.pdb')))} structures, "
       f"{len(models)} in the viewer")
+print(f"  {len(_SS_MEASURED)} disulphides over {len(disulphide_map)} structures, "
+      f"SG-SG {min(_SS_MEASURED)}-{max(_SS_MEASURED)} \u00c5"
+      + (f", open in {len(_SS_OPEN)}: {', '.join(_SS_OPEN[:4])}" if _SS_OPEN else ""))

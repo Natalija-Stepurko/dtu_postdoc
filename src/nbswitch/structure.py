@@ -336,3 +336,48 @@ def disulphides(atoms, max_distance: float = DISULPHIDE_MAX_A) -> list[dict]:
                     "chain_b": str(sg.chain_id[j]), "res_b": int(sg.res_id[j]),
                     "distance_A": round(d, 2)})
     return sorted(found, key=lambda b: (b["chain_a"], b["res_a"]))
+
+
+#: Widest SG-SG separation still drawn as a bridge in a predicted structure.
+#: The deposited complex holds its five bridges at 2.01-2.04 A, but neither
+#: ESMFold nor Boltz-2 constrains the bond, and the same bridges come out of a
+#: prediction between 2.1 and 2.5 A. Past this the two sulphurs are too far
+#: apart for a stick drawn between them to describe anything.
+DISULPHIDE_PREDICTED_MAX_A = 2.6
+
+
+def map_disulphides(atoms, bonds, chain_map=None, offset: int = 0,
+                    max_distance: float = DISULPHIDE_PREDICTED_MAX_A) -> list[dict]:
+    """Reference disulphides located in another structure of the same chains.
+
+    Which cysteine pairs are bridged is carried over from the reference rather
+    than rediscovered here. Rediscovering it from SG-SG distance alone finds
+    pairs a prediction has fused together by accident: a mask carries
+    cysteines out of the antigen loop it was cut from, their partners stay
+    behind in the rest of the antigen, and a predicted structure is free to
+    leave the orphans an angstrom apart. Those are not bridges, and drawing
+    them would put a covalent bond on the page that the construct does not
+    have.
+
+    ``chain_map`` renames reference chains onto the target's, ``offset`` shifts
+    residue numbering for a construct carrying a mask and linker ahead of the
+    nanobody. Each mapped pair is then measured in the target, so a bridge the
+    prediction left open is dropped instead of drawn across empty space.
+    """
+    names = chain_map or {}
+    sg = atoms[(atoms.res_name == "CYS") & (atoms.atom_name == "SG")]
+    at = {(str(c), int(r)): sg.coord[i]
+          for i, (c, r) in enumerate(zip(sg.chain_id, sg.res_id))}
+    found = []
+    for b in bonds:
+        key_a = (names.get(b["chain_a"], b["chain_a"]), b["res_a"] + offset)
+        key_b = (names.get(b["chain_b"], b["chain_b"]), b["res_b"] + offset)
+        if key_a not in at or key_b not in at:
+            continue
+        d = float(np.linalg.norm(at[key_a] - at[key_b]))
+        if d > max_distance:
+            continue
+        found.append({"chain_a": key_a[0], "res_a": key_a[1],
+                      "chain_b": key_b[0], "res_b": key_b[1],
+                      "distance_A": round(d, 2)})
+    return sorted(found, key=lambda b: (b["chain_a"], b["res_a"]))

@@ -350,6 +350,32 @@ const SS_ATOMS = ['N', 'CA', 'C', 'O', 'CB', 'SG'];
 const SS_COLOUR = '#FFD300';
 const STICK_DISULPHIDE = {stick: {color: SS_COLOUR, radius: 0.18}};
 
+// The bridges of one loaded structure, drawn into one viewer. Which cysteine
+// pairs are bridged was settled at build time, per file: the deposited complex
+// was measured, every prediction inherits that topology and was measured
+// against it, and a bridge a prediction left open was dropped there. The
+// viewer draws what it is handed and decides nothing.
+// `scope` narrows the selection to one model of a multi-model file.
+function disulphides(view, file, scope) {
+  const bonds = (typeof DISULPHIDES !== 'undefined' && DISULPHIDES[file]) || [];
+  const at = scope || {};
+  const pick = function (ss, end) {
+    return Object.assign({chain: ss['chain_' + end], resi: ss['res_' + end]}, at);
+  };
+  bonds.forEach(function (ss) {
+    ['a', 'b'].forEach(function (end) {
+      view.addStyle(Object.assign(pick(ss, end), {atom: SS_ATOMS}), STICK_DISULPHIDE);
+    });
+    // 3Dmol bonds atoms by distance within a residue, so the two sulphurs of
+    // a bridge are never joined; the bond itself is drawn by hand
+    const a = view.selectedAtoms(Object.assign(pick(ss, 'a'), {atom: 'SG'}))[0];
+    const b = view.selectedAtoms(Object.assign(pick(ss, 'b'), {atom: 'SG'}))[0];
+    if (a && b) view.addCylinder({
+      start: {x: a.x, y: a.y, z: a.z}, end: {x: b.x, y: b.y, z: b.z},
+      radius: 0.18, color: SS_COLOUR, fromCap: 2, toCap: 2});
+  });
+}
+
 function termini(view, model, sel, labelSuffix) {
   const cas = model.selectedAtoms(Object.assign({atom: 'CA'}, sel));
   if (!cas.length) return;
@@ -380,22 +406,11 @@ function boot() {
       return toxContact.indexOf(atom.resi) >= 0 ? '#B8541F' : '#E0C49A';
     }}});
     v1.addStyle({chain: 'A', resi: PARATOPE}, STICK_PARATOPE);
-    // the disulphides the deposited structure actually contains, found by
-    // measuring SG to SG rather than by drawing every cysteine: a free
-    // cysteine drawn the same way would read as half a bond that is not there
-    DISULPHIDES.forEach(function (ss) {
-      v1.addStyle({chain: ss.chain_a, resi: ss.res_a, atom: SS_ATOMS},
-                  STICK_DISULPHIDE);
-      v1.addStyle({chain: ss.chain_b, resi: ss.res_b, atom: SS_ATOMS},
-                  STICK_DISULPHIDE);
-      // 3Dmol bonds atoms by distance within a residue, so the two sulphurs
-      // of a bridge are never joined; the bond itself is drawn by hand
-      const a = m.selectedAtoms({chain: ss.chain_a, resi: ss.res_a, atom: 'SG'})[0];
-      const b = m.selectedAtoms({chain: ss.chain_b, resi: ss.res_b, atom: 'SG'})[0];
-      if (a && b) v1.addCylinder({
-        start: {x: a.x, y: a.y, z: a.z}, end: {x: b.x, y: b.y, z: b.z},
-        radius: 0.18, color: SS_COLOUR, fromCap: 2, toCap: 2});
-    });
+    // the nanobody's one conserved bridge and the four that make the toxin a
+    // three-finger fold, measured in this file rather than drawn over every
+    // cysteine: a free cysteine drawn the same way reads as half a bond that
+    // is not there
+    disulphides(v1, SOLVED_FILE.split('/').pop());
     termini(v1, m, {chain: 'A'}, '');
     termini(v1, m, {chain: 'X'}, '\u2032');
     const fit1 = function () { v1.zoomTo(); v1.zoom(1.75); };
@@ -440,6 +455,8 @@ function bootFinalPair() {
         view.setStyle({chain: spec.mask}, {cartoon: {color: '#8C72AD'}});
         view.addStyle({chain: spec.mask}, STICK_MASK);
       }
+      // after the chain styles, so the sticks are not overwritten by them
+      disulphides(view, spec.file);
       const fit = function () { view.zoomTo({chain: spec.vhh}); view.zoom(1.5); };
       setRefit(hostId, fit);
       fit();
@@ -479,6 +496,9 @@ function loadDesigned(id) {
     v2.addStyle({atom: ['N', 'CA', 'C']}, {stick: {radius: 0.12, color: '#7E8A93'}});
     if (spec.mask) v2.addStyle({resi: spec.mask}, STICK_MASK);
     if (spec.paratope) v2.addStyle({resi: spec.paratope}, STICK_PARATOPE);
+    // the nanobody's conserved bridge, at this construct's numbering: the mask
+    // and linker shift it by however many residues precede the nanobody
+    disulphides(v2, id + '.pdb');
     termini(v2, m, {}, '');
     const fit2 = function () { v2.zoomTo(); v2.zoom(1.15); };
     setRefit('stage-designed', fit2);
@@ -539,6 +559,10 @@ function mountEnsemble(hostId, scoreKey) {
       v.addStyle({model: n + 1, atom: ['N', 'CA', 'C']},
                  {stick: {radius: 0.1, color: '#8A949B'}});
     });
+    // on the nanobody alone. Every construct is superposed on it, so their
+    // bridges all sit where this one does, and drawing sixty coincident
+    // sticks would only thicken it
+    disulphides(v, 'ensemble.pdb', {model: 0});
     const fitE = function () { v.zoomTo(); v.zoom(1.55); };
     setRefit(hostId, fitE);
     fitE(); v.render();
@@ -1555,6 +1579,9 @@ CDR_KEY = ('<span><i style="background:#2E7DBE"></i>CDR1</span>'
            '<span><i style="background:#B8860B"></i>CDR2</span>'
            '<span><i style="background:#A8324A"></i>CDR3</span>')
 
+#: One wording for the bridges, in every viewer that draws them.
+SS_KEY = '<span><i style="background:#FFD300"></i>disulphide bonds</span>'
+
 
 def ramp_legend(low: str, high: str) -> str:
     stops = ["#2C5F8A", "#4E8FB0", "#8FBDC9", "#D8C9A3", "#D79A5B", "#C06014"]
@@ -1562,6 +1589,7 @@ def ramp_legend(low: str, high: str) -> str:
                        for c in stops)
     return (f'<span><i style="background:#337D79"></i>framework</span>{CDR_KEY}'
             f'<span><i style="background:#C06014"></i>antigen-binding residues</span>'
+            f'{SS_KEY}'
             f'<span style="display:flex;align-items:center;gap:0">{low}&nbsp;{swatches}'
             f'&nbsp;{high}</span>')
 
